@@ -1,4 +1,42 @@
+.wrapper {
+    padding: 40px;
+
+    h1 {
+        font-size: 45px;
+        color: #424242;
+        font-weight: 600;
+    }
+}
 .competency-card {
     padding: 10px;
-    margin: 10px;
+
+    .competency {
+        max-width: 80%;
+        float: left;
+    }
+
+    .actions {
+        width: 20%;
+        float: right;
+        right: 0;
+        padding: 10px 0;
+
+        button {
+            float: right;
+        }
+    }
+}
+
+mat-card {
+    color: #424242;
+    background: transparent;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.builder {
+    color: #424242;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
