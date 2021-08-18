@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   HttpClient,
 } from '@angular/common/http';
-import { COMPETENCY_ROUTES } from 'src/environments/routes';
+import { COMPETENCY_ROUTES } from '../../environments/routes';
 
 @Injectable({
   providedIn: 'root'
