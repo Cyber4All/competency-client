@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { CompetencyService } from '../../core/competency.service';
 
 export interface DialogData {
   audience: string;
@@ -18,38 +19,33 @@ export class CompetenciesDashboardComponent implements OnInit {
 
   competency!: DialogData;
 
-  competencies = [
-    {
-      _id: "123455",
-      audience: "The student",
-      behavior: "diagnose network connectivity problem(4 -T0081) and fix",
-      condition: "acting as a Network operations specialist and given a network with with a connectivity issue, will",
-      degree: "Within 30 minutes",
-      effectiveness: "in keeping with best practices",
-      author: "",
-      locked: false,
-      lastUpdate: Date.now()
-    },
-    {
-      _id: "98765",
-      audience: "The student",
-      behavior: "diagnose network connectivity problem(4 -T0081) and fix",
-      condition: "acting as a Network operations specialist and given a network with with a connectivity issue, will",
-      degree: "Within 30 minutes",
-      effectiveness: "in keeping with best practices",
-      author: "",
-      locked: false,
-      lastUpdate: Date.now()
-    }
-  ]
-  constructor(public dialog: MatDialog) { }
+  competencies: any = [];
 
-  ngOnInit(): void {
-    this.getCompetencies();
+  constructor(public dialog: MatDialog, public competencyService: CompetencyService) { }
+
+  async ngOnInit() {
+    await this.getCompetencies();
   }
 
-  getCompetencies() {
-    console.log("I will call the service");
+  async getCompetencies() {
+    return;
+    // this.competencies = await this.competencyService.getAllCompetencies()
+  }
+
+  async createCompetency(competency: any) {
+    console.log(competency);
+    await this.competencyService.createCompetency(competency);
+  }
+
+  async updateCompetency(competency: any) {
+    console.log(competency);
+    await this.competencyService.editCompetency(competency);
+    await this.competencyService.lockCompetency(competency, false);
+  }
+
+  async lockCompetency(competency: any) {
+    console.log('locking baby')
+    await this.competencyService.lockCompetency(competency, true);
   }
 
   openCompetencyBuilder(competency?: any) {
@@ -66,6 +62,7 @@ export class CompetenciesDashboardComponent implements OnInit {
     }
     if(competency) {
       data = competency;
+      this.lockCompetency(competency);
     }
     const dialogRef = this.dialog.open(CompetencyBuilderComponent, {
       height: '700px',
@@ -74,7 +71,12 @@ export class CompetenciesDashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Baby baby baby', result);
+      if(competency) {
+        this.updateCompetency(result);
+      } else {
+        this.createCompetency(result);
+      }
+      this.getCompetencies()
     });
   }
 }
