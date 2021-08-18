@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { CompetenciesDashboardComponent } from './pages/competencies-dashboard/competencies-dashboard.component';
 import { CompetencyBuilderComponent } from './pages/competencies-dashboard/competency-builder/competency-builder.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CompetencyBuilderComponent } from './pages/competencies-dashboard/compe
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
