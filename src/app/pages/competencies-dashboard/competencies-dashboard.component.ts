@@ -33,26 +33,21 @@ export class CompetenciesDashboardComponent implements OnInit {
   }
 
   async createCompetency(competency: any) {
-    console.log(competency);
     await this.competencyService.createCompetency(competency);
   }
 
   async updateCompetency(competency: any) {
-    console.log(competency);
-    await this.competencyService.editCompetency(competency);
     await this.competencyService.lockCompetency(competency, false);
+    await this.competencyService.editCompetency(competency);
   }
 
   async lockCompetency(competency: any) {
-    console.log('locking baby')
     await this.competencyService.lockCompetency(competency, true);
   }
 
   openCompetencyBuilder(competency?: any) {
     let authorId = "";
-    console.log(this.authService.user);
     if (this.authService.user) {
-      console.log(this.authService.user);
       authorId = this.authService.user._id;
     }
     let data = {
@@ -80,7 +75,6 @@ export class CompetenciesDashboardComponent implements OnInit {
       if(competency) {
         this.updateCompetency(result);
       } else {
-        console.log(result);
         this.createCompetency(result);
       }
       this.getCompetencies()
