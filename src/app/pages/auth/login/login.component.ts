@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/core/auth.service';
 export class LoginComponent implements OnInit{
 
   email = new FormControl("", [Validators.required, Validators.email]);
-  password: string = "";
+  password = new FormControl("", [Validators.required]);
 
   constructor(
     private auth: AuthService,
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit{
   }
 
   login() {
-    this.auth.login(this.email.value, this.password)
+    this.auth.login(this.email.value, this.password.value)
       .then(() => {
         if (this.auth.user) {
           this.router.navigate(['/dashboard']);

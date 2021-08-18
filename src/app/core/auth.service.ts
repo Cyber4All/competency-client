@@ -48,9 +48,8 @@ export class AuthService {
       //   email,
       //   password,
       // });
-
       this.http
-        .post(USER_ROUTES.LOGIN(), {email, password})
+        .patch(USER_ROUTES.LOGIN(), {email: email, password: password})
         .pipe(retry(3))
         .toPromise()
         .then(
