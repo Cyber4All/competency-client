@@ -1,0 +1,72 @@
+.wrapper {
+    padding: 40px;
+    background-color: white;
+    height: 100vh;
+
+    .header {
+        padding-bottom: 20px;
+        h1 {
+            font-size: 45px;
+            color: #424242;
+            font-weight: 600;
+        }
+    
+    }
+
+}
+.competency-card {
+    padding: 10px;
+
+    .competency {
+        max-width: 80%;
+        float: left;
+    }
+
+    .actions {
+        width: 20%;
+        float: right;
+        right: 0;
+        padding: 10px 0;
+
+        button {
+            float: right;
+        }
+    }
+}
+
+mat-card {
+    color: #424242;
+    background: transparent;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.builder {
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .form {
+        width: 100%;
+        .example-form {
+            min-width: 150px;
+            max-width: 400px;
+            width: 100%;
+        }
+          
+        .example-full-width {
+            width: 100%;
+        }
+
+        mat-form-field {
+            width: 100%;
+        }
+    }
+}
+
+.competency-example {
+    color: white;
+}
