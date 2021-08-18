@@ -1,5 +1,10 @@
 <div class="wrapper">
-    <h1>Competencies</h1>
+    <div class="header">
+        <h1>Competencies</h1>
+        <button mat-mini-fab color="primary" class="add-button" aria-label="Open builder" (click)="openCompetencyBuilder()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
     <div *ngFor="let competency of competencies" class="competency-card">
         <mat-card>
             <div class="competency">

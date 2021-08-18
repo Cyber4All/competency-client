@@ -16,6 +16,8 @@ export interface DialogData {
 })
 export class CompetenciesDashboardComponent implements OnInit {
 
+  competency!: DialogData;
+
   competencies = [
     {
       _id: "123455",
@@ -50,15 +52,29 @@ export class CompetenciesDashboardComponent implements OnInit {
     console.log("I will call the service");
   }
 
-  openCompetencyBuilder(competency: any) {
+  openCompetencyBuilder(competency?: any) {
+    let data = {
+      _id: "",
+      audience: "",
+      behavior: "",
+      condition: "",
+      degree: "",
+      effectiveness: "",
+      author: "",
+      locked: false,
+      lastUpdate: Date.now()
+    }
+    if(competency) {
+      data = competency;
+    }
     const dialogRef = this.dialog.open(CompetencyBuilderComponent, {
       height: '700px',
       width: '600px',
-      data: { competency }
+      data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('Baby baby baby', result);
     });
   }
 }
@@ -70,7 +86,6 @@ export class CompetenciesDashboardComponent implements OnInit {
   styleUrls: ['./competencies-dashboard.component.scss']
 })
 export class CompetencyBuilderComponent {
-
   constructor(
     public dialogRef: MatDialogRef<CompetencyBuilderComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}

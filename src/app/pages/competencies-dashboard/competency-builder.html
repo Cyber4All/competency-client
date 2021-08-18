@@ -1,4 +1,57 @@
 <div class="builder">
-    <h1>Wow this is really cool</h1>
-    <button mat-icon-button aria-label="close dialog" mat-dialog-close></button>
+    <div class="header">
+        <div></div>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="form">
+        <h1>Competency Builder Form</h1>
+        <form class="example-form">
+            <mat-form-field appearance="fill" color="primary">
+                <!--Audience Fields -->
+                <mat-label>Audience</mat-label>
+                <mat-select [(ngModel)]="data.audience" [ngModelOptions]="{standalone: true}">
+                  <mat-option value="The Student">The Undergraduate Student</mat-option>
+                  <mat-option value="The Graduate Student">The Graduate Student</mat-option>
+                  <mat-option value="The Professional">The Professional</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+              <!--Condition Fields-->
+              <mat-form-field appearance="fill" color="primary">
+                <mat-label>Condition</mat-label>
+                <textarea matInput [(ngModel)]="data.condition" [ngModelOptions]="{standalone: true}"></textarea>
+              </mat-form-field>
+              <br>
+              <!--Behavior Fields-->
+              <mat-form-field appearance="fill" color="primary">
+                <mat-label>Behavior</mat-label>
+                <textarea matInput [(ngModel)]="data.behavior" [ngModelOptions]="{standalone: true}"></textarea>
+              </mat-form-field>
+              <br>
+              <!--Degree Fields-->
+              <mat-form-field appearance="fill" color="primary">
+                <mat-label>Degree</mat-label>
+                <input matInput [(ngModel)]="data.degree" [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
+              <br>
+              <!--Effectiveness Fields-->
+              <mat-form-field appearance="fill" color="primary">
+                <mat-label>Effectiveness</mat-label>
+                <input matInput [(ngModel)]="data.effectiveness" [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
+              <br>
+              <!--Example Stuff -->
+              <!-- Fix this if this is awful -->
+              <h3 *ngIf="data?.audience !== ''" class="competency-example">
+                {{ data?.audience }} {{ data?.condition }} {{ data?.behavior }} {{ data?.degree }} {{ data?.effectiveness }}.
+              </h3>
+              <!--Dialog Fields-->
+              <div mat-dialog-actions>
+                <button mat-button color="accent" (click)="onNoClick()">No Thanks</button>
+                <button mat-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+              </div>  
+          </form>
+    </div>
 </div>

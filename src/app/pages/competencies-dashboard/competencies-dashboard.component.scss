@@ -1,11 +1,16 @@
 .wrapper {
     padding: 40px;
 
-    h1 {
-        font-size: 45px;
-        color: #424242;
-        font-weight: 600;
+    .header {
+        padding-bottom: 20px;
+        h1 {
+            font-size: 45px;
+            color: #424242;
+            font-weight: 600;
+        }
+    
     }
+
 }
 .competency-card {
     padding: 10px;
@@ -35,8 +40,31 @@ mat-card {
 }
 
 .builder {
-    color: #424242;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .form {
+        width: 100%;
+        .example-form {
+            min-width: 150px;
+            max-width: 400px;
+            width: 100%;
+        }
+          
+        .example-full-width {
+            width: 100%;
+        }
+
+        mat-form-field {
+            width: 100%;
+        }
+    }
+}
+
+.competency-example {
+    color: white;
 }
