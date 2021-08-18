@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { AuthService } from '../../core/auth.service';
 import { CompetencyService } from '../../core/competency.service';
 
 export interface DialogData {
@@ -21,15 +22,14 @@ export class CompetenciesDashboardComponent implements OnInit {
 
   competencies: any = [];
 
-  constructor(public dialog: MatDialog, public competencyService: CompetencyService) { }
+  constructor(public dialog: MatDialog, public competencyService: CompetencyService, public authService: AuthService) { }
 
   async ngOnInit() {
     await this.getCompetencies();
   }
 
   async getCompetencies() {
-    return;
-    // this.competencies = await this.competencyService.getAllCompetencies()
+    this.competencies = await this.competencyService.getAllCompetencies()
   }
 
   async createCompetency(competency: any) {
@@ -49,6 +49,12 @@ export class CompetenciesDashboardComponent implements OnInit {
   }
 
   openCompetencyBuilder(competency?: any) {
+    let authorId = "";
+    console.log(this.authService.user);
+    if (this.authService.user) {
+      console.log(this.authService.user);
+      authorId = this.authService.user._id;
+    }
     let data = {
       _id: "",
       audience: "",
@@ -56,7 +62,7 @@ export class CompetenciesDashboardComponent implements OnInit {
       condition: "",
       degree: "",
       effectiveness: "",
-      author: "",
+      author: authorId,
       locked: false,
       lastUpdate: Date.now()
     }
@@ -74,6 +80,7 @@ export class CompetenciesDashboardComponent implements OnInit {
       if(competency) {
         this.updateCompetency(result);
       } else {
+        console.log(result);
         this.createCompetency(result);
       }
       this.getCompetencies()

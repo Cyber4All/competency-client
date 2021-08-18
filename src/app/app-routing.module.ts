@@ -11,6 +11,14 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: CompetenciesDashboardComponent,
+  },
+  {
+    path: "",
+    component: LoginComponent
+  },
+  {
+    path: "**",
+    component: LoginComponent
   }
 ];
 

@@ -15,11 +15,11 @@ export const COMPETENCY_ROUTES = {
     GET_ALL_COMPETENCIES(){
         return `${environment.apiURL}/competencies`;
     },
-    CREATE_COMPETENCY() {
-        return `${environment.apiURL}/competencies`;
+    CREATE_COMPETENCY(userId: string) {
+        return `${environment.apiURL}/users/${encodeURIComponent("611d65aaa22d7ca85295a4a9")}/competencies`;
     },
-    EDIT_COMPETENCY(competencyId: string) {
-        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}`;
+    EDIT_COMPETENCY(competency: any) {
+        return `${environment.apiURL}/users/${encodeURIComponent("611d65aaa22d7ca85295a4a9")}/competencies/${encodeURIComponent(competency._id)}`;
     },
     LOCK_COMPETENCY(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/lock`;
