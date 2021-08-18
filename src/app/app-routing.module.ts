@@ -17,8 +17,14 @@ const routes: Routes = [
     path: 'dashboard',
     component: CompetenciesDashboardComponent,
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/login' },
+  {
+    path: "",
+    component: LoginComponent
+  },
+  {
+    path: "**",
+    component: LoginComponent
+  }
 ];
 
 @NgModule({

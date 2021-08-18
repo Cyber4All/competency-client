@@ -11,8 +11,11 @@
                 {{ competency?.audience }} {{ competency?.condition }} {{ competency?.behavior }} {{ competency?.degree }} {{ competency?.effectiveness }}
             </div>
             <div class="actions">
-                <button mat-mini-fab color="secondary" aria-label="Open builder" (click)="openCompetencyBuilder(competency)">
+                <button *ngIf="!competency.locked" mat-mini-fab color="secondary" aria-label="Open builder" (click)="openCompetencyBuilder(competency)">
                     <mat-icon>edit</mat-icon>
+                </button>
+                <button *ngIf="competency.locked" mat-mini-fab color="warn" aria-label="Open builder">
+                    <mat-icon>close</mat-icon>
                 </button>
             </div>
         </mat-card>
