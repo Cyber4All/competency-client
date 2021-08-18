@@ -5,6 +5,9 @@ export const USER_ROUTES = {
     },
     GET_ALL_USERS() {
         return `${environment.apiURL}/users`;
+    },
+    GET_KEY_PAIR() {
+        return `${environment.apiURL}/keys`;
     }
 }
 
