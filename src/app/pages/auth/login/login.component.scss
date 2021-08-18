@@ -1,0 +1,14 @@
+
+.login-wrapper {
+    width: 300px;
+    text-align: center;
+    margin: 50px auto;
+
+    mat-form-field {
+        display: block;
+    }
+
+    button {
+        margin: 0 5px;
+    }
+}
