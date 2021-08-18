@@ -8,7 +8,7 @@
     <div *ngFor="let competency of competencies" class="competency-card">
         <mat-card>
             <div class="competency">
-                {{ competency.audience }} {{ competency.condition }} {{ competency.behavior }} {{ competency.degree }} {{ competency.effectiveness }}
+                {{ competency?.audience }} {{ competency?.condition }} {{ competency?.behavior }} {{ competency?.degree }} {{ competency?.effectiveness }}
             </div>
             <div class="actions">
                 <button mat-mini-fab color="secondary" aria-label="Open builder" (click)="openCompetencyBuilder(competency)">
