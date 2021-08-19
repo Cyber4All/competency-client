@@ -71,13 +71,14 @@ export class CompetenciesDashboardComponent implements OnInit {
       data: data
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async(result) => {
       if(competency) {
-        this.updateCompetency(result);
+        await this.updateCompetency(result);
+        this.getCompetencies();
       } else {
-        this.createCompetency(result);
+        await this.createCompetency(result);
       }
-      this.getCompetencies()
+      await this.getCompetencies();
     });
   }
 }
