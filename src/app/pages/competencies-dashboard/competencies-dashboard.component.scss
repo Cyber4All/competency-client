@@ -70,3 +70,11 @@ mat-card {
 .competency-example {
     color: white;
 }
+
+.float-right {
+    float: right;
+
+    .logout {
+        border: 2px solid #C2175B;
+    }
+}
