@@ -7,39 +7,48 @@
     </div>
     <div class="form">
         <h1>Competency Builder Form</h1>
+        <div class="notice-bar" *ngIf="errorMessage && isDisabled">
+          <mat-icon>error_outline</mat-icon>
+          <span>All fields must  be complete</span>
+        </div>
         <form class="example-form">
             <mat-form-field appearance="fill" color="primary">
                 <!--Audience Fields -->
                 <mat-label>Audience</mat-label>
-                <mat-select [(ngModel)]="data.audience" [ngModelOptions]="{standalone: true}">
-                  <mat-option value="The Student">The Undergraduate Student</mat-option>
+                <mat-select [(ngModel)]="data.audience" [formControl]="audience">
+                  <mat-option value="The Undergraduate Student">The Undergraduate Student</mat-option>
                   <mat-option value="The Graduate Student">The Graduate Student</mat-option>
                   <mat-option value="The Professional">The Professional</mat-option>
                 </mat-select>
+                <mat-error *ngIf="audience.invalid">{{getErrorMessage(audience)}}</mat-error>
               </mat-form-field>
               <br>
               <!--Condition Fields-->
               <mat-form-field appearance="fill" color="primary">
                 <mat-label>Condition</mat-label>
-                <textarea matInput [(ngModel)]="data.condition" [ngModelOptions]="{standalone: true}"></textarea>
+                <textarea matInput [(ngModel)]="data.condition" [formControl]="condition"></textarea>
+                <mat-error *ngIf="condition.invalid">{{getErrorMessage(condition)}}</mat-error>
               </mat-form-field>
               <br>
               <!--Behavior Fields-->
               <mat-form-field appearance="fill" color="primary">
                 <mat-label>Behavior</mat-label>
-                <textarea matInput [(ngModel)]="data.behavior" [ngModelOptions]="{standalone: true}"></textarea>
+                <textarea matInput [(ngModel)]="data.behavior" [formControl]="behavior"></textarea>
+                <mat-error *ngIf="behavior.invalid">{{getErrorMessage(behavior)}}</mat-error>
               </mat-form-field>
               <br>
               <!--Degree Fields-->
               <mat-form-field appearance="fill" color="primary">
                 <mat-label>Degree</mat-label>
-                <input matInput [(ngModel)]="data.degree" [ngModelOptions]="{standalone: true}">
+                <input matInput [(ngModel)]="data.degree" [formControl]="degree">
+                <mat-error *ngIf="degree.invalid">{{getErrorMessage(degree)}}</mat-error>
               </mat-form-field>
               <br>
               <!--Effectiveness Fields-->
               <mat-form-field appearance="fill" color="primary">
                 <mat-label>Effectiveness</mat-label>
-                <input matInput [(ngModel)]="data.effectiveness" [ngModelOptions]="{standalone: true}">
+                <input matInput [(ngModel)]="data.effectiveness" [formControl]="effectiveness">
+                <mat-error *ngIf="effectiveness.invalid">{{getErrorMessage(effectiveness)}}</mat-error>
               </mat-form-field>
               <br>
               <!--Example Stuff -->
@@ -50,7 +59,7 @@
               <!--Dialog Fields-->
               <div mat-dialog-actions>
                 <button mat-button color="accent" (click)="onNoClick()">No Thanks</button>
-                <button mat-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+                <button mat-button color="primary" [mat-dialog-close]="data" [disabled]="isDisabled" cdkFocusInitial>Ok</button>
               </div>  
           </form>
     </div>

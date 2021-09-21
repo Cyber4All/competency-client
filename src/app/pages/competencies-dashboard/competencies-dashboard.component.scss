@@ -56,6 +56,17 @@ mat-card {
             max-width: 400px;
             width: 100%;
         }
+
+        .notice-bar {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding-bottom: 10px;
+
+            span {
+                margin-left: 5px;
+            }
+        }
           
         .example-full-width {
             width: 100%;

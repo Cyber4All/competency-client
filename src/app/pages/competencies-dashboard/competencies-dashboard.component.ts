@@ -1,4 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, DoCheck, Inject, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { AuthService } from '../../core/auth.service';
 import { CompetencyService } from '../../core/competency.service';
@@ -89,13 +90,90 @@ export class CompetenciesDashboardComponent implements OnInit {
   templateUrl: 'competency-builder.html',
   styleUrls: ['./competencies-dashboard.component.scss']
 })
-export class CompetencyBuilderComponent {
+export class CompetencyBuilderComponent implements DoCheck{
   constructor(
     public dialogRef: MatDialogRef<CompetencyBuilderComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
+
+  isDisabled: boolean = true;
+  errorMessage: boolean = false;
+
+  audience = new FormControl('', [Validators.required]);
+  condition = new FormControl('', [Validators.required]);
+  behavior = new FormControl('', [Validators.required]);
+  degree = new FormControl('', [Validators.required]);
+  effectiveness = new FormControl('', [Validators.required])
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * Function to continusouly check form element values
+   */
+  ngDoCheck() {
+    this.checkData();
+  }
+
+  /**
+   * Function to send an error message for the specific dialog box
+   * 
+   * @param obj Form control element where error occured
+   * @returns error message for form element
+   */
+  getErrorMessage(obj: FormControl): string {
+    switch (obj) {
+      case this.audience:
+        return "You must select an audience!";
+      case this.condition:
+        return "You must provide the condition of the competency!";
+      case this.behavior:
+        return "You must provide the behavior of the competency!";
+      case this.degree:
+        return "You must define the degree of the competency!";
+      case this.effectiveness:
+        return "You must define the effectiveness of the competency!";
+      default:
+        return "Something went wrong, please refresh the page and try again...";
+    }
+  }
+
+  checkData(): void {
+    // Check to ensure all fileds are completed; enable submission button
+    if (
+      this.data.audience !== '' &&
+      this.data.behavior !== '' &&
+      this.data.condition !== '' &&
+      this.data.degree !== '' &&
+      this.data.effectiveness !== ''
+    ) {
+      this.errorMessage = false;
+      this.isDisabled = false;
+    }
+
+    // Check to ensure submission button is disabled if information is deleted from the form
+    if (
+      this.data.audience == '' ||
+      this.data.behavior == '' ||
+      this.data.condition == '' ||
+      this.data.degree == '' ||
+      this.data.effectiveness == ''
+    ) {
+      this.isDisabled = true;
+    }
+
+    // Check if data values are null and the form element has already been touched; show warning message; otherwise disable warning
+    if (
+      (this.data.audience == '' && this.audience.value == '' && this.audience.touched) ||
+      (this.data.behavior == '' && this.behavior.value == '' && this.behavior.touched) ||
+      (this.data.condition == '' && this.condition.value == '' && this.condition.touched) ||
+      (this.data.degree == '' && this.degree.value == '' && this.degree.touched) ||
+      (this.data.effectiveness == '' && this.effectiveness.value == '' && this.effectiveness.touched)
+    ) {
+      this.errorMessage = true;
+    } else {
+      this.errorMessage = false;
+    }
+  }
 }
