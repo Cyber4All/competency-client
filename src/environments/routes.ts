@@ -19,7 +19,7 @@ export const COMPETENCY_ROUTES = {
         return `${environment.apiURL}/competencies`;
     },
     CREATE_COMPETENCY(userId: string) {
-        return `${environment.apiURL}/user/${encodeURIComponent(userId)}/competencies`;
+        return `${environment.apiURL}/users/${encodeURIComponent(userId)}/competencies`;
     },
     EDIT_COMPETENCY(competency: any) {
         return `${environment.apiURL}/users/${encodeURIComponent("611d65aaa22d7ca85295a4a9")}/competencies/${encodeURIComponent(competency._id)}`;
