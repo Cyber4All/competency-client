@@ -1,1 +1,25 @@
-<p>competencies-dashboard works!</p>
+<div class="wrapper">
+    <div class="header">
+        <h1>Competencies</h1>
+        <button mat-mini-fab color="primary" class="add-button" aria-label="Open builder" (click)="openCompetencyBuilder()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <div *ngFor="let competency of competencies" class="competency-card">
+        <mat-card>
+            <div class="competency">
+                {{ competency?.audience }} {{ competency?.condition }} {{ competency?.behavior }} {{ competency?.degree }} {{ competency?.effectiveness }}.
+            </div>
+            <div class="actions">
+                <button *ngIf="!competency.locked" mat-mini-fab color="secondary" aria-label="Open builder" (click)="openCompetencyBuilder(competency)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button *ngIf="competency.locked" mat-mini-fab color="warn" aria-label="Open builder">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+
