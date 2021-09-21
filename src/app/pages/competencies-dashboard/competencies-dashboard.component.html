@@ -1,7 +1,13 @@
+<div class="navigation">
+    <div class="title">
+        <h1>Competency Constructor ( )</h1>
+    </div>
+    <button mat-button color="accent" class="logout" aria-label="logout" (click)="logout()">Logout</button>
+</div>
 <div class="wrapper">
     <div class="header">
         <h1>Competencies</h1>
-        <button mat-mini-fab color="primary" class="add-button" aria-label="Open builder" (click)="openCompetencyBuilder()">
+        <button mat-mini-fab color="primary" class="add-button" aria-label="Open builder" matTooltip="Add Competency" (click)="openCompetencyBuilder()">
             <mat-icon>add</mat-icon>
         </button>
     </div>
@@ -11,17 +17,14 @@
                 {{ competency?.audience }} {{ competency?.condition }} {{ competency?.behavior }} {{ competency?.degree }} {{ competency?.effectiveness }}.
             </div>
             <div class="actions">
-                <button *ngIf="!competency.locked" mat-mini-fab color="secondary" aria-label="Open builder" (click)="openCompetencyBuilder(competency)">
+                <button *ngIf="!competency.locked" mat-mini-fab color="secondary" aria-label="Open builder" matTooltip="Edit competency" (click)="openCompetencyBuilder(competency)">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button *ngIf="competency.locked" mat-mini-fab color="warn" aria-label="Open builder">
+                <button *ngIf="competency.locked" mat-mini-fab color="warn" aria-label="Competency currently being edited. Try again later." matTooltip="Competency currently being edited. Try again later.">
                     <mat-icon>close</mat-icon>
                 </button>
             </div>
         </mat-card>
-    </div>
-    <div class="float-right">
-        <button mat-button color="primary" class="logout" aria-label="logout" (click)="logout()">Logout</button>
     </div>
 </div>
 
