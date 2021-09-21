@@ -22,7 +22,7 @@ export const COMPETENCY_ROUTES = {
         return `${environment.apiURL}/users/${encodeURIComponent(userId)}/competencies`;
     },
     EDIT_COMPETENCY(competency: any) {
-        return `${environment.apiURL}/users/${encodeURIComponent("611d65aaa22d7ca85295a4a9")}/competencies/${encodeURIComponent(competency._id)}`;
+        return `${environment.apiURL}/users/${encodeURIComponent(competency.author)}/competencies/${encodeURIComponent(competency._id)}`;
     },
     LOCK_COMPETENCY(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/lock`;
