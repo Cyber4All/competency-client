@@ -51,6 +51,10 @@ export class CompetenciesDashboardComponent implements OnInit {
     await this.competencyService.lockCompetency(competency, true);
   }
 
+  async unlockCompetency(competency: any) {
+    await this.competencyService.lockCompetency(competency, false);
+  }
+
   openCompetencyBuilder(competency?: any) {
     let authorId = "";
     if (this.authService.user) {
@@ -78,11 +82,12 @@ export class CompetenciesDashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(async(result) => {
-      if(competency) {
+      if (competency && result !== undefined) {
         await this.updateCompetency(result);
-        this.getCompetencies();
-      } else {
+      } else if (result !== undefined) {
         await this.createCompetency(result);
+      } else if (result === undefined) {
+        await this.unlockCompetency(competency);
       }
       await this.getCompetencies();
     });
