@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { CompetencyService } from '../../core/competency.service';
 
@@ -22,7 +23,12 @@ export class CompetenciesDashboardComponent implements OnInit {
 
   competencies: any = [];
 
-  constructor(public dialog: MatDialog, public competencyService: CompetencyService, public authService: AuthService) { }
+  constructor(
+    public dialog: MatDialog,
+    public competencyService: CompetencyService,
+    public authService: AuthService,
+    private router: Router,
+    ) { }
 
   async ngOnInit() {
     await this.getCompetencies();
@@ -43,6 +49,10 @@ export class CompetenciesDashboardComponent implements OnInit {
 
   async lockCompetency(competency: any) {
     await this.competencyService.lockCompetency(competency, true);
+  }
+
+  async unlockCompetency(competency: any) {
+    await this.competencyService.lockCompetency(competency, false);
   }
 
   openCompetencyBuilder(competency?: any) {
@@ -72,14 +82,20 @@ export class CompetenciesDashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(async(result) => {
-      if(competency) {
+      if (competency && result !== undefined) {
         await this.updateCompetency(result);
-        this.getCompetencies();
-      } else {
+      } else if (result !== undefined) {
         await this.createCompetency(result);
+      } else if (result === undefined) {
+        await this.unlockCompetency(competency);
       }
       await this.getCompetencies();
     });
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
 

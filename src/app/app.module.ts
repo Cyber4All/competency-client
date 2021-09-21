@@ -21,7 +21,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatOptionModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
-import { RegisterComponent } from './pages/auth/register/register.component'
+import { RegisterComponent } from './pages/auth/register/register.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +58,7 @@ import { RegisterComponent } from './pages/auth/register/register.component'
     MatProgressSpinnerModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
