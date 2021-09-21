@@ -20,13 +20,15 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatOptionModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { RegisterComponent } from './pages/auth/register/register.component'
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     CompetenciesDashboardComponent,
     CompetencyBuilderComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

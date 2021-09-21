@@ -42,6 +42,30 @@ export class AuthService {
     return this._status$.asObservable();
   }
 
+  async register(name: string, email: string, password: string): Promise<User> {
+    return new Promise(async (resolve, reject) => {
+      //const encrypted = await this.encryptionService.encryptRSA(user);
+
+      this.http
+        .post(USER_ROUTES.CREATE_USER(), {name: name, email: email, password: password})
+        .pipe(retry(3))
+        .toPromise()
+        .then(
+          (res: any) => {
+            this.storeToken(res.bearer);
+            this.user = res.user;
+            resolve(this.user!);
+          },
+          (err) => {
+            if (err.status > 500) {
+              console.log(err)
+            }
+            reject(err);
+          }
+        );
+    });
+  }
+
   async login(email: string, password: string): Promise<User> {
     return new Promise(async (resolve, reject) => {
       // const encrypted = await this.encryptionService.encryptRSA({
