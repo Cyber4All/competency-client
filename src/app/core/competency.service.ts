@@ -22,8 +22,8 @@ export class CompetencyService {
   createCompetency(competency: any) {
     return this.http
       .post(
-        COMPETENCY_ROUTES.CREATE_COMPETENCY(),
-        { competency },
+        COMPETENCY_ROUTES.CREATE_COMPETENCY(competency.author),
+        competency,
         { withCredentials: true, responseType: 'text' }
       )
       .toPromise();
@@ -32,8 +32,8 @@ export class CompetencyService {
   editCompetency(competency: any) {
     return this.http
       .patch(
-        COMPETENCY_ROUTES.EDIT_COMPETENCY(competency._id),
-        { competency },
+        COMPETENCY_ROUTES.EDIT_COMPETENCY(competency),
+        competency,
         { withCredentials: true, responseType: 'text' }
       )
       .toPromise();
@@ -42,8 +42,8 @@ export class CompetencyService {
   lockCompetency(competency: any, lock: boolean) {
     return this.http
       .patch(
-        COMPETENCY_ROUTES.EDIT_COMPETENCY(competency._id),
-        { lock },
+        COMPETENCY_ROUTES.LOCK_COMPETENCY(competency._id),
+        { locked: lock },
         { withCredentials: true, responseType: 'text' }
       )
       .toPromise();

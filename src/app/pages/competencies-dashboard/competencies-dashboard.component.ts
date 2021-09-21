@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { AuthService } from '../../core/auth.service';
 import { CompetencyService } from '../../core/competency.service';
 
 export interface DialogData {
@@ -21,34 +22,34 @@ export class CompetenciesDashboardComponent implements OnInit {
 
   competencies: any = [];
 
-  constructor(public dialog: MatDialog, public competencyService: CompetencyService) { }
+  constructor(public dialog: MatDialog, public competencyService: CompetencyService, public authService: AuthService) { }
 
   async ngOnInit() {
     await this.getCompetencies();
   }
 
   async getCompetencies() {
-    return;
-    // this.competencies = await this.competencyService.getAllCompetencies()
+    this.competencies = await this.competencyService.getAllCompetencies()
   }
 
   async createCompetency(competency: any) {
-    console.log(competency);
     await this.competencyService.createCompetency(competency);
   }
 
   async updateCompetency(competency: any) {
-    console.log(competency);
-    await this.competencyService.editCompetency(competency);
     await this.competencyService.lockCompetency(competency, false);
+    await this.competencyService.editCompetency(competency);
   }
 
   async lockCompetency(competency: any) {
-    console.log('locking baby')
     await this.competencyService.lockCompetency(competency, true);
   }
 
   openCompetencyBuilder(competency?: any) {
+    let authorId = "";
+    if (this.authService.user) {
+      authorId = this.authService.user._id;
+    }
     let data = {
       _id: "",
       audience: "",
@@ -56,7 +57,7 @@ export class CompetenciesDashboardComponent implements OnInit {
       condition: "",
       degree: "",
       effectiveness: "",
-      author: "",
+      author: authorId,
       locked: false,
       lastUpdate: Date.now()
     }
@@ -70,13 +71,14 @@ export class CompetenciesDashboardComponent implements OnInit {
       data: data
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async(result) => {
       if(competency) {
-        this.updateCompetency(result);
+        await this.updateCompetency(result);
+        this.getCompetencies();
       } else {
-        this.createCompetency(result);
+        await this.createCompetency(result);
       }
-      this.getCompetencies()
+      await this.getCompetencies();
     });
   }
 }
