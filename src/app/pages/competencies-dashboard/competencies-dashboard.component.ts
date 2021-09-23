@@ -112,9 +112,12 @@ export class CompetencyBuilderComponent implements DoCheck{
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 
+  // Boolean to disable submission button
   isDisabled: boolean = true;
+  // Boolean to toggle error message
   errorMessage: boolean = false;
 
+  // Form controls
   audience = new FormControl('', [Validators.required]);
   condition = new FormControl('', [Validators.required]);
   behavior = new FormControl('', [Validators.required]);
