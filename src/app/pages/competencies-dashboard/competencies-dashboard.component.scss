@@ -1,3 +1,21 @@
+.navigation {
+    margin: 20px;
+    min-height: 50px;
+    .title {
+        color: #fff;
+        float: left;
+        
+        h1 {
+            padding-top: 5px;
+            font-size: 36px;
+        }
+    }
+    .logout {
+        float: right;
+        color: #fff;
+        border: 2px solid #fff;
+    }
+}
 .wrapper {
     padding: 40px;
     background-color: white;
@@ -5,10 +23,17 @@
 
     .header {
         padding-bottom: 20px;
+        display: inline-block;
+        width: 100%;
+
         h1 {
-            font-size: 45px;
+            float: left;
+            font-size: 36px;
             color: #424242;
             font-weight: 600;
+        }
+        .add-button {
+            float: right;
         }
     
     }
@@ -80,4 +105,12 @@ mat-card {
 
 .competency-example {
     color: white;
+}
+
+.float-right {
+    float: right;
+
+    .logout {
+        border: 2px solid #C2175B;
+    }
 }

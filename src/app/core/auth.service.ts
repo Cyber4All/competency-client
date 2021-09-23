@@ -35,6 +35,14 @@ export class AuthService {
   }
 
   get user() {
+    // If the user is undefined get it from local storage
+    if(this._user === undefined) {
+      let retrievedObject = localStorage.getItem('user');
+      if(retrievedObject !== null) {
+        let user = JSON.parse(retrievedObject);
+        this._user = user;
+      }
+    }
     return this._user;
   }
 
@@ -79,6 +87,7 @@ export class AuthService {
         .then(
           (res: any) => {
             this.user = res.user;
+            localStorage.setItem('user', JSON.stringify(res.user));
             this.storeToken(res.bearer);
             resolve(this.user!);
           },
@@ -92,7 +101,9 @@ export class AuthService {
 
   logout() {
     this.user = undefined;
+    localStorage.removeItem('user');
     this.deleteToken();
+    return;
   }
 
   private retrieveToken() {
