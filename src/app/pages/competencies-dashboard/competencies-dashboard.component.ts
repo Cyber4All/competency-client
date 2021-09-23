@@ -127,7 +127,7 @@ export class CompetencyBuilderComponent implements DoCheck{
       case this.audience:
         return "You must select an audience!";
       case this.condition:
-        return "You must provide the condition of the competency!";
+        return "You must provide a condition for the competency!";
       case this.behavior:
         return "You must provide the behavior of the competency!";
       case this.degree:
@@ -140,7 +140,7 @@ export class CompetencyBuilderComponent implements DoCheck{
   }
 
   checkData(): void {
-    // Check to ensure all fileds are completed; enable submission button
+    // Check to ensure all fileds are completed to enable submission button
     if (
       this.data.audience !== '' &&
       this.data.behavior !== '' &&
@@ -152,7 +152,7 @@ export class CompetencyBuilderComponent implements DoCheck{
       this.isDisabled = false;
     }
 
-    // Check to ensure submission button is disabled if information is deleted from the form
+    // Check to ensure submission button is disabled if a field becomes empty after intially touched
     if (
       this.data.audience == '' ||
       this.data.behavior == '' ||
@@ -163,7 +163,8 @@ export class CompetencyBuilderComponent implements DoCheck{
       this.isDisabled = true;
     }
 
-    // Check if data values are null and the form element has already been touched; show warning message; otherwise disable warning
+    // After a form element has been touched, check if the data values are empty strings
+    // If they are empty, show the warning message, otherwise disable the warning message
     if (
       (this.data.audience == '' && this.audience.value == '' && this.audience.touched) ||
       (this.data.behavior == '' && this.behavior.value == '' && this.behavior.touched) ||
