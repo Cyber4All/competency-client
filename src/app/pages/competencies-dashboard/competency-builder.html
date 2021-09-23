@@ -1,12 +1,11 @@
 <div class="builder">
     <div class="header">
-        <div></div>
+        <h1>Competency Builder Form</h1>
         <button mat-icon-button aria-label="close dialog" mat-dialog-close>
             <mat-icon>close</mat-icon>
         </button>
     </div>
     <div class="form">
-        <h1>Competency Builder Form</h1>
         <div class="notice-bar" *ngIf="errorMessage && isDisabled">
           <mat-icon>error_outline</mat-icon>
           <span>All fields must  be complete</span>
@@ -16,17 +15,13 @@
                 <!--Audience Fields -->
                 <mat-label>Audience</mat-label>
                 <mat-select [(ngModel)]="data.audience" [formControl]="audience">
-                  <mat-optgroup label="Yeet">
-                    <mat-option value="The undergraduate student">The Undergraduate Student</mat-option>
+                  <mat-optgroup label="Workforce and Post Graduate Work">
+                    <mat-option value="The working professional">The working professional</mat-option>
+                    <mat-option value="The intern">The intern</mat-option>
                   </mat-optgroup>
-                  <mat-optgroup label="other yeet">
-                    <mat-option value="The graduate student">The Graduate Student</mat-option>
-                    <mat-option value="The working professional">The Professional</mat-option>
-                    <mat-option value="The student">The student</mat-option>
+                  <mat-optgroup label="K12 and Higher Ed">
+                    <mat-option *ngFor="let option of academia" [value]="'The ' + option">The {{option}}</mat-option>
                   </mat-optgroup>
-                  <!--
-                    The student
-                  -->
                 </mat-select>
                 <mat-error *ngIf="audience.invalid">{{getErrorMessage(audience)}}</mat-error>
               </mat-form-field>
@@ -46,24 +41,31 @@
               </mat-form-field>
               <br>
               <!--Degree Fields-->
-              <mat-form-field appearance="fill" color="primary">
-                <mat-label>Degree</mat-label>
-                <input matInput [(ngModel)]="data.degree" [formControl]="degree">
-                <mat-error *ngIf="degree.invalid">{{getErrorMessage(degree)}}</mat-error>
-              </mat-form-field>
-              <!--
-                minutes
-                hours
-                days
-                weeks
-                months
-
-                --
-                unit
-                course
-                semester
-              -->
-              <br>
+              <div class="degree-fields">
+                <mat-form-field appearance="fill" color="primary">
+                  <mat-label>Degree</mat-label>
+                  <input matInput [(ngModel)]="data.degree" [formControl]="degree">
+                  <mat-error *ngIf="degree.invalid">{{getErrorMessage(degree)}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="unit" appearance="fill" color="primary">
+                  <mat-label>Unit</mat-label>
+                  <mat-select [formControl]="unit">
+                    <mat-optgroup label="Relative Time">
+                      <mat-option value="minutes">minutes</mat-option>
+                      <mat-option value="hours">hours</mat-option>
+                      <mat-option value="days">days</mat-option>
+                      <mat-option value="weeks">weeks</mat-option>
+                      <mat-option value="months">months</mat-option>
+                    </mat-optgroup>
+                    <mat-optgroup label="Academic Time">
+                      <mat-option value="unit">unit</mat-option>
+                      <mat-option value="course">course</mat-option>
+                      <mat-option value="semester">semester</mat-option>
+                    </mat-optgroup>
+                  </mat-select>
+                  <mat-error *ngIf="unit.invalid">{{getErrorMessage(unit)}}</mat-error>
+                </mat-form-field>
+              </div>
               <!--Effectiveness Fields-->
               <mat-form-field appearance="fill" color="primary">
                 <mat-label>Effectiveness</mat-label>
@@ -74,12 +76,12 @@
               <!--Example Stuff -->
               <!-- Fix this if this is awful -->
               <h3 *ngIf="data?.audience !== ''" class="competency-example">
-                {{ data?.audience }} {{ data?.condition }} {{ data?.behavior }} {{ data?.degree }} {{ data?.effectiveness }}.
+                {{ data?.audience }} {{ data?.condition }} {{ data?.behavior }} {{ data?.degree }} {{ unit.value == "" ? "" : unit.value }} {{ data?.effectiveness }}.
               </h3>
               <!--Dialog Fields-->
               <div mat-dialog-actions>
                 <button mat-button color="accent" (click)="onNoClick()">No Thanks</button>
-                <button mat-button color="primary" [mat-dialog-close]="data" [disabled]="isDisabled" cdkFocusInitial>Ok</button>
+                <button mat-button color="primary" (click)="processData()" [mat-dialog-close]="data" [disabled]="isDisabled" cdkFocusInitial>Ok</button>
               </div>  
           </form>
     </div>
