@@ -16,9 +16,17 @@
                 <!--Audience Fields -->
                 <mat-label>Audience</mat-label>
                 <mat-select [(ngModel)]="data.audience" [formControl]="audience">
-                  <mat-option value="The Undergraduate Student">The Undergraduate Student</mat-option>
-                  <mat-option value="The Graduate Student">The Graduate Student</mat-option>
-                  <mat-option value="The Professional">The Professional</mat-option>
+                  <mat-optgroup label="Yeet">
+                    <mat-option value="The undergraduate student">The Undergraduate Student</mat-option>
+                  </mat-optgroup>
+                  <mat-optgroup label="other yeet">
+                    <mat-option value="The graduate student">The Graduate Student</mat-option>
+                    <mat-option value="The working professional">The Professional</mat-option>
+                    <mat-option value="The student">The student</mat-option>
+                  </mat-optgroup>
+                  <!--
+                    The student
+                  -->
                 </mat-select>
                 <mat-error *ngIf="audience.invalid">{{getErrorMessage(audience)}}</mat-error>
               </mat-form-field>
@@ -43,6 +51,18 @@
                 <input matInput [(ngModel)]="data.degree" [formControl]="degree">
                 <mat-error *ngIf="degree.invalid">{{getErrorMessage(degree)}}</mat-error>
               </mat-form-field>
+              <!--
+                minutes
+                hours
+                days
+                weeks
+                months
+
+                --
+                unit
+                course
+                semester
+              -->
               <br>
               <!--Effectiveness Fields-->
               <mat-form-field appearance="fill" color="primary">
