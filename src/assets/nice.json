@@ -1,0 +1,544 @@
+[
+    {
+        "workrole": "Database Administrator",
+        "tasks": [
+            {
+                "id": "T0008",
+                "task": "Analyze and plan for anticipated changes in data capacity requirements."
+            },
+            {
+                "id": "T0137",
+                "task": "Maintain database management systems software."
+            },
+            {
+                "id": "T0139",
+                "task": "Maintain directory replication services that enable information to replicate automatically from rear servers to forward units via optimized routing."
+            },
+            {
+                "id": "T0140",
+                "task": "Maintain information exchanges through publish, subscribe, and alert functions that enable users to send and receive critical information as required."
+            },
+            {
+                "id": "T0146",
+                "task": "Manage the compilation, cataloging, caching, distribution, and retrieval of data."
+            },
+            {
+                "id": "T0152",
+                "task": "Monitor and maintain databases to ensure optimal performance."
+            },
+            {
+                "id": "T0162",
+                "task": "Perform backup and recovery of databases to ensure data integrity."
+            },
+            {
+                "id": "T0210",
+                "task": "Provide recommendations on new database technologies and architectures."
+            },
+            {
+                "id": "T0305",
+                "task": "Performs configuration management, problem management, capacity management, and financial management for databases and data management systems."
+            },
+            {
+                "id": "T0306",
+                "task": "Supports incident management, service-level management, change management, release management, continuity management, and availability management for databases and data management systems."
+            },
+            {
+                "id": "T0330",
+                "task": "Maintain assured message delivery systems."
+            },
+            {
+                "id": "T0422",
+                "task": "Implement data management standards, requirements, and specifications."
+            },
+            {
+                "id": "T0459",
+                "task": "Implement data mining and data warehousing applications."
+            },
+            {
+                "id": "T0490",
+                "task": "Install and configure database management systems and software."
+            }
+        ]
+    },
+    {
+        "workrole": "Technical Support Specialist",
+        "tasks": [
+            {
+                "id": "T0125",
+                "task": "Install and maintain network infrastructure device operating system software (e.g., IOS, firmware)."
+            },
+            {
+                "id": "T0237",
+                "task": "Troubleshoot system hardware and software."
+            },
+            {
+                "id": "T0308",
+                "task": "Analyze incident data for emerging trends."
+            },
+            {
+                "id": "T0315",
+                "task": "Develop and deliver technical training to educate others or meet customer needs."
+            },
+            {
+                "id": "T0331",
+                "task": "Maintain incident tracking and solution database."
+            },
+            {
+                "id": "T0468",
+                "task": "Diagnose and resolve customer reported system incidents, problems, and events."
+            },
+            {
+                "id": "T0482",
+                "task": "Make recommendations based on trend analysis for enhancements to software and hardware solutions to enhance customer experience."
+            },
+            {
+                "id": "T0491",
+                "task": "Install and configure hardware, software, and peripheral equipment for system users in accordance with organizational standards."
+            },
+            {
+                "id": "T0494",
+                "task": "Administer accounts, network rights, and access to systems and equipment."
+            },
+            {
+                "id": "T0496",
+                "task": "Perform asset management/inventory of information technology (IT) resources."
+            },
+            {
+                "id": "T0502",
+                "task": "Monitor and report client-level computer system performance."
+            },
+            {
+                "id": "T0530",
+                "task": "Develop a trend analysis and impact report."
+            }
+        ]
+    },
+    {
+        "workrole": "Data Analyst",
+        "tasks": [
+            {
+                "id": "",
+                "task": ""
+            },
+            {
+                "id": "T0007",
+                "task": "Analyze and define data requirements and specifications."
+            },
+            {
+                "id": "T0008",
+                "task": "Analyze and plan for anticipated changes in data capacity requirements."
+            },
+            {
+                "id": "T0068",
+                "task": "Develop data standards, policies, and procedures."
+            },
+            {
+                "id": "T0146",
+                "task": "Manage the compilation, cataloging, caching, distribution, and retrieval of data."
+            },
+            {
+                "id": "T0195",
+                "task": "Provide a managed flow of relevant information (via web-based portals or other means) based on mission requirements."
+            },
+            {
+                "id": "T0210",
+                "task": "Provide recommendations on new database technologies and architectures."
+            },
+            {
+                "id": "T0342",
+                "task": "Analyze data sources to provide actionable recommendations."
+            },
+            {
+                "id": "T0347",
+                "task": "Assess the validity of source data and subsequent findings."
+            },
+            {
+                "id": "T0349",
+                "task": "Collect metrics and trending data."
+            },
+            {
+                "id": "T0351",
+                "task": "Conduct hypothesis testing using statistical processes."},
+            {
+                "id": "T0353",
+                "task": "Confer with systems analysts, engineers, programmers, and others to design application."
+            },
+            {
+                "id": "T0361",
+                "task": "Develop and facilitate data-gathering methods."
+            },
+            {
+                "id": "T0366",
+                "task": "Develop strategic insights from large data sets."},
+            {
+                "id": "T0381",
+                "task": "Present technical information to technical and nontechnical audiences."
+            },
+            {
+                "id": "T0382",
+                "task": "Present data in creative formats."
+            },
+            {
+                "id": "T0383",
+                "task": "Program custom algorithms."
+            },
+            {
+                "id": "T0385",
+                "task": "Provide actionable recommendations to critical stakeholders based on data analysis and findings."
+            },
+            {
+                "id": "T0392",
+                "task": "Utilize technical documentation or resources to implement a new mathematical, data science, or computer science method."
+            },
+            {
+                "id": "T0402",
+                "task": "Effectively allocate storage capacity in the design of data management systems."
+            },
+            {
+                "id": "T0403",
+                "task": "Read, interpret, write, modify, and execute simple scripts (e.g., Perl, VBScript) on Windows and UNIX systems (e.g., those that perform tasks such as: parsing large data files, automating manual tasks, and fetching/processing remote data)."
+            },
+            {
+                "id": "T0404",
+                "task": "Utilize different programming languages to write code, open files, read files, and write output to different files."},
+            {
+                "id": "T0405",
+                "task": "Utilize open source language such as R and apply quantitative techniques (e.g., descriptive and inferential statistics, sampling, experimental design, parametric and non-parametric tests of difference, ordinary least squares regression, general line)."},
+            {
+                "id": "T0460",
+                "task": "Develop and implement data mining and data warehousing programs."
+            }
+        ]
+    },
+    {
+        "workrole": "Network Operations Specialist",
+        "tasks": [
+            {
+                "id": "T0035",
+                "task": "Configure and optimize network hubs, routers, and switches (e.g., higher-level protocols, tunneling)."
+            },
+            {
+                "id": "T0065",
+                "task": "Develop and implement network backup and recovery procedures."
+            },
+            {
+                "id": "T0081",
+                "task": "Diagnose network connectivity problem."
+            },
+            {
+                "id": "T0121",
+                "task": "Implement new system design procedures, test procedures, and quality standards."
+            },
+            {
+                "id": "T0125",
+                "task": "Install and maintain network infrastructure device operating system software (e.g., IOS, firmware)."
+            },
+            {
+                "id": "T0126",
+                "task": "Install or replace network hubs, routers, and switches."
+            },
+            {
+                "id": "T0129",
+                "task": "Integrate new systems into existing network architecture."
+            },
+            {
+                "id": "T0153",
+                "task": "Monitor network capacity and performance."
+            },
+            {
+                "id": "T0160",
+                "task": "Patch network vulnerabilities to ensure that information is safeguarded against outside parties."
+            },
+            {
+                "id": "T0200",
+                "task": "Provide feedback on network requirements, including network architecture and infrastructure."
+            },
+            {
+                "id": "T0232",
+                "task": "Test and maintain network infrastructure including software and hardware devices."
+            }
+        ]
+    },
+    { 
+        "workrole": "Systems Security Analyst",
+        "tasks": [ 
+            {
+                "id": "T0009",
+                "task": "Analyze information to determine, recommend, and plan the development of a new application or modification of an existing application."
+            },
+            {
+                "id": "T0011",
+                "task": "Analyze user needs and software requirements to determine feasibility of design within time and cost constraints."
+            },
+            {
+                "id": "T0013",
+                "task": "Apply coding and testing standards, apply security testing tools including \"fuzzing\" static-analysis code scanning tools, and conduct code reviews."
+            },
+            {
+                "id": "T0014",
+                "task": "Apply secure code documentation."
+            },
+            {
+                "id": "T0022",
+                "task": "Capture security controls used during the requirements phase to integrate security within the process, to identify key security objectives, and to maximize software security while minimizing disruption to plans and schedules."
+            },
+            {
+                "id":"T0026",
+                "task": "Compile and write documentation of program development and subsequent revisions, inserting comments in the coded instructions so others can understand the program."
+            },
+            {
+                "id":"T0034",
+                "task": "Confer with systems analysts, engineers, programmers, and others to design application and to obtain information on project limitations and capabilities, performance requirements, and interfaces."
+            },
+            {
+                "id": "T0040",
+                "task": "Consult with engineering staff to evaluate interface between hardware and software."
+            },
+            {
+                "id": "T0046",
+                "task": "Correct errors by making appropriate changes and rechecking the program to ensure that desired results are produced."
+            },
+            {
+                "id": "T0057",
+                "task": "Design, develop, and modify software systems, using scientific analysis and mathematical models to predict and measure outcome and consequences of design."
+            },
+            {
+                "id": "T0077",
+                "task": "Develop secure code and error handling."
+            },
+            {
+                "id": "T0100",
+                "task": "Evaluate factors such as reporting formats required, cost constraints, and need for security restrictions to determine hardware configuration."
+            },
+            {
+                "id": "T0111",
+                "task": "Identify basic common coding flaws at a high level."
+            },
+            {
+                "id": "T0117",
+                "task": "Identify security implications and apply methodologies within centralized and decentralized environments across the enterprise's computer systems in software development."
+            },
+            {
+                "id": "T0118",
+                "task": "Identify security issues around steady state operation and management of software and incorporate security measures that must be taken when a product reaches its end of life."
+            },
+            {
+                "id": "T0171",
+                "task": "Perform integrated quality assurance testing for security functionality and resiliency attack."
+            },
+            {
+                "id": "T0176",
+                "task": "Perform secure programming and identify potential flaws in codes to mitigate vulnerabilities."
+            },
+            {
+                "id": "T0181",
+                "task": "Perform risk analysis (e.g., threat, vulnerability, and probability of occurrence) whenever an application or system undergoes a major change."
+            },
+            {
+                "id": "T0189",
+                "task": "Prepare detailed workflow charts and diagrams that describe input, output, and logical operation, and convert them into a series of instructions coded in a computer language."
+            },
+            {
+                "id": "T0217",
+                "task": "Address security implications in the software acceptance phase including completion criteria, risk acceptance and documentation, common criteria, and methods of independent testing."
+            },
+            {
+                "id": "T0228",
+                "task": "Store, retrieve, and manipulate data for analysis of system capabilities and requirements."
+            },
+            {
+                "id": "T0236",
+                "task": "Translate security requirements into application design elements including documenting the elements of the software attack surfaces, conducting threat modeling, and defining any specific security criteria."
+            },
+            {
+                "id": "T0267",
+                "task": "Design countermeasures and mitigations against potential exploitations of programming language weaknesses and vulnerabilities in system and elements."
+            },
+            {
+                "id": "T0303",
+                "task": "Identify and leverage the enterprise-wide version control system while designing and developing secure applications."
+            },
+            {
+                "id": "T0311",
+                "task": "Consult with customers about software system design and maintenance."
+            },
+            {
+                "id": "T0324",
+                "task": "Direct software programming and development of documentation."
+            },
+            {
+                "id": "T0337",
+                "task": "Supervise and assign work to programmers, designers, technologists and technicians, and other engineering and scientific personnel."
+            },
+            {
+                "id": "T0416",
+                "task": "Enable applications with public keying by leveraging existing public key infrastructure (PKI) libraries and incorporating certificate management and encryption functionalities when appropriate."
+            },
+            {
+                "id": "T0417",
+                "task": "Identify and leverage the enterprise-wide security services while designing and developing secure applications (e.g., Enterprise PKI, Federated Identity server, Enterprise Antivirus solution) when appropriate."
+            },
+            {
+                "id": "T0436",
+                "task": "Conduct trial runs of programs and software applications to ensure that the desired information is produced and instructions and security levels are correct."
+            },
+            {
+                "id": "T0455",
+                "task": "Develop software system testing and validation procedures, programming, and documentation."
+            },
+            {
+                "id": "T0500",
+                "task": "Modify and maintain existing software to correct errors, to adapt it to new hardware, or to upgrade interfaces and improve performance."
+            },
+            {
+                "id": "T0553",
+                "task": "Apply cybersecurity functions (e.g., encryption, access control, and identity management) to reduce exploitation opportunities."
+            },
+            {
+                "id": "T0554",
+                "task": "Determine and document software patches or the extent of releases that would leave software vulnerable."
+            }
+        ]
+    },
+    { 
+        "workrole": "System Administrator",
+        "tasks": [ 
+            {
+                "id": "T0009",
+                "task": "Analyze information to determine, recommend, and plan the development of a new application or modification of an existing application."
+            },
+            {
+                "id": "T0011",
+                "task": "Analyze user needs and software requirements to determine feasibility of design within time and cost constraints."
+            },
+            {
+                "id": "T0013",
+                "task": "Apply coding and testing standards, apply security testing tools including \"fuzzing\" static-analysis code scanning tools, and conduct code reviews."
+            },
+            {
+                "id": "T0014",
+                "task": "Apply secure code documentation."
+            },
+            {
+                "id": "T0022",
+                "task": "Capture security controls used during the requirements phase to integrate security within the process, to identify key security objectives, and to maximize software security while minimizing disruption to plans and schedules."
+            },
+            {
+                "id": "T0026",
+                "task": "Compile and write documentation of program development and subsequent revisions, inserting comments in the coded instructions so others can understand the program."
+            },
+            {
+                "id": "T0034",
+                "task": "Confer with systems analysts, engineers, programmers, and others to design application and to obtain information on project limitations and capabilities, performance requirements, and interfaces."
+            },
+            {
+                "id": "T0040",
+                "task": "Consult with engineering staff to evaluate interface between hardware and software."
+            },
+            {
+                "id": "T0046",
+                "task": "Correct errors by making appropriate changes and rechecking the program to ensure that desired results are produced."
+            },
+            {
+                "id": "T0057",
+                "task": "Design, develop, and modify software systems, using scientific analysis and mathematical models to predict and measure outcome and consequences of design."
+            },
+            {
+                "id": "T0077",
+                "task": "Develop secure code and error handling."
+            },
+            {
+                "id": "T0100",
+                "task": "Evaluate factors such as reporting formats required, cost constraints, and need for security restrictions to determine hardware configuration."
+            },
+            {
+                "id": "T0111",
+                "task": " Identify basic common coding flaws at a high level."
+            },
+            {
+                "id": "T0117",
+                "task": " Identify security implications and apply methodologies within centralized and decentralized environments across the enterprise's computer systems in software development."
+            },
+            {
+                "id": "T0118",
+                "task": "Identify security issues around steady state operation and management of software and incorporate security measures that must be taken when a product reaches its end of life."
+            },
+            {
+                "id": "T0171",
+                "task": "Perform integrated quality assurance testing for security functionality and resiliency attack."
+            },
+            {
+                "id": "T0176",
+                "task": "Perform secure programming and identify potential flaws in codes to mitigate vulnerabilities."
+            },
+            {
+                "id": "T0181",
+                "task": "Perform risk analysis (e.g., threat, vulnerability, and probability of occurrence) whenever an application or system undergoes a major change."
+            },
+            {
+                "id": "T0189",
+                "task": "Prepare detailed workflow charts and diagrams that describe input, output, and logical operation, and convert them into a series of instructions coded in a computer language."
+            },
+            {
+                "id": "T0217",
+                "task": "Address security implications in the software acceptance phase including completion criteria, risk acceptance and documentation, common criteria, and methods of independent testing."
+            },
+            {
+                "id": "T0228",
+                "task": "Store, retrieve, and manipulate data for analysis of system capabilities and requirements."
+            },
+            {
+                "id": "T0236",
+                "task": "Translate security requirements into application design elements including documenting the elements of the software attack surfaces, conducting threat modeling, and defining any specific security criteria."
+            },
+            {
+                "id": "T0267",
+                "task": "Design countermeasures and mitigations against potential exploitations of programming language weaknesses and vulnerabilities in system and elements."
+            },
+            {
+                "id": "T0303",
+                "task": "Identify and leverage the enterprise-wide version control system while designing and developing secure applications."
+            },
+            {
+                "id": "T0311",
+                "task": "Consult with customers about software system design and maintenance."
+            },
+            {
+                "id": "T0324",
+                "task": "Direct software programming and development of documentation."
+            },
+            {
+                "id": "T0337",
+                "task": "Supervise and assign work to programmers, designers, technologists and technicians, and other engineering and scientific personnel."
+            },
+            {
+                "id": "T0416",
+                "task": "Enable applications with public keying by leveraging existing public key infrastructure (PKI) libraries and incorporating certificate management and encryption functionalities when appropriate."
+            },
+            {
+                "id": "T0417",
+                "task": "Identify and leverage the enterprise-wide security services while designing and developing secure applications (e.g., Enterprise PKI, Federated Identity server, Enterprise Antivirus solution) when appropriate."
+            },
+            {
+                "id": "T0436",
+                "task": "Conduct trial runs of programs and software applications to ensure that the desired information is produced and instructions and security levels are correct."
+            },
+            {
+                "id": "T0455",
+                "task": "Develop software system testing and validation procedures, programming, and documentation."
+            },
+            {
+                "id": "T0500",
+                "task": "Modify and maintain existing software to correct errors, to adapt it to new hardware, or to upgrade interfaces and improve performance."
+            },
+            {
+                "id": "T0553",
+                "task": "Apply cybersecurity functions (e.g., encryption, access control, and identity management) to reduce exploitation opportunities."
+            },
+            {
+                "id": "T0554",
+                "task": "Determine and document software patches or the extent of releases that would leave software vulnerable."
+            }
+        ]
+    }
+]
