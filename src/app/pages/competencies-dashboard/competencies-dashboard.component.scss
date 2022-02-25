@@ -1,18 +1,29 @@
 .navigation {
-    margin: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 20px;
     min-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     .title {
         color: #fff;
-        float: left;
+        margin-bottom: 20px;
+        padding-right: 20px;
         
-        h1 {
+        h2 {
             padding-top: 5px;
-            font-size: 36px;
+            margin-bottom: 0px;
+        }
+        .feedback {
+            color: #fff;
         }
     }
     .logout {
         float: right;
         color: #fff;
+        max-height: 50px;
+        padding: 5px;
         border: 2px solid #fff;
     }
 }

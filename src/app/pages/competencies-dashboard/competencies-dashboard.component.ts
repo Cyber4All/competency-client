@@ -21,6 +21,7 @@ export interface DialogData {
 export class CompetenciesDashboardComponent implements OnInit {
 
   competency!: DialogData;
+  user!: any;
 
   competencies: any = [];
 
@@ -33,6 +34,7 @@ export class CompetenciesDashboardComponent implements OnInit {
 
   async ngOnInit() {
     await this.getCompetencies();
+    this.user = this.authService.user;
   }
 
   async getCompetencies() {
