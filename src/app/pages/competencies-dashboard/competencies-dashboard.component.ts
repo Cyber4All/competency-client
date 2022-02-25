@@ -80,7 +80,7 @@ export class CompetenciesDashboardComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(CompetencyBuilderComponent, {
       height: '700px',
-      width: '600px',
+      width: '900px',
       data: data
     });
 
@@ -126,7 +126,7 @@ export class CompetencyBuilderComponent implements DoCheck{
   degree = new FormControl('', [Validators.required]);
   effectiveness = new FormControl('', [Validators.required]);
 
-  academia = ["doctorial candidate", "graduate student", "undergraduate student", "12th grade student", "11th grade student", "10th grade student", "9th grade student", "8th grade student", "7th grade student", "6th grade student", "5th grade student", "4th grade student", "3rd grade student", "2nd grade student", "1st grade student", "kindergarten student"]
+  academia = ["doctoral candidate", "graduate student", "undergraduate student", "12th grade student", "11th grade student", "10th grade student", "9th grade student", "8th grade student", "7th grade student", "6th grade student", "5th grade student", "4th grade student", "3rd grade student", "2nd grade student", "1st grade student", "kindergarten student"]
 
   onNoClick(): void {
     this.dialogRef.close();

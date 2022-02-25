@@ -5,6 +5,13 @@
             <mat-icon>close</mat-icon>
         </button>
     </div>
+    <!--Example Stuff -->
+    <!-- Fix this if this is awful -->
+    <div class="competency-example">
+      <h3 *ngIf="data?.audience !== ''">
+        {{ data?.audience }} {{ data?.condition }} {{ data?.behavior }} {{ data?.degree }} {{ data?.effectiveness }}.
+      </h3>
+    </div>
     <div class="form">
         <div class="notice-bar" *ngIf="errorMessage && isDisabled">
           <mat-icon>error_outline</mat-icon>
@@ -54,12 +61,6 @@
                 <input matInput [(ngModel)]="data.effectiveness" [formControl]="effectiveness">
                 <mat-error *ngIf="effectiveness.invalid">{{getErrorMessage(effectiveness)}}</mat-error>
               </mat-form-field>
-              <br>
-              <!--Example Stuff -->
-              <!-- Fix this if this is awful -->
-              <h3 *ngIf="data?.audience !== ''" class="competency-example">
-                {{ data?.audience }} {{ data?.condition }} {{ data?.behavior }} {{ data?.degree }} {{ data?.effectiveness }}.
-              </h3>
               <!--Dialog Fields-->
               <div mat-dialog-actions>
                 <button mat-button color="accent" (click)="onNoClick()">CANCEL</button>

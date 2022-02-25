@@ -88,8 +88,6 @@ mat-card {
     .form {
         width: 100%;
         .example-form {
-            min-width: 150px;
-            max-width: 450px;
             width: 100%;
         }
 
@@ -126,6 +124,7 @@ mat-card {
 
 .competency-example {
     color: white;
+    min-height: 80px;
 }
 
 .float-right {
