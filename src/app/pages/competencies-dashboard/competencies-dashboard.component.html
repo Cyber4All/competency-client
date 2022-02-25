@@ -16,14 +16,15 @@
             <div class="competency">
                 {{ competency?.audience }} {{ competency?.condition }} {{ competency?.behavior }} {{ competency?.degree }} {{ competency?.effectiveness }}.
             </div>
-            <div class="actions">
+            <!-- Remove the actions options for Cali 03-07-2022 -->
+            <!-- <div class="actions">
                 <button *ngIf="!competency.locked" mat-mini-fab color="secondary" aria-label="Open builder" matTooltip="Edit competency" (click)="openCompetencyBuilder(competency)">
                     <mat-icon>edit</mat-icon>
                 </button>
                 <button *ngIf="competency.locked" mat-mini-fab color="warn" aria-label="Competency currently being edited. Try again later." matTooltip="Competency currently being edited. Try again later.">
                     <mat-icon>close</mat-icon>
                 </button>
-            </div>
+            </div> -->
         </mat-card>
     </div>
 </div>
