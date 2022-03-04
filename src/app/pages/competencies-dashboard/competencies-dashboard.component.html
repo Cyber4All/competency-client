@@ -12,11 +12,30 @@
         <button mat-mini-fab color="primary" class="add-button" aria-label="Open builder" matTooltip="Add Competency" (click)="openCompetencyBuilder()">
             <mat-icon>add</mat-icon>
         </button>
+        <div class="filter-container">
+            <button mat-raised-button color="warn" class="filter-button" *ngIf="filterApplied" aria-label="Clear Filters" matTooltip="Clear Filters" (click)="clearFilters()">CLEAR FILTERS</button>
+            <button mat-raised-button class="filter-button" aria-label="Filter Workroles" matTooltip="Filter Workroles" [matMenuTriggerFor]="workrole">Workrole  &nbsp; <mat-icon>filter_list</mat-icon></button>
+            <mat-menu #workrole="matMenu">
+                <button mat-menu-item  *ngFor="let obj of niceFramework" (click)="addFilter(obj.workrole, 1)">{{obj.workrole | titlecase }}</button>
+            </mat-menu>
+            <button mat-raised-button class="filter-button" aria-label="Filter Tasks" matTooltip="Filter Tasks" [matMenuTriggerFor]="tasks">Tasks &nbsp; <mat-icon>filter_list</mat-icon></button>
+            <mat-menu #tasks="matMenu">
+                <button mat-menu-item *ngFor="let obj of competencies" (click)="addFilter(obj.taskId, 3)">{{obj.taskId}}</button>
+            </mat-menu>
+            <button mat-raised-button class="filter-button" aria-label="Filter Audience" matTooltip="Filter Audience" [matMenuTriggerFor]="aud">Audience &nbsp; <mat-icon>filter_list</mat-icon></button>
+            <mat-menu #aud="matMenu">
+                <button mat-menu-item *ngFor="let obj of audience" (click)="addFilter(obj, 2)">The {{obj | titlecase }}</button>
+            </mat-menu>
+        </div>
     </div>
     <div *ngFor="let competency of competencies" class="competency-card">
         <mat-card>
+            <div class="framework">
+                Workrole: {{ competency?.role | titlecase}}<br>Task: {{competency?.taskId}}-{{competency.task}}
+            </div>
+            <br>
             <div class="competency">
-                {{ competency?.audience }} {{ competency?.condition }} {{ competency?.behavior }} {{ competency?.degree }} {{ competency?.effectiveness }}.
+                The {{ competency?.audience | titlecase}} acting as a {{ competency?.role | lowercase }} {{ competency?.condition }} should be able to {{ competency?.task }} {{ competency?.degree }} {{ competency?.effectiveness }}.
             </div>
             <!-- Remove the actions options for Cali 03-07-2022 -->
             <!-- <div class="actions">

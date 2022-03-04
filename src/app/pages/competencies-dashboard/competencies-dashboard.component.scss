@@ -30,7 +30,8 @@
 .wrapper {
     padding: 40px;
     background-color: white;
-    height: 100vh;
+    overflow-y: auto;
+    min-height: 100vh;
 
     .header {
         padding-bottom: 20px;
@@ -46,12 +47,25 @@
         .add-button {
             float: right;
         }
+        .filter-container {
+            float: right;
+            margin-right: 30px;
+            display: inline;
+        
+            .filter-button {
+                margin: 3px 2px 0 5px;
+            }
+        }
     
     }
 
 }
 .competency-card {
     padding: 10px;
+
+    .framework {
+        font-weight: bold;
+    }
 
     .competency {
         max-width: 80%;

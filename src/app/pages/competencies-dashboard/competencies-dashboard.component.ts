@@ -4,11 +4,15 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialo
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { CompetencyService } from '../../core/competency.service';
+import { behavior } from 'src/assets/behavior';
+import { audience } from 'src/assets/audiance';
 
 export interface DialogData {
   audience: string;
   condition: string;
-  behavior: string;
+  role: string;
+  task: string;
+  taskId: string;
   degree: string;
   effectiveness: string;
 }
@@ -25,6 +29,21 @@ export class CompetenciesDashboardComponent implements OnInit {
 
   competencies: any = [];
 
+  // Workroles and Tasks
+  niceFramework: any[] = Object.values(behavior);
+  // Academic Audience
+  audience: any[] = Object.values(audience);
+
+  // Applied filters
+  selected: { role: string[]; audience: string[], task: string[] } = {
+    role: [],
+    audience: [],
+    task: []
+  };
+
+  // Boolean toggle for 'clear filters' button
+  filterApplied: boolean = false;
+
   constructor(
     public dialog: MatDialog,
     public competencyService: CompetencyService,
@@ -35,6 +54,9 @@ export class CompetenciesDashboardComponent implements OnInit {
   async ngOnInit() {
     await this.getCompetencies();
     this.user = this.authService.user;
+    
+    // Push unsaved/non-academic audiences to audience array
+    this.audience.push("working Professional","intern")
   }
 
   async getCompetencies() {
@@ -58,6 +80,39 @@ export class CompetenciesDashboardComponent implements OnInit {
     await this.competencyService.lockCompetency(competency, false);
   }
 
+  // Apply filter to results list
+  addFilter(facet: string, type: number): void {
+    if(type === 1) {
+      if (!this.selected.role.includes(facet)){
+        this.selected.role.push(facet);
+      }
+    } else if (type === 2) {
+      if(!this.selected.audience.includes(facet)){
+        this.selected.audience.push(facet);
+      }
+    } else if (type === 3) {
+      if (!this.selected.task.includes(facet)){
+        this.selected.task.push(facet);
+      }
+    }
+    this.filter();
+    this.filterApplied = true;
+  }
+
+  // Get filtered competencies
+  async filter() {
+    this.competencies = await this.competencyService.getAllCompetencies(this.selected)
+  }
+
+  // Clear filters and reset index
+  async clearFilters() {
+    this.selected.role = [];
+    this.selected.audience = [];
+    this.selected.task = [];
+    this.filterApplied = false;
+    this.competencies = await this.competencyService.getAllCompetencies(this.selected);
+  }
+
   openCompetencyBuilder(competency?: any) {
     let authorId = "";
     if (this.authService.user) {
@@ -66,7 +121,9 @@ export class CompetenciesDashboardComponent implements OnInit {
     let data = {
       _id: "",
       audience: "",
-      behavior: "",
+      role: "",
+      task: "",
+      taskId: "",
       condition: "",
       degree: "",
       effectiveness: "",
@@ -90,7 +147,11 @@ export class CompetenciesDashboardComponent implements OnInit {
       } else if (result !== undefined) {
         await this.createCompetency(result);
       } else if (result === undefined) {
-        await this.unlockCompetency(competency);
+        /**
+         * not currently in use - california 3/2022
+         * 
+         * await this.unlockCompetency(competency);
+         */
       }
       await this.getCompetencies();
     });
@@ -102,12 +163,14 @@ export class CompetenciesDashboardComponent implements OnInit {
   }
 }
 
-
 @Component({
   selector: 'comptency-builder',
   templateUrl: 'competency-builder.html',
   styleUrls: ['./competencies-dashboard.component.scss']
 })
+/**
+ * Componet to build and submit competencies
+ */
 export class CompetencyBuilderComponent implements DoCheck{
   constructor(
     public dialogRef: MatDialogRef<CompetencyBuilderComponent>,
@@ -119,15 +182,32 @@ export class CompetencyBuilderComponent implements DoCheck{
   // Boolean to toggle error message
   errorMessage: boolean = false;
 
-  // Form controls
+  /**
+   * FORM CONTROLS
+   */
   audience = new FormControl('', [Validators.required]);
   condition = new FormControl('', [Validators.required]);
-  behavior = new FormControl('', [Validators.required]);
+  role = new FormControl('', [Validators.required]);
+  task = new FormControl('', [Validators.required]);
   degree = new FormControl('', [Validators.required]);
   effectiveness = new FormControl('', [Validators.required]);
+  // Index of selected formatted task for mapped ids and tasks
+  taskIndex = new FormControl(null, [Validators.required]);
+  
+  // Audiance groups (academic only)
+  academia = Object.values(audience)
+  // NICE Framwork Workroles and Tasks
+  niceFramework: any = Object.values(behavior);
+  // Formatted Dropdown Tasks
+  workroleTasks: any = [];
+  // Mapped NICE Tasks
+  currentTasks: any = [];
+  // Mapped Task Ids
+  currentTaskIds: any = [];
 
-  academia = ["doctoral candidate", "graduate student", "undergraduate student", "12th grade student", "11th grade student", "10th grade student", "9th grade student", "8th grade student", "7th grade student", "6th grade student", "5th grade student", "4th grade student", "3rd grade student", "2nd grade student", "1st grade student", "kindergarten student"]
-
+  /**
+   * Function to handle exit of builder
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -135,8 +215,40 @@ export class CompetencyBuilderComponent implements DoCheck{
   /**
    * Function to continusouly check form element values
    */
-  ngDoCheck() {
+  ngDoCheck(): void {
     this.checkData();
+  }
+
+  /**
+   * Function to set a formatted tasks list based on current selected workrole and
+   * to also store the task id and description in their own arrarys
+   * ^^^Did this so theres no regex^^^
+   */
+  setTasks(): void {
+    // clear all arrays
+    this.workroleTasks = [];
+    this.currentTaskIds = [];
+    this.currentTasks = [];
+    // clear task index
+    this.taskIndex.setValue(-1);
+    // format and push task description and id for each array
+    this.niceFramework.map((frame: any) => {
+      if (frame.workrole === this.role.value) {
+        frame.tasks.map((task: any) => {
+          this.workroleTasks.push(task.id + ' - ' + task.task)
+          this.currentTaskIds.push(task.id);
+          this.currentTasks.push(task.task);
+        })
+      }
+    });
+  }
+
+  /**
+   * Function to set task description and id to the competency
+   */
+  setTaskMeta(): void {
+    this.data.task = this.currentTasks[this.taskIndex.value];
+    this.data.taskId = this.currentTaskIds[this.taskIndex.value];
   }
 
   /**
@@ -151,10 +263,12 @@ export class CompetencyBuilderComponent implements DoCheck{
         return "You must select an audience!";
       case this.condition:
         return "You must provide a condition for the competency!";
-      case this.behavior:
-        return "You must provide the behavior of the competency!";
+      case this.role:
+        return "You must select a workrole for the competency!";
+      case this.task:
+        return "You must select a task for the competency!";
       case this.degree:
-        return "You must define the degree of the competency!";
+        return "You must define the degree for the competency!";
       case this.effectiveness:
         return "You must define the effectiveness of the competency!";
       default:
@@ -162,11 +276,15 @@ export class CompetencyBuilderComponent implements DoCheck{
     }
   }
 
+  /**
+   * Function to toggle error messages and submission button
+   */
   checkData(): void {
     // Check to ensure all fileds are completed to enable submission button
     if (
       this.data.audience !== '' &&
-      this.data.behavior !== '' &&
+      this.data.role !== '' &&
+      this.data.task !== '' &&
       this.data.condition !== '' &&
       this.data.degree !== '' &&
       this.data.effectiveness !== ''
@@ -178,7 +296,8 @@ export class CompetencyBuilderComponent implements DoCheck{
     // Check to ensure submission button is disabled if a field becomes empty after intially touched
     if (
       this.data.audience == '' ||
-      this.data.behavior == '' ||
+      this.data.role == '' ||
+      this.data.task == '' ||
       this.data.condition == '' ||
       this.data.degree == '' ||
       this.data.effectiveness == ''
@@ -190,7 +309,8 @@ export class CompetencyBuilderComponent implements DoCheck{
     // If they are empty, show the warning message, otherwise disable the warning message
     if (
       (this.data.audience == '' && this.audience.value == '' && this.audience.touched) ||
-      (this.data.behavior == '' && this.behavior.value == '' && this.behavior.touched) ||
+      (this.data.role == '' && this.role.value == '' && this.role.touched) ||
+      (this.data.task == '' && this.task.value == '' && this.task.touched) ||
       (this.data.condition == '' && this.condition.value == '' && this.condition.touched) ||
       (this.data.degree == '' && this.degree.value == '' && this.degree.touched) ||
       (this.data.effectiveness == '' && this.effectiveness.value == '' && this.effectiveness.touched)

@@ -1,4 +1,6 @@
 import { environment } from './environment';
+import * as querystring from 'query-string';
+
 export const USER_ROUTES = {
     LOGIN() {
         return `${environment.apiURL}/users/login`;
@@ -15,8 +17,12 @@ export const USER_ROUTES = {
 }
 
 export const COMPETENCY_ROUTES = {
-    GET_ALL_COMPETENCIES(){
-        return `${environment.apiURL}/competencies`;
+    GET_ALL_COMPETENCIES(query? : {role? : string[]; audience?: string[]; task?: string[]}){
+        if(query) {
+            return `${environment.apiURL}/competencies?${querystring.stringify(query)}`
+        } else {
+            return `${environment.apiURL}/competencies`;
+        }
     },
     CREATE_COMPETENCY(userId: string) {
         return `${environment.apiURL}/users/${encodeURIComponent(userId)}/competencies`;

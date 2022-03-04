@@ -9,7 +9,7 @@
     <!-- Fix this if this is awful -->
     <div class="competency-example">
       <h3 *ngIf="data?.audience !== ''">
-        {{ data?.audience }} {{ data?.condition }} {{ data?.behavior }} {{ data?.degree }} {{ data?.effectiveness }}.
+        The {{ data?.audience }} {{ data?.audience ? 'acting as a' : ''}} {{ data?.role | lowercase }} {{ data?.condition }} {{ data?.condition ? 'should be able to' : '' }} {{ data?.task }} {{ data?.degree }} {{ data?.effectiveness }}
       </h3>
     </div>
     <div class="form">
@@ -23,14 +23,25 @@
                 <mat-label>Audience</mat-label>
                 <mat-select [(ngModel)]="data.audience" [formControl]="audience">
                   <mat-optgroup label="Workforce and Post Graduate Work">
-                    <mat-option value="The working professional">The working professional</mat-option>
-                    <mat-option value="The intern">The intern</mat-option>
+                    <mat-option value="working professional">The working professional</mat-option>
+                    <mat-option value="intern">The intern</mat-option>
                   </mat-optgroup>
-                  <mat-optgroup label="K12 and Higher Ed">
-                    <mat-option *ngFor="let option of academia" [value]="'The ' + option">The {{option}}</mat-option>
+                  <mat-optgroup label="Higher Education">
+                    <mat-option *ngFor="let option of academia" [value]="option">The {{option}}</mat-option>
                   </mat-optgroup>
                 </mat-select>
                 <mat-error *ngIf="audience.invalid">{{getErrorMessage(audience)}}</mat-error>
+              </mat-form-field>
+              <br>
+              <!--Workrole Field-->
+              <mat-form-field appearance="fill" color="primary">
+                <mat-label>Workrole</mat-label>
+                <mat-select [(ngModel)]="data.role" [formControl]="role" (selectionChange)="setTasks()">
+                  <mat-optgroup label="Workrole">
+                    <mat-option *ngFor="let option of niceFramework" [value]="option.workrole">{{option.workrole}}</mat-option>
+                  </mat-optgroup>
+                </mat-select>
+                <mat-error *ngIf="role.invalid">{{getErrorMessage(role)}}</mat-error>
               </mat-form-field>
               <br>
               <!--Condition Fields-->
@@ -40,11 +51,15 @@
                 <mat-error *ngIf="condition.invalid">{{getErrorMessage(condition)}}</mat-error>
               </mat-form-field>
               <br>
-              <!--Behavior Fields-->
+              <!--Task Field-->
               <mat-form-field appearance="fill" color="primary">
-                <mat-label>Behavior</mat-label>
-                <textarea matInput [(ngModel)]="data.behavior" [formControl]="behavior"></textarea>
-                <mat-error *ngIf="behavior.invalid">{{getErrorMessage(behavior)}}</mat-error>
+                <mat-label>Task</mat-label>
+                <mat-select [(ngModel)]="task" [formControl]="taskIndex" (selectionChange)="setTaskMeta()">
+                  <mat-optgroup label="Tasks">
+                    <mat-option *ngFor="let task of workroleTasks; let i = index" [value]="i">{{task}}</mat-option>
+                  </mat-optgroup>
+                </mat-select>
+                <mat-error *ngIf="task.invalid">{{getErrorMessage(task)}}</mat-error>
               </mat-form-field>
               <br>
               <!--Degree Fields-->

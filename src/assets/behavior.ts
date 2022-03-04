@@ -1,6 +1,6 @@
 export const behavior = [
     {
-        "workrole": "Database Administrator",
+        "workrole": "database administrator",
         "tasks": [
             {
                 "id": "T0008",
@@ -61,7 +61,7 @@ export const behavior = [
         ]
     },
     {
-        "workrole": "Technical Support Specialist",
+        "workrole": "technical support specialist",
         "tasks": [
             {
                 "id": "T0125",
@@ -114,7 +114,7 @@ export const behavior = [
         ]
     },
     {
-        "workrole": "Data Analyst",
+        "workrole": "data analyst",
         "tasks": [
             {
                 "id": "T0007",
@@ -207,7 +207,7 @@ export const behavior = [
         ]
     },
     {
-        "workrole": "Network Operations Specialist",
+        "workrole": "network operations specialist",
         "tasks": [
             {
                 "id": "T0035",
@@ -256,7 +256,7 @@ export const behavior = [
         ]
     },
     { 
-        "workrole": "Systems Security Analyst",
+        "workrole": "systems security analyst",
         "tasks": [ 
             {
                 "id": "T0009",
@@ -397,7 +397,7 @@ export const behavior = [
         ]
     },
     { 
-        "workrole": "System Administrator",
+        "workrole": "system administrator",
         "tasks": [ 
             {
                 "id": "T0009",
