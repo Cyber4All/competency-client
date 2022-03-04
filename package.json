@@ -1,6 +1,6 @@
 {
   "name": "competency-client",
-  "version": "0.0.0",
+  "version": "1.0.0-Calimari",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
