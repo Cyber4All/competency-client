@@ -11,10 +11,10 @@ export class CompetencyService {
 
   constructor(private http: HttpClient) { }
 
-  getAllCompetencies() {
+  getAllCompetencies(query?: { role?: string[], audience?: string[], task?: string[] }) {
     return this.http
       .get(
-        COMPETENCY_ROUTES.GET_ALL_COMPETENCIES(),
+        COMPETENCY_ROUTES.GET_ALL_COMPETENCIES(query),
       )
       .toPromise();
   }

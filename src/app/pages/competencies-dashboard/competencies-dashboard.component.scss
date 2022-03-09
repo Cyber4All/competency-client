@@ -1,25 +1,37 @@
 .navigation {
-    margin: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 20px;
     min-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     .title {
         color: #fff;
-        float: left;
+        margin-bottom: 20px;
+        padding-right: 20px;
         
-        h1 {
+        h2 {
             padding-top: 5px;
-            font-size: 36px;
+            margin-bottom: 0px;
+        }
+        .feedback {
+            color: #fff;
         }
     }
     .logout {
         float: right;
         color: #fff;
+        max-height: 50px;
+        padding: 5px;
         border: 2px solid #fff;
     }
 }
 .wrapper {
     padding: 40px;
     background-color: white;
-    height: 100vh;
+    overflow-y: auto;
+    min-height: 100vh;
 
     .header {
         padding-bottom: 20px;
@@ -35,12 +47,25 @@
         .add-button {
             float: right;
         }
+        .filter-container {
+            float: right;
+            margin-right: 30px;
+            display: inline;
+        
+            .filter-button {
+                margin: 3px 2px 0 5px;
+            }
+        }
     
     }
 
 }
 .competency-card {
     padding: 10px;
+
+    .framework {
+        font-weight: bold;
+    }
 
     .competency {
         max-width: 80%;
@@ -77,8 +102,6 @@ mat-card {
     .form {
         width: 100%;
         .example-form {
-            min-width: 150px;
-            max-width: 450px;
             width: 100%;
         }
 
@@ -115,6 +138,7 @@ mat-card {
 
 .competency-example {
     color: white;
+    min-height: 80px;
 }
 
 .float-right {
