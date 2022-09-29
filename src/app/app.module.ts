@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './pages/auth/login/login.component';
-import { CompetenciesDashboardComponent, CompetencyBuilderComponent } from './pages/competencies-dashboard/competencies-dashboard.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,15 +19,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatOptionModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
-import { RegisterComponent } from './pages/auth/register/register.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    CompetenciesDashboardComponent,
-    CompetencyBuilderComponent,
-    RegisterComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
