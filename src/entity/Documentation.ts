@@ -1,7 +1,5 @@
-import { Types } from "mongoose";
-
 export interface Documentation {
-  conditionId: Types.ObjectId,
+  conditionId: string,
   description: string,
   uri: string
 }
