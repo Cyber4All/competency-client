@@ -14,7 +14,7 @@ export class CompetencyService {
   getAllCompetencies(query?: { role?: string[], audience?: string[], task?: string[] }) {
     return this.http
       .get(
-        COMPETENCY_ROUTES.GET_ALL_COMPETENCIES(query),
+        COMPETENCY_ROUTES.RETRIEVE_COMPETENCY(),
       )
       .toPromise();
   }
@@ -22,7 +22,7 @@ export class CompetencyService {
   createCompetency(competency: any) {
     return this.http
       .post(
-        COMPETENCY_ROUTES.CREATE_COMPETENCY(competency.author),
+        COMPETENCY_ROUTES.CREATE_COMPETENCY(),
         competency,
         { withCredentials: true, responseType: 'text' }
       )
@@ -32,7 +32,7 @@ export class CompetencyService {
   editCompetency(competency: any) {
     return this.http
       .patch(
-        COMPETENCY_ROUTES.EDIT_COMPETENCY(competency),
+        COMPETENCY_ROUTES.CREATE_COMPETENCY(),
         competency,
         { withCredentials: true, responseType: 'text' }
       )
@@ -42,7 +42,7 @@ export class CompetencyService {
   lockCompetency(competency: any, lock: boolean) {
     return this.http
       .patch(
-        COMPETENCY_ROUTES.LOCK_COMPETENCY(competency._id),
+        COMPETENCY_ROUTES.CREATE_COMPETENCY(),
         { locked: lock },
         { withCredentials: true, responseType: 'text' }
       )

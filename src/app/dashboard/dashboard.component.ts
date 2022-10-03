@@ -27,9 +27,9 @@ export class DashboardComponent implements OnInit {
   competencies: any = [];
 
   // Workroles and Tasks
-  niceFramework: any[] = Object.values(behavior);
+  // niceFramework: any[] = Object.values(behavior);
   // Academic Audience
-  audience: any[] = Object.values(audience);
+  // audience: any[] = Object.values(audience);
 
   // Applied filters
   selected: { role: string[]; audience: string[], task: string[] } = {
@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
     this.user = this.authService.user;
     
     // Push unsaved/non-academic audiences to audience array
-    this.audience.push("working Professional","intern")
+    // this.audience.push("working Professional","intern")
   }
 
   async getCompetencies() {
@@ -110,49 +110,49 @@ export class DashboardComponent implements OnInit {
     this.competencies = await this.competencyService.getAllCompetencies(this.selected);
   }
 
-  openCompetencyBuilder(competency?: any) {
-    let authorId = "";
-    if (this.authService.user) {
-      authorId = this.authService.user._id;
-    }
-    let data = {
-      _id: "",
-      audience: "",
-      role: "",
-      task: "",
-      taskId: "",
-      condition: "",
-      degree: "",
-      effectiveness: "",
-      author: authorId,
-      locked: false,
-      lastUpdate: Date.now()
-    }
-    if(competency) {
-      data = competency;
-      this.lockCompetency(competency);
-    }
-    const dialogRef = this.dialog.open(CompetencyBuilderComponent, {
-      height: '700px',
-      width: '900px',
-      data: data
-    });
+  // openCompetencyBuilder(competency?: any) {
+  //   let authorId = "";
+  //   if (this.authService.user) {
+  //     authorId = this.authService.user._id;
+  //   }
+  //   let data = {
+  //     _id: "",
+  //     audience: "",
+  //     role: "",
+  //     task: "",
+  //     taskId: "",
+  //     condition: "",
+  //     degree: "",
+  //     effectiveness: "",
+  //     author: authorId,
+  //     locked: false,
+  //     lastUpdate: Date.now()
+  //   }
+  //   if(competency) {
+  //     data = competency;
+  //     this.lockCompetency(competency);
+  //   }
+  //   const dialogRef = this.dialog.open(CompetencyBuilderComponent, {
+  //     height: '700px',
+  //     width: '900px',
+  //     data: data
+  //   });
 
-    dialogRef.afterClosed().subscribe(async(result) => {
-      if (competency && result !== undefined) {
-        await this.updateCompetency(result);
-      } else if (result !== undefined) {
-        await this.createCompetency(result);
-      } else if (result === undefined) {
-        /**
-         * not currently in use - california 3/2022
-         * 
-         * await this.unlockCompetency(competency);
-         */
-      }
-      await this.getCompetencies();
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(async(result) => {
+  //     if (competency && result !== undefined) {
+  //       await this.updateCompetency(result);
+  //     } else if (result !== undefined) {
+  //       await this.createCompetency(result);
+  //     } else if (result === undefined) {
+  //       /**
+  //        * not currently in use - california 3/2022
+  //        * 
+  //        * await this.unlockCompetency(competency);
+  //        */
+  //     }
+  //     await this.getCompetencies();
+  //   });
+  // }
 
   logout() {
     this.authService.logout();

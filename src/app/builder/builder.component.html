@@ -27,7 +27,7 @@
                   <mat-option value="intern">The intern</mat-option>
                 </mat-optgroup>
                 <mat-optgroup label="Higher Education">
-                  <mat-option *ngFor="let option of academia" [value]="option">The {{option}}</mat-option>
+                  <!-- <mat-option *ngFor="let option of academia" [value]="option">The {{option}}</mat-option> -->
                 </mat-optgroup>
               </mat-select>
               <mat-error *ngIf="audience.invalid">{{getErrorMessage(audience)}}</mat-error>
@@ -36,11 +36,11 @@
             <!--Workrole Field-->
             <mat-form-field appearance="fill" color="primary">
               <mat-label>Workrole</mat-label>
-              <mat-select [(ngModel)]="data.role" [formControl]="role" (selectionChange)="setTasks()">
+              <!-- <mat-select [(ngModel)]="data.role" [formControl]="role" (selectionChange)="setTasks()">
                 <mat-optgroup label="Workrole">
                   <mat-option *ngFor="let option of niceFramework" [value]="option.workrole">{{option.workrole}}</mat-option>
                 </mat-optgroup>
-              </mat-select>
+              </mat-select> -->
               <mat-error *ngIf="role.invalid">{{getErrorMessage(role)}}</mat-error>
             </mat-form-field>
             <br>

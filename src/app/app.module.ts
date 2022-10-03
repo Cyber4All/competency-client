@@ -5,6 +5,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { AuthModule } from './auth/auth.module';
+import { BuilderModule } from './builder/builder.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -16,6 +19,9 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    DashboardModule,
+    AuthModule,
+    BuilderModule
   ],
   providers: [],
   bootstrap: [AppComponent],

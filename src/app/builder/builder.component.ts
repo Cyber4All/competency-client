@@ -32,9 +32,9 @@ export class BuilderComponent implements DoCheck {
   taskIndex = new FormControl(null, [Validators.required]);
   
   // Audiance groups (academic only)
-  academia = Object.values(audience)
+  // academia = Object.values(audience)
   // NICE Framwork Workroles and Tasks
-  niceFramework: any = Object.values(behavior);
+  // niceFramework: any = Object.values(behavior);
   // Formatted Dropdown Tasks
   workroleTasks: any = [];
   // Mapped NICE Tasks
@@ -61,24 +61,24 @@ export class BuilderComponent implements DoCheck {
    * to also store the task id and description in their own arrarys
    * ^^^Did this so theres no regex^^^
    */
-  setTasks(): void {
-    // clear all arrays
-    this.workroleTasks = [];
-    this.currentTaskIds = [];
-    this.currentTasks = [];
-    // clear task index
-    this.taskIndex.setValue(-1);
-    // format and push task description and id for each array
-    this.niceFramework.map((frame: any) => {
-      if (frame.workrole === this.role.value) {
-        frame.tasks.map((task: any) => {
-          this.workroleTasks.push(task.id + ' - ' + task.task)
-          this.currentTaskIds.push(task.id);
-          this.currentTasks.push(task.task);
-        })
-      }
-    });
-  }
+  // setTasks(): void {
+  //   // clear all arrays
+  //   this.workroleTasks = [];
+  //   this.currentTaskIds = [];
+  //   this.currentTasks = [];
+  //   // clear task index
+  //   this.taskIndex.setValue(-1);
+  //   // format and push task description and id for each array
+  //   this.niceFramework.map((frame: any) => {
+  //     if (frame.workrole === this.role.value) {
+  //       frame.tasks.map((task: any) => {
+  //         this.workroleTasks.push(task.id + ' - ' + task.task)
+  //         this.currentTaskIds.push(task.id);
+  //         this.currentTasks.push(task.task);
+  //       })
+  //     }
+  //   });
+  // }
 
   /**
    * Function to set task description and id to the competency

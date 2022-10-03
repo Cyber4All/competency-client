@@ -55,7 +55,7 @@ export class AuthService {
       //const encrypted = await this.encryptionService.encryptRSA(user);
 
       this.http
-        .post(USER_ROUTES.CREATE_USER(), {name: name, email: email, password: password})
+        .post(USER_ROUTES.REGISTER(), {name: name, email: email, password: password})
         .pipe(retry(3))
         .toPromise()
         .then(
