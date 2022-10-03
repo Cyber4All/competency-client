@@ -1,0 +1,26 @@
+
+.login-wrapper {
+    width: 300px;
+    text-align: center;
+    margin: 50px auto;
+
+    mat-form-field {
+        display: block;
+        color: white
+    }
+
+    h1 {
+        color: white;
+        margin-bottom: 0px !important;
+    }
+
+    h5 {
+        color: white;
+        margin-top: 0px !important;
+        text-align: right;
+    }
+
+    button {
+        margin: 0 5px;
+    }
+}
