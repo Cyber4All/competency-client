@@ -1,7 +1,7 @@
 export enum Lifecycles {
-  DRAFT = "draft",
-  SUBMITTED = "submitted",
-  PUBLISHED = "published",
-  DEPRECATED = "deprecated",
-  REJECTED = "rejected",
+  DRAFT = 'draft',
+  SUBMITTED = 'submitted',
+  PUBLISHED = 'published',
+  DEPRECATED = 'deprecated',
+  REJECTED = 'rejected',
 }

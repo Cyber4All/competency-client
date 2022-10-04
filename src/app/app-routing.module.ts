@@ -20,11 +20,11 @@ const routes: Routes = [
     canActivate: [AuthenticatedGuard],
   },
   {
-    path: "",
+    path: '',
     component: LoginComponent
   },
   {
-    path: "**",
+    path: '**',
     component: LoginComponent
   }
 ];

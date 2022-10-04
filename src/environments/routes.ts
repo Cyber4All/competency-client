@@ -29,7 +29,7 @@ export const USER_ROUTES = {
     VALIDATE_ACTIONS() {
         return `${environment.apiURL}/auth/validate`;
     },
-}
+};
 
 export const COMPETENCY_ROUTES = {
     CREATE_COMPETENCY() {
@@ -57,12 +57,13 @@ export const COMPETENCY_ROUTES = {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/documentation`;
     },
     UPDATE_ONE_DOCUMENTATION(competencyId: string, documentationId: string) {
-        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/documentation/${encodeURIComponent(documentationId)}`;
+        return `${environment.apiURL}/competencies/
+        ${encodeURIComponent(competencyId)}/documentation/${encodeURIComponent(documentationId)}`;
     },
     DELETE_DOCUMENTATION(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/documentation`;
     },
     RETRIEVE_COMPETENCY() {
-        return `${environment.apiURL}/graphql`
+        return `${environment.apiURL}/graphql`;
     }
-}
+};

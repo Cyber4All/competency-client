@@ -15,9 +15,9 @@ export class BuilderComponent implements DoCheck {
   ) {}
 
   // Boolean to disable submission button
-  isDisabled: boolean = true;
+  isDisabled = true;
   // Boolean to toggle error message
-  errorMessage: boolean = false;
+  errorMessage = false;
 
   /**
    * FORM CONTROLS
@@ -30,7 +30,7 @@ export class BuilderComponent implements DoCheck {
   effectiveness = new FormControl('', [Validators.required]);
   // Index of selected formatted task for mapped ids and tasks
   taskIndex = new FormControl(null, [Validators.required]);
-  
+
   // Audiance groups (academic only)
   // academia = Object.values(audience)
   // NICE Framwork Workroles and Tasks
@@ -90,26 +90,26 @@ export class BuilderComponent implements DoCheck {
 
   /**
    * Function to send an error message for the specific dialog box
-   * 
+   *
    * @param obj Form control element where error occured
    * @returns error message for form element
    */
   getErrorMessage(obj: FormControl): string {
     switch (obj) {
       case this.audience:
-        return "You must select an audience!";
+        return 'You must select an audience!';
       case this.condition:
-        return "You must provide a condition for the competency!";
+        return 'You must provide a condition for the competency!';
       case this.role:
-        return "You must select a workrole for the competency!";
+        return 'You must select a workrole for the competency!';
       case this.task:
-        return "You must select a task for the competency!";
+        return 'You must select a task for the competency!';
       case this.degree:
-        return "You must define the degree for the competency!";
+        return 'You must define the degree for the competency!';
       case this.effectiveness:
-        return "You must define the effectiveness of the competency!";
+        return 'You must define the effectiveness of the competency!';
       default:
-        return "Something went wrong, please refresh the page and try again...";
+        return 'Something went wrong, please refresh the page and try again...';
     }
   }
 
@@ -132,12 +132,12 @@ export class BuilderComponent implements DoCheck {
 
     // Check to ensure submission button is disabled if a field becomes empty after intially touched
     if (
-      this.data.audience == '' ||
-      this.data.role == '' ||
-      this.data.task == '' ||
-      this.data.condition == '' ||
-      this.data.degree == '' ||
-      this.data.effectiveness == ''
+      this.data.audience === '' ||
+      this.data.role === '' ||
+      this.data.task === '' ||
+      this.data.condition === '' ||
+      this.data.degree === '' ||
+      this.data.effectiveness === ''
     ) {
       this.isDisabled = true;
     }
@@ -145,12 +145,12 @@ export class BuilderComponent implements DoCheck {
     // After a form element has been touched, check if the data values are empty strings
     // If they are empty, show the warning message, otherwise disable the warning message
     if (
-      (this.data.audience == '' && this.audience.value == '' && this.audience.touched) ||
-      (this.data.role == '' && this.role.value == '' && this.role.touched) ||
-      (this.data.task == '' && this.task.value == '' && this.task.touched) ||
-      (this.data.condition == '' && this.condition.value == '' && this.condition.touched) ||
-      (this.data.degree == '' && this.degree.value == '' && this.degree.touched) ||
-      (this.data.effectiveness == '' && this.effectiveness.value == '' && this.effectiveness.touched)
+      (this.data.audience === '' && this.audience.value === '' && this.audience.touched) ||
+      (this.data.role === '' && this.role.value === '' && this.role.touched) ||
+      (this.data.task === '' && this.task.value === '' && this.task.touched) ||
+      (this.data.condition === '' && this.condition.value === '' && this.condition.touched) ||
+      (this.data.degree === '' && this.degree.value === '' && this.degree.touched) ||
+      (this.data.effectiveness === '' && this.effectiveness.value === '' && this.effectiveness.touched)
     ) {
       this.errorMessage = true;
     } else {

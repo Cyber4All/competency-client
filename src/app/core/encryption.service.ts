@@ -18,7 +18,7 @@ export class EncryptionService {
   async encryptRSA(data: object) {
     // Get the key and encrypt the data
     const key = await this.importPublicKey();
-    let encrypted = await crypto.subtle.encrypt(
+    const encrypted = await crypto.subtle.encrypt(
       {
         name: 'RSA-OAEP',
       },
@@ -48,7 +48,7 @@ export class EncryptionService {
     //     .pipe(retry(3))
     //     .toPromise()
     // ).publicKey;
-    const publicKey = "tempkey"
+    const publicKey = 'tempkey';
 
     // Parse out the key using RSA-OAEP and a SHA256 hash
     return {

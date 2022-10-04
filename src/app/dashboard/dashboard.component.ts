@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
   };
 
   // Boolean toggle for 'clear filters' button
-  filterApplied: boolean = false;
+  filterApplied = false;
 
   constructor(
     public dialog: MatDialog,
@@ -51,13 +51,13 @@ export class DashboardComponent implements OnInit {
   async ngOnInit() {
     await this.getCompetencies();
     this.user = this.authService.user;
-    
+
     // Push unsaved/non-academic audiences to audience array
     // this.audience.push("working Professional","intern")
   }
 
   async getCompetencies() {
-    this.competencies = await this.competencyService.getAllCompetencies()
+    this.competencies = await this.competencyService.getAllCompetencies();
   }
 
   async createCompetency(competency: any) {
@@ -98,7 +98,7 @@ export class DashboardComponent implements OnInit {
 
   // Get filtered competencies
   async filter() {
-    this.competencies = await this.competencyService.getAllCompetencies(this.selected)
+    this.competencies = await this.competencyService.getAllCompetencies(this.selected);
   }
 
   // Clear filters and reset index
@@ -146,7 +146,7 @@ export class DashboardComponent implements OnInit {
   //     } else if (result === undefined) {
   //       /**
   //        * not currently in use - california 3/2022
-  //        * 
+  //        *
   //        * await this.unlockCompetency(competency);
   //        */
   //     }
