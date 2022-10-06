@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { User } from '../../typings/user'
+import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from 'src/environments/routes';
 import { retry } from 'rxjs/operators';
@@ -37,9 +37,9 @@ export class AuthService {
   get user() {
     // If the user is undefined get it from local storage
     if(this._user === undefined) {
-      let retrievedObject = localStorage.getItem('user');
+      const retrievedObject = localStorage.getItem('user');
       if(retrievedObject !== null) {
-        let user = JSON.parse(retrievedObject);
+        const user = JSON.parse(retrievedObject);
         this._user = user;
       }
     }
@@ -55,18 +55,19 @@ export class AuthService {
       //const encrypted = await this.encryptionService.encryptRSA(user);
 
       this.http
-        .post(USER_ROUTES.CREATE_USER(), {name: name, email: email, password: password})
+        .post(USER_ROUTES.REGISTER(), {name: name, email: email, password: password})
         .pipe(retry(3))
         .toPromise()
         .then(
           (res: any) => {
             this.storeToken(res.bearer);
             this.user = res.user;
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             resolve(this.user!);
           },
           (err) => {
             if (err.status > 500) {
-              console.log(err)
+              console.log(err);
             }
             reject(err);
           }
@@ -89,6 +90,7 @@ export class AuthService {
             this.user = res.user;
             localStorage.setItem('user', JSON.stringify(res.user));
             this.storeToken(res.bearer);
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             resolve(this.user!);
           },
           (err) => {
@@ -122,7 +124,9 @@ export class AuthService {
   }
 
   private deleteToken() {
-    // These parameters are now required by the library. The '/' is just so that we can access the cookie for our domain. We are not allowed to delete cookies from other domains
+    // These parameters are now required by the library.
+    // The '/' is just so that we can access the cookie for our domain.
+    // We are not allowed to delete cookies from other domains
     this.cookie.delete('presence', '/', environment.host, false, 'Lax');
     // Since the cookie.delete doesn't seem to want to cooperate in prod I'm explicitly setting it to empty using good old fashioned JS
     document.cookie =

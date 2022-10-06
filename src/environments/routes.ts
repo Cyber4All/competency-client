@@ -3,34 +3,67 @@ import * as querystring from 'query-string';
 
 export const USER_ROUTES = {
     LOGIN() {
-        return `${environment.apiURL}/users/login`;
+        return `${environment.apiURL}/auth/login`;
     },
-    CREATE_USER() {
-        return `${environment.apiURL}/users`
+    REGISTER() {
+        return `${environment.apiURL}/auth/register`;
     },
-    GET_ALL_USERS() {
-        return `${environment.apiURL}/users`;
+    UPDATE_ACL_ACTIONS(userId: string) {
+        return `${environment.apiURL}/users/${encodeURIComponent(userId)}/acl`;
     },
-    GET_KEY_PAIR() {
+    DELETE_ACL_ACTIONS(userId: string) {
+        return `${environment.apiURL}/users/${encodeURIComponent(userId)}/acl`;
+    },
+    GENERATE_KEYS() {
         return `${environment.apiURL}/keys`;
-    }
-}
+    },
+    ADD_API_KEY(userId: string) {
+        return `${environment.apiURL}/users/${encodeURIComponent(userId)}/keys`;
+    },
+    UPDATE_API_KEY_PERMISSIONS(userId: string, prefix: string) {
+        return `${environment.apiURL}/users/${encodeURIComponent(userId)}/keys/${encodeURIComponent(prefix)}/acl`;
+    },
+    DELETE_API_KEY(userId: string, prefix: string) {
+        return `${environment.apiURL}/users/${encodeURIComponent(userId)}/keys/${encodeURIComponent(prefix)}`;
+    },
+    VALIDATE_ACTIONS() {
+        return `${environment.apiURL}/auth/validate`;
+    },
+};
 
 export const COMPETENCY_ROUTES = {
-    GET_ALL_COMPETENCIES(query? : {role? : string[]; audience?: string[]; task?: string[]}){
-        if(query) {
-            return `${environment.apiURL}/competencies?${querystring.stringify(query)}`
-        } else {
-            return `${environment.apiURL}/competencies`;
-        }
+    CREATE_COMPETENCY() {
+        return `${environment.apiURL}/competencies`;
     },
-    CREATE_COMPETENCY(userId: string) {
-        return `${environment.apiURL}/users/${encodeURIComponent(userId)}/competencies`;
+    UPDATE_AUDIENCE(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/audience`;
     },
-    EDIT_COMPETENCY(competency: any) {
-        return `${environment.apiURL}/users/${encodeURIComponent(competency.author)}/competencies/${encodeURIComponent(competency._id)}`;
+    UPDATE_BEHAVIOR(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/behavior`;
     },
-    LOCK_COMPETENCY(competencyId: string) {
-        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/lock`;
+    UPDATE_CONDITION(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/condition`;
+    },
+    UPDATE_DEGREE(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/degree`;
+    },
+    UPDATE_EMPLOYABILITY(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/employability`;
+    },
+    DELETE_COMPETENCY(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}`;
+    },
+    CREATE_DOCUMENTATION(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/documentation`;
+    },
+    UPDATE_ONE_DOCUMENTATION(competencyId: string, documentationId: string) {
+        return `${environment.apiURL}/competencies/
+        ${encodeURIComponent(competencyId)}/documentation/${encodeURIComponent(documentationId)}`;
+    },
+    DELETE_DOCUMENTATION(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/documentation`;
+    },
+    RETRIEVE_COMPETENCY() {
+        return `${environment.apiURL}/graphql`;
     }
-}
+};

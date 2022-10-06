@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthenticatedGuard } from './guards/authenticated.guard';
-import { LoginComponent } from './pages/auth/login/login.component';
-import { RegisterComponent } from './pages/auth/register/register.component';
-import { CompetenciesDashboardComponent } from './pages/competencies-dashboard/competencies-dashboard.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
 
 const routes: Routes = [
   {
@@ -16,15 +16,15 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: CompetenciesDashboardComponent,
+    component: DashboardComponent,
     canActivate: [AuthenticatedGuard],
   },
   {
-    path: "",
+    path: '',
     component: LoginComponent
   },
   {
-    path: "**",
+    path: '**',
     component: LoginComponent
   }
 ];

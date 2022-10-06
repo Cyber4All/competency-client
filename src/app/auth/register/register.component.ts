@@ -10,9 +10,9 @@ import { AuthService } from 'src/app/core/auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-  email = new FormControl("", [Validators.required, Validators.email]);
-  password = new FormControl("", [Validators.required]);
-  name = new FormControl("", [Validators.required])
+  email = new FormControl('', [Validators.required, Validators.email]);
+  password = new FormControl('', [Validators.required]);
+  name = new FormControl('', [Validators.required]);
 
   constructor(
     private auth: AuthService,
@@ -29,8 +29,8 @@ export class RegisterComponent implements OnInit {
         }
       })
       .catch((error: any) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
   }
 
   login() {
