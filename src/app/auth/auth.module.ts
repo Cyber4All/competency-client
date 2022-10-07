@@ -22,6 +22,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
+import { VirtualScrollerModule } from 'ngx-virtual-scroller'
 
 
 
@@ -53,6 +54,7 @@ import { AppRoutingModule } from '../app-routing.module';
     HttpClientModule,
     ReactiveFormsModule,
     MatTooltipModule,
+    VirtualScrollerModule,
   ]
 })
 export class AuthModule { }

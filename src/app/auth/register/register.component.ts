@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { debounceTime, Subject } from 'rxjs';
 import { AuthService } from 'src/app/core/auth.service';
+import { Organization } from '../../../entity/organization';
+import { AuthValidationService } from '../../core/auth-validation.service';
+import { OrganizationService } from '../../core/organization.service';
 
 @Component({
   selector: 'app-register',
@@ -10,27 +14,96 @@ import { AuthService } from 'src/app/core/auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required]);
-  name = new FormControl('', [Validators.required]);
+  regInfo = {
+    username: '',
+    name: '',
+    email: '',
+    organization: '',
+    password: '',
+    confirmPassword: '',
+  }
+
+  regFormGroup: FormGroup = new FormGroup({
+    username: this.authValidation.getInputFormControl('username'),
+    name: this.authValidation.getInputFormControl('required'),
+    email: this.authValidation.getInputFormControl('email'),
+    organization: this.authValidation.getInputFormControl('required'),
+    password: this.authValidation.getInputFormControl('password'),
+    confirmPassword: this.authValidation.getInputFormControl('required'),
+  }, this.authValidation.passwordMatchValidator('password', 'confirmPassword'));
+
+  organizationInput$: Subject<string> = new Subject<string>();
+  showDropdown: boolean = false;
+  loading: boolean = false;
+  closeDropdown = () => {this.showDropdown = false};
+  searchResults: Array<Organization> = [];
+  selectedOrg: string = '';
+  scrollerHeight: string = '100px';
+  registrationFailure: Boolean = true;
 
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private orgService: OrganizationService,
+    public authValidation: AuthValidationService
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.organizationInput$.pipe(debounceTime(650))
+    .subscribe( async (value: string) => {
+      this.searchResults = (await this.orgService.searchOrgs(value.trim()));
+      this.loading = false;
+    });
+    this.organizationInput$
+      .subscribe((value: string) => {
+        if (value && value !== '') {
+          this.showDropdown = true;
+          this.loading = true
+        } else {
+          this.showDropdown = false;
+        }
+      });
+  }
 
   register() {
-    this.auth.register(this.name.value, this.email.value, this.password.value)
+    const reqBody = {
+      username: this.regInfo.username.trim(),
+      name: this.regInfo.name.trim(),
+      email: this.regInfo.email.trim(),
+      password: this.regInfo.password.trim(),
+      organization: this.regInfo.organization.trim()
+    }
+    if(this.regFormGroup.valid){
+      this.auth.register(reqBody)
       .then(() => {
         if (this.auth.user) {
           this.router.navigate(['/dashboard']);
         }
       })
       .catch((error: any) => {
-        console.log(error);
-      });
+        //TO-DO: handle Error message with banner
+      })
+    }
+  }
+
+  /**
+   * Registers typing events from the organization input
+   *
+   * @param event The typing event
+   */
+  keyup(event: any) {
+    this.organizationInput$.next(event.target.value);
+  }
+
+  selectOrg(org?: Organization) {
+    if(org) {
+      this.regInfo.organization = org._id;
+      this.regFormGroup.get('organization')!.setValue(org.name);
+    } else {
+      this.selectedOrg = '602ae2a038e2aaa1059f3c39';
+      this.regFormGroup.get('organization')!.setValue('Other');
+    }
+    this.closeDropdown();
   }
 
   login() {

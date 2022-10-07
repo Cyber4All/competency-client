@@ -50,12 +50,21 @@ export class AuthService {
     return this._status$.asObservable();
   }
 
-  async register(name: string, email: string, password: string): Promise<User> {
+  async register(user: {
+      email: string,
+      name: string,
+      password: string,
+      organization: string,
+      username: string
+  }): Promise<User> {
     return new Promise(async (resolve, reject) => {
-      //const encrypted = await this.encryptionService.encryptRSA(user);
-
+      console.log(user);
+      const encrypted = await this.encryptionService.encryptRSA(user);
       this.http
-        .post(USER_ROUTES.REGISTER(), {name: name, email: email, password: password})
+        .post(USER_ROUTES.REGISTER(), {
+          data: encrypted.data, 
+          publicKey: encrypted.publicKey
+        })
         .pipe(retry(3))
         .toPromise()
         .then(
@@ -66,9 +75,6 @@ export class AuthService {
             resolve(this.user!);
           },
           (err) => {
-            if (err.status > 500) {
-              console.log(err);
-            }
             reject(err);
           }
         );
@@ -77,12 +83,15 @@ export class AuthService {
 
   async login(email: string, password: string): Promise<User> {
     return new Promise(async (resolve, reject) => {
-      // const encrypted = await this.encryptionService.encryptRSA({
-      //   email,
-      //   password,
-      // });
+      const encrypted = await this.encryptionService.encryptRSA({
+        email,
+        password,
+      });
       this.http
-        .patch(USER_ROUTES.LOGIN(), {email: email, password: password})
+        .post(USER_ROUTES.LOGIN(), { 
+          data: encrypted.data, 
+          publicKey: encrypted.publicKey 
+        })
         .pipe(retry(3))
         .toPromise()
         .then(

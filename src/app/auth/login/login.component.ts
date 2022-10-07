@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth.service';
+import { AuthValidationService } from '../../core/auth-validation.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,37 +10,39 @@ import { AuthService } from 'src/app/core/auth.service';
 })
 export class LoginComponent implements OnInit{
 
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required]);
+  loginFormGroup: FormGroup = new FormGroup({
+    email: this.authValidation.getInputFormControl('required'),
+    password: this.authValidation.getInputFormControl('required')
+  })
 
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    public authValidation: AuthValidationService
   ) {}
+
+  loginInfo = {
+    email: '',
+    password: ''
+  }
 
   ngOnInit() {}
 
   login() {
-    this.auth.login(this.email.value, this.password.value)
+    if(this.loginFormGroup.valid){
+      this.auth.login(this.loginInfo.email, this.loginInfo.password)
       .then(() => {
         if (this.auth.user) {
           this.router.navigate(['/dashboard']);
         }
       })
       .catch((error: any) => {
-        console.log(error);
-      });
+        //TO-DO: handle error with banner
+      })
+    }
   }
 
   register() {
     this.router.navigate(['/register']);
-  }
-
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 }
