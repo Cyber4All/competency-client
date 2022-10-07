@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit{
 
   login() {
     if(this.loginFormGroup.valid){
+      console.log(this.loginInfo)
       this.auth.login(this.loginInfo.email, this.loginInfo.password)
       .then(() => {
         if (this.auth.user) {
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit{
       })
       .catch((error: any) => {
         //TO-DO: handle error with banner
+        console.log(error)
       })
     }
   }
