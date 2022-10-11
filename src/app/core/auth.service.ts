@@ -70,7 +70,7 @@ export class AuthService {
       this.storeToken(res!.bearer.toString()!);
       return this.user!;
     } catch(e: any) {
-      throw e.error;
+      throw this.formatError(e);
     }
   }
 
@@ -91,9 +91,22 @@ export class AuthService {
       this.storeToken(res!.bearer.toString()!);
       return this.user!;
     } catch(e: any) {
-      throw e.error;
+      throw this.formatError(e);
     }
 
+  }
+
+  formatError(e: any): { code: number, message: string } {
+    if(e.error.message instanceof Array){
+      return {
+        code: 500,
+        message: 'There was an error formatting your request.'
+              +  ' Sorry for the inconvenience.'
+              +  ' If the error persists, please email info@secured.team'
+            };
+    } else {
+      return e.error;
+    }
   }
 
   logout() {
