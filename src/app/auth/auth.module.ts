@@ -22,7 +22,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
-import { VirtualScrollerModule } from 'ngx-virtual-scroller'
+import { VirtualScrollerModule } from 'ngx-virtual-scroller';
+import { ErrorBannerComponent } from './components/error-banner/error-banner.component'
 
 
 
@@ -30,6 +31,7 @@ import { VirtualScrollerModule } from 'ngx-virtual-scroller'
   declarations: [
     LoginComponent,
     RegisterComponent,
+    ErrorBannerComponent,
   ],
   imports: [
     CommonModule,

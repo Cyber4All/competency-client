@@ -40,6 +40,7 @@ export class RegisterComponent implements OnInit {
   selectedOrg: string = '';
   scrollerHeight: string = '100px';
   registrationFailure: Boolean = true;
+  errMessage: string = '';
 
   constructor(
     private auth: AuthService,
@@ -81,7 +82,8 @@ export class RegisterComponent implements OnInit {
         }
       })
       .catch((error: any) => {
-        //TO-DO: handle Error message with banner
+        this.errMessage = error.message;
+        this.authValidation.showError();
       })
     }
   }

@@ -1,3 +1,4 @@
+<app-error-banner [message]="errMessage"></app-error-banner>
 <div class="login-wrapper">
     <h1>Competency Constructor ( )</h1>
     <h5>A SecurEd Inc. Project</h5>
@@ -29,7 +30,7 @@
             </mat-error>
 
         </mat-form-field>
-        <button mat-raised-button color="primary" (click)="login()">LOGIN</button>
+        <button mat-raised-button color="primary" type="submit">LOGIN</button>
         <button mat-raised-button (click)="register()">REGISTER</button>
     </form>
 </div>

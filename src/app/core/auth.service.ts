@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from 'src/environments/routes';
-import { retry } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
+import { Token } from '@angular/compiler';
 
 
 const TOKEN_KEY = 'presence';
@@ -57,57 +57,43 @@ export class AuthService {
       organization: string,
       username: string
   }): Promise<User> {
-    return new Promise(async (resolve, reject) => {
-      console.log(user);
+    try {
       const encrypted = await this.encryptionService.encryptRSA(user);
-      this.http
-        .post(USER_ROUTES.REGISTER(), {
-          data: encrypted.data, 
+      const res = await lastValueFrom(this.http
+        .post<{bearer: Token, user: User}>(USER_ROUTES.REGISTER(), {
+          data:encrypted.data,
           publicKey: encrypted.publicKey
-        })
-        .pipe(retry(3))
-        .toPromise()
-        .then(
-          (res: any) => {
-            this.storeToken(res.bearer);
-            this.user = res.user;
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            resolve(this.user!);
-          },
-          (err) => {
-            reject(err);
-          }
-        );
-    });
+        }))
+      
+      this.user = res!.user;
+      localStorage.setItem('user', JSON.stringify(res!.user));
+      this.storeToken(res!.bearer.toString()!);
+      return this.user!;
+    } catch(e: any) {
+      throw e.error;
+    }
   }
 
   async login(email: string, password: string): Promise<User> {
-    return new Promise(async (resolve, reject) => {
+    try {
       const encrypted = await this.encryptionService.encryptRSA({
         email,
         password,
       });
-      this.http
-        .post(USER_ROUTES.LOGIN(), { 
+      const res = await lastValueFrom(this.http
+        .post<{bearer: Token, user: User}>(USER_ROUTES.LOGIN(), { 
           data: encrypted.data, 
           publicKey: encrypted.publicKey 
-        })
-        .pipe(retry(3))
-        .toPromise()
-        .then(
-          (res: any) => {
-            this.user = res.user;
-            localStorage.setItem('user', JSON.stringify(res.user));
-            this.storeToken(res.bearer);
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            resolve(this.user!);
-          },
-          (err) => {
-            //Handled in component.
-            reject(err);
-          }
-        );
-    });
+        }))
+        
+      this.user = res!.user;
+      localStorage.setItem('user', JSON.stringify(res!.user));
+      this.storeToken(res!.bearer.toString()!);
+      return this.user!;
+    } catch(e: any) {
+      throw e.error;
+    }
+    
   }
 
   logout() {
