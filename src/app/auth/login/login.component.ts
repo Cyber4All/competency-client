@@ -13,7 +13,7 @@ export class LoginComponent{
   loginFormGroup: FormGroup = new FormGroup({
     email: this.authValidation.getInputFormControl('required'),
     password: this.authValidation.getInputFormControl('required')
-  })
+  });
 
   constructor(
     private auth: AuthService,
@@ -24,9 +24,9 @@ export class LoginComponent{
   loginInfo = {
     email: '',
     password: ''
-  }
+  };
 
-  errMessage: string = '';
+  errMessage = '';
 
   login() {
     if(this.loginFormGroup.valid){
@@ -38,7 +38,7 @@ export class LoginComponent{
       }, error => {
         this.errMessage = error.message;
         this.authValidation.showError();
-      })
+      });
     }
   }
 

@@ -116,7 +116,7 @@ export class AuthValidationService {
   }
 
   /**
-   * 
+   *
    * @param controlName form control name to match too
    * @param matchingControlName form control name to match
    * @returns null but adds error to matchControl if it does not match
@@ -124,12 +124,12 @@ export class AuthValidationService {
   passwordMatchValidator(controlName: string, matchingControlName: string): ValidatorFn {
     return (control: AbstractControl) => {
       if(control.get(controlName)!.value !== control.get(matchingControlName)!.value){
-        control.get(matchingControlName)?.setErrors({ mismatch: true })
+        control.get(matchingControlName)?.setErrors({ mismatch: true });
       }
-      return null
-    }
+      return null;
+    };
   }
-  
+
   /**
    * subscribe to this function to get the error banner state
    *

@@ -33,9 +33,9 @@ export const USER_ROUTES = {
 
 export const ORGANIZATION_ROUTES = {
     SEARCH_ORGANIZATIONS(queryString: string) {
-        return `${environment.cardOrganizationUrl}&text=${queryString}`
+        return `${environment.cardOrganizationUrl}&text=${queryString}`;
     }
-}
+};
 
 export const COMPETENCY_ROUTES = {
     CREATE_COMPETENCY() {

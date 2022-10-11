@@ -8,8 +8,8 @@ import { AuthValidationService } from '../../../core/auth-validation.service';
 })
 export class ErrorBannerComponent implements OnInit {
 
-  isError: boolean = false;
-  @Input() message: string = '';
+  isError = false;
+  @Input() message = '';
 
   constructor(
     private authValidation: AuthValidationService,
@@ -18,7 +18,7 @@ export class ErrorBannerComponent implements OnInit {
   ngOnInit(): void {
     this.authValidation.isError.subscribe((val) => {
       this.isError = val;
-    })
+    });
   }
 
 }

@@ -63,8 +63,8 @@ export class AuthService {
         .post<{bearer: Token, user: User}>(USER_ROUTES.REGISTER(), {
           data:encrypted.data,
           publicKey: encrypted.publicKey
-        }))
-      
+        }));
+
       this.user = res!.user;
       localStorage.setItem('user', JSON.stringify(res!.user));
       this.storeToken(res!.bearer.toString()!);
@@ -81,11 +81,11 @@ export class AuthService {
         password,
       });
       const res = await lastValueFrom(this.http
-        .post<{bearer: Token, user: User}>(USER_ROUTES.LOGIN(), { 
-          data: encrypted.data, 
-          publicKey: encrypted.publicKey 
-        }))
-        
+        .post<{bearer: Token, user: User}>(USER_ROUTES.LOGIN(), {
+          data: encrypted.data,
+          publicKey: encrypted.publicKey
+        }));
+
       this.user = res!.user;
       localStorage.setItem('user', JSON.stringify(res!.user));
       this.storeToken(res!.bearer.toString()!);
@@ -93,7 +93,7 @@ export class AuthService {
     } catch(e: any) {
       throw e.error;
     }
-    
+
   }
 
   logout() {

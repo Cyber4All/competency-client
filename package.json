@@ -7,6 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "npx ng lint competency-client",
+    "lint:fix": "npx ng lint competency-client --fix",
     "e2e": "ng e2e",
     "prepare": "husky install"
   },

@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
     organization: '',
     password: '',
     confirmPassword: '',
-  }
+  };
 
   regFormGroup: FormGroup = new FormGroup({
     username: this.authValidation.getInputFormControl('username'),
@@ -33,14 +33,16 @@ export class RegisterComponent implements OnInit {
   }, this.authValidation.passwordMatchValidator('password', 'confirmPassword'));
 
   organizationInput$: Subject<string> = new Subject<string>();
-  showDropdown: boolean = false;
-  loading: boolean = false;
-  closeDropdown = () => {this.showDropdown = false};
+  showDropdown = false;
+  loading = false;
+  closeDropdown = () => {
+this.showDropdown = false;
+};
   searchResults: Array<Organization> = [];
-  selectedOrg: string = '';
-  scrollerHeight: string = '100px';
+  selectedOrg = '';
+  scrollerHeight = '100px';
   registrationFailure: Boolean = true;
-  errMessage: string = '';
+  errMessage = '';
 
   constructor(
     private auth: AuthService,
@@ -59,7 +61,7 @@ export class RegisterComponent implements OnInit {
       .subscribe((value: string) => {
         if (value && value !== '') {
           this.showDropdown = true;
-          this.loading = true
+          this.loading = true;
         } else {
           this.showDropdown = false;
         }
@@ -73,7 +75,7 @@ export class RegisterComponent implements OnInit {
       email: this.regInfo.email.trim(),
       password: this.regInfo.password.trim(),
       organization: this.regInfo.organization.trim()
-    }
+    };
     if(this.regFormGroup.valid){
       this.auth.register(reqBody)
       .then(() => {
@@ -84,7 +86,7 @@ export class RegisterComponent implements OnInit {
       .catch((error: any) => {
         this.errMessage = error.message;
         this.authValidation.showError();
-      })
+      });
     }
   }
 

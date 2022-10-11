@@ -47,7 +47,7 @@ export class EncryptionService {
         .get<{ publicKey: string }>(USER_ROUTES.GENERATE_KEYS())
         .pipe(retry(3))
         .toPromise()
-    )?.publicKey
+    )?.publicKey;
     // const publicKey = "tempkey"
 
     // Parse out the key using RSA-OAEP and a SHA256 hash
