@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuilderComponent } from './builder.component';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -48,7 +47,6 @@ import { AppRoutingModule } from '../app-routing.module';
     MatSlideToggleModule,
     MatOptionModule,
     MatProgressSpinnerModule,
-    HttpClientModule,
     ReactiveFormsModule,
     MatTooltipModule,
   ]

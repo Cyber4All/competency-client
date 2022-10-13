@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -53,7 +52,6 @@ import { ErrorBannerComponent } from './components/error-banner/error-banner.com
     MatSlideToggleModule,
     MatOptionModule,
     MatProgressSpinnerModule,
-    HttpClientModule,
     ReactiveFormsModule,
     MatTooltipModule,
     VirtualScrollerModule,
