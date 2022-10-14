@@ -7,6 +7,11 @@ import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
 
 const routes: Routes = [
   {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthenticatedGuard],
+  },
+  {
     path: 'login',
     component: LoginComponent
   },
@@ -15,17 +20,13 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [AuthenticatedGuard],
-  },
-  {
     path: '',
-    component: LoginComponent
+    redirectTo: '/dashboard',
+    pathMatch: 'full'
   },
   {
     path: '**',
-    component: LoginComponent
+    redirectTo: '/dashboard'
   }
 ];
 
