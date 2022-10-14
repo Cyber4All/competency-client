@@ -1,0 +1,38 @@
+version: 2.1
+
+orbs:
+  cyber4all: cyber4all/orb@1.2
+  gh: circleci/github-cli@2.1.1
+
+workflows:
+  continuous-integration:
+    jobs:
+      - cyber4all/lint-app:
+          isNode: true
+        
+      - cyber4all/test-app:
+          docker-image: cimg/node@sha256:9e7dff70aee20446a146e374367c3fddc58df1e39cca318dbd4993e625892880
+          isNode: true
+    
+  release-prod:
+    when:
+      equal: [ releases, << pipeline.git.branch >> ]
+    jobs:
+      - gh/release:
+          context: [Github]
+          tag: "v$(jq -r '.version' package.json)"
+          token: GH_PAT
+  
+  continuous-deployment:
+    # when:
+    #   equal: [ '/^v[0-9]+\.[0-9]+\.[0-9]+$/', << pipeline.git.tag >> ]
+    jobs:
+      - cyber4all/sbom:
+          context: [Shortcut]
+          language: node
+          filters:
+            branches:
+              only:
+                - chore/sc-14941/add-sbom-on-releases
+
+      # deploy to S3 when ready for prod-environment
