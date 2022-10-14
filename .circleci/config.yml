@@ -24,15 +24,9 @@ workflows:
           token: GH_PAT
   
   continuous-deployment:
-    # when:
-    #   equal: [ '/^v[0-9]+\.[0-9]+\.[0-9]+$/', << pipeline.git.tag >> ]
     jobs:
       - cyber4all/sbom:
           context: [Shortcut]
           language: node
-          filters:
-            branches:
-              only:
-                - chore/sc-14941/add-sbom-on-releases
 
       # deploy to S3 when ready for prod-environment
