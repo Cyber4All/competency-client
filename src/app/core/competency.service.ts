@@ -3,50 +3,54 @@ import {
   HttpClient,
 } from '@angular/common/http';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
+import { AuthService } from './auth.service';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompetencyService {
-
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private auth: AuthService,
+  ) {}
 
   getAllCompetencies(query?: { role?: string[], audience?: string[], task?: string[] }) {
-    return this.http
+    this.auth.initHeaders();
+    return lastValueFrom(this.http
       .get(
         COMPETENCY_ROUTES.RETRIEVE_COMPETENCY(),
-      )
-      .toPromise();
+        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+      ));
   }
 
-  createCompetency(competency: any) {
-    return this.http
+  createCompetency() {
+    this.auth.initHeaders();
+    return lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.CREATE_COMPETENCY(),
-        competency,
-        { withCredentials: true, responseType: 'text' }
-      )
-      .toPromise();
+        {},
+        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+      ));
   }
 
   editCompetency(competency: any) {
-    return this.http
+    this.auth.initHeaders();
+    return lastValueFrom(this.http
       .patch(
         COMPETENCY_ROUTES.CREATE_COMPETENCY(),
         competency,
-        { withCredentials: true, responseType: 'text' }
-      )
-      .toPromise();
+        { headers: this.auth.headers, withCredentials: true, responseType: 'text' }
+      ));
   }
 
   lockCompetency(competency: any, lock: boolean) {
-    return this.http
+    return lastValueFrom(this.http
       .patch(
         COMPETENCY_ROUTES.CREATE_COMPETENCY(),
         { locked: lock },
-        { withCredentials: true, responseType: 'text' }
-      )
-      .toPromise();
+        { headers: this.auth.headers, withCredentials: true, responseType: 'text' }
+      ));
   }
 }
 

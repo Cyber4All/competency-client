@@ -113,6 +113,20 @@ export class BuilderComponent implements DoCheck {
     }
   }
 
+  step = 0;
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
+
   /**
    * Function to toggle error messages and submission button
    */

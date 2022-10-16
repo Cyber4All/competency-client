@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { BuilderModule } from '../builder/builder.module';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -50,7 +51,8 @@ import { BuilderModule } from '../builder/builder.module';
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     MatTooltipModule,
-    BuilderModule
+    BuilderModule,
+    SharedModule
   ]
 })
 export class DashboardModule { }

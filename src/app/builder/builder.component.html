@@ -1,4 +1,169 @@
 <div class="builder">
+  <form>
+    <mat-accordion class="competency-constructor_accordion">
+      <!--Audience-->
+      <ng-template #audienceTemplate></ng-template>
+      <!--Behavior-->
+      <ng-template #behaviorTemplate></ng-template>
+      <!--Condition-->
+      <ng-template #conditionTemplate></ng-template>
+      <!--Degree-->
+      <ng-template #degreeTemplate></ng-template>
+      <!--Employability-->
+      <ng-template #employabilityTemplate></ng-template>
+    </mat-accordion>
+  </form>
+</div>
+
+<!--Audience Template-->
+<ng-container #audienceTemplate>
+  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+    <mat-expansion-panel-header>
+      <!--ngif to swap for selected actor and workrole-->
+      <mat-panel-title>
+        Audience
+      </mat-panel-title>
+      <mat-panel-description>
+        Identify an actor and their workrole
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label>Audience</mat-label>
+      <mat-select [(ngModel)]="data.audience" [formControl]="audience">
+        <mat-optgroup label="Workforce and Post Graduate Work">
+          <mat-option value="working professional">The working professional</mat-option>
+          <mat-option value="intern">The intern</mat-option>
+        </mat-optgroup>
+        <mat-optgroup label="Higher Education">
+          <!-- <mat-option *ngFor="let option of academia" [value]="option">The {{option}}</mat-option> -->
+        </mat-optgroup>
+      </mat-select>
+      <mat-error *ngIf="audience.invalid">{{getErrorMessage(audience)}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label>Workrole</mat-label>
+      <input matInput>
+      <!-- <mat-select [(ngModel)]="data.role" [formControl]="role" (selectionChange)="setTasks()">
+        <mat-optgroup label="Workrole">
+          <mat-option *ngFor="let option of niceFramework" [value]="option.workrole">{{option.workrole}}</mat-option>
+        </mat-optgroup>
+      </mat-select> -->
+      <mat-error *ngIf="role.invalid">{{getErrorMessage(role)}}</mat-error>
+    </mat-form-field>
+
+    <mat-action-row>
+      <button mat-button color="primary" (click)="nextStep()">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</ng-container>
+
+<!--Behavior Template-->
+<ng-container #behaviorTemplate>
+  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Behavior
+      </mat-panel-title>
+      <mat-panel-description>
+        Type the country name
+        <mat-icon>map</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Country</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button mat-button color="primary" (click)="nextStep()">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</ng-container>
+
+<!--Condition Template-->
+<ng-container #conditionTemplate>
+  <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Condition
+      </mat-panel-title>
+      <mat-panel-description>
+        Inform the date you wish to travel
+        <mat-icon>date_range</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button mat-button color="primary" (click)="nextStep()">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</ng-container>
+
+<!--Degree Template-->
+<ng-container #degreeTemplate>
+  <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Degree
+      </mat-panel-title>
+      <mat-panel-description>
+        Type your name and age
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+      <mat-label>First name</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Age</mat-label>
+      <input matInput type="number" min="1">
+    </mat-form-field>
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button mat-button color="primary" (click)="nextStep()">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</ng-container>
+
+<!--Employability Template-->
+<ng-container #employabilityTemplate>
+  <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Employability
+      </mat-panel-title>
+      <mat-panel-description>
+        Type your name and age
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+      <mat-label>First name</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Age</mat-label>
+      <input matInput type="number" min="1">
+    </mat-form-field>
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button mat-button color="primary" (click)="nextStep()">End</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</ng-container>
+
+<!--
   <div class="header">
       <h1>Competency Builder Form</h1>
       <button mat-icon-button aria-label="close dialog" mat-dialog-close>
@@ -6,7 +171,7 @@
       </button>
   </div>
   <!--Example Stuff -->
-  <!-- Fix this if this is awful -->
+  <!-- Fix this if this is awful --
   <div class="competency-example">
     <h3 *ngIf="data?.audience !== ''">
       The {{ data?.audience }} {{ data?.audience ? 'acting as a' : ''}} {{ data?.role | lowercase }} {{ data?.condition }} {{ data?.condition ? 'should be able to' : '' }} {{ data?.task }} {{ data?.degree }} {{ data?.effectiveness }}
@@ -19,7 +184,7 @@
       </div>
       <form class="example-form">
           <mat-form-field appearance="fill" color="primary">
-              <!--Audience Fields -->
+              <!--Audience Fields --
               <mat-label>Audience</mat-label>
               <mat-select [(ngModel)]="data.audience" [formControl]="audience">
                 <mat-optgroup label="Workforce and Post Graduate Work">
@@ -27,31 +192,31 @@
                   <mat-option value="intern">The intern</mat-option>
                 </mat-optgroup>
                 <mat-optgroup label="Higher Education">
-                  <!-- <mat-option *ngFor="let option of academia" [value]="option">The {{option}}</mat-option> -->
+                  <!-- <mat-option *ngFor="let option of academia" [value]="option">The {{option}}</mat-option> --
                 </mat-optgroup>
               </mat-select>
               <mat-error *ngIf="audience.invalid">{{getErrorMessage(audience)}}</mat-error>
             </mat-form-field>
             <br>
-            <!--Workrole Field-->
+            <!--Workrole Field--
             <mat-form-field appearance="fill" color="primary">
               <mat-label>Workrole</mat-label>
               <!-- <mat-select [(ngModel)]="data.role" [formControl]="role" (selectionChange)="setTasks()">
                 <mat-optgroup label="Workrole">
                   <mat-option *ngFor="let option of niceFramework" [value]="option.workrole">{{option.workrole}}</mat-option>
                 </mat-optgroup>
-              </mat-select> -->
+              </mat-select> --
               <mat-error *ngIf="role.invalid">{{getErrorMessage(role)}}</mat-error>
             </mat-form-field>
             <br>
-            <!--Condition Fields-->
+            <!--Condition Fields--
             <mat-form-field appearance="fill" color="primary">
               <mat-label>Condition</mat-label>
               <textarea matInput [(ngModel)]="data.condition" [formControl]="condition"></textarea>
               <mat-error *ngIf="condition.invalid">{{getErrorMessage(condition)}}</mat-error>
             </mat-form-field>
             <br>
-            <!--Task Field-->
+            <!--Task Field--
             <mat-form-field appearance="fill" color="primary">
               <mat-label>Task</mat-label>
               <mat-select [(ngModel)]="task" [formControl]="taskIndex" (selectionChange)="setTaskMeta()">
@@ -62,7 +227,7 @@
               <mat-error *ngIf="task.invalid">{{getErrorMessage(task)}}</mat-error>
             </mat-form-field>
             <br>
-            <!--Degree Fields-->
+            <!--Degree Fields--
             <div class="degree-fields">
               <mat-form-field appearance="fill" color="primary">
                 <mat-label>Degree</mat-label>
@@ -70,17 +235,19 @@
                 <mat-error *ngIf="degree.invalid">{{getErrorMessage(degree)}}</mat-error>
               </mat-form-field>
             </div>
-            <!--Effectiveness Fields-->
+            <!--Effectiveness Fields--
             <mat-form-field appearance="fill" color="primary">
               <mat-label>Effectiveness</mat-label>
               <input matInput [(ngModel)]="data.effectiveness" [formControl]="effectiveness">
               <mat-error *ngIf="effectiveness.invalid">{{getErrorMessage(effectiveness)}}</mat-error>
             </mat-form-field>
-            <!--Dialog Fields-->
+            <!--Dialog Fields--
             <div mat-dialog-actions>
               <button mat-button color="accent" (click)="onNoClick()">CANCEL</button>
               <button mat-button color="primary" [mat-dialog-close]="data" [disabled]="isDisabled" cdkFocusInitial>SUBMIT</button>
             </div>  
         </form>
   </div>
-</div>
+
+
+-->

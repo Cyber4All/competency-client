@@ -20,7 +20,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
-
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
@@ -36,6 +36,7 @@ import { AppRoutingModule } from '../app-routing.module';
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
+    MatExpansionModule,
     MatInputModule,
     MatFormFieldModule,
     MatSelectModule,
