@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
-import { BuilderComponent } from '../builder/builder.component';
+import { CompetencyCardComponent } from '../shared/components/competency-card/competency-card.component';
 
 export interface DialogData {
   audience: string;
@@ -16,7 +16,7 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-competencies-dashboard',
+  selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
@@ -108,14 +108,14 @@ export class DashboardComponent implements OnInit {
   }
 
   async openCompetencyBuilder(competency?: any) {
-    const res = await this.competencyService.createCompetency();
+    const res: any = await this.competencyService.createCompetency();
     console.log(res);
     let authorId = '';
     if (this.authService.user) {
       authorId = this.authService.user._id;
     }
     let data = {
-      _id: '',
+      _id: res.id,
       audience: '',
       role: '',
       task: '',
@@ -131,7 +131,7 @@ export class DashboardComponent implements OnInit {
       data = competency;
       this.lockCompetency(competency);
     }
-    const dialogRef = this.dialog.open(BuilderComponent, {
+    const dialogRef = this.dialog.open(CompetencyCardComponent, {
       height: '700px',
       width: '900px',
       data: data

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth.service';
 import { AuthValidationService } from '../../core/auth-validation.service';
 @Component({
-  selector: 'app-login',
+  selector: 'cc-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

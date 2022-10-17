@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AuthValidationService } from '../../../core/auth-validation.service';
 
 @Component({
-  selector: 'app-error-banner',
+  selector: 'cc-error-banner',
   templateUrl: './error-banner.component.html',
   styleUrls: ['./error-banner.component.scss']
 })

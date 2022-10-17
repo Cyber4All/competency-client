@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogData } from '../dashboard/dashboard.component';
 
 @Component({
-  selector: 'app-builder',
+  selector: 'cc-builder',
   templateUrl: './builder.component.html',
   styleUrls: ['./builder.component.scss']
 })

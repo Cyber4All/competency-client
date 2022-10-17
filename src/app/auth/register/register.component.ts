@@ -8,7 +8,7 @@ import { AuthValidationService } from '../../core/auth-validation.service';
 import { OrganizationService } from '../../core/organization.service';
 
 @Component({
-  selector: 'app-register',
+  selector: 'cc-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })

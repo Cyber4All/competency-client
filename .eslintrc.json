@@ -32,7 +32,14 @@
         "rules": {
           "@typescript-eslint/adjacent-overload-signatures": "off",
           "@typescript-eslint/no-non-null-assertion": "off",
-          "@angular-eslint/component-selector": "off",
+          "@angular-eslint/component-selector": [
+            "error",
+            {
+              "type": "element",
+              "prefix": "cc",
+              "style": "kebab-case"
+            }
+          ],
           "@angular-eslint/directive-selector": [
             "error",
             {
