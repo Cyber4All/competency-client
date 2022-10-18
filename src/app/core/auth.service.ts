@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from 'src/environments/routes';
-import { retry } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 
 
@@ -50,55 +49,63 @@ export class AuthService {
     return this._status$.asObservable();
   }
 
-  async register(name: string, email: string, password: string): Promise<User> {
-    return new Promise(async (resolve, reject) => {
-      //const encrypted = await this.encryptionService.encryptRSA(user);
+  async register(user: {
+      email: string,
+      name: string,
+      password: string,
+      organization: string,
+      username: string
+  }): Promise<User> {
+    try {
+      const encrypted = await this.encryptionService.encryptRSA(user);
+      const res = await lastValueFrom(this.http
+        .post<{bearer: string, user: User}>(USER_ROUTES.REGISTER(), {
+          data:encrypted.data,
+          publicKey: encrypted.publicKey
+        }));
 
-      this.http
-        .post(USER_ROUTES.REGISTER(), {name: name, email: email, password: password})
-        .pipe(retry(3))
-        .toPromise()
-        .then(
-          (res: any) => {
-            this.storeToken(res.bearer);
-            this.user = res.user;
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            resolve(this.user!);
-          },
-          (err) => {
-            if (err.status > 500) {
-              console.log(err);
-            }
-            reject(err);
-          }
-        );
-    });
+      this.user = res.user;
+      localStorage.setItem('user', JSON.stringify(res.user));
+      this.storeToken(res.bearer);
+      return this.user;
+    } catch(e: any) {
+      throw this.formatError(e);
+    }
   }
 
   async login(email: string, password: string): Promise<User> {
-    return new Promise(async (resolve, reject) => {
-      // const encrypted = await this.encryptionService.encryptRSA({
-      //   email,
-      //   password,
-      // });
-      this.http
-        .patch(USER_ROUTES.LOGIN(), {email: email, password: password})
-        .pipe(retry(3))
-        .toPromise()
-        .then(
-          (res: any) => {
-            this.user = res.user;
-            localStorage.setItem('user', JSON.stringify(res.user));
-            this.storeToken(res.bearer);
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            resolve(this.user!);
-          },
-          (err) => {
-            //Handled in component.
-            reject(err);
-          }
-        );
-    });
+    try {
+      const encrypted = await this.encryptionService.encryptRSA({
+        email,
+        password,
+      });
+      const res = await lastValueFrom(this.http
+        .post<{bearer: string, user: User}>(USER_ROUTES.LOGIN(), {
+          data: encrypted.data,
+          publicKey: encrypted.publicKey
+        }));
+
+      this.user = res.user;
+      localStorage.setItem('user', JSON.stringify(res.user));
+      this.storeToken(res.bearer);
+      return this.user;
+    } catch(e: any) {
+      throw this.formatError(e);
+    }
+
+  }
+
+  formatError(e: any): { code: number, message: string } {
+    if(e.error.message instanceof Array){
+      return {
+        code: 500,
+        message: 'There was an error formatting your request.'
+              +  ' Sorry for the inconvenience.'
+              +  ' If the error persists, please email info@secured.team'
+            };
+    } else {
+      return e.error;
+    }
   }
 
   logout() {
