@@ -20,6 +20,8 @@ workflows:
           token: GH_PAT
   
   continuous-deployment:
+    when:
+      equal: [ '/^v[0-9]+\.[0-9]+\.[0-9]+-?[a-zA-Z]*$/', << pipeline.git.tag >> ]
     jobs:
       - cyber4all/sbom:
           context: [Shortcut]
