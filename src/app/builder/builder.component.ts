@@ -1,8 +1,15 @@
 import { Component, DoCheck, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogData } from '../dashboard/dashboard.component';
-
+export interface DialogData {
+  audience: string;
+  condition: string;
+  role: string;
+  task: string;
+  taskId: string;
+  degree: string;
+  effectiveness: string;
+}
 @Component({
   selector: 'cc-builder',
   templateUrl: './builder.component.html',
