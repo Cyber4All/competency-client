@@ -4,16 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
 import { CompetencyCardComponent } from '../shared/components/competency-card/competency-card.component';
-
-export interface DialogData {
-  audience: string;
-  condition: string;
-  role: string;
-  task: string;
-  taskId: string;
-  degree: string;
-  effectiveness: string;
-}
+import { Competency } from 'src/entity/Competency';
+import { Lifecycles } from 'src/entity/Lifecycles';
 
 @Component({
   selector: 'cc-competencies-dashboard',
@@ -22,7 +14,7 @@ export interface DialogData {
 })
 export class DashboardComponent implements OnInit {
 
-  competency!: DialogData;
+  competency!: Competency;
   user!: any;
 
   competencies: any = [];
@@ -107,25 +99,48 @@ export class DashboardComponent implements OnInit {
     this.competencies = await this.competencyService.getAllCompetencies(this.selected);
   }
 
-  async openCompetencyBuilder(competency?: any) {
+  async openCompetencyBuilder(competency?: Competency) {
     const res: any = await this.competencyService.createCompetency();
-    console.log(res);
     let authorId = '';
     if (this.authService.user) {
       authorId = this.authService.user._id;
     }
-    let data = {
+    let data: Competency = {
       _id: res.id,
-      audience: '',
-      role: '',
-      task: '',
-      taskId: '',
-      condition: '',
-      degree: '',
-      effectiveness: '',
-      author: authorId,
-      locked: false,
-      lastUpdate: Date.now()
+      status: Lifecycles.DRAFT,
+      authorId: '',
+      version: 0,
+      audience: {
+        _id: '',
+        type: '',
+        details: ''
+      },
+      condition: {
+        _id: '',
+        tech: [],
+        limitations: '',
+        documentation: [],
+        workRole: {
+          _id: '',
+          name: '',
+          description: ''
+        },
+      },
+      behavior: {
+        _id: '',
+        task: '',
+        details: ''
+      },
+      degree: {
+        _id: '',
+        complete: '',
+        correct: '',
+        time: ''
+      },
+      employability: {
+        _id: '',
+        details: ''
+      }
     };
     if(competency) {
       data = competency;

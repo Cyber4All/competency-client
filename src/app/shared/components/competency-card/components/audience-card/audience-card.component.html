@@ -1,1 +1,40 @@
-<p>audience-card works!</p>
+<!-- Toggle template for edit and viewing competency -->
+<ng-container *ngIf="!isEdit; then viewAudienceTemplate else editAudienceTemplate"></ng-container>
+
+<!--View Audience Template-->
+<ng-template #viewAudienceTemplate>
+  <p>aud go brrrr</p>
+</ng-template>
+
+<!--Edit Audience Template-->
+<ng-template #editAudienceTemplate>
+    <mat-expansion-panel [expanded]="currIndex === 0" (opened)="setStep(0)" >
+      
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Audience
+        </mat-panel-title>
+        <mat-panel-description>
+          Identify an actor for your competency
+          <mat-icon>account_circle</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Audience</mat-label>
+        <input matInput [formControl]="type">
+        <mat-error *ngIf="type.invalid">You must select a target audience!</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Description</mat-label>
+        <input matInput [formControl]="details">
+        <mat-error *ngIf="details.invalid">You must provide a description of your audience!</mat-error>
+      </mat-form-field>
+  
+      <mat-action-row>
+        <button mat-button color="primary" (click)="nextStep()">Next</button>
+      </mat-action-row>
+
+    </mat-expansion-panel>
+  </ng-template>

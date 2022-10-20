@@ -1,1 +1,51 @@
-<p>competency-card works!</p>
+<ng-container class="competency-card_container">
+  <form>
+    <mat-accordion class="competency-constructor_accordion">
+      <!--Audience-->
+      <cc-audience-card
+        [isEdit]="isEdit"
+        [currIndex] = "currIndex"
+        (setIndex) = "setView($event)"
+        (nextView) = "nextView()"
+        [audience] = "data.audience"
+        (audienceChange) = "updateCompetency($event)"
+      ></cc-audience-card>
+      <!--Behavior-->
+      <!-- <cc-behavior-card
+        [isEdit]="isEdit"
+        [currIndex] = "currIndex"
+        (setIndex) = "setView($event)"
+        (nextView) = "nextView()"
+        (prevView) = "prevView()"
+        [(behavior)] = "behavior"
+      ></cc-behavior-card> -->
+      <!--Condition-->
+      <!-- <cc-context-card
+        [isEdit]="isEdit"
+        [currIndex] = "currIndex"
+        (setIndex) = "setView($event)"
+        (nextView) = "nextView()"
+        (prevView) = "prevView()"
+        [(condition)] = "condition"
+      ></cc-context-card> -->
+      <!--Degree-->
+      <!-- <cc-degree-card
+        [isEdit]="isEdit"
+        [currIndex] = "currIndex"
+        (setIndex) = "setView($event)"
+        (nextView) = "nextView()"
+        (prevView) = "prevView()"
+        [(degree)] = "degree"
+      ></cc-degree-card> -->
+      <!--Employability-->
+      <!-- <cc-employability-card
+        [isEdit]="isEdit"
+        [currIndex] = "currIndex"
+        (setIndex) = "setView($event)"
+        (nextView) = "nextView()"
+        (prevView) = "prevView()"
+        [(employability)] = "employability"
+      ></cc-employability-card> -->
+    </mat-accordion>
+  </form>
+</ng-container>
