@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, DoCheck, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Audience } from 'src/entity/Audience';
+import { Audience } from 'src/entity/audience';
 
 @Component({
   selector: 'cc-audience-card',

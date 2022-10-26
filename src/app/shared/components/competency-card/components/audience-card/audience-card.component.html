@@ -8,7 +8,7 @@
 
 <!--Edit Audience Template-->
 <ng-template #editAudienceTemplate>
-    <mat-expansion-panel [expanded]="currIndex === 0" (opened)="setStep(0)" >
+    <mat-expansion-panel [expanded]="currIndex === 0" (opened)="setStep(0)">
       
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -32,9 +32,10 @@
         <mat-error *ngIf="details.invalid">You must provide a description of your audience!</mat-error>
       </mat-form-field>
   
+      <!-- This aint working
       <mat-action-row>
         <button mat-button color="primary" (click)="nextStep()">Next</button>
-      </mat-action-row>
+      </mat-action-row> -->
 
     </mat-expansion-panel>
   </ng-template>
