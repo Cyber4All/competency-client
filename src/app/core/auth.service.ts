@@ -6,7 +6,6 @@ import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from 'src/environments/routes';
 import { CookieService } from 'ngx-cookie-service';
-import { Token } from '@angular/compiler';
 
 
 const TOKEN_KEY = 'presence';
@@ -53,7 +52,7 @@ export class AuthService {
     try {
       const encrypted = await this.encryptionService.encryptRSA(user);
       const res = await lastValueFrom(this.http
-        .post<{bearer: Token, user: User}>(USER_ROUTES.REGISTER(), {
+        .post<{bearer: string, user: User}>(USER_ROUTES.REGISTER(), {
           data:encrypted.data,
           publicKey: encrypted.publicKey
         }));
