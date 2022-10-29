@@ -1,4 +1,4 @@
-import { Component, Input, DoCheck, Output, EventEmitter, OnChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, DoCheck, Output, EventEmitter, OnChanges, ChangeDetectorRef, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Condition } from 'src/entity/condition';
 @Component({
@@ -6,7 +6,7 @@ import { Condition } from 'src/entity/condition';
   templateUrl: './condition-card.component.html',
   styleUrls: ['./condition-card.component.scss']
 })
-export class ConditionCardComponent implements DoCheck {
+export class ConditionCardComponent implements OnInit, DoCheck {
 
   @Input() isEdit = false;
   @Input() currIndex: number | null = null;
@@ -20,6 +20,21 @@ export class ConditionCardComponent implements DoCheck {
   documentation = new FormControl({}, [Validators.required]);
 
   constructor() { }
+
+  ngOnInit(): void {
+    // If value exists, set type form control
+    if(this.condition.tech) {
+      this.tech.patchValue(this.condition.tech);
+    }
+    // If value exists, set details form control
+    if (this.condition.limitations) {
+      this.limitations.patchValue(this.condition.limitations);
+    }
+    // If value exists, set workrole form control
+    if (this.condition.documentation) {
+      this.documentation.patchValue(this.condition.documentation);
+    }
+  }
 
   ngDoCheck(): void {
     // If any value updates, update parent component

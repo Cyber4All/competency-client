@@ -1,1 +1,27 @@
-<p>condition-card works!</p>
+<!-- Toggle template for edit and viewing condition-->
+<ng-container *ngIf="!isEdit; then viewConditionTemplate else editConditionTemplate"></ng-container>
+
+<!--View Condition Template-->
+<ng-template #viewConditionTemplate>
+    <p>con go brrrr</p>
+</ng-template>
+
+<!--Edit Condition Template-->
+<ng-template #editConditionTemplate>
+    <mat-expansion-panel [expanded]="currIndex === 2" (opened)="setStep(2)">
+        <mat-expansion-panel-header>
+        <mat-panel-title>
+            Condition
+        </mat-panel-title>
+        <mat-panel-description>
+            Inform the date you wish to travel
+            <mat-icon>date_range</mat-icon>
+        </mat-panel-description>
+        </mat-expansion-panel-header>
+    
+        <!-- <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Previous</button>
+        <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row> -->
+    </mat-expansion-panel>
+</ng-template>
