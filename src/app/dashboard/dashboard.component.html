@@ -20,7 +20,7 @@
             </mat-menu>
             <button mat-raised-button class="filter-button" aria-label="Filter Tasks" matTooltip="Filter Tasks" [matMenuTriggerFor]="tasks">Tasks &nbsp; <mat-icon>filter_list</mat-icon></button>
             <mat-menu #tasks="matMenu">
-                <button mat-menu-item *ngFor="let obj of competencies" (click)="addFilter(obj.taskId, 3)">{{obj.taskId}}</button>
+                <!-- <button mat-menu-item *ngFor="let obj of competencies" (click)="addFilter(obj.taskId, 3)">{{obj.taskId}}</button> -->
             </mat-menu>
             <button mat-raised-button class="filter-button" aria-label="Filter Audience" matTooltip="Filter Audience" [matMenuTriggerFor]="aud">Audience &nbsp; <mat-icon>filter_list</mat-icon></button>
             <mat-menu #aud="matMenu">
@@ -28,11 +28,11 @@
             </mat-menu>
         </div>
     </div>
-    <div *ngFor="let competency of competencies" class="competency-card">
+    <!-- <div *ngFor="let competency of competencies" class="competency-card">
         <mat-card>
             <!-- <div class="framework">
                 Workrole: {{ competency?.role | titlecase}}<br>Task: {{competency?.taskId}}-{{competency.task}}
-            </div> -->
+            </div> --
             <br>
             <!-- <div class="competency">
                 The {{ competency?.audience | titlecase}} acting as a {{ competency?.role | lowercase }} {{ competency?.condition }} should be able to {{ competency?.task }} {{ competency?.degree }} {{ competency?.effectiveness }}.
@@ -45,9 +45,9 @@
                 <button *ngIf="competency.locked" mat-mini-fab color="warn" aria-label="Competency currently being edited. Try again later." matTooltip="Competency currently being edited. Try again later.">
                     <mat-icon>close</mat-icon>
                 </button>
-            </div> -->
+            </div> --
         </mat-card>
-    </div>
+    </div> -->
 </div>
 
 

@@ -41,14 +41,15 @@
         (degreeChange) = "updateCompetency($event)"
       ></cc-degree-card>
       <!--Employability-->
-      <!-- <cc-employability-card
+      <cc-employability-card
         [isEdit]="isEdit"
         [currIndex] = "currIndex"
         (setIndex) = "setView($event)"
         (nextView) = "nextView()"
         (prevView) = "prevView()"
-        [(employability)] = "employability"
-      ></cc-employability-card> -->
+        [employability] = "data.employability"
+        (employabilityChange) = "updateCompetency($event)"
+      ></cc-employability-card>
     </mat-accordion>
   </form>
 </ng-container>

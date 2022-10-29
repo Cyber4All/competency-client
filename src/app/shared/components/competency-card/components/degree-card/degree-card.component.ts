@@ -38,9 +38,9 @@ export class DegreeCardComponent implements OnInit, DoCheck {
 
   ngDoCheck(): void {
     // If any value updates, update parent component
-    if(this.degree.complete || this.degree.correct || this.degree.time) {
+    if(this.complete.value || this.correct.value || this.time.value) {
       this.degreeChange.emit({
-        update: 'condition',
+        update: 'degree',
         value: {
           _id: this.degree._id,
           complete: this.complete.value,

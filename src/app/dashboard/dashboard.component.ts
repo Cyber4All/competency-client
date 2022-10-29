@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
 import { CompetencyCardComponent } from '../shared/components/competency-card/competency-card.component';
-import { Competency } from 'src/entity/Competency';
-import { Lifecycles } from 'src/entity/Lifecycles';
+import { Competency } from 'src/entity/competency';
+import { Lifecycles } from 'src/entity/lifecycles';
 
 @Component({
   selector: 'cc-competencies-dashboard',
@@ -42,15 +42,18 @@ export class DashboardComponent implements OnInit {
     ) { }
 
   async ngOnInit() {
-    await this.getCompetencies();
+    this.getCompetencies();
     this.user = this.authService.user;
 
     // Push unsaved/non-academic audiences to audience array
     // this.audience.push('working Professional','intern')
   }
 
-  async getCompetencies() {
-    this.competencies = await this.competencyService.getAllCompetencies();
+  getCompetencies() {
+    this.competencyService.getAllCompetencies()
+    .then((res: any) => {
+      this.competencies = res.data.competency;
+    });
   }
 
   async updateCompetency(competency: any) {
@@ -87,7 +90,7 @@ export class DashboardComponent implements OnInit {
 
   // Get filtered competencies
   async filter() {
-    this.competencies = await this.competencyService.getAllCompetencies(this.selected);
+    //this.competencies = await this.competencyService.getAllCompetencies(this.selected);
   }
 
   // Clear filters and reset index
@@ -119,17 +122,17 @@ export class DashboardComponent implements OnInit {
         _id: '',
         tech: [],
         limitations: '',
-        documentation: [],
-        workRole: {
-          _id: '',
-          name: '',
-          description: ''
-        },
+        documentation: []
       },
       behavior: {
         _id: '',
         task: '',
-        details: ''
+        details: '',
+        workrole: {
+          _id: '',
+          name: '',
+          description: ''
+        },
       },
       degree: {
         _id: '',

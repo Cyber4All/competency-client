@@ -1,1 +1,36 @@
-<p>employability-card works!</p>
+<!-- Toggle template for edit and viewing employability -->
+<ng-container *ngIf="!isEdit; then viewEmployabilityTemplate else editEmployabilityTemplate"></ng-container>
+
+<!--View Employability Template-->
+<ng-template #viewEmployabilityTemplate>
+  <p>deg go brrrr</p>
+</ng-template>
+
+<!--Edit Employability Template-->
+<ng-template #editEmployabilityTemplate>
+  <mat-expansion-panel [expanded]="currIndex === 4" (opened)="setStep(4)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Employability
+      </mat-panel-title>
+      <mat-panel-description>
+        Type your name and age
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+      <mat-label>First name</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Age</mat-label>
+      <input matInput type="number" min="1">
+    </mat-form-field>
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button mat-button color="primary" (click)="nextStep()">End</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</ng-template>

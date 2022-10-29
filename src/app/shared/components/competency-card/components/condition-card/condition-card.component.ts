@@ -55,21 +55,21 @@ export class ConditionCardComponent implements OnInit, DoCheck {
    *
    * @param val value of current builder element
    */
-     setStep(val: number) {
-      this.setIndex.emit(val);
-    }
+    setStep(val: number) {
+    this.setIndex.emit(val);
+  }
 
-    /**
-     * Method to advance to next step
-     */
-    nextStep() {
-      if(this.tech.valid && this.limitations.valid && this.documentation.valid) {
-        this.nextView.emit();
-      }
+  /**
+   * Method to advance to next step
+   */
+  nextStep() {
+    if(this.tech.valid && this.limitations.valid && this.documentation.valid) {
+      this.nextView.emit();
     }
+  }
 
-    prevStep() {
-      this.prevView.emit();
-    }
+  prevStep() {
+    this.prevView.emit();
+  }
 
 }

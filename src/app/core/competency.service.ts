@@ -15,11 +15,15 @@ export class CompetencyService {
     private auth: AuthService,
   ) {}
 
-  getAllCompetencies(query?: { role?: string[], audience?: string[], task?: string[] }) {
+  getAllCompetencies(q?: { role?: string[], audience?: string[], task?: string[] }) {
     this.auth.initHeaders();
+    const query = `query 
+    Query{competency(competencyId: "63488ddcb835f7100cf6ea94"){
+      audience{type}, behavior{details}, condition{tech}, degree{complete}, employability{details}}}`;
     return lastValueFrom(this.http
-      .get(
+      .post(
         COMPETENCY_ROUTES.RETRIEVE_COMPETENCY(),
+        { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ));
   }

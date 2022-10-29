@@ -1,12 +1,12 @@
-import { Component, DoCheck, Inject, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, DoCheck, OnChanges, Inject, Input, Output, SimpleChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Audience } from 'src/entity/Audience';
-import { Behavior } from 'src/entity/Behavior';
-import { Competency } from 'src/entity/Competency';
-import { Condition } from 'src/entity/Condition';
-import { Degree } from 'src/entity/Degree';
-import { Employability } from 'src/entity/Employability';
+import { Audience } from 'src/entity/audience';
+import { Behavior } from 'src/entity/behavior';
+import { Competency } from 'src/entity/competency';
+import { Condition } from 'src/entity/condition';
+import { Degree } from 'src/entity/degree';
+import { Employability } from 'src/entity/employability';
 
 @Component({
   selector: 'cc-competency-card',
@@ -16,11 +16,7 @@ import { Employability } from 'src/entity/Employability';
 export class CompetencyCardComponent implements DoCheck {
   // Toggle for editing a competency
   @Input() isEdit = true;
-  /**MOVING FORM CONTROLS OUT TO COMPONENTS */
-  behavior = new FormControl({}, [Validators.required]);
-  condition = new FormControl({}, [Validators.required]);
-  degree = new FormControl({}, [Validators.required]);
-  employability = new FormControl({}, [Validators.required]);
+
   // Index to toggle cards *** Null closes all cards
   compIndex: number | null = null;
   // Index of current open card component
@@ -32,7 +28,7 @@ export class CompetencyCardComponent implements DoCheck {
 
   constructor(
     public dialogRef: MatDialogRef<CompetencyCardComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Competency
+    @Inject(MAT_DIALOG_DATA) public data: Competency,
   ) {}
 
   /**
