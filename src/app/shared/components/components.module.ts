@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CompetencyCardComponent } from './competency-card/competency-card.component';
 import { AudienceCardComponent } from './competency-card/components/audience-card/audience-card.component';
 import { BehaviorCardComponent } from './competency-card/components/behavior-card/behavior-card.component';
-import { ContextCardComponent } from './competency-card/components/context-card/context-card.component';
+import { ConditionCardComponent } from './competency-card/components/condition-card/condition-card.component';
 import { DegreeCardComponent } from './competency-card/components/degree-card/degree-card.component';
 import { EmployabilityCardComponent } from './competency-card/components/employability-card/employability-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,9 +32,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     CompetencyCardComponent,
     AudienceCardComponent,
     BehaviorCardComponent,
-    ContextCardComponent,
+    ConditionCardComponent,
     DegreeCardComponent,
-    EmployabilityCardComponent
+    EmployabilityCardComponent,
   ],
   imports: [
     CommonModule,
