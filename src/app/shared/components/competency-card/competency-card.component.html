@@ -11,32 +11,35 @@
         (audienceChange) = "updateCompetency($event)"
       ></cc-audience-card>
       <!--Behavior-->
-      <!-- <cc-behavior-card
+      <cc-behavior-card
         [isEdit]="isEdit"
         [currIndex] = "currIndex"
         (setIndex) = "setView($event)"
         (nextView) = "nextView()"
         (prevView) = "prevView()"
-        [(behavior)] = "behavior"
-      ></cc-behavior-card> -->
+        [behavior] = "data.behavior"
+        (behaviorChange) = "updateCompetency($event)"
+      ></cc-behavior-card>
       <!--Condition-->
-      <!-- <cc-context-card
+      <cc-condition-card
         [isEdit]="isEdit"
         [currIndex] = "currIndex"
         (setIndex) = "setView($event)"
         (nextView) = "nextView()"
         (prevView) = "prevView()"
-        [(condition)] = "condition"
-      ></cc-context-card> -->
+        [condition] = "data.condition"
+        (conditionChange) = "updateCompetency($event)"
+      ></cc-condition-card>
       <!--Degree-->
-      <!-- <cc-degree-card
+      <cc-degree-card
         [isEdit]="isEdit"
         [currIndex] = "currIndex"
         (setIndex) = "setView($event)"
         (nextView) = "nextView()"
         (prevView) = "prevView()"
-        [(degree)] = "degree"
-      ></cc-degree-card> -->
+        [degree] = "data.degree"
+        (degreeChange) = "updateCompetency($event)"
+      ></cc-degree-card>
       <!--Employability-->
       <!-- <cc-employability-card
         [isEdit]="isEdit"
