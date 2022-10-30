@@ -18,7 +18,25 @@
             <mat-icon>date_range</mat-icon>
         </mat-panel-description>
         </mat-expansion-panel-header>
+
+        <mat-form-field appearance="fill" color="primary">
+            <mat-label>Technology</mat-label>
+            <textarea matInput [formControl]="tech"></textarea>
+            <mat-error *ngIf="tech.invalid">Yeetus check tech</mat-error>
+        </mat-form-field>
     
+        <mat-form-field appearance="fill" color="primary">
+            <mat-label>Limitations</mat-label>
+            <textarea matInput [formControl]="limitations"></textarea>
+            <mat-error *ngIf="limitations.invalid">Yeetus check limits</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" color="primary">
+            <mat-label>Documentation</mat-label>
+            <textarea matInput [formControl]="documentation"></textarea>
+            <mat-error *ngIf="documentation.invalid">Yeetus check docs</mat-error>
+        </mat-form-field>
+
         <!-- <mat-action-row>
         <button mat-button color="warn" (click)="prevStep()">Previous</button>
         <button mat-button color="primary" (click)="nextStep()">Next</button>
