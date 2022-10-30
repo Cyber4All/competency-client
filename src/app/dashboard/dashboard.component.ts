@@ -102,57 +102,21 @@ export class DashboardComponent implements OnInit {
     this.competencies = await this.competencyService.getAllCompetencies(this.selected);
   }
 
-  async openCompetencyBuilder(competency?: Competency) {
+  async openCompetencyBuilder(existingCompetency?: Competency) {
     const res: any = await this.competencyService.createCompetency();
+    let competency: Competency = await this.competencyService.getCompetencyById(res.id);
     let authorId = '';
     if (this.authService.user) {
       authorId = this.authService.user._id;
     }
-    let data: Competency = {
-      _id: res.id,
-      status: Lifecycles.DRAFT,
-      authorId: '',
-      version: 0,
-      audience: {
-        _id: '',
-        type: '',
-        details: ''
-      },
-      condition: {
-        _id: '',
-        tech: [],
-        limitations: '',
-        documentation: []
-      },
-      behavior: {
-        _id: '',
-        task: '',
-        details: '',
-        workrole: {
-          _id: '',
-          name: '',
-          description: ''
-        },
-      },
-      degree: {
-        _id: '',
-        complete: '',
-        correct: '',
-        time: ''
-      },
-      employability: {
-        _id: '',
-        details: ''
-      }
-    };
-    if(competency) {
-      data = competency;
+    if(existingCompetency) {
+      competency = existingCompetency;
       this.lockCompetency(competency);
     }
     const dialogRef = this.dialog.open(CompetencyCardComponent, {
       height: '700px',
       width: '900px',
-      data: data
+      data: competency
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {

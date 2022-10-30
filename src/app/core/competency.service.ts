@@ -5,6 +5,7 @@ import {
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { lastValueFrom } from 'rxjs';
+import { Competency, CompetencyGraph } from 'src/entity/competency';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,17 @@ export class CompetencyService {
       audience{type}, behavior{details}, condition{tech}, degree{complete}, employability{details}}}`;
     return lastValueFrom(this.http
       .post(
+        COMPETENCY_ROUTES.RETRIEVE_COMPETENCY(),
+        { query },
+        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+      ));
+  }
+
+  getCompetencyById(competencyId: string): Promise<Competency> {
+    this.auth.initHeaders();
+    const query = CompetencyGraph(competencyId);
+    return lastValueFrom(this.http
+      .post<Competency>(
         COMPETENCY_ROUTES.RETRIEVE_COMPETENCY(),
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }

@@ -16,3 +16,48 @@ export interface Competency {
   degree: Degree,
   employability: Employability
 }
+
+export function CompetencyGraph(id: string) {
+  return `
+    query
+      Query {
+        competency(competencyId:"`+id+`") {
+          audience {
+            _id
+            type
+            details
+          },
+          behavior {
+            _id
+            task
+            details
+            work_role {
+              _id
+              name
+              description
+            }
+          },
+          condition {
+            _id
+            tech
+            limitations
+            documentation {
+              conditionId
+              description
+              uri
+            }
+          },
+          degree {
+            _id
+            complete
+            correct
+            time
+          },
+          employability {
+            _id
+            details
+          }
+        }
+      }
+  `;
+}

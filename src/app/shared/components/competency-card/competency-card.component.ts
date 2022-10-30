@@ -1,9 +1,7 @@
-import { ChangeDetectorRef, Component, DoCheck, OnChanges, Inject, Input, Output, SimpleChanges } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, DoCheck, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Audience } from 'src/entity/audience';
 import { Behavior } from 'src/entity/behavior';
-import { Competency } from 'src/entity/competency';
 import { Condition } from 'src/entity/condition';
 import { Degree } from 'src/entity/degree';
 import { Employability } from 'src/entity/employability';
@@ -28,11 +26,10 @@ export class CompetencyCardComponent implements DoCheck {
 
   constructor(
     public dialogRef: MatDialogRef<CompetencyCardComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Competency,
+    @Inject(MAT_DIALOG_DATA) public COMPETENCY: any,
   ) {}
 
   /**
-   * Need audience groups
    * Need NICE Framework workroles
    * Need NICE Tasks based on workroles^
    */
@@ -86,22 +83,22 @@ export class CompetencyCardComponent implements DoCheck {
   ): void {
     switch(event.update) {
       case 'audience':
-        this.data.audience = event.value as Audience;
+        this.COMPETENCY.data.competency.audience = event.value as Audience;
         break;
       case 'behavior':
-        this.data.behavior = event.value as Behavior;
+        this.COMPETENCY.data.competency.behavior = event.value as Behavior;
         break;
       case 'condition':
-        this.data.condition = event.value as Condition;
+        this.COMPETENCY.data.competency.condition = event.value as Condition;
         break;
       case 'degree':
-        this.data.degree = event.value as Degree;
+        this.COMPETENCY.data.competency.degree = event.value as Degree;
         break;
       case 'employability':
-        this.data.employability = event.value as Employability;
+        this.COMPETENCY.data.competency.employability = event.value as Employability;
         break;
       default:
-        console.log('yo wtf check yo shit');
+        console.log('yo you messed up dawg');
         break;
     }
   }
