@@ -1,10 +1,6 @@
 import { Component, DoCheck, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AudienceService } from 'src/app/core/audience.service';
-import { BehaviorService } from 'src/app/core/behavior.service';
-import { ConditionService } from 'src/app/core/condition.service';
-import { DegreeService } from 'src/app/core/degree.service';
-import { EmployabilityService } from 'src/app/core/employability.service';
+import { CompetencyService } from 'src/app/core/competency.service';
 import { Audience } from 'src/entity/audience';
 import { Behavior } from 'src/entity/behavior';
 import { Condition } from 'src/entity/condition';
@@ -19,7 +15,8 @@ import { Employability } from 'src/entity/employability';
 export class CompetencyCardComponent implements DoCheck {
   // Toggle for editing a competency
   @Input() isEdit = true;
-
+  // Current Competency ID
+  competencyId = '';
   // Index to toggle cards *** Null closes all cards
   compIndex: number | null = null;
   // Index of current open card component
@@ -32,12 +29,10 @@ export class CompetencyCardComponent implements DoCheck {
   constructor(
     public dialogRef: MatDialogRef<CompetencyCardComponent>,
     @Inject(MAT_DIALOG_DATA) public COMPETENCY: any,
-    private audService: AudienceService,
-    private behService: BehaviorService,
-    private conService: ConditionService,
-    private degService: DegreeService,
-    private empService: EmployabilityService
-  ) {}
+    private competencyService: CompetencyService,
+  ) {
+    this.competencyId = COMPETENCY.data.competency._id;
+  }
 
   /**
    * Need NICE Framework workroles
@@ -95,7 +90,7 @@ export class CompetencyCardComponent implements DoCheck {
       case 'audience':
         const audienceUpdate = event.value as Audience;
         this.COMPETENCY.data.competency.audience = audienceUpdate;
-        //this.audService
+        // this.competencyService.updateAudience(this.COMPETENCY.data.competency._id,audienceUpdate);
         break;
       case 'behavior':
         this.COMPETENCY.data.competency.behavior = event.value as Behavior;

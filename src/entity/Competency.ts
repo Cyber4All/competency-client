@@ -22,6 +22,10 @@ export function CompetencyGraph(id: string) {
     query
       Query {
         competency(competencyId:"`+id+`") {
+          _id
+          status
+          authorId
+          version
           audience {
             _id
             type

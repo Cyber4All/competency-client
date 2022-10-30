@@ -3,6 +3,7 @@
     <mat-accordion class="competency-constructor_accordion">
       <!--Audience-->
       <cc-audience-card
+        [competencyId] = "competencyId"
         [isEdit]="isEdit"
         [currIndex] = "currIndex"
         (setIndex) = "setView($event)"
@@ -12,6 +13,7 @@
       ></cc-audience-card>
       <!--Behavior-->
       <cc-behavior-card
+        [competencyId] = "competencyId"
         [isEdit]="isEdit"
         [currIndex] = "currIndex"
         (setIndex) = "setView($event)"
@@ -22,6 +24,7 @@
       ></cc-behavior-card>
       <!--Condition-->
       <cc-condition-card
+        [competencyId] = "competencyId"
         [isEdit]="isEdit"
         [currIndex] = "currIndex"
         (setIndex) = "setView($event)"
@@ -32,6 +35,7 @@
       ></cc-condition-card>
       <!--Degree-->
       <cc-degree-card
+        [competencyId] = "competencyId"
         [isEdit]="isEdit"
         [currIndex] = "currIndex"
         (setIndex) = "setView($event)"
@@ -42,6 +46,7 @@
       ></cc-degree-card>
       <!--Employability-->
       <cc-employability-card
+        [competencyId] = "competencyId"
         [isEdit]="isEdit"
         [currIndex] = "currIndex"
         (setIndex) = "setView($event)"

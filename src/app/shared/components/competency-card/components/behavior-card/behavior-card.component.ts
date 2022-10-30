@@ -8,6 +8,7 @@ import { Behavior } from 'src/entity/behavior';
 })
 export class BehaviorCardComponent implements OnInit, DoCheck {
 
+  @Input() competencyId!: string;
   @Input() isEdit = false;
   @Input() currIndex: number | null = null;
   @Input() behavior!: Behavior;

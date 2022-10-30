@@ -8,6 +8,7 @@ import { Employability } from 'src/entity/employability';
 })
 export class EmployabilityCardComponent implements OnInit, DoCheck {
 
+  @Input() competencyId!: string;
   @Input() isEdit = false;
   @Input() currIndex: number | null = null;
   @Input() employability!: Employability;

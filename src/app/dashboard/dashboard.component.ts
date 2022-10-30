@@ -58,7 +58,6 @@ export class DashboardComponent implements OnInit {
 
   async updateCompetency(competency: any) {
     await this.competencyService.lockCompetency(competency, false);
-    await this.competencyService.editCompetency(competency);
   }
 
   async lockCompetency(competency: any) {
@@ -105,10 +104,6 @@ export class DashboardComponent implements OnInit {
   async openCompetencyBuilder(existingCompetency?: Competency) {
     const res: any = await this.competencyService.createCompetency();
     let competency: Competency = await this.competencyService.getCompetencyById(res.id);
-    let authorId = '';
-    if (this.authService.user) {
-      authorId = this.authService.user._id;
-    }
     if(existingCompetency) {
       competency = existingCompetency;
       this.lockCompetency(competency);

@@ -8,6 +8,7 @@ import { Condition } from 'src/entity/condition';
 })
 export class ConditionCardComponent implements OnInit, DoCheck {
 
+  @Input() competencyId!: string;
   @Input() isEdit = false;
   @Input() currIndex: number | null = null;
   @Input() condition!: Condition;

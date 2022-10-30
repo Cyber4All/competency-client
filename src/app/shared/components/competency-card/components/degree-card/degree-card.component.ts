@@ -8,6 +8,7 @@ import { Degree } from 'src/entity/degree';
 })
 export class DegreeCardComponent implements OnInit, DoCheck {
 
+  @Input() competencyId!: string;
   @Input() isEdit = false;
   @Input() currIndex: number | null = null;
   @Input() degree!: Degree;
