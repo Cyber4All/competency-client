@@ -1,5 +1,10 @@
 import { Component, DoCheck, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AudienceService } from 'src/app/core/audience.service';
+import { BehaviorService } from 'src/app/core/behavior.service';
+import { ConditionService } from 'src/app/core/condition.service';
+import { DegreeService } from 'src/app/core/degree.service';
+import { EmployabilityService } from 'src/app/core/employability.service';
 import { Audience } from 'src/entity/audience';
 import { Behavior } from 'src/entity/behavior';
 import { Condition } from 'src/entity/condition';
@@ -27,6 +32,11 @@ export class CompetencyCardComponent implements DoCheck {
   constructor(
     public dialogRef: MatDialogRef<CompetencyCardComponent>,
     @Inject(MAT_DIALOG_DATA) public COMPETENCY: any,
+    private audService: AudienceService,
+    private behService: BehaviorService,
+    private conService: ConditionService,
+    private degService: DegreeService,
+    private empService: EmployabilityService
   ) {}
 
   /**
@@ -83,7 +93,9 @@ export class CompetencyCardComponent implements DoCheck {
   ): void {
     switch(event.update) {
       case 'audience':
-        this.COMPETENCY.data.competency.audience = event.value as Audience;
+        const audienceUpdate = event.value as Audience;
+        this.COMPETENCY.data.competency.audience = audienceUpdate;
+        //this.audService
         break;
       case 'behavior':
         this.COMPETENCY.data.competency.behavior = event.value as Behavior;
