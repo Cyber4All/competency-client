@@ -1,5 +1,6 @@
-import { Component, DoCheck, Inject, Input } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatAccordionTogglePosition } from '@angular/material/expansion';
 import { CompetencyService } from 'src/app/core/competency.service';
 import { Audience } from 'src/entity/audience';
 import { Behavior } from 'src/entity/behavior';
@@ -12,7 +13,7 @@ import { Employability } from 'src/entity/employability';
   templateUrl: './competency-card.component.html',
   styleUrls: ['./competency-card.component.scss']
 })
-export class CompetencyCardComponent implements DoCheck {
+export class CompetencyCardComponent implements OnInit {
   // Toggle for editing a competency
   @Input() isEdit = true;
   // Current Competency ID
@@ -21,10 +22,7 @@ export class CompetencyCardComponent implements DoCheck {
   compIndex: number | null = null;
   // Index of current open card component
   currIndex = 0;
-  // Boolean to disable submission button
-  isDisabled = true;
-  // Boolean to toggle error message
-  errorMessage = false;
+  position: MatAccordionTogglePosition = 'before';
 
   constructor(
     public dialogRef: MatDialogRef<CompetencyCardComponent>,
@@ -32,6 +30,14 @@ export class CompetencyCardComponent implements DoCheck {
     private competencyService: CompetencyService,
   ) {
     this.competencyId = COMPETENCY.data.competency._id;
+  }
+
+  ngOnInit(): void {
+    this.competencyService.build.subscribe((index: number | null) => {
+      if(index !== null) {
+        this.currIndex = index;
+      }
+    });
   }
 
   /**
@@ -44,26 +50,8 @@ export class CompetencyCardComponent implements DoCheck {
    *
    * @param index location of selected builder element
    */
-  setView(index: number): void {
+  setView(index: number | null): void {
     this.compIndex = index;
-  }
-
-  /**
-   * Advances to next builder element
-   */
-  nextView(): void {
-    if(typeof this.compIndex === 'number') {
-      this.compIndex++;
-    }
-  }
-
-  /**
-   * Returns to previous builder element
-   */
-  prevView(): void {
-    if(typeof this.compIndex === 'number') {
-      this.compIndex--;
-    }
   }
 
   /**
@@ -88,9 +76,7 @@ export class CompetencyCardComponent implements DoCheck {
   ): void {
     switch(event.update) {
       case 'audience':
-        const audienceUpdate = event.value as Audience;
-        this.COMPETENCY.data.competency.audience = audienceUpdate;
-        // this.competencyService.updateAudience(this.COMPETENCY.data.competency._id,audienceUpdate);
+        this.COMPETENCY.data.competency.audience = event.value as Audience;
         break;
       case 'behavior':
         this.COMPETENCY.data.competency.behavior = event.value as Behavior;
@@ -108,55 +94,5 @@ export class CompetencyCardComponent implements DoCheck {
         console.log('yo you messed up dawg');
         break;
     }
-  }
-
-  /**
-   * Function to continusouly check form element values
-   */
-  ngDoCheck(): void {
-    this.checkData();
-  }
-
-  /**
-   * Function to toggle error messages and submission button
-   */
-  checkData(): void {
-    // Check to ensure all fileds are completed to enable submission button
-    // if (
-    //   typeof this.data.audience !== 'Audience' &&
-    //   this.data.role !== '' &&
-    //   this.data.task !== '' &&
-    //   this.data.condition !== '' &&
-    //   this.data.degree !== '' &&
-    //   this.data.effectiveness !== ''
-    // ) {
-    //   this.errorMessage = false;
-    //   this.isDisabled = false;
-    // }
-
-    // // Check to ensure submission button is disabled if a field becomes empty after intially touched
-    // if (
-    //   this.data.audience === '' ||
-    //   this.data.role === '' ||
-    //   this.data.task === '' ||
-    //   this.data.condition === '' ||
-    //   this.data.degree === '' ||
-    //   this.data.effectiveness === ''
-    // ) {
-    //   this.isDisabled = true;
-    // }
-
-    // // After a form element has been touched, check if the data values are empty strings
-    // // If they are empty, show the warning message, otherwise disable the warning message
-    // if (
-    //   (this.data.audience === '' && this.audience.value === '' && this.audience.touched) ||
-    //   (this.data.condition === '' && this.condition.value === '' && this.condition.touched) ||
-    //   (this.data.degree === '' && this.degree.value === '' && this.degree.touched) ||
-    //   (this.data.effectiveness === '' && this.employability.value === '' && this.employability.touched)
-    // ) {
-    //   this.errorMessage = true;
-    // } else {
-    //   this.errorMessage = false;
-    // }
   }
 }

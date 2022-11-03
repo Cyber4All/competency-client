@@ -1,5 +1,6 @@
 import { Component, Input, DoCheck, Output, EventEmitter, OnChanges, ChangeDetectorRef, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { CompetencyService } from 'src/app/core/competency.service';
 import { Degree } from 'src/entity/degree';
 @Component({
   selector: 'cc-degree-card',
@@ -10,19 +11,24 @@ export class DegreeCardComponent implements OnInit, DoCheck {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
-  @Input() currIndex: number | null = null;
   @Input() degree!: Degree;
   @Output() degreeChange = new EventEmitter<{update: string, value: Degree}>();
   @Output() setIndex = new EventEmitter<number>();
-  @Output() nextView = new EventEmitter();
-  @Output() prevView = new EventEmitter();
+  currIndex: number | null = null;
   complete = new FormControl('', [Validators.required]);
   correct = new FormControl('', [Validators.required]);
   time = new FormControl('', [Validators.required]);
 
-  constructor() { }
+  constructor(
+    private competencyService: CompetencyService
+  ) { }
 
   ngOnInit(): void {
+    this.competencyService.build.subscribe((index: number | null) => {
+      if(index !== null) {
+        this.currIndex = index;
+      }
+    });
     // If value exists, set type form control
     if(this.degree.complete) {
       this.complete.patchValue(this.degree.complete);
@@ -64,14 +70,17 @@ export class DegreeCardComponent implements OnInit, DoCheck {
   /**
    * Method to advance to next step
    */
-  nextStep() {
+   async nextStep() {
     if(this.complete.valid && this.correct.valid && this.time.valid) {
-      this.nextView.emit();
+      const res: any = await this.competencyService.updateDegree(
+        this.competencyId,
+        {
+          _id: this.degree._id,
+          correct: this.correct.value,
+          complete: this.complete.value,
+          time: this.time.value
+        }
+      );
     }
   }
-
-  prevStep() {
-    this.prevView.emit();
-  }
-
 }

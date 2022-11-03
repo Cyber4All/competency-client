@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, DoCheck, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { CompetencyService } from 'src/app/core/competency.service';
 import { Audience } from 'src/entity/audience';
 
 @Component({
@@ -11,17 +12,25 @@ export class AudienceCardComponent implements OnInit, DoCheck {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
-  @Input() currIndex: number | null = null;
   @Input() audience!: Audience;
   @Output() audienceChange = new EventEmitter<{update: string, value: Audience}>();
   @Output() setIndex = new EventEmitter<number>();
-  @Output() nextView = new EventEmitter();
+  currIndex: number | null = null;
   type = new FormControl('', [Validators.required]);
   details = new FormControl('', [Validators.required]);
 
-  constructor() {}
+  constructor(
+    private competencyService: CompetencyService,
+    // private subscription: Subscription
+  ) {}
 
   ngOnInit(): void {
+    this.competencyService.build.subscribe((index: number | null) => {
+      if(index !== null) {
+        this.currIndex = index;
+      }
+    });
+
     // If value exists, set type form control
     if(this.audience.type) {
       this.type.patchValue(this.audience.type);
@@ -56,11 +65,18 @@ export class AudienceCardComponent implements OnInit, DoCheck {
   }
 
   /**
-   * Method to advance to next step
+   * Method to save audience and advance to next step
    */
-   nextStep() {
+   async nextStep() {
     if(this.type.valid && this.details.valid) {
-      this.nextView.emit();
+      const res: any = await this.competencyService.updateAudience(
+        this.competencyId,
+        {
+          _id: this.audience._id,
+          type: this.type.value,
+          details: this.details.value
+        }
+      );
     }
   }
 }

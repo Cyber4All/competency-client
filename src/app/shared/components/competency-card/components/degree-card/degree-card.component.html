@@ -8,7 +8,7 @@
 
 <!--Edit Degree Template-->
 <ng-template #editDegreeTemplate>
-  <mat-expansion-panel [expanded]="currIndex === 3" (opened)="setStep(3)">
+  <mat-expansion-panel [expanded]="true" (opened)="setStep(3)">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Degree
@@ -28,9 +28,10 @@
       <mat-label>Age</mat-label>
       <input matInput type="number" min="1">
     </mat-form-field>
+
     <mat-action-row>
-      <button mat-button color="warn" (click)="prevStep()">Previous</button>
-      <button mat-button color="primary" (click)="nextStep()">Next</button>
+      <button mat-button color="primary" (click)="nextStep()" [disabled]="complete.invalid || correct.invalid || time.invalid">Update Audience</button>
     </mat-action-row>
+
   </mat-expansion-panel>
 </ng-template>

@@ -1,5 +1,6 @@
 import { Component, Input, DoCheck, Output, EventEmitter, OnChanges, ChangeDetectorRef, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { CompetencyService } from 'src/app/core/competency.service';
 import { Condition } from 'src/entity/condition';
 @Component({
   selector: 'cc-condition-card',
@@ -10,19 +11,24 @@ export class ConditionCardComponent implements OnInit, DoCheck {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
-  @Input() currIndex: number | null = null;
   @Input() condition!: Condition;
   @Output() conditionChange = new EventEmitter<{update: string, value: Condition}>();
   @Output() setIndex = new EventEmitter<number>();
-  @Output() nextView = new EventEmitter();
-  @Output() prevView = new EventEmitter();
-  tech = new FormControl({}, [Validators.required]);
+  currIndex: number | null = null;
+  tech = new FormControl([], [Validators.required]);
   limitations = new FormControl('', [Validators.required]);
-  documentation = new FormControl({}, [Validators.required]);
+  documentation = new FormControl([], [Validators.required]);
 
-  constructor() { }
+  constructor(
+    private competencyService: CompetencyService
+  ) { }
 
   ngOnInit(): void {
+    this.competencyService.build.subscribe((index: number | null) => {
+      if(index !== null) {
+        this.currIndex = index;
+      }
+    });
     // If value exists, set type form control
     if(this.condition.tech) {
       this.tech.patchValue(this.condition.tech);
@@ -56,21 +62,24 @@ export class ConditionCardComponent implements OnInit, DoCheck {
    *
    * @param val value of current builder element
    */
-    setStep(val: number) {
+  setStep(val: number) {
     this.setIndex.emit(val);
   }
 
   /**
    * Method to advance to next step
    */
-  nextStep() {
+   async nextStep() {
     if(this.tech.valid && this.limitations.valid && this.documentation.valid) {
-      this.nextView.emit();
+      const res: any = await this.competencyService.updateCondition(
+        this.competencyId,
+        {
+          _id: this.condition._id,
+          tech: this.tech.value,
+          limitations: this.limitations.value,
+          documentation: this.documentation.value
+        }
+      );
     }
   }
-
-  prevStep() {
-    this.prevView.emit();
-  }
-
 }

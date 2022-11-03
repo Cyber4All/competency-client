@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, DoCheck, Output, EventEmitter, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { CompetencyService } from 'src/app/core/competency.service';
 import { Behavior } from 'src/entity/behavior';
 @Component({
   selector: 'cc-behavior-card',
@@ -10,19 +12,25 @@ export class BehaviorCardComponent implements OnInit, DoCheck {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
-  @Input() currIndex: number | null = null;
   @Input() behavior!: Behavior;
   @Output() behaviorChange = new EventEmitter<{update: string, value: Behavior}>();
   @Output() setIndex = new EventEmitter<number>();
-  @Output() nextView = new EventEmitter();
-  @Output() prevView = new EventEmitter();
+  currIndex: number | null = null;
   task = new FormControl('', [Validators.required]);
   details = new FormControl('', [Validators.required]);
   workrole = new FormControl({}, [Validators.required]);
 
-  constructor() {}
+  constructor(
+    private competencyService: CompetencyService,
+    // private subscription: Subscription
+  ) {}
 
   ngOnInit(): void {
+    this.competencyService.build.subscribe((index: number | null) => {
+      if(index !== null) {
+        this.currIndex = index;
+      }
+    });
     // If value exists, set type form control
     if(this.behavior.task) {
       this.task.patchValue(this.behavior.task);
@@ -32,8 +40,8 @@ export class BehaviorCardComponent implements OnInit, DoCheck {
       this.details.patchValue(this.behavior.details);
     }
     // If value exists, set workrole form control
-    if (this.behavior.workrole) {
-      this.workrole.patchValue(this.behavior.workrole);
+    if (this.behavior.work_role) {
+      this.workrole.patchValue(this.behavior.work_role);
     }
   }
 
@@ -46,7 +54,7 @@ export class BehaviorCardComponent implements OnInit, DoCheck {
           _id: this.behavior._id,
           task: this.task.value,
           details: this.details.value,
-          workrole: this.workrole.value
+          work_role: this.workrole.value
         }
       });
     };
@@ -65,13 +73,17 @@ export class BehaviorCardComponent implements OnInit, DoCheck {
   /**
    * Method to advance to next step
    */
-  nextStep() {
+  async nextStep() {
     if(this.task.valid && this.details.valid && this.workrole.valid) {
-      this.nextView.emit();
+      const res: any = await this.competencyService.updateBehavior(
+        this.competencyId,
+        {
+          _id: this.behavior._id,
+          task: this.task.value,
+          details: this.details.value,
+          work_role: this.workrole.value
+        }
+      );
     }
-  }
-
-  prevStep() {
-    this.prevView.emit();
   }
 }

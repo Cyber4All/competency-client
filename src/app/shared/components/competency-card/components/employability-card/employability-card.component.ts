@@ -1,5 +1,6 @@
 import { Component, Input, DoCheck, Output, EventEmitter, OnChanges, ChangeDetectorRef, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { CompetencyService } from 'src/app/core/competency.service';
 import { Employability } from 'src/entity/employability';
 @Component({
   selector: 'cc-employability-card',
@@ -10,17 +11,22 @@ export class EmployabilityCardComponent implements OnInit, DoCheck {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
-  @Input() currIndex: number | null = null;
   @Input() employability!: Employability;
   @Output() employabilityChange = new EventEmitter<{update: string, value: Employability}>();
-  @Output() setIndex = new EventEmitter<number>();
-  @Output() nextView = new EventEmitter();
-  @Output() prevView = new EventEmitter();
+  @Output() setIndex = new EventEmitter<number | null>();
+  currIndex: number | null = null;
   details = new FormControl('', [Validators.required]);
 
-  constructor() { }
+  constructor(
+    private competencyService: CompetencyService
+  ) { }
 
   ngOnInit(): void {
+    this.competencyService.build.subscribe((index: number | null) => {
+      if(index !== null) {
+        this.currIndex = index;
+      }
+    });
   }
 
   ngDoCheck(): void {
@@ -41,21 +47,25 @@ export class EmployabilityCardComponent implements OnInit, DoCheck {
  *
  * @param val value of current builder element
  */
-  setStep(val: number) {
+  setStep(val: number | null) {
     this.setIndex.emit(val);
   }
 
   /**
    * Method to advance to next step
    */
-  nextStep() {
+   async nextStep() {
     if(this.details.valid) {
-      this.nextView.emit();
+      const res: any = await this.competencyService.updateEmployability(
+        this.competencyId,
+        {
+          _id: this.employability._id,
+          details: this.details.value
+        }
+      );
+      if(res === null) {
+        this.setStep(null);
+      }
     }
   }
-
-  prevStep() {
-    this.prevView.emit();
-  }
-
 }
