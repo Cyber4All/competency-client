@@ -4,7 +4,7 @@ import {
 } from '@angular/common/http';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
-import { lastValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, lastValueFrom, Observable } from 'rxjs';
 import { Competency, CompetencyGraph, CompetencySearch } from 'src/entity/competency';
 import { Audience } from 'src/entity/audience';
 import { Degree } from 'src/entity/degree';
@@ -16,6 +16,19 @@ import { Employability } from 'src/entity/employability';
   providedIn: 'root'
 })
 export class CompetencyService {
+
+  // Observable boolean to toggle download spinner in components
+  private _builder$ = new BehaviorSubject<number | null>(null);
+
+  // Public get for loading observable
+  get build() {
+    return this._builder$;
+  }
+
+  set build(build: BehaviorSubject<number | null>) {
+    this._builder$ = build;
+  }
+
   constructor(
     private http: HttpClient,
     private auth: AuthService,
@@ -74,12 +87,17 @@ export class CompetencyService {
 
   async updateAudience(competencyId: string, audienceUpdate: Audience) {
     this.auth.initHeaders();
-    return await lastValueFrom(this.http
-      .patch(
-        COMPETENCY_ROUTES.UPDATE_AUDIENCE(competencyId),
-        audienceUpdate,
-        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-      ));
+    try {
+      return await lastValueFrom(this.http
+        .patch(
+          COMPETENCY_ROUTES.UPDATE_AUDIENCE(competencyId),
+          {type: audienceUpdate.type, details: audienceUpdate.details},
+          { headers: this.auth.headers, withCredentials: true, responseType: 'text' }
+        ));
+    } catch (e) {
+      // Should throw a toaster
+      return e;
+    }
   }
 
   async updateBehavior(competencyId: string, behaviorUpdate: Behavior) {

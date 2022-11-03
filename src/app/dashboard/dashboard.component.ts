@@ -47,9 +47,6 @@ export class DashboardComponent implements OnInit {
     // console.log("getting all tasks");
     // await this.workroleService.getAllTasks();
     console.log(this.authService.user);
-
-    // Push unsaved/non-academic audiences to audience array
-    // this.audience.push('working Professional','intern')
   }
 
   async getCompetencies() {
