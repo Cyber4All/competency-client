@@ -69,7 +69,7 @@ export const COMPETENCY_ROUTES = {
     DELETE_DOCUMENTATION(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/documentation`;
     },
-    RETRIEVE_COMPETENCY() {
+    GRAPH_QUERY() {
         return `${environment.apiURL}/graphql`;
     }
 };

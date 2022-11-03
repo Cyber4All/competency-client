@@ -19,49 +19,73 @@ export interface Competency {
 
 export function CompetencyGraph(id: string) {
   return `
-    query
-      Query {
-        competency(competencyId:"`+id+`") {
+    query {
+      competency(competencyId:"${id}") {
+        _id
+        status
+        authorId
+        version
+        audience {
           _id
-          status
-          authorId
-          version
-          audience {
-            _id
-            type
-            details
-          },
-          behavior {
-            _id
-            task
-            details
-            work_role {
-              _id
-              name
-              description
-            }
-          },
-          condition {
-            _id
-            tech
-            limitations
-            documentation {
-              conditionId
-              description
-              uri
-            }
-          },
-          degree {
-            _id
-            complete
-            correct
-            time
-          },
-          employability {
-            _id
-            details
+          type
+          details
+        },
+        behavior {
+          _id
+          tasks
+          details
+          work_role
+        },
+        condition {
+          _id
+          tech
+          limitations
+          documentation {
+            conditionId
+            description
+            uri
           }
+        },
+        degree {
+          _id
+          complete
+          correct
+          time
+        },
+        employability {
+          _id
+          details
         }
       }
+    }
+  `;
+}
+
+export function CompetencySearch(
+  query?: {
+    text?: string,
+    page?: number,
+    limit?: number,
+    author?: string,
+    status?: string[],
+    version?: number
+  }
+) {
+  return `
+    query {
+      search(text:"${query?.text ?? ''}",
+      page:${query?.page ?? 0},
+      limit:${query?.limit ?? 0}, 
+      author:"${query?.author ?? ''}",
+      status:[${query?.status ?? ''}],
+      version:${query?.version ?? 0}) {
+        competencies {
+          _id
+        }
+        total
+        page
+        limit
+      }
+    }
   `;
 }

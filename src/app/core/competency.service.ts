@@ -5,7 +5,7 @@ import {
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { lastValueFrom } from 'rxjs';
-import { Competency, CompetencyGraph } from 'src/entity/competency';
+import { Competency, CompetencyGraph, CompetencySearch } from 'src/entity/competency';
 import { Audience } from 'src/entity/audience';
 import { Degree } from 'src/entity/degree';
 import { Condition } from 'src/entity/condition';
@@ -21,15 +21,22 @@ export class CompetencyService {
     private auth: AuthService,
   ) {}
 
-  getAllCompetencies(q?: { role?: string[], audience?: string[], task?: string[] }) {
+  getAllCompetencies(
+      q?: {
+        text?: string,
+        page?: number,
+        limit?: number,
+        author?: string,
+        status?: string[],
+        version?: number
+      }
+    ) {
     this.auth.initHeaders();
-    const query = `query 
-    Query{competency(competencyId: "63488ddcb835f7100cf6ea94"){
-      audience{type}, behavior{details}, condition{tech}, degree{complete}, employability{details}}}`;
+    const query = CompetencySearch(q);
     return lastValueFrom(this.http
       .post(
-        COMPETENCY_ROUTES.RETRIEVE_COMPETENCY(),
-        { query },
+        COMPETENCY_ROUTES.GRAPH_QUERY(),
+        { query, userId: this.auth.user?._id },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ));
   }
@@ -39,17 +46,16 @@ export class CompetencyService {
     const query = CompetencyGraph(competencyId);
     const val = await lastValueFrom(this.http
       .post<Competency>(
-        COMPETENCY_ROUTES.RETRIEVE_COMPETENCY(),
+        COMPETENCY_ROUTES.GRAPH_QUERY(),
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ));
-    console.log(val);
     return val;
   }
 
-  createCompetency() {
+  async createCompetency() {
     this.auth.initHeaders();
-    return lastValueFrom(this.http
+    return await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.CREATE_COMPETENCY(),
         {},
@@ -57,19 +63,18 @@ export class CompetencyService {
       ));
   }
 
-  editCompetency(competency: any) {
+  async deleteCompetency(competencyId: string) {
     this.auth.initHeaders();
-    return lastValueFrom(this.http
-      .patch(
-        COMPETENCY_ROUTES.CREATE_COMPETENCY(),
-        competency,
-        { headers: this.auth.headers, withCredentials: true, responseType: 'text' }
+    return await lastValueFrom(this.http
+      .delete(
+        COMPETENCY_ROUTES.DELETE_COMPETENCY(competencyId),
+        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ));
   }
 
-  updateAudience(competencyId: string, audienceUpdate: Audience) {
+  async updateAudience(competencyId: string, audienceUpdate: Audience) {
     this.auth.initHeaders();
-    return lastValueFrom(this.http
+    return await lastValueFrom(this.http
       .patch(
         COMPETENCY_ROUTES.UPDATE_AUDIENCE(competencyId),
         audienceUpdate,
@@ -77,9 +82,9 @@ export class CompetencyService {
       ));
   }
 
-  updateBehavior(competencyId: string, behaviorUpdate: Behavior) {
+  async updateBehavior(competencyId: string, behaviorUpdate: Behavior) {
     this.auth.initHeaders();
-    return lastValueFrom(this.http
+    return await lastValueFrom(this.http
       .patch(
         COMPETENCY_ROUTES.UPDATE_BEHAVIOR(competencyId),
         behaviorUpdate,
@@ -87,9 +92,9 @@ export class CompetencyService {
       ));
   }
 
-  updateCondition(competencyId: string, conditionUpdate: Condition) {
+  async updateCondition(competencyId: string, conditionUpdate: Condition) {
     this.auth.initHeaders();
-    return lastValueFrom(this.http
+    return await lastValueFrom(this.http
       .patch(
         COMPETENCY_ROUTES.UPDATE_CONDITION(competencyId),
         conditionUpdate,
@@ -97,9 +102,9 @@ export class CompetencyService {
       ));
   }
 
-  updateDegree(competencyId: string, degreeUpdate: Degree) {
+  async updateDegree(competencyId: string, degreeUpdate: Degree) {
     this.auth.initHeaders();
-    return lastValueFrom(this.http
+    return await lastValueFrom(this.http
       .patch(
         COMPETENCY_ROUTES.UPDATE_BEHAVIOR(competencyId),
         degreeUpdate,
@@ -107,23 +112,13 @@ export class CompetencyService {
       ));
   }
 
-  updateEmployability(competencyId: string, employabilityUpdate: Employability) {
+  async updateEmployability(competencyId: string, employabilityUpdate: Employability) {
     this.auth.initHeaders();
-    return lastValueFrom(this.http
+    return await lastValueFrom(this.http
       .patch(
         COMPETENCY_ROUTES.UPDATE_EMPLOYABILITY(competencyId),
         employabilityUpdate,
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ));
   }
-
-  lockCompetency(competency: any, lock: boolean) {
-    return lastValueFrom(this.http
-      .patch(
-        COMPETENCY_ROUTES.CREATE_COMPETENCY(),
-        { locked: lock },
-        { headers: this.auth.headers, withCredentials: true, responseType: 'text' }
-      ));
-  }
 }
-

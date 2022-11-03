@@ -6,7 +6,7 @@ import { CompetencyService } from '../core/competency.service';
 import { CompetencyCardComponent } from '../shared/components/competency-card/competency-card.component';
 import { Competency } from 'src/entity/competency';
 import { Lifecycles } from 'src/entity/lifecycles';
-
+import { WorkroleService } from '../core/workrole.service';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -19,11 +19,6 @@ export class DashboardComponent implements OnInit {
 
   competencies: any = [];
 
-  // Workroles and Tasks
-  // niceFramework: any[] = Object.values(behavior);
-  // Academic Audience
-  // audience: any[] = Object.values(audience);
-
   // Applied filters
   selected: { role: string[]; audience: string[], task: string[] } = {
     role: [],
@@ -35,37 +30,39 @@ export class DashboardComponent implements OnInit {
   filterApplied = false;
 
   constructor(
-    public dialog: MatDialog,
-    public competencyService: CompetencyService,
-    public authService: AuthService,
+    private dialog: MatDialog,
+    private competencyService: CompetencyService,
+    private authService: AuthService,
     private router: Router,
+    private workroleService: WorkroleService
     ) { }
 
   async ngOnInit() {
     this.getCompetencies();
     this.user = this.authService.user;
+    // console.log("hitting graph for workrole")
+    // await this.workroleService.getCompleteWorkrole("635fc5be14f517aa6aef0116")
+    // console.log("getting all workroles");
+    // await this.workroleService.getAllWorkroles();
+    // console.log("getting all tasks");
+    // await this.workroleService.getAllTasks();
+    console.log(this.authService.user);
 
     // Push unsaved/non-academic audiences to audience array
     // this.audience.push('working Professional','intern')
   }
 
-  getCompetencies() {
-    this.competencyService.getAllCompetencies()
-    .then((res: any) => {
-      this.competencies = res.data.competency;
-    });
-  }
+  async getCompetencies() {
+    if(this.authService.user) {
+      await this.competencyService
+        .getAllCompetencies({
+          author: this.authService.user?._id,
+          status: [`${Lifecycles.DRAFT}`, `${Lifecycles.REJECTED}`, `${Lifecycles.PUBLISHED}`]
+        })
+        .then((res: any) => {
+        });
+    }
 
-  async updateCompetency(competency: any) {
-    await this.competencyService.lockCompetency(competency, false);
-  }
-
-  async lockCompetency(competency: any) {
-    await this.competencyService.lockCompetency(competency, true);
-  }
-
-  async unlockCompetency(competency: any) {
-    await this.competencyService.lockCompetency(competency, false);
   }
 
   // Apply filter to results list
@@ -98,7 +95,7 @@ export class DashboardComponent implements OnInit {
     this.selected.audience = [];
     this.selected.task = [];
     this.filterApplied = false;
-    this.competencies = await this.competencyService.getAllCompetencies(this.selected);
+    this.competencies = await this.competencyService.getAllCompetencies();
   }
 
   async openCompetencyBuilder(existingCompetency?: Competency) {
@@ -106,7 +103,6 @@ export class DashboardComponent implements OnInit {
     let competency: Competency = await this.competencyService.getCompetencyById(res.id);
     if(existingCompetency) {
       competency = existingCompetency;
-      this.lockCompetency(competency);
     }
     const dialogRef = this.dialog.open(CompetencyCardComponent, {
       height: '700px',
@@ -116,7 +112,6 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(async (result) => {
       if (competency && result !== undefined) {
-        await this.updateCompetency(result);
       } else if (result === undefined) {
         /**
          * not currently in use - california 3/2022
