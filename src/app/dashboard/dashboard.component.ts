@@ -97,7 +97,7 @@ export class DashboardComponent implements OnInit {
 
   async openCompetencyBuilder(existingCompetency?: Competency) {
     const res: any = await this.competencyService.createCompetency();
-    let competency: Competency = await this.competencyService.getCompetencyById(res.id);
+    let competency: any = await this.competencyService.getCompetencyById(res.id);
     if(existingCompetency) {
       competency = existingCompetency;
     }
