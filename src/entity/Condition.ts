@@ -1,6 +1,6 @@
 import { Documentation } from './documentation';
 export interface Condition {
-  _id: string,
+  _id?: string,
   tech: string[],
   limitations: string,
   documentation: Documentation[],
