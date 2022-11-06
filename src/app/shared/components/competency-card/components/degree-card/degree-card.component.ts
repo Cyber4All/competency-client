@@ -13,7 +13,6 @@ export class DegreeCardComponent implements OnInit, DoCheck {
   @Input() isEdit = false;
   @Input() degree!: Degree;
   @Output() degreeChange = new EventEmitter<{update: string, value: Degree}>();
-  @Output() setIndex = new EventEmitter<number>();
   currIndex: number | null = null;
   complete = new FormControl('', [Validators.required]);
   correct = new FormControl('', [Validators.required]);
@@ -24,11 +23,6 @@ export class DegreeCardComponent implements OnInit, DoCheck {
   ) { }
 
   ngOnInit(): void {
-    this.competencyService.build.subscribe((index: number | null) => {
-      if(index !== null) {
-        this.currIndex = index;
-      }
-    });
     // If value exists, set type form control
     if(this.degree.complete) {
       this.complete.patchValue(this.degree.complete);
@@ -56,15 +50,6 @@ export class DegreeCardComponent implements OnInit, DoCheck {
         }
       });
     };
-  }
-
-  /**
-   * Method to set view of builder element
-   *
-   * @param val value of current builder element
-   */
-   setStep(val: number) {
-    this.setIndex.emit(val);
   }
 
   /**

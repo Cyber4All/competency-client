@@ -5,7 +5,6 @@
       <cc-audience-card
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
-        (setIndex) = "setView($event)"
         [audience] = "COMPETENCY.data.competency.audience"
         (audienceChange) = "updateCompetency($event)"
       ></cc-audience-card>
@@ -13,7 +12,6 @@
       <cc-behavior-card
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
-        (setIndex) = "setView($event)"
         [behavior] = "COMPETENCY.data.competency.behavior"
         (behaviorChange) = "updateCompetency($event)"
       ></cc-behavior-card>
@@ -21,7 +19,6 @@
       <cc-condition-card
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
-        (setIndex) = "setView($event)"
         [condition] = "COMPETENCY.data.competency.condition"
         (conditionChange) = "updateCompetency($event)"
       ></cc-condition-card>
@@ -29,7 +26,6 @@
       <cc-degree-card
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
-        (setIndex) = "setView($event)"
         [degree] = "COMPETENCY.data.competency.degree"
         (degreeChange) = "updateCompetency($event)"
       ></cc-degree-card>
@@ -37,7 +33,6 @@
       <cc-employability-card
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
-        (setIndex) = "setView($event)"
         [employability] = "COMPETENCY.data.competency.employability"
         (employabilityChange) = "updateCompetency($event)"
       ></cc-employability-card>

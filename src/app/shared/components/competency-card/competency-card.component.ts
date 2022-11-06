@@ -32,13 +32,7 @@ export class CompetencyCardComponent implements OnInit {
     this.competencyId = COMPETENCY.data.competency._id;
   }
 
-  ngOnInit(): void {
-    this.competencyService.build.subscribe((index: number | null) => {
-      if(index !== null) {
-        this.currIndex = index;
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   /**
    * Need NICE Framework workroles

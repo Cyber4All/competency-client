@@ -14,23 +14,15 @@ export class AudienceCardComponent implements OnInit, DoCheck {
   @Input() isEdit = false;
   @Input() audience!: Audience;
   @Output() audienceChange = new EventEmitter<{update: string, value: Audience}>();
-  @Output() setIndex = new EventEmitter<number>();
   currIndex: number | null = null;
   type = new FormControl('', [Validators.required]);
   details = new FormControl('', [Validators.required]);
 
   constructor(
     private competencyService: CompetencyService,
-    // private subscription: Subscription
   ) {}
 
   ngOnInit(): void {
-    this.competencyService.build.subscribe((index: number | null) => {
-      if(index !== null) {
-        this.currIndex = index;
-      }
-    });
-
     // If value exists, set type form control
     if(this.audience.type) {
       this.type.patchValue(this.audience.type);
@@ -56,25 +48,15 @@ export class AudienceCardComponent implements OnInit, DoCheck {
   }
 
   /**
-   * Method to set view of builder element
-   *
-   * @param val value of current builder element
-   */
-  setStep(val: number) {
-    this.setIndex.emit(val);
-  }
-
-  /**
    * Method to save audience and advance to next step
    */
    async nextStep() {
     if(this.type.valid && this.details.valid) {
-      const res: any = await this.competencyService.updateAudience(
+      await this.competencyService.updateAudience(
         this.competencyId,
         {
-          _id: this.audience._id,
           type: this.type.value,
-          details: this.details.value
+          details: this.details.value,
         }
       );
     }

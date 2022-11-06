@@ -13,7 +13,6 @@ export class EmployabilityCardComponent implements OnInit, DoCheck {
   @Input() isEdit = false;
   @Input() employability!: Employability;
   @Output() employabilityChange = new EventEmitter<{update: string, value: Employability}>();
-  @Output() setIndex = new EventEmitter<number | null>();
   currIndex: number | null = null;
   details = new FormControl('', [Validators.required]);
 
@@ -21,13 +20,7 @@ export class EmployabilityCardComponent implements OnInit, DoCheck {
     private competencyService: CompetencyService
   ) { }
 
-  ngOnInit(): void {
-    this.competencyService.build.subscribe((index: number | null) => {
-      if(index !== null) {
-        this.currIndex = index;
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   ngDoCheck(): void {
     // If any value updates, update parent component
@@ -42,15 +35,6 @@ export class EmployabilityCardComponent implements OnInit, DoCheck {
     };
   }
 
-/**
- * Method to set view of builder element
- *
- * @param val value of current builder element
- */
-  setStep(val: number | null) {
-    this.setIndex.emit(val);
-  }
-
   /**
    * Method to advance to next step
    */
@@ -63,9 +47,6 @@ export class EmployabilityCardComponent implements OnInit, DoCheck {
           details: this.details.value
         }
       );
-      if(res === null) {
-        this.setStep(null);
-      }
     }
   }
 }

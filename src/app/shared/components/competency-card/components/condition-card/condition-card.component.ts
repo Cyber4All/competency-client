@@ -13,7 +13,6 @@ export class ConditionCardComponent implements OnInit, DoCheck {
   @Input() isEdit = false;
   @Input() condition!: Condition;
   @Output() conditionChange = new EventEmitter<{update: string, value: Condition}>();
-  @Output() setIndex = new EventEmitter<number>();
   currIndex: number | null = null;
   tech = new FormControl([], [Validators.required]);
   limitations = new FormControl('', [Validators.required]);
@@ -24,11 +23,6 @@ export class ConditionCardComponent implements OnInit, DoCheck {
   ) { }
 
   ngOnInit(): void {
-    this.competencyService.build.subscribe((index: number | null) => {
-      if(index !== null) {
-        this.currIndex = index;
-      }
-    });
     // If value exists, set type form control
     if(this.condition.tech) {
       this.tech.patchValue(this.condition.tech);
@@ -56,14 +50,6 @@ export class ConditionCardComponent implements OnInit, DoCheck {
         }
       });
     };
-  }
-  /**
-   * Method to set view of builder element
-   *
-   * @param val value of current builder element
-   */
-  setStep(val: number) {
-    this.setIndex.emit(val);
   }
 
   /**

@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, DoCheck, Output, EventEmitter, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { CompetencyService } from 'src/app/core/competency.service';
 import { Behavior } from 'src/entity/behavior';
 @Component({
@@ -14,7 +13,6 @@ export class BehaviorCardComponent implements OnInit, DoCheck {
   @Input() isEdit = false;
   @Input() behavior!: Behavior;
   @Output() behaviorChange = new EventEmitter<{update: string, value: Behavior}>();
-  @Output() setIndex = new EventEmitter<number>();
   currIndex: number | null = null;
   task = new FormControl('', [Validators.required]);
   details = new FormControl('', [Validators.required]);
@@ -22,15 +20,9 @@ export class BehaviorCardComponent implements OnInit, DoCheck {
 
   constructor(
     private competencyService: CompetencyService,
-    // private subscription: Subscription
   ) {}
 
   ngOnInit(): void {
-    this.competencyService.build.subscribe((index: number | null) => {
-      if(index !== null) {
-        this.currIndex = index;
-      }
-    });
     // If value exists, set type form control
     if(this.behavior.task) {
       this.task.patchValue(this.behavior.task);
@@ -58,16 +50,6 @@ export class BehaviorCardComponent implements OnInit, DoCheck {
         }
       });
     };
-  }
-
-
-  /**
-   * Method to set view of builder element
-   *
-   * @param val value of current builder element
-   */
-  setStep(val: number) {
-    this.setIndex.emit(val);
   }
 
   /**
