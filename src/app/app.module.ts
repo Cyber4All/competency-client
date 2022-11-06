@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthModule } from './auth/auth.module';
 import { BuilderModule } from './builder/builder.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     AppComponent
@@ -21,7 +22,8 @@ import { BuilderModule } from './builder/builder.module';
     ReactiveFormsModule,
     DashboardModule,
     AuthModule,
-    BuilderModule
+    BuilderModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],
