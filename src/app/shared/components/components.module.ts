@@ -25,8 +25,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../../app-routing.module';
 import { MatExpansionModule } from '@angular/material/expansion';
-
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -40,6 +39,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatAutocompleteModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -58,6 +58,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     MatTooltipModule,
+  ],
+  exports: [
+    CompetencyCardComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

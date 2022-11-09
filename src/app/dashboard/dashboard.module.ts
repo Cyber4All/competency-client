@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,11 +20,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
 import { DashboardComponent } from './dashboard.component';
-import { BuilderModule } from '../builder/builder.module';
 import { SharedModule } from '../shared/shared.module';
-
-
-
+import {MatExpansionModule} from '@angular/material/expansion';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -33,6 +30,7 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     BrowserModule,
     AppRoutingModule,
+    SharedModule,
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
@@ -51,8 +49,8 @@ import { SharedModule } from '../shared/shared.module';
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     MatTooltipModule,
-    BuilderModule,
-    SharedModule
-  ]
+    MatExpansionModule
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class DashboardModule { }
