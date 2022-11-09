@@ -1,7 +1,10 @@
 export interface Workrole {
   _id: string
-  name: string
+  work_role: string
+  work_role_id: string
   description: string
+  ksats: []
+  special_area: string
 }
 
 export function getCompleteWorkRole(id: string) {

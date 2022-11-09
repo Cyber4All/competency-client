@@ -134,7 +134,7 @@ export class CompetencyService {
     this.auth.initHeaders();
     return await lastValueFrom(this.http
       .patch(
-        COMPETENCY_ROUTES.UPDATE_BEHAVIOR(competencyId),
+        COMPETENCY_ROUTES.UPDATE_DEGREE(competencyId),
         degreeUpdate,
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
