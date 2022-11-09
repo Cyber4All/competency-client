@@ -5,35 +5,35 @@
       <cc-audience-card
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
-        [audience] = "COMPETENCY.data.competency.audience"
+        [audience] = "competency.audience"
         (audienceChange) = "updateCompetency($event)"
       ></cc-audience-card>
       <!--Behavior-->
       <cc-behavior-card
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
-        [behavior] = "COMPETENCY.data.competency.behavior"
+        [behavior] = "competency.behavior"
         (behaviorChange) = "updateCompetency($event)"
       ></cc-behavior-card>
       <!--Condition-->
       <cc-condition-card
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
-        [condition] = "COMPETENCY.data.competency.condition"
+        [condition] = "competency.condition"
         (conditionChange) = "updateCompetency($event)"
       ></cc-condition-card>
       <!--Degree-->
       <cc-degree-card
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
-        [degree] = "COMPETENCY.data.competency.degree"
+        [degree] = "competency.degree"
         (degreeChange) = "updateCompetency($event)"
       ></cc-degree-card>
       <!--Employability-->
       <cc-employability-card
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
-        [employability] = "COMPETENCY.data.competency.employability"
+        [employability] = "competency.employability"
         (employabilityChange) = "updateCompetency($event)"
       ></cc-employability-card>
     </mat-accordion>

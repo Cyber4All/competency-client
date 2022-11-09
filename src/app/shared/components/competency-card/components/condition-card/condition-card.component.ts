@@ -1,4 +1,4 @@
-import { Component, Input, DoCheck, Output, EventEmitter, OnChanges, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { CompetencyService } from 'src/app/core/competency.service';
 import { Condition } from 'src/entity/condition';
@@ -7,7 +7,7 @@ import { Condition } from 'src/entity/condition';
   templateUrl: './condition-card.component.html',
   styleUrls: ['./condition-card.component.scss']
 })
-export class ConditionCardComponent implements OnInit, DoCheck {
+export class ConditionCardComponent implements OnInit, OnChanges {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
@@ -37,7 +37,7 @@ export class ConditionCardComponent implements OnInit, DoCheck {
     }
   }
 
-  ngDoCheck(): void {
+  ngOnChanges(): void {
     // If any value updates, update parent component
     if(this.tech.value || this.limitations.value || this.documentation.value) {
       this.conditionChange.emit({
@@ -55,7 +55,7 @@ export class ConditionCardComponent implements OnInit, DoCheck {
   /**
    * Method to advance to next step
    */
-   async nextStep() {
+   async updateCondition() {
     if(this.tech.valid && this.limitations.valid && this.documentation.valid) {
       const res: any = await this.competencyService.updateCondition(
         this.competencyId,

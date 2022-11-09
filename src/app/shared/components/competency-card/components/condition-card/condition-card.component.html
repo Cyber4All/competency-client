@@ -14,8 +14,8 @@
             Condition
         </mat-panel-title>
         <mat-panel-description>
-            Inform the date you wish to travel
-            <mat-icon>date_range</mat-icon>
+            Identify any conditions for completeing this competency
+            <!-- <mat-icon>date_range</mat-icon> -->
         </mat-panel-description>
         </mat-expansion-panel-header>
 
@@ -38,7 +38,7 @@
         </mat-form-field>
 
         <mat-action-row>
-            <button mat-button color="primary" (click)="nextStep()" [disabled]="tech.invalid || limitations.invalid || documentation.invalid">Update Condition</button>
+            <button mat-button color="primary" (click)="updateCondition()" [disabled]="tech.invalid || limitations.invalid || documentation.invalid">Update Condition</button>
         </mat-action-row>
 
     </mat-expansion-panel>

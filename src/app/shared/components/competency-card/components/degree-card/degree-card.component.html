@@ -14,23 +14,31 @@
         Degree
       </mat-panel-title>
       <mat-panel-description>
-        Type your name and age
-        <mat-icon>account_circle</mat-icon>
+        Identify the time completeness and correctness for this competency
+        <!-- <mat-icon>account_circle</mat-icon> -->
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <mat-form-field appearance="fill">
-      <mat-label>First name</mat-label>
-      <input matInput>
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label>Time</mat-label>
+      <input matInput [formControl]="time">
+      <mat-error *ngIf="time.invalid">You must select a target audience!</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Age</mat-label>
-      <input matInput type="number" min="1">
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label>Completeness</mat-label>
+      <input matInput [formControl]="complete">
+      <mat-error *ngIf="complete.invalid">You must select a target audience!</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label>Correctness</mat-label>
+      <input matInput [formControl]="correct">
+      <mat-error *ngIf="correct.invalid">You must provide a description of your audience!</mat-error>
     </mat-form-field>
 
     <mat-action-row>
-      <button mat-button color="primary" (click)="nextStep()" [disabled]="complete.invalid || correct.invalid || time.invalid">Update Audience</button>
+      <button mat-button color="primary" (click)="updateDegree()" [disabled]="complete.invalid || correct.invalid || time.invalid">Update Degree</button>
     </mat-action-row>
 
   </mat-expansion-panel>

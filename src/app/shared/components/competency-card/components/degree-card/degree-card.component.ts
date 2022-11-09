@@ -1,4 +1,4 @@
-import { Component, Input, DoCheck, Output, EventEmitter, OnChanges, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { CompetencyService } from 'src/app/core/competency.service';
 import { Degree } from 'src/entity/degree';
@@ -7,16 +7,16 @@ import { Degree } from 'src/entity/degree';
   templateUrl: './degree-card.component.html',
   styleUrls: ['./degree-card.component.scss']
 })
-export class DegreeCardComponent implements OnInit, DoCheck {
+export class DegreeCardComponent implements OnInit, OnChanges {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
   @Input() degree!: Degree;
   @Output() degreeChange = new EventEmitter<{update: string, value: Degree}>();
   currIndex: number | null = null;
-  complete = new FormControl('', [Validators.required]);
-  correct = new FormControl('', [Validators.required]);
-  time = new FormControl('', [Validators.required]);
+  complete = new FormControl('');
+  correct = new FormControl('');
+  time = new FormControl('');
 
   constructor(
     private competencyService: CompetencyService
@@ -37,7 +37,7 @@ export class DegreeCardComponent implements OnInit, DoCheck {
     }
   }
 
-  ngDoCheck(): void {
+  ngOnChanges(): void {
     // If any value updates, update parent component
     if(this.complete.value || this.correct.value || this.time.value) {
       this.degreeChange.emit({
@@ -55,7 +55,7 @@ export class DegreeCardComponent implements OnInit, DoCheck {
   /**
    * Method to advance to next step
    */
-   async nextStep() {
+   async updateDegree() {
     if(this.complete.valid && this.correct.valid && this.time.valid) {
       const res: any = await this.competencyService.updateDegree(
         this.competencyId,

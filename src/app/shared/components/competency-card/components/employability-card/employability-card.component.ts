@@ -1,5 +1,6 @@
-import { Component, Input, DoCheck, Output, EventEmitter, OnChanges, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 import { CompetencyService } from 'src/app/core/competency.service';
 import { Employability } from 'src/entity/employability';
 @Component({
@@ -7,12 +8,13 @@ import { Employability } from 'src/entity/employability';
   templateUrl: './employability-card.component.html',
   styleUrls: ['./employability-card.component.scss']
 })
-export class EmployabilityCardComponent implements OnInit, DoCheck {
+export class EmployabilityCardComponent implements OnInit, OnChanges {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
   @Input() employability!: Employability;
   @Output() employabilityChange = new EventEmitter<{update: string, value: Employability}>();
+  touched: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currIndex: number | null = null;
   details = new FormControl('', [Validators.required]);
 
@@ -22,7 +24,7 @@ export class EmployabilityCardComponent implements OnInit, DoCheck {
 
   ngOnInit(): void {}
 
-  ngDoCheck(): void {
+  ngOnChanges(): void {
     // If any value updates, update parent component
     if(this.details.value) {
       this.employabilityChange.emit({
@@ -38,7 +40,7 @@ export class EmployabilityCardComponent implements OnInit, DoCheck {
   /**
    * Method to advance to next step
    */
-   async nextStep() {
+   async updateEmployability() {
     if(this.details.valid) {
       const res: any = await this.competencyService.updateEmployability(
         this.competencyId,
@@ -48,5 +50,6 @@ export class EmployabilityCardComponent implements OnInit, DoCheck {
         }
       );
     }
+    this.touched.next(false);
   }
 }

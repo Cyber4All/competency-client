@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, DoCheck, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { CompetencyService } from 'src/app/core/competency.service';
 import { Audience } from 'src/entity/audience';
@@ -8,7 +8,7 @@ import { Audience } from 'src/entity/audience';
   templateUrl: './audience-card.component.html',
   styleUrls: ['./audience-card.component.scss']
 })
-export class AudienceCardComponent implements OnInit, DoCheck {
+export class AudienceCardComponent implements OnInit, OnChanges {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
@@ -33,7 +33,7 @@ export class AudienceCardComponent implements OnInit, DoCheck {
     }
   }
 
-  ngDoCheck(): void {
+  ngOnChanges(): void {
     // If any value updates, update parent component
     if(this.type.value || this.details.value) {
       this.audienceChange.emit({
@@ -50,7 +50,7 @@ export class AudienceCardComponent implements OnInit, DoCheck {
   /**
    * Method to save audience and advance to next step
    */
-   async nextStep() {
+   async updateAudience() {
     if(this.type.valid && this.details.valid) {
       await this.competencyService.updateAudience(
         this.competencyId,

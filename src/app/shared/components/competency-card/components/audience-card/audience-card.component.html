@@ -16,7 +16,7 @@
         </mat-panel-title>
         <mat-panel-description>
           Identify an actor for your competency
-          <mat-icon>account_circle</mat-icon>
+          <!-- <mat-icon>account_circle</mat-icon> -->
         </mat-panel-description>
       </mat-expansion-panel-header>
   
@@ -33,7 +33,7 @@
       </mat-form-field>
   
       <mat-action-row>
-        <button mat-button color="primary" (click)="nextStep()" [disabled]="type.invalid || details.invalid">Update Audience</button>
+        <button mat-button color="primary" (click)="updateAudience()" [disabled]="type.invalid || details.invalid">Update Audience</button>
       </mat-action-row>
 
     </mat-expansion-panel>

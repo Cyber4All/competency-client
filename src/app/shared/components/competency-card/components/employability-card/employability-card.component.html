@@ -14,19 +14,19 @@
         Employability
       </mat-panel-title>
       <mat-panel-description>
-        Type your name and age
-        <mat-icon>account_circle</mat-icon>
+        Identify how your audience shall fit into this competency
+        <!-- <mat-icon>account_circle</mat-icon> -->
       </mat-panel-description>
     </mat-expansion-panel-header>
 
     <mat-form-field appearance="fill" color="primary">
       <mat-label>Description</mat-label>
       <input matInput [formControl]="details">
-      <mat-error *ngIf="details.invalid">You must provide a description employability!</mat-error>
+      <mat-error *ngIf="details.value === ''">You must provide a description employability!</mat-error>
     </mat-form-field>
 
     <mat-action-row>
-      <button mat-button color="primary" (click)="nextStep()" [disabled]="details.invalid">Update Audience</button>
+      <button mat-button color="primary" (click)="updateEmployability()" [disabled]="touched">Update Employability</button>
     </mat-action-row>
 
   </mat-expansion-panel>

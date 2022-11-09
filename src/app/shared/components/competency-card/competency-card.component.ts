@@ -1,9 +1,9 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatAccordionTogglePosition } from '@angular/material/expansion';
-import { CompetencyService } from 'src/app/core/competency.service';
 import { Audience } from 'src/entity/audience';
 import { Behavior } from 'src/entity/behavior';
+import { Competency } from 'src/entity/competency';
 import { Condition } from 'src/entity/condition';
 import { Degree } from 'src/entity/degree';
 import { Employability } from 'src/entity/employability';
@@ -14,6 +14,7 @@ import { Employability } from 'src/entity/employability';
   styleUrls: ['./competency-card.component.scss']
 })
 export class CompetencyCardComponent implements OnInit {
+  @Input() competency!: Competency;
   // Toggle for editing a competency
   @Input() isEdit = true;
   // Current Competency ID
@@ -27,17 +28,14 @@ export class CompetencyCardComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CompetencyCardComponent>,
     @Inject(MAT_DIALOG_DATA) public COMPETENCY: any,
-    private competencyService: CompetencyService,
-  ) {
-    this.competencyId = COMPETENCY.data.competency._id;
+  ) {}
+
+  ngOnInit(): void {
+    if(!this.competency) {
+      this.competency = this.COMPETENCY.data.competency;
+    }
+    this.competencyId = this.competency._id;
   }
-
-  ngOnInit(): void {}
-
-  /**
-   * Need NICE Framework workroles
-   * Need NICE Tasks based on workroles^
-   */
 
   /**
    * Opens selected builder view and closes last opened
@@ -70,19 +68,19 @@ export class CompetencyCardComponent implements OnInit {
   ): void {
     switch(event.update) {
       case 'audience':
-        this.COMPETENCY.data.competency.audience = event.value as Audience;
+        this.competency.audience = event.value as Audience;
         break;
       case 'behavior':
-        this.COMPETENCY.data.competency.behavior = event.value as Behavior;
+        this.competency.behavior = event.value as Behavior;
         break;
       case 'condition':
-        this.COMPETENCY.data.competency.condition = event.value as Condition;
+        this.competency.condition = event.value as Condition;
         break;
       case 'degree':
-        this.COMPETENCY.data.competency.degree = event.value as Degree;
+        this.competency.degree = event.value as Degree;
         break;
       case 'employability':
-        this.COMPETENCY.data.competency.employability = event.value as Employability;
+        this.competency.employability = event.value as Employability;
         break;
       default:
         console.log('yo you messed up dawg');
