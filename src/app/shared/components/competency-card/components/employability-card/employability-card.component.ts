@@ -14,7 +14,6 @@ export class EmployabilityCardComponent implements OnInit, OnChanges {
   @Input() isEdit = false;
   @Input() employability!: Employability;
   @Output() employabilityChange = new EventEmitter<{update: string, value: Employability}>();
-  touched: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currIndex: number | null = null;
   details = new FormControl('', [Validators.required]);
 
@@ -50,6 +49,5 @@ export class EmployabilityCardComponent implements OnInit, OnChanges {
         }
       );
     }
-    this.touched.next(false);
   }
 }

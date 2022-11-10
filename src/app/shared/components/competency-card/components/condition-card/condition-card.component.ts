@@ -9,6 +9,13 @@ import { Condition } from 'src/entity/condition';
 })
 export class ConditionCardComponent implements OnInit, OnChanges {
 
+
+  /**
+   * THIS IS STILL BEING WORKED ON
+   * TECH AND DOCUMENTATION ARE BROKEN ATM (11/10/22)
+   */
+
+
   @Input() competencyId!: string;
   @Input() isEdit = false;
   @Input() condition!: Condition;
@@ -61,9 +68,9 @@ export class ConditionCardComponent implements OnInit, OnChanges {
         this.competencyId,
         {
           _id: this.condition._id,
-          tech: this.tech.value,
+          tech: [this.tech.value],
           limitations: this.limitations.value,
-          documentation: this.documentation.value
+          documentation: [this.documentation.value]
         }
       );
     }
