@@ -28,26 +28,25 @@
             </mat-menu>
         </div>
     </div>
-    <!-- <div *ngFor="let competency of competencies" class="competency-card">
-        <mat-card>
-            <!-- <div class="framework">
-                Workrole: {{ competency?.role | titlecase}}<br>Task: {{competency?.taskId}}-{{competency.task}}
-            </div> --
-            <br>
-            <!-- <div class="competency">
-                The {{ competency?.audience | titlecase}} acting as a {{ competency?.role | lowercase }} {{ competency?.condition }} should be able to {{ competency?.task }} {{ competency?.degree }} {{ competency?.effectiveness }}.
-            </div> -->
-            <!-- Remove the actions options for Cali 03-07-2022 -->
-            <!-- <div class="actions">
-                <button *ngIf="!competency.locked" mat-mini-fab color="secondary" aria-label="Open builder" matTooltip="Edit competency" (click)="openCompetencyBuilder(competency)">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <button *ngIf="competency.locked" mat-mini-fab color="warn" aria-label="Competency currently being edited. Try again later." matTooltip="Competency currently being edited. Try again later.">
-                    <mat-icon>close</mat-icon>
-                </button>
-            </div> --
-        </mat-card>
-    </div> -->
+    <!--
+        This could actually become a template to toggle views for admins and authors
+    -->
+    <ng-container *ngIf="!loading; else loadingTemplate">
+        <div class="competency-card">
+            <div *ngFor="let competency of loadedCompetencies">
+                <cc-competency-card
+                    [competency]="competency"
+                    [isEdit]="false"
+                ></cc-competency-card>
+            </div>
+        </div>
+    </ng-container>
 </div>
 
+<ng-template #loadingTemplate>
+    <div class="competency-loading">
+        <i class="far fa-spinner-third fa-spin"></i>
+        Loading Competencies...
+    </div>
+</ng-template>
 
