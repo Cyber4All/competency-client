@@ -28,19 +28,7 @@
             </mat-menu>
         </div>
     </div>
-    <!--
-        This could actually become a template to toggle views for admins and authors
-    -->
-    <ng-container *ngIf="!loading; else loadingTemplate">
-        <div class="competency-card">
-            <div *ngFor="let competency of loadedCompetencies">
-                <cc-competency-card
-                    [competency]="competency"
-                    [isEdit]="false"
-                ></cc-competency-card>
-            </div>
-        </div>
-    </ng-container>
+    <ng-container *ngIf="!loading; then competencyTemplate; else loadingTemplate"></ng-container>
 </div>
 
 <ng-template #loadingTemplate>
@@ -50,3 +38,13 @@
     </div>
 </ng-template>
 
+<ng-template #competencyTemplate>
+    <div class="competency-card">
+        <div *ngFor="let competency of loadedCompetencies">
+            <cc-competency-card
+                [competency]="competency"
+                [isEdit]="false"
+            ></cc-competency-card>
+        </div>
+    </div>
+</ng-template>
