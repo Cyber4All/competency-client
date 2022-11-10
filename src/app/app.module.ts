@@ -9,7 +9,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthModule } from './auth/auth.module';
 import { BuilderModule } from './builder/builder.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent
@@ -25,7 +25,7 @@ import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogRef, M
     AuthModule,
     BuilderModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },
