@@ -8,38 +8,37 @@
 
 <!--Edit Degree Template-->
 <ng-template #editDegreeTemplate>
-  <mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel [expanded]="true" class="competency_edit-degree-container">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Degree
       </mat-panel-title>
-      <mat-panel-description>
-        Identify the time completeness and correctness for this competency
-        <!-- <mat-icon>account_circle</mat-icon> -->
-      </mat-panel-description>
     </mat-expansion-panel-header>
-
+    <!--Degree Description-->
+    <div class="edit-degree_description">
+      Identify the time, degree of completetion, and expectations of how much must be correct to gain this competency
+    </div>
+    <!--Time form filed-->
     <mat-form-field appearance="fill" color="primary">
       <mat-label>Time</mat-label>
       <input matInput [formControl]="time">
       <mat-error *ngIf="time.invalid">You must select a target audience!</mat-error>
     </mat-form-field>
-
+    <!--Completeness form field-->
     <mat-form-field appearance="fill" color="primary">
       <mat-label>Completeness</mat-label>
       <input matInput [formControl]="complete">
       <mat-error *ngIf="complete.invalid">You must select a target audience!</mat-error>
     </mat-form-field>
-
+    <!--Correctness form field-->
     <mat-form-field appearance="fill" color="primary">
       <mat-label>Correctness</mat-label>
       <input matInput [formControl]="correct">
       <mat-error *ngIf="correct.invalid">You must provide a description of your audience!</mat-error>
     </mat-form-field>
-
+    <!--Update degree button-->
     <mat-action-row>
       <button mat-button color="primary" (click)="updateDegree()" [disabled]="complete.invalid || correct.invalid || time.invalid">Update Degree</button>
     </mat-action-row>
-
   </mat-expansion-panel>
 </ng-template>
