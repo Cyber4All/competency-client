@@ -26,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../../app-routing.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -58,6 +59,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     MatTooltipModule,
+    MatChipsModule
   ],
   exports: [
     CompetencyCardComponent

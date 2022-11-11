@@ -8,38 +8,55 @@
 
 <!--Edit Condition Template-->
 <ng-template #editConditionTemplate>
-    <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel [expanded]="true" class="competency_edit-condition-container">
         <mat-expansion-panel-header>
         <mat-panel-title>
             Condition
         </mat-panel-title>
-        <mat-panel-description>
-            Identify any conditions for completeing this competency
-            <!-- <mat-icon>date_range</mat-icon> -->
-        </mat-panel-description>
         </mat-expansion-panel-header>
-
+        <!--Condition description-->
+        <div class="edit-condition_description">
+            Describe the scenario in which the competency is demonstrated. Specify any resources, tools, or technology and identify
+            any limitations here.
+        </div>
+        <!--Technology form field-->
         <mat-form-field appearance="fill" color="primary">
             <mat-label>Technology</mat-label>
-            <textarea matInput [formControl]="tech"></textarea>
-            <mat-error *ngIf="tech.invalid">Yeetus check tech</mat-error>
+            <input
+                placeholder="Add a new technology..."
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputFor]="techList"
+                (matChipInputTokenEnd)="addTechnology($event)"
+            >
+            <mat-chip-list #techList aria-label="Technology keywords" multiple [formControl]="tech">
+                <mat-chip
+                    *ngFor="let tech of technology"
+                    [selected]="tech"
+                    [value]="tech"
+                    (removed)="removeTechnology(tech)" color="accent" selected>
+                    {{ tech }}
+                    <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip>
+            </mat-chip-list>
+            <mat-error *ngIf="tech.invalid">You must specify at least one piece of technology required for this competency</mat-error>
         </mat-form-field>
-    
+        <!--Limitations form field-->
         <mat-form-field appearance="fill" color="primary">
             <mat-label>Limitations</mat-label>
             <textarea matInput [formControl]="limitations"></textarea>
             <mat-error *ngIf="limitations.invalid">Yeetus check limits</mat-error>
         </mat-form-field>
-
+        <!--Documenation form filed-->
         <mat-form-field appearance="fill" color="primary">
             <mat-label>Documentation</mat-label>
-            <textarea matInput [formControl]="documentation"></textarea>
+            <input matInput [formControl]="documentation">
             <mat-error *ngIf="documentation.invalid">Yeetus check docs</mat-error>
         </mat-form-field>
-
+        <!--Submission button to update-->
         <mat-action-row>
             <button mat-button color="primary" (click)="updateCondition()" [disabled]="tech.invalid || limitations.invalid || documentation.invalid">Update Condition</button>
         </mat-action-row>
-
     </mat-expansion-panel>
 </ng-template>
