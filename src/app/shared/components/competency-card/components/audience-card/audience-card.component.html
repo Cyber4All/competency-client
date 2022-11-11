@@ -28,7 +28,7 @@
       <!--Audience description form field-->
       <mat-form-field appearance="fill" color="primary">
         <mat-label>Description</mat-label>
-        <textarea matInput placeholder="{{details.value === '' ? 'Provide a description for your audience' : null}}" [formControl]="details"></textarea>
+        <textarea matInput placeholder="Provide a description for your audience" [formControl]="details"></textarea>
         <mat-error *ngIf="details.invalid">You must provide a description of your audience!</mat-error>
       </mat-form-field>
       <!--Update action row-->
