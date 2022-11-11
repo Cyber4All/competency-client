@@ -8,33 +8,32 @@
 
 <!--Edit Audience Template-->
 <ng-template #editAudienceTemplate>
-    <mat-expansion-panel [expanded]="true">
-      
+    <mat-expansion-panel [expanded]="true" class="competency_edit-audience-container">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Audience
         </mat-panel-title>
-        <mat-panel-description>
-          Identify an actor for your competency
-          <!-- <mat-icon>account_circle</mat-icon> -->
-        </mat-panel-description>
       </mat-expansion-panel-header>
-  
+      <!--Audience description-->
+      <div class="edit-audience_description">
+        Describe the person who will be learning/performing the competency and identitfy any pre-requisite levels of knowledge,
+        courses studied or previous relevant activities.
+      </div>
+      <!--Audience type form field-->
       <mat-form-field appearance="fill" color="primary">
         <mat-label>Audience</mat-label>
         <input matInput [formControl]="type">
-        <mat-error *ngIf="type.invalid">You must select a target audience!</mat-error>
+        <mat-error *ngIf="type.invalid">You must specify a target audience!</mat-error>
       </mat-form-field>
-
+      <!--Audience description form field-->
       <mat-form-field appearance="fill" color="primary">
         <mat-label>Description</mat-label>
-        <input matInput [formControl]="details">
+        <textarea matInput placeholder="{{details.value === '' ? 'Provide a description for your audience' : null}}" [formControl]="details"></textarea>
         <mat-error *ngIf="details.invalid">You must provide a description of your audience!</mat-error>
       </mat-form-field>
-  
+      <!--Update action row-->
       <mat-action-row>
         <button mat-button color="primary" (click)="updateAudience()" [disabled]="type.invalid || details.invalid">Update Audience</button>
       </mat-action-row>
-
     </mat-expansion-panel>
   </ng-template>
