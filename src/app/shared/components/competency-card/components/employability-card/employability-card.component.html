@@ -8,26 +8,25 @@
 
 <!--Edit Employability Template-->
 <ng-template #editEmployabilityTemplate>
-  <mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel [expanded]="true" class="competency_edit-employability-container">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Employability
       </mat-panel-title>
-      <mat-panel-description>
-        Identify how your audience shall fit into this competency
-        <!-- <mat-icon>account_circle</mat-icon> -->
-      </mat-panel-description>
     </mat-expansion-panel-header>
-
+    <!--Employability description-->
+    <div class="edit-employability_description">
+      Describe the soft skills and fit an individual must have in order to achieve this competency
+    </div>
+    <!--Employability description form field-->
     <mat-form-field appearance="fill" color="primary">
       <mat-label>Description</mat-label>
-      <input matInput [formControl]="details">
+      <textarea matInput [formControl]="details"></textarea>
       <mat-error *ngIf="details.value === ''">You must provide a description employability!</mat-error>
     </mat-form-field>
-
+    <!--Update employability button-->
     <mat-action-row>
       <button mat-button color="primary" (click)="updateEmployability()" [disabled]="details.invalid">Update Employability</button>
     </mat-action-row>
-
   </mat-expansion-panel>
 </ng-template>
