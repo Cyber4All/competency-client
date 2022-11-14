@@ -21,7 +21,12 @@ export class EmployabilityCardComponent implements OnInit, OnChanges {
     private competencyService: CompetencyService
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // If value exists, set details form control
+    if (this.employability.details) {
+      this.details.patchValue(this.employability.details);
+    }
+  }
 
   ngOnChanges(): void {
     // If any value updates, update parent component

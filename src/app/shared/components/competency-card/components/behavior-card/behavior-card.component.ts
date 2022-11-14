@@ -110,7 +110,7 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
     const behaviorUpdate = {
       _id: this.behavior._id,
       task: '',
-      details: '',
+      details: this.details.value,
       work_role: ''
     };
     if(this.task.valid && this.details.valid && this.workrole.valid) {
