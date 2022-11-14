@@ -5,7 +5,13 @@ import {
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { lastValueFrom } from 'rxjs';
-import { getCompleteWorkRole, Workrole, getAllWorkRoles, getAllTasks } from 'src/entity/workrole';
+import {
+  getCompleteWorkRole,
+  Workrole,
+  getAllWorkRoles,
+  getAllTasks,
+  getCompleteTask
+} from 'src/entity/workrole';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +47,16 @@ export class WorkroleService {
   async getAllTasks() {
     this.auth.initHeaders();
     const query = getAllTasks();
+    return await lastValueFrom(this.http
+      .post(
+        COMPETENCY_ROUTES.GRAPH_QUERY(),
+        { query },
+        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+      ));
+  }
+
+  async getCompelteTask(taskId: string) {
+    const query = getCompleteTask(taskId);
     return await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),

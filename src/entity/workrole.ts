@@ -48,3 +48,15 @@ export function getAllTasks() {
     }
   `;
 }
+
+export function getCompleteTask(id: string) {
+  return `
+    query {
+      task(taskId: "${id}") {
+        element
+        element_id
+        description
+      }
+    }
+  `;
+}

@@ -32,8 +32,11 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
 
   async ngOnInit(): Promise<void> {
     // If value exists, set type form control
-    if(this.behavior.task) {
-      this.task.patchValue(this.behavior.task);
+    if(this.behavior.tasks) {
+      await this.workroleService.getCompelteTask(this.behavior.tasks)
+        .then((taskQuery: any) => {
+          this.task.patchValue(taskQuery.data.task.description);
+        });
     }
     // If value exists, set details form control
     if (this.behavior.details) {
@@ -95,7 +98,7 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
         update: 'behavior',
         value: {
           _id: this.behavior._id,
-          task: this.task.value,
+          tasks: this.task.value,
           details: this.details.value,
           work_role: this.workrole.value
         }
