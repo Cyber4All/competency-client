@@ -49,28 +49,34 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
         this.workrole.patchValue(workroleQuery.data.workrole.work_role);
       });
     }
-
+    // Set list of all workrole tasks
     await this.workroleService.getAllTasks()
     .then((tasksQuery: any) => {
       this.tasks = tasksQuery.data.tasks;
     });
-
+    // Set list of all workroles
     await this.workroleService.getAllWorkroles()
     .then((workrolesQuery: any) => {
       this.workroles = workrolesQuery.data.workroles;
     });
-
+    // Pipe filtered tasks input to match dropdown list
     this.filteredTasks = this.task.valueChanges.pipe(
       startWith(''),
       map(value => this._filterTasks(value || '')),
     );
-
+    // Pipe filtred workroles input to match dropdown list
     this.filteredWorkroles = this.workrole.valueChanges.pipe(
       startWith(''),
       map(value => this._filterWorkroles(value || '')),
     );
   }
 
+  /**
+   * Method to filter tasks based on search input
+   *
+   * @param value keyword input for tasks
+   * @returns filtered list of tasks
+   */
   private _filterTasks(value: string): string[] {
     const filterValue = value.toLowerCase();
 
@@ -81,6 +87,12 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
     return tasks.filter(option => option.toLowerCase().includes(filterValue));
   }
 
+  /**
+   * Method to filter workroles based on search input
+   *
+   * @param value keyword input for workroles
+   * @returns list of filtered workroles
+   */
   private _filterWorkroles(value: string): string[] {
     const filterValue = value.toLowerCase();
 
@@ -124,11 +136,9 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
         return workrole.work_role === this.workrole.value;
       });
       if(selectedTask.length > 0) {
-        console.log('task updated', selectedTask);
         behaviorUpdate.task = selectedTask[0]._id ?? '';
       }
       if(selectedWorkrole.length > 0) {
-        console.log('workrole updated', selectedWorkrole);
         behaviorUpdate.work_role = selectedWorkrole[0]._id ?? '';
       }
       const res: any = await this.competencyService.updateBehavior(

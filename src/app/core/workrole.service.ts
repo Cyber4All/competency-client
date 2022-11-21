@@ -22,6 +22,11 @@ export class WorkroleService {
     private auth: AuthService,
   ) {}
 
+  /**
+   * Method to retreive all workroles
+   *
+   * @returns array of workrole ids from NICE DB
+   */
   async getAllWorkroles() {
     this.auth.initHeaders();
     const query = getAllWorkRoles();
@@ -33,6 +38,12 @@ export class WorkroleService {
       ));
   }
 
+  /**
+   * Method to retrieving attributes of a partial workrole
+   *
+   * @param workroleId workrole id
+   * @returns complete workrole object
+   */
   async getCompleteWorkrole(workroleId: string) {
     this.auth.initHeaders();
     const query = getCompleteWorkRole(workroleId);
@@ -44,6 +55,11 @@ export class WorkroleService {
       ));
   }
 
+  /**
+   * Method to retrive all task ids from NICE DB
+   *
+   * @returns array of task ids
+   */
   async getAllTasks() {
     this.auth.initHeaders();
     const query = getAllTasks();
@@ -55,6 +71,12 @@ export class WorkroleService {
       ));
   }
 
+  /**
+   * Method to retreive a full element object
+   *
+   * @param taskId element object id
+   * @returns complete element object
+   */
   async getCompelteTask(taskId: string) {
     const query = getCompleteTask(taskId);
     return await lastValueFrom(this.http

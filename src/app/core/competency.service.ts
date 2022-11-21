@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
-import { BehaviorSubject, firstValueFrom, lastValueFrom, Observable } from 'rxjs';
-import { Competency, CompetencyGraph, CompetencySearch } from 'src/entity/competency';
+import { lastValueFrom } from 'rxjs';
+import { CompetencyGraph, CompetencySearch } from 'src/entity/competency';
 import { Audience } from 'src/entity/audience';
 import { Degree } from 'src/entity/degree';
 import { Condition } from 'src/entity/condition';
@@ -20,6 +18,12 @@ export class CompetencyService {
     private auth: AuthService,
   ) {}
 
+  /**
+   * Method to retrieve all competencies based on query params
+   *
+   * @optional q is a query object for searching competencies and setting pagination
+   * @returns Promise with list of competencies
+   */
   getAllCompetencies(
       q?: {
         text?: string,
@@ -43,6 +47,12 @@ export class CompetencyService {
       });
   }
 
+  /**
+   * Method to retreive all fields of a competency
+   *
+   * @param competencyId competency to retreive
+   * @returns full competency
+   */
   async getCompetencyById(competencyId: string) {
     this.auth.initHeaders();
     const query = CompetencyGraph(competencyId);
@@ -57,6 +67,11 @@ export class CompetencyService {
       });
   }
 
+  /**
+   * Method to create the shell of a competency
+   *
+   * @returns new competency id
+   */
   async createCompetency() {
     this.auth.initHeaders();
     return await lastValueFrom(this.http
@@ -70,6 +85,12 @@ export class CompetencyService {
       });
   }
 
+  /**
+   * Method to delete a specific competency
+   *
+   * @param competencyId id of competency to be deleted
+   * @returns null
+   */
   async deleteCompetency(competencyId: string) {
     this.auth.initHeaders();
     return await lastValueFrom(this.http
@@ -77,14 +98,18 @@ export class CompetencyService {
         COMPETENCY_ROUTES.DELETE_COMPETENCY(competencyId),
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
-      .then(res => {
-        console.log(res);
-      },
-      err => {
-        console.log(err);
+      .catch((e)=> {
+        console.log(e);
       });
   }
 
+  /**
+   * Method to send audinece updates
+   *
+   * @param competencyId current competency being edited
+   * @param audienceUpdate updated fields of an audience attribute
+   * @returns null for successful request
+   */
   async updateAudience(competencyId: string, audienceUpdate: Audience) {
     this.auth.initHeaders();
     return await lastValueFrom(this.http
@@ -98,6 +123,13 @@ export class CompetencyService {
       });
   }
 
+  /**
+   * Method to send behavior updates
+   *
+   * @param competencyId current competency being edited
+   * @param behaviorUpdate udpated fields of a behavior attribute
+   * @returns mull for succesful request
+   */
   async updateBehavior(competencyId: string, behaviorUpdate: Partial<Behavior>) {
     this.auth.initHeaders();
     return await lastValueFrom(this.http
@@ -106,14 +138,18 @@ export class CompetencyService {
         behaviorUpdate,
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
-      .then(res => {
-        console.log(res);
-      },
-      err => {
-        console.log(err);
+      .catch((e)=> {
+        console.log(e);
       });
   }
 
+  /**
+   * Method to send condition updates
+   *
+   * @param competencyId current competncy being edited
+   * @param conditionUpdate updated fields of a condition attribute
+   * @returns null for successful request
+   */
   async updateCondition(competencyId: string, conditionUpdate: Partial<Condition>) {
     this.auth.initHeaders();
     return await lastValueFrom(this.http
@@ -122,14 +158,18 @@ export class CompetencyService {
         conditionUpdate,
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
-      .then(res => {
-        console.log(res);
-      },
-      err => {
-        console.log(err);
+      .catch((e)=> {
+        console.log(e);
       });
   }
 
+  /**
+   * Method to send degree updates
+   *
+   * @param competencyId current competency being edited
+   * @param degreeUpdate updated fields of a degree attribute
+   * @returns null for successful request
+   */
   async updateDegree(competencyId: string, degreeUpdate: Partial<Degree>) {
     this.auth.initHeaders();
     return await lastValueFrom(this.http
@@ -138,14 +178,18 @@ export class CompetencyService {
         degreeUpdate,
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
-      .then(res => {
-        console.log(res);
-      },
-      err => {
-        console.log(err);
+      .catch((e)=> {
+        console.log(e);
       });
   }
 
+  /**
+   * Method to send employability updates
+   *
+   * @param competencyId current competency being edited
+   * @param employabilityUpdate updated fields of a employability attribute
+   * @returns null for successful request
+   */
   async updateEmployability(competencyId: string, employabilityUpdate: Partial<Employability>) {
     this.auth.initHeaders();
     return await lastValueFrom(this.http
@@ -154,11 +198,8 @@ export class CompetencyService {
         employabilityUpdate,
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
-      .then(res => {
-        console.log(res);
-      },
-      err => {
-        console.log(err);
+      .catch((e)=> {
+        console.log(e);
       });
   }
 }

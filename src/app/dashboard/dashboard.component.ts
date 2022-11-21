@@ -59,16 +59,14 @@ export class DashboardComponent implements OnInit {
    * Admins: retrieve SUBMITTED competencies by default and an admins DRAFTS
    */
   async getCompetencies() {
-    if(!this.authService.user) {
-      await this.competencyService
-        .getAllCompetencies({
-          author: '636d5249768cc30058964c09',
-          status: [`${Lifecycles.DRAFT}`, `${Lifecycles.REJECTED}`]
-        })
-        .then((res: any) => {
-          this.search = res.data.search;
-        });
-    }
+    await this.competencyService
+      .getAllCompetencies({
+        author: this.user.id,
+        status: [`${Lifecycles.DRAFT}`, `${Lifecycles.REJECTED}`]
+      })
+      .then((res: any) => {
+        this.search = res.data.search;
+      });
   }
 
   /**
@@ -134,12 +132,10 @@ export class DashboardComponent implements OnInit {
    * @param existingCompetency - Opens the builder with a pre-selected competency
    */
   async openCompetencyBuilder(existingCompetency?: Competency) {
-    let competency: any;
+    let competency: any = existingCompetency;
     if(!existingCompetency) {
       const res: any = await this.competencyService.createCompetency();
       competency = await this.competencyService.getCompetencyById(res.id);
-    } else {
-      competency = existingCompetency;
     }
     // Open dialog ref for builder
     const dialogRef = this.dialog.open(CompetencyCardComponent, {

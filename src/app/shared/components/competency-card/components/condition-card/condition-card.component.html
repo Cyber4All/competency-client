@@ -49,13 +49,13 @@
         <mat-form-field appearance="fill" color="primary">
             <mat-label>Limitations</mat-label>
             <textarea matInput [formControl]="limitations"></textarea>
-            <mat-error *ngIf="limitations.invalid">Yeetus check limits</mat-error>
+            <mat-error *ngIf="limitations.invalid">Check limits!</mat-error>
         </mat-form-field>
         <!--Documenation form filed-->
         <mat-form-field appearance="fill" color="primary">
             <mat-label>Documentation</mat-label>
             <input matInput [formControl]="documentation">
-            <mat-error *ngIf="documentation.invalid">Yeetus check docs</mat-error>
+            <mat-error *ngIf="documentation.invalid">Check docs!</mat-error>
         </mat-form-field>
         <!--Submission button to update-->
         <mat-action-row>
