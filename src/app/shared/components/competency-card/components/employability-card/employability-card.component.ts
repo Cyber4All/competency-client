@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, Output, EventEmitter, OnInit } from '@angu
 import { FormControl, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { CompetencyService } from 'src/app/core/competency.service';
-import { Employability } from 'src/entity/employability';
+import { Employability } from 'src/entity/Employability';
 @Component({
   selector: 'cc-employability-card',
   templateUrl: './employability-card.component.html',

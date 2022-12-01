@@ -1,9 +1,9 @@
-import { Audience } from './audience';
-import { Behavior } from './behavior';
-import { Condition } from './condition';
-import { Degree } from './degree';
-import { Employability } from './employability';
-import { Lifecycles } from './lifecycles';
+import { Audience } from './Audience';
+import { Behavior } from './Behavior';
+import { Condition } from './Condition';
+import { Degree } from './Degree';
+import { Employability } from './Employability';
+import { Lifecycles } from './Lifecycles';
 
 export interface Competency {
   _id: string,

@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
 import { CompetencyService } from 'src/app/core/competency.service';
 import { WorkroleService } from 'src/app/core/workrole.service';
-import { Behavior } from 'src/entity/behavior';
+import { Behavior } from 'src/entity/Behavior';
 import { Workrole } from 'src/entity/workrole';
 import { Elements } from 'src/entity/elements';
 @Component({

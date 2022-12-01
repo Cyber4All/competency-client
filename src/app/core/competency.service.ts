@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { lastValueFrom } from 'rxjs';
-import { CompetencyGraph, CompetencySearch } from 'src/entity/competency';
-import { Audience } from 'src/entity/audience';
-import { Degree } from 'src/entity/degree';
-import { Condition } from 'src/entity/condition';
-import { Behavior } from 'src/entity/behavior';
-import { Employability } from 'src/entity/employability';
+import { CompetencyGraph, CompetencySearch } from 'src/entity/Competency';
+import { Audience } from 'src/entity/Audience';
+import { Degree } from 'src/entity/Degree';
+import { Condition } from 'src/entity/Condition';
+import { Behavior } from 'src/entity/Behavior';
+import { Employability } from 'src/entity/Employability';
 @Injectable({
   providedIn: 'root'
 })
