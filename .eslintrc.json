@@ -103,8 +103,7 @@
           "one-var": "off",
           "object-shorthand": "off",
           "prefer-arrow/prefer-arrow-functions": "off",
-          "quote-props": "off",
-          "no-import-assign": "error"
+          "quote-props": "off"
         }
       },
       {
