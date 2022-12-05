@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { CompetencyService } from 'src/app/core/competency.service';
-import { Audience } from 'src/entity/audience';
+import { CompetencyService } from '../../../../../../app/core/competency.service';
+import { Audience } from '../../../../../../entity/audience';
 
 @Component({
   selector: 'cc-audience-card',

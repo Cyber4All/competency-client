@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
 import { CompetencyCardComponent } from '../shared/components/competency-card/competency-card.component';
-import { Competency } from 'src/entity/competency';
-import { Lifecycles } from 'src/entity/lifecycles';
+import { Competency } from '../../entity/competency';
+import { Lifecycles } from '../../entity/lifecycles';
 import { WorkroleService } from '../core/workrole.service';
-import { Search } from 'src/entity/Search';
+import { Search } from '../../entity/Search';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',

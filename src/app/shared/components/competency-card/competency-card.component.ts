@@ -1,12 +1,12 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatAccordionTogglePosition } from '@angular/material/expansion';
-import { Audience } from 'src/entity/audience';
-import { Behavior } from 'src/entity/behavior';
-import { Competency } from 'src/entity/competency';
-import { Condition } from 'src/entity/condition';
-import { Degree } from 'src/entity/degree';
-import { Employability } from 'src/entity/employability';
+import { Audience } from '../../../../entity/audience';
+import { Behavior } from '../../../../entity/behavior';
+import { Competency } from '../../../../entity/competency';
+import { Condition } from '../../../../entity/condition';
+import { Degree } from '../../../../entity/degree';
+import { Employability } from '../../../../entity/employability';
 
 @Component({
   selector: 'cc-competency-card',

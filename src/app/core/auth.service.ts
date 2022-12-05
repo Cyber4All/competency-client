@@ -4,7 +4,7 @@ import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
-import { USER_ROUTES } from 'src/environments/routes';
+import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
 
 
