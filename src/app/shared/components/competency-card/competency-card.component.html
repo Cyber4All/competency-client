@@ -1,0 +1,41 @@
+<ng-container class="competency-card_container">
+  <form>
+    <mat-accordion class="competency-constructor_accordion" [multi]="true"[togglePosition]="position">
+      <!--Audience-->
+      <cc-audience-card
+        [competencyId] = "competencyId"
+        [isEdit]="isEdit"
+        [audience] = "competency.audience"
+        (audienceChange) = "updateCompetency($event)"
+      ></cc-audience-card>
+      <!--Behavior-->
+      <cc-behavior-card
+        [competencyId] = "competencyId"
+        [isEdit]="isEdit"
+        [behavior] = "competency.behavior"
+        (behaviorChange) = "updateCompetency($event)"
+      ></cc-behavior-card>
+      <!--Condition-->
+      <cc-condition-card
+        [competencyId] = "competencyId"
+        [isEdit]="isEdit"
+        [condition] = "competency.condition"
+        (conditionChange) = "updateCompetency($event)"
+      ></cc-condition-card>
+      <!--Degree-->
+      <cc-degree-card
+        [competencyId] = "competencyId"
+        [isEdit]="isEdit"
+        [degree] = "competency.degree"
+        (degreeChange) = "updateCompetency($event)"
+      ></cc-degree-card>
+      <!--Employability-->
+      <cc-employability-card
+        [competencyId] = "competencyId"
+        [isEdit]="isEdit"
+        [employability] = "competency.employability"
+        (employabilityChange) = "updateCompetency($event)"
+      ></cc-employability-card>
+    </mat-accordion>
+  </form>
+</ng-container>

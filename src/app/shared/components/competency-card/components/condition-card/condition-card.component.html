@@ -1,0 +1,65 @@
+<!-- Toggle template for edit and viewing condition-->
+<ng-container *ngIf="!isEdit; then viewConditionTemplate else editConditionTemplate"></ng-container>
+
+<!--View Condition Template-->
+<ng-template #viewConditionTemplate>
+    <h2>CONDITION</h2>
+    <p>{{ tech.value }}</p>
+    <p>{{ limitations.value }}</p>
+    <p>{{ documentation.value }}</p>
+</ng-template>
+
+<!--Edit Condition Template-->
+<ng-template #editConditionTemplate>
+    <mat-expansion-panel  class="competency_edit-condition-container">
+        <mat-expansion-panel-header>
+        <mat-panel-title>
+            Condition
+        </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!--Condition description-->
+        <div class="edit-condition_description">
+            Describe the scenario in which the competency is demonstrated. Specify any resources, tools, or technology and identify
+            any limitations here.
+        </div>
+        <!--Technology form field-->
+        <mat-form-field appearance="fill" color="primary">
+            <mat-label>Technology</mat-label>
+            <input
+                placeholder="Add a new technology..."
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputFor]="techList"
+                (matChipInputTokenEnd)="addTechnology($event)"
+            >
+            <mat-chip-list #techList aria-label="Technology keywords" multiple [formControl]="tech">
+                <mat-chip
+                    *ngFor="let tech of technology"
+                    [selected]="tech"
+                    [value]="tech"
+                    (removed)="removeTechnology(tech)" color="accent" selected>
+                    {{ tech }}
+                    <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip>
+            </mat-chip-list>
+            <mat-error *ngIf="tech.invalid">You must specify at least one piece of technology required for this competency</mat-error>
+        </mat-form-field>
+        <!--Limitations form field-->
+        <mat-form-field appearance="fill" color="primary">
+            <mat-label>Limitations</mat-label>
+            <textarea matInput [formControl]="limitations"></textarea>
+            <mat-error *ngIf="limitations.invalid">Check limits!</mat-error>
+        </mat-form-field>
+        <!--Documenation form filed-->
+        <mat-form-field appearance="fill" color="primary">
+            <mat-label>Documentation</mat-label>
+            <input matInput [formControl]="documentation">
+            <mat-error *ngIf="documentation.invalid">Check docs!</mat-error>
+        </mat-form-field>
+        <!--Submission button to update-->
+        <mat-action-row>
+            <button mat-button color="primary" (click)="updateCondition()" [disabled]="tech.invalid || limitations.invalid || documentation.invalid">Update Condition</button>
+        </mat-action-row>
+    </mat-expansion-panel>
+</ng-template>

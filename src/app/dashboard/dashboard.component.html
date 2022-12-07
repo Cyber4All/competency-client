@@ -9,9 +9,9 @@
 <div class="wrapper">
     <div class="header">
         <h1>Competencies</h1>
-        <!-- <button mat-mini-fab color="primary" class="add-button" aria-label="Open builder" matTooltip="Add Competency" (click)="openCompetencyBuilder()">
+        <button mat-mini-fab color="primary" class="add-button" aria-label="Open builder" matTooltip="Add Competency" (click)="openCompetencyBuilder()">
             <mat-icon>add</mat-icon>
-        </button> -->
+        </button>
         <div class="filter-container">
             <button mat-raised-button color="warn" class="filter-button" *ngIf="filterApplied" aria-label="Clear Filters" matTooltip="Clear Filters" (click)="clearFilters()">CLEAR FILTERS</button>
             <button mat-raised-button class="filter-button" aria-label="Filter Workroles" matTooltip="Filter Workroles" [matMenuTriggerFor]="workrole">Workrole  &nbsp; <mat-icon>filter_list</mat-icon></button>
@@ -20,7 +20,7 @@
             </mat-menu>
             <button mat-raised-button class="filter-button" aria-label="Filter Tasks" matTooltip="Filter Tasks" [matMenuTriggerFor]="tasks">Tasks &nbsp; <mat-icon>filter_list</mat-icon></button>
             <mat-menu #tasks="matMenu">
-                <button mat-menu-item *ngFor="let obj of competencies" (click)="addFilter(obj.taskId, 3)">{{obj.taskId}}</button>
+                <!-- <button mat-menu-item *ngFor="let obj of competencies" (click)="addFilter(obj.taskId, 3)">{{obj.taskId}}</button> -->
             </mat-menu>
             <button mat-raised-button class="filter-button" aria-label="Filter Audience" matTooltip="Filter Audience" [matMenuTriggerFor]="aud">Audience &nbsp; <mat-icon>filter_list</mat-icon></button>
             <mat-menu #aud="matMenu">
@@ -28,26 +28,23 @@
             </mat-menu>
         </div>
     </div>
-    <div *ngFor="let competency of competencies" class="competency-card">
-        <mat-card>
-            <!-- <div class="framework">
-                Workrole: {{ competency?.role | titlecase}}<br>Task: {{competency?.taskId}}-{{competency.task}}
-            </div> -->
-            <br>
-            <!-- <div class="competency">
-                The {{ competency?.audience | titlecase}} acting as a {{ competency?.role | lowercase }} {{ competency?.condition }} should be able to {{ competency?.task }} {{ competency?.degree }} {{ competency?.effectiveness }}.
-            </div> -->
-            <!-- Remove the actions options for Cali 03-07-2022 -->
-            <!-- <div class="actions">
-                <button *ngIf="!competency.locked" mat-mini-fab color="secondary" aria-label="Open builder" matTooltip="Edit competency" (click)="openCompetencyBuilder(competency)">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <button *ngIf="competency.locked" mat-mini-fab color="warn" aria-label="Competency currently being edited. Try again later." matTooltip="Competency currently being edited. Try again later.">
-                    <mat-icon>close</mat-icon>
-                </button>
-            </div> -->
-        </mat-card>
-    </div>
+    <ng-container *ngIf="!loading; then competencyTemplate; else loadingTemplate"></ng-container>
 </div>
 
+<ng-template #loadingTemplate>
+    <div class="competency-loading">
+        <i class="far fa-spinner-third fa-spin"></i>
+        Loading Competencies...
+    </div>
+</ng-template>
 
+<ng-template #competencyTemplate>
+    <div class="competency-card">
+        <div *ngFor="let competency of loadedCompetencies">
+            <cc-competency-card
+                [competency]="competency"
+                [isEdit]="false"
+            ></cc-competency-card>
+        </div>
+    </div>
+</ng-template>

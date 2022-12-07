@@ -1,5 +1,5 @@
 export interface Audience {
-  _id: string;
+  _id?: string;
   type: string;
   details: string;
 }

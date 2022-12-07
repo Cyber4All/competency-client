@@ -1,0 +1,66 @@
+<!-- Toggle template for edit and viewing competency -->
+<ng-container *ngIf="!isEdit; then viewBehaviorTemplate else editBehaviorTemplate"></ng-container>
+
+<!--View Behavior Template-->
+<ng-template #viewBehaviorTemplate>
+  <h2>BEHAVIOR</h2>
+  <p>{{ details.value }}</p>
+  <p>Completing: {{ task.value }}</p>
+  <p>Acting as a {{ workrole.value }}</p>
+</ng-template>
+
+<!--Edit Behavior Template-->
+<ng-template #editBehaviorTemplate>
+    <mat-expansion-panel  class="competency_edit-behavior-container">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Behavior
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <!--Behavior description-->
+      <div class="edit-behavior_description">
+        Describe the behavior that will be done. The task should be a complete piece of work within the context of a workrole. This
+        workrole and task can correspond with the NICE Framework tasks and workroles.
+      </div>
+      <!--Behavior description form field-->
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Task Description</mat-label>
+        <textarea matInput placeholder="Provide a description for your task" [formControl]="details"></textarea>
+        <mat-error *ngIf="details.invalid">You must provide a description of your task!</mat-error>
+      </mat-form-field>
+      <!--Behavior task selection field-->
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Task</mat-label>
+        <input type="text"
+               placeholder="Choose a task"
+               aria-label="Task"
+               matInput
+               [formControl]="task"
+               [matAutocomplete]="tasks">
+        <mat-autocomplete #tasks="matAutocomplete">
+          <mat-option *ngFor="let task of filteredTasks | async" [value]="task">
+            {{task}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!--Behavior workrole selection field-->
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Workrole</mat-label>
+        <input type="text"
+               placeholder="Choose a workrole"
+               aria-label="Workrole"
+               matInput
+               [formControl]="workrole"
+               [matAutocomplete]="workroles">
+        <mat-autocomplete #workroles="matAutocomplete">
+          <mat-option *ngFor="let workrole of filteredWorkroles | async" [value]="workrole">
+            {{workrole}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-action-row>
+        <button mat-button color="primary" (click)="updateBehavior()" [disabled]="task.invalid || details.invalid || workrole.invalid">Update Behavior</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+</ng-template>

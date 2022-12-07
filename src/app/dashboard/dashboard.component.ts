@@ -3,89 +3,99 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
-
-export interface DialogData {
-  audience: string;
-  condition: string;
-  role: string;
-  task: string;
-  taskId: string;
-  degree: string;
-  effectiveness: string;
-}
-
+import { CompetencyCardComponent } from '../shared/components/competency-card/competency-card.component';
+import { Competency } from '../../entity/competency';
+import { Lifecycles } from '../../entity/lifecycles';
+import { WorkroleService } from '../core/workrole.service';
+import { Search } from '../../entity/Search';
 @Component({
-  selector: 'app-competencies-dashboard',
+  selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
-  competency!: DialogData;
+  // Logged in user
   user!: any;
-
-  competencies: any = [];
-
-  // Workroles and Tasks
-  // niceFramework: any[] = Object.values(behavior);
-  // Academic Audience
-  // audience: any[] = Object.values(audience);
-
+  // Loading visual for competency list
+  loading = false;
+  // Array of complete competency objects
+  loadedCompetencies: Competency[] = [];
+  // Object for search results
+  search: Search = {
+    competencies: [],
+    limit: 0,
+    page: 0,
+    total: 0
+  };
   // Applied filters
-  selected: { role: string[]; audience: string[], task: string[] } = {
-    role: [],
-    audience: [],
+  selected: { work_role: string[]; task: string[] } = {
+    work_role: [],
     task: []
   };
-
   // Boolean toggle for 'clear filters' button
   filterApplied = false;
 
   constructor(
-    public dialog: MatDialog,
-    public competencyService: CompetencyService,
-    public authService: AuthService,
+    private dialog: MatDialog,
+    private competencyService: CompetencyService,
+    private authService: AuthService,
     private router: Router,
-    ) { }
+    private workroleService: WorkroleService
+  ) { }
 
   async ngOnInit() {
+    this.loading = true;
+    if(!this.user) {
+      this.user = this.authService.user;
+    }
     await this.getCompetencies();
-    this.user = this.authService.user;
-
-    // Push unsaved/non-academic audiences to audience array
-    // this.audience.push("working Professional","intern")
+    await this.loadCompetencies();
   }
 
+  /**
+   * WORK-IN-PROGRESS
+   * Method to retrieve competencies based on a users permissions
+   * Authors: retrieve all DRAFT and REJECTED competencies by default
+   * Admins: retrieve SUBMITTED competencies by default and an admins DRAFTS
+   */
   async getCompetencies() {
-    this.competencies = await this.competencyService.getAllCompetencies();
+    await this.competencyService
+      .getAllCompetencies({
+        author: this.user.id, //replace this with your user id when you register
+        status: [`${Lifecycles.DRAFT}`, `${Lifecycles.REJECTED}`]
+      })
+      .then((res: any) => {
+        this.search = res.data.search;
+      });
   }
 
-  async createCompetency(competency: any) {
-    await this.competencyService.createCompetency(competency);
+  /**
+   * Method to retrieve all fields for each found competency
+   */
+  async loadCompetencies(): Promise<any> {
+    if(this.search.competencies.length > 0) {
+      this.search.competencies.map(async (comp: Competency) => {
+        await this.competencyService.getCompetencyById(comp._id)
+          .then((res: any) => {
+            this.loadedCompetencies.push(res.data.competency);
+          });
+      });
+    }
+    // Toggle for loading spinner
+    this.loading = false;
   }
 
-  async updateCompetency(competency: any) {
-    await this.competencyService.lockCompetency(competency, false);
-    await this.competencyService.editCompetency(competency);
-  }
-
-  async lockCompetency(competency: any) {
-    await this.competencyService.lockCompetency(competency, true);
-  }
-
-  async unlockCompetency(competency: any) {
-    await this.competencyService.lockCompetency(competency, false);
-  }
-
-  // Apply filter to results list
+  /**
+   * NOT CURRENTLY IN USE - WORK IN PROGRESS
+   * Method to apply filters for competencies
+   *
+   * @param facet
+   * @param type
+   */
   addFilter(facet: string, type: number): void {
     if(type === 1) {
-      if (!this.selected.role.includes(facet)){
-        this.selected.role.push(facet);
-      }
-    } else if (type === 2) {
-      if(!this.selected.audience.includes(facet)){
-        this.selected.audience.push(facet);
+      if (!this.selected.work_role.includes(facet)){
+        this.selected.work_role.push(facet);
       }
     } else if (type === 3) {
       if (!this.selected.task.includes(facet)){
@@ -96,64 +106,55 @@ export class DashboardComponent implements OnInit {
     this.filterApplied = true;
   }
 
-  // Get filtered competencies
+  /**
+   * Method to find competencies by specified filters
+   */
   async filter() {
-    this.competencies = await this.competencyService.getAllCompetencies(this.selected);
+    console.log('METHOD NOT CURRENTLY IMPLEMENTED');
   }
 
-  // Clear filters and reset index
+  /**
+   * Method to clear applied filters
+   */
   async clearFilters() {
-    this.selected.role = [];
-    this.selected.audience = [];
+    this.loading = true;
+    this.selected.work_role = [];
     this.selected.task = [];
     this.filterApplied = false;
-    this.competencies = await this.competencyService.getAllCompetencies(this.selected);
+    await this.getCompetencies();
+    await this.loadCompetencies();
+    this.loading = false;
   }
 
-  // openCompetencyBuilder(competency?: any) {
-  //   let authorId = "";
-  //   if (this.authService.user) {
-  //     authorId = this.authService.user._id;
-  //   }
-  //   let data = {
-  //     _id: "",
-  //     audience: "",
-  //     role: "",
-  //     task: "",
-  //     taskId: "",
-  //     condition: "",
-  //     degree: "",
-  //     effectiveness: "",
-  //     author: authorId,
-  //     locked: false,
-  //     lastUpdate: Date.now()
-  //   }
-  //   if(competency) {
-  //     data = competency;
-  //     this.lockCompetency(competency);
-  //   }
-  //   const dialogRef = this.dialog.open(CompetencyBuilderComponent, {
-  //     height: '700px',
-  //     width: '900px',
-  //     data: data
-  //   });
+  /**
+   * Method to open the competency-card component and build a competency
+   *
+   * @param existingCompetency - Opens the builder with a pre-selected competency
+   */
+  async openCompetencyBuilder(existingCompetency?: Competency) {
+    let competency: any = existingCompetency;
+    if(!existingCompetency) {
+      const res: any = await this.competencyService.createCompetency();
+      competency = await this.competencyService.getCompetencyById(res.id);
+    }
+    // Open dialog ref for builder
+    const dialogRef = this.dialog.open(CompetencyCardComponent, {
+      height: '700px',
+      width: '900px',
+      data: competency
+    });
+    // After close of builder; refresh list of competencies
+    dialogRef.afterClosed().subscribe(async (result) => {
+      this.loading = true;
+      await this.getCompetencies();
+      await this.loadCompetencies();
+      this.loading = false;
+    });
+  }
 
-  //   dialogRef.afterClosed().subscribe(async(result) => {
-  //     if (competency && result !== undefined) {
-  //       await this.updateCompetency(result);
-  //     } else if (result !== undefined) {
-  //       await this.createCompetency(result);
-  //     } else if (result === undefined) {
-  //       /**
-  //        * not currently in use - california 3/2022
-  //        *
-  //        * await this.unlockCompetency(competency);
-  //        */
-  //     }
-  //     await this.getCompetencies();
-  //   });
-  // }
-
+  /**
+   * Method to log a user out and refresh the page view
+   */
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);

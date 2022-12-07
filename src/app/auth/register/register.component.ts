@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { debounceTime, Subject } from 'rxjs';
-import { AuthService } from 'src/app/core/auth.service';
+import { AuthService } from '../../core/auth.service';
 import { Organization } from '../../../entity/organization';
 import { AuthValidationService } from '../../core/auth-validation.service';
 import { OrganizationService } from '../../core/organization.service';
 
 @Component({
-  selector: 'app-register',
+  selector: 'cc-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
