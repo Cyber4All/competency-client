@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
 import { FormArray, FormControl, Validators } from '@angular/forms';
-import { CompetencyService } from 'src/app/core/competency.service';
-import { Condition } from 'src/entity/Condition';
+import { CompetencyService } from '../../../../../../app/core/competency.service';
+import { Condition } from '../../../../../../entity/condition';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 @Component({

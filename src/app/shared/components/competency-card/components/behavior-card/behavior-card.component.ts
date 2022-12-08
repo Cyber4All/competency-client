@@ -1,11 +1,11 @@
 import { Component, Input, OnInit, DoCheck, Output, EventEmitter, OnChanges, ChangeDetectorRef, SimpleChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
-import { CompetencyService } from 'src/app/core/competency.service';
-import { WorkroleService } from 'src/app/core/workrole.service';
-import { Behavior } from 'src/entity/Behavior';
-import { Workrole } from 'src/entity/workrole';
-import { Elements } from 'src/entity/elements';
+import { CompetencyService } from '../../../../../core/competency.service';
+import { WorkroleService } from '../../../../../core/workrole.service';
+import { Behavior } from '../../../../../../entity/behavior';
+import { Workrole } from '../../../../../../entity/workrole';
+import { Elements } from '../../../../../../entity/elements';
 @Component({
   selector: 'cc-behavior-card',
   templateUrl: './behavior-card.component.html',

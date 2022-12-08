@@ -11,7 +11,7 @@ import {
   getAllWorkRoles,
   getAllTasks,
   getCompleteTask
-} from 'src/entity/workrole';
+} from '../../entity/workrole';
 
 @Injectable({
   providedIn: 'root'

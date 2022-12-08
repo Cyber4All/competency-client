@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
 import { CompetencyCardComponent } from '../shared/components/competency-card/competency-card.component';
-import { Competency } from 'src/entity/Competency';
-import { Lifecycles } from 'src/entity/Lifecycles';
+import { Competency } from '../../entity/competency';
+import { Lifecycles } from '../../entity/lifecycles';
 import { WorkroleService } from '../core/workrole.service';
-import { Search } from 'src/entity/Search';
+import { Search } from '../../entity/Search';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
   async getCompetencies() {
     await this.competencyService
       .getAllCompetencies({
-        author: this.user.id,
+        author: this.user.id, //replace this with your user id when you register
         status: [`${Lifecycles.DRAFT}`, `${Lifecycles.REJECTED}`]
       })
       .then((res: any) => {
