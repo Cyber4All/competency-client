@@ -56,6 +56,9 @@ export const COMPETENCY_ROUTES = {
     UPDATE_EMPLOYABILITY(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/employability`;
     },
+    UPDATE_NOTES(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/notes`;
+    },
     DELETE_COMPETENCY(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}`;
     },

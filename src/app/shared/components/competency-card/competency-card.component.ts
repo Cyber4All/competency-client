@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatAccordionTogglePosition } from '@angular/material/expansion';
+import { Notes } from 'src/entity/notes';
 import { Audience } from '../../../../entity/audience';
 import { Behavior } from '../../../../entity/behavior';
 import { Competency } from '../../../../entity/competency';
@@ -63,7 +64,7 @@ export class CompetencyCardComponent implements OnInit {
   updateCompetency(
     event: {
       update: string,
-      value: Audience | Behavior | Condition | Degree | Employability
+      value: Audience | Behavior | Condition | Degree | Employability | Notes
     }
   ): void {
     switch(event.update) {
@@ -81,6 +82,9 @@ export class CompetencyCardComponent implements OnInit {
         break;
       case 'employability':
         this.competency.employability = event.value as Employability;
+        break;
+      case 'notes':
+        this.competency.notes = event.value as Notes;
         break;
       default:
         console.log('yo you messed up dawg');

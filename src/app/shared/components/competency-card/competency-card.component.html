@@ -36,6 +36,13 @@
         [employability] = "competency.employability"
         (employabilityChange) = "updateCompetency($event)"
       ></cc-employability-card>
+      <!--Notes-->
+      <cc-notes-card
+        [competencyId]="competencyId"
+        [isEdit]="isEdit"
+        [notes]="competency.notes"
+        (notesChange)="updateCompetency($event)"
+      ></cc-notes-card>
     </mat-accordion>
   </form>
 </ng-container>

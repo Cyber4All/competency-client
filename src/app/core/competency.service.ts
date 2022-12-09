@@ -9,6 +9,7 @@ import { Degree } from '../../entity/degree';
 import { Condition } from '../../entity/condition';
 import { Behavior } from '../../entity/behavior';
 import { Employability } from '../../entity/employability';
+import { Notes } from 'src/entity/notes';
 @Injectable({
   providedIn: 'root'
 })
@@ -196,6 +197,19 @@ export class CompetencyService {
       .patch(
         COMPETENCY_ROUTES.UPDATE_EMPLOYABILITY(competencyId),
         employabilityUpdate,
+        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+      ))
+      .catch((e)=> {
+        console.log(e);
+      });
+  }
+
+  async updateNotes(competencyId: string, notesUpdate: Partial<Notes>) {
+    this.auth.initHeaders();
+    return await lastValueFrom(this.http
+      .patch(
+        COMPETENCY_ROUTES.UPDATE_NOTES(competencyId),
+        notesUpdate,
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .catch((e)=> {

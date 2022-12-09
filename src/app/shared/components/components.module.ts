@@ -27,6 +27,7 @@ import { AppRoutingModule } from '../../app-routing.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
+import { NotesCardComponent } from './competency-card/components/notes-card/notes-card.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -35,6 +36,7 @@ import { MatChipsModule } from '@angular/material/chips';
     ConditionCardComponent,
     DegreeCardComponent,
     EmployabilityCardComponent,
+    NotesCardComponent,
   ],
   imports: [
     CommonModule,

@@ -4,6 +4,7 @@ import { Condition } from './condition';
 import { Degree } from './degree';
 import { Employability } from './employability';
 import { Lifecycles } from './lifecycles';
+import { Notes } from './notes';
 
 export interface Competency {
   _id: string,
@@ -14,7 +15,8 @@ export interface Competency {
   condition: Condition,
   behavior: Behavior,
   degree: Degree,
-  employability: Employability
+  employability: Employability,
+  notes: Notes
 }
 
 export function CompetencyGraph(id: string) {
@@ -53,6 +55,10 @@ export function CompetencyGraph(id: string) {
           time
         },
         employability {
+          _id
+          details
+        },
+        notes {
           _id
           details
         }

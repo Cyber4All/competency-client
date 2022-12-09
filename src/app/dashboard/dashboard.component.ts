@@ -7,7 +7,7 @@ import { CompetencyCardComponent } from '../shared/components/competency-card/co
 import { Competency } from '../../entity/competency';
 import { Lifecycles } from '../../entity/lifecycles';
 import { WorkroleService } from '../core/workrole.service';
-import { Search } from '../../entity/Search';
+import { Search } from '../../entity/search';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
   async getCompetencies() {
     await this.competencyService
       .getAllCompetencies({
-        author: this.user.id, //replace this with your user id when you register
+        author: '636d5249768cc30058964c09', //replace this with your user id when you register
         status: [`${Lifecycles.DRAFT}`, `${Lifecycles.REJECTED}`]
       })
       .then((res: any) => {
