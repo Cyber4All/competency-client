@@ -24,4 +24,14 @@ export class FileUploadComponent implements OnInit {
     console.log(event[0]);
     this.files.push(event[0]);
   }
+
+  handleFileThroughInput(event: any) {
+    this.handleFileDropped(event.target.files);
+  }
+
+  removeFile(file: File) {
+    const index = this.files.indexOf(file);
+
+    this.files.splice(index, 1);
+  }
 }

@@ -2,7 +2,8 @@
 <form>
   <div ccDragAndDrop class="drop-zone" (fileOver)="handleFileOver($event)" (fileDropped)="handleFileDropped($event)">
     <div *ngIf="!fileOver else dropFile">
-      <input type="file" accept=".pdf,.txt,.docx,.doc" /> <br />
+      <!-- Ask how to change this change event to go straight to handleFileDropped() -->
+      <input (change)="handleFileThroughInput($event)" type="file" accept=".pdf,.txt,.docx,.doc" /> <br />
       <h3>Drag and Drop a File Here!</h3>
       <p>Or click here to add a file</p>
     </div>
@@ -14,6 +15,7 @@
       <label>(Optional) Enter a description of the file: </label>
       <input type="text" />
       <button>Submit</button>
+      <button (click)="removeFile(file)">Remove</button>
     </form>
   </div>
 </form>
