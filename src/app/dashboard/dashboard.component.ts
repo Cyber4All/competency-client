@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
   async loadCompetencies(): Promise<any> {
     if(this.search.competencies.length > 0) {
       this.search.competencies.map(async (comp: Competency) => {
-        await this.competencyService.getCompetencyById(comp._id)
+        await this.competencyService.getCompetencyById(comp.id)
           .then((res: any) => {
             this.loadedCompetencies.push(res.data.competency);
           });

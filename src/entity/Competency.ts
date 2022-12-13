@@ -6,7 +6,7 @@ import { Employability } from './Employability';
 import { Lifecycles } from './Lifecycles';
 
 export interface Competency {
-  _id: string,
+  id: string,
   status: Lifecycles,
   authorId: string,
   version: number,
@@ -19,41 +19,35 @@ export interface Competency {
 
 export function CompetencyGraph(id: string) {
   return `
-    query {
+    {
       competency(competencyId:"${id}") {
-        _id
-        status
-        authorId
-        version
+        status,
+        authorId,
+        version,
         audience {
-          _id
           type
           details
         },
         behavior {
-          _id
-          tasks
+          task
           details
-          work_role
         },
         condition {
-          _id
           tech
           limitations
+          work_role
           documentation {
-            conditionId
-            description
-            uri
+              conditionId
+              description
+              uri
           }
         },
         degree {
-          _id
           complete
           correct
           time
         },
         employability {
-          _id
           details
         }
       }
@@ -72,15 +66,17 @@ export function CompetencySearch(
   }
 ) {
   return `
-    query {
-      search(text:"${query?.text ?? ''}",
-      page:${query?.page ?? 0},
-      limit:${query?.limit ?? 0}, 
-      author:"${query?.author ?? ''}",
-      status:[${query?.status ?? ''}],
-      version:${query?.version ?? 0}) {
+    {
+      search(
+        text:"${query?.text ?? ''}",
+        page:${query?.page ?? 0},
+        limit:${query?.limit ?? 0}, 
+        author:"${query?.author ?? ''}",
+        status:[${query?.status ?? 'DRAFT'}],
+        version:${query?.version ?? 0}
+      ) {
         competencies {
-          _id
+          id
         }
         total
         page
