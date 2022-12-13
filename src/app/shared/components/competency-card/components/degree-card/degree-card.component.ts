@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { CompetencyService } from '../../../../../../app/core/competency.service';
-import { Degree } from '../../../../../../entity/degree';
+import { Degree } from '../../../../../../entity/Degree';
 @Component({
   selector: 'cc-degree-card',
   templateUrl: './degree-card.component.html',

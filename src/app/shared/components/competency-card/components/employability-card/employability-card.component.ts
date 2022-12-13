@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { CompetencyService } from '../../../../../../app/core/competency.service';
-import { Employability } from '../../../../../../entity/employability';
+import { Employability } from '../../../../../../entity/Employability';
 @Component({
   selector: 'cc-employability-card',
   templateUrl: './employability-card.component.html',

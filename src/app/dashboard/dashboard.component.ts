@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
 import { CompetencyCardComponent } from '../shared/components/competency-card/competency-card.component';
-import { Competency } from '../../entity/competency';
-import { Lifecycles } from '../../entity/lifecycles';
+import { Competency } from '../../entity/Competency';
+import { Lifecycles } from '../../entity/Lifecycles';
 import { WorkroleService } from '../core/workrole.service';
 import { Search } from '../../entity/Search';
 @Component({
