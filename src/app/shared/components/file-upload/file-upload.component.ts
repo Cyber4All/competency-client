@@ -8,10 +8,18 @@ import { Component, Input, OnInit } from '@angular/core';
 export class FileUploadComponent implements OnInit {
 
   @Input() competencyId = '';
+  fileOver = false;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  handleFileOver(event: boolean) {
+    this.fileOver = event;
+  }
+
+  handleFileDropped(event: FileList) {
+    console.log(event[0]);
+  }
 }

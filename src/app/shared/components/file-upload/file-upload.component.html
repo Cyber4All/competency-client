@@ -1,11 +1,16 @@
 <!-- Are these all the accepted file types? -->
 <form>
-  <div ccDragAndDrop class="dropzone">
-    <input type="file" accept=".pdf,.txt,.docx,.doc" /> <br />
-    <h3>Drag and Drop a File Here!</h3>
-    <p>Or click here to add a file</p>
+  <div ccDragAndDrop class="dropzone" (fileOver)="handleFileOver($event)" (fileDropped)="handleFileDropped($event)">
+    <div *ngIf="!fileOver else dropFile">
+      <input type="file" accept=".pdf,.txt,.docx,.doc" /> <br />
+      <h3>Drag and Drop a File Here!</h3>
+      <p>Or click here to add a file</p>
+    </div>
+    
   </div>
   <button class="submit">Submit</button>
 </form>
 
-
+<ng-template #dropFile>
+  <p>Dragged file detected!</p>
+</ng-template>
