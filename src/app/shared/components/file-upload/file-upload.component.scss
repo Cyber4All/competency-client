@@ -1,0 +1,21 @@
+.dropzone {
+  position: relative;
+  width: 450px;
+  height: 200px;
+  text-align: center;
+  border: 1px dashed black;
+
+  input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+}
+
+.submit {
+  z-index: 2;
+}
