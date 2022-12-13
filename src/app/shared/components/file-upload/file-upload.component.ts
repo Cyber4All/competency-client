@@ -9,6 +9,7 @@ export class FileUploadComponent implements OnInit {
 
   @Input() competencyId = '';
   fileOver = false;
+  files: File[] = [];
 
   constructor() { }
 
@@ -21,5 +22,6 @@ export class FileUploadComponent implements OnInit {
 
   handleFileDropped(event: FileList) {
     console.log(event[0]);
+    this.files.push(event[0]);
   }
 }

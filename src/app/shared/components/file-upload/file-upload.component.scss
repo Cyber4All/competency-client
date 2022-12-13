@@ -1,4 +1,4 @@
-.dropzone {
+.drop-zone {
   position: relative;
   width: 450px;
   height: 200px;
@@ -17,6 +17,15 @@
 
   &:hover {
     background-color: rgba($color: #808080, $alpha: 0.1);
+  }
+}
+
+.file-list {
+  display: flex;
+  flex-direction: row;
+
+  p {
+    margin-right: 10px;
   }
 }
 
