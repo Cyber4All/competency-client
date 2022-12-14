@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FileService } from 'src/app/core/file.service';
 
 @Component({
   selector: 'cc-file-upload',
@@ -11,7 +12,9 @@ export class FileUploadComponent implements OnInit {
   fileOver = false;
   files: File[] = [];
 
-  constructor() { }
+  constructor(
+    private fileService: FileService,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -29,8 +32,9 @@ export class FileUploadComponent implements OnInit {
     this.handleFileDropped(event.target.files);
   }
 
-  handleFileUpload(file: File, description: string) {
-    console.log(file.name + ' ' + description);
+  async handleFileUpload(file: File, description: string) {
+    const sampleDesc = `${file.name} ${description}`;
+    await this.fileService.uploadFile(this.competencyId, sampleDesc);
   }
 
   removeFile(file: File) {
