@@ -13,8 +13,8 @@
     <p>File {{ i + 1 }}: {{ file.name }} </p>
     <form>
       <label>(Optional) Enter a description of the file: </label>
-      <input type="text" />
-      <button>Submit</button>
+      <input type="text" #description/>
+      <button (click)="handleFileUpload(file, description.value)">Submit</button>
       <button (click)="removeFile(file)">Remove</button>
     </form>
   </div>

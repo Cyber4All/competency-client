@@ -29,6 +29,10 @@ export class FileUploadComponent implements OnInit {
     this.handleFileDropped(event.target.files);
   }
 
+  handleFileUpload(file: File, description: string) {
+    console.log(file.name + ' ' + description);
+  }
+
   removeFile(file: File) {
     const index = this.files.indexOf(file);
 
