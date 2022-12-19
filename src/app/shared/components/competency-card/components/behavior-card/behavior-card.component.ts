@@ -124,7 +124,7 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
   async updateBehavior() {
     const behaviorUpdate = {
       _id: this.behavior._id,
-      task: '',
+      tasks: '',
       details: this.details.value,
       work_role: ''
     };
@@ -136,7 +136,7 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
         return workrole.work_role === this.workrole.value;
       });
       if(selectedTask.length > 0) {
-        behaviorUpdate.task = selectedTask[0]._id ?? '';
+        behaviorUpdate.tasks = selectedTask[0]._id ?? '';
       }
       if(selectedWorkrole.length > 0) {
         behaviorUpdate.work_role = selectedWorkrole[0]._id ?? '';
