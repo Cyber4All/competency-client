@@ -6,7 +6,9 @@
     <h2>CONDITION</h2>
     <p>{{ tech.value }}</p>
     <p>{{ limitations.value }}</p>
-    <p>{{ documentation.value }}</p>
+    <p *ngFor="let doc of condition.documentation">
+        {{ doc.conditionId }} {{ doc.description }}
+    </p>
 </ng-template>
 
 <!--Edit Condition Template-->

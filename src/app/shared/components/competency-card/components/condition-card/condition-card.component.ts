@@ -31,6 +31,7 @@ export class ConditionCardComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.condition);
     // If value exists, set type form control
     if(this.condition.tech) {
       this.tech.patchValue(this.condition.tech);
