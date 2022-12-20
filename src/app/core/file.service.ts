@@ -16,7 +16,7 @@ export class FileService {
 
   async uploadFile(competencyId: string, description: string) {
     this.authService.initHeaders();
-    const res = await lastValueFrom(
+    await lastValueFrom(
       this.http.post(
         COMPETENCY_ROUTES.CREATE_DOCUMENTATION(competencyId),
         {
@@ -26,9 +26,8 @@ export class FileService {
         },
         { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
       )
-    ).then((x) => {
-      // do something
+    ).then((res) => {
+      // returns the id of the documentation object
     });
-    return res;
   }
 }
