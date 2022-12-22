@@ -3,3 +3,16 @@ export interface Audience {
   type: string;
   details: string;
 }
+
+export function getPreReqs() {
+  return `
+    query {
+      prereqSuggestions {
+        _id
+        element
+        element_id
+        description
+      }
+    }
+  `;
+}

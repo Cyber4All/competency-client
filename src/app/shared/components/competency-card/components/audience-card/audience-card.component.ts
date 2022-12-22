@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { WorkroleService } from 'src/app/core/workrole.service';
 import { CompetencyService } from '../../../../../../app/core/competency.service';
 import { Audience } from '../../../../../../entity/audience';
 
@@ -20,9 +21,10 @@ export class AudienceCardComponent implements OnInit, OnChanges {
 
   constructor(
     private competencyService: CompetencyService,
+    private workroleService: WorkroleService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     // If value exists, set type form control
     if(this.audience.type) {
       this.type.patchValue(this.audience.type);
@@ -31,6 +33,7 @@ export class AudienceCardComponent implements OnInit, OnChanges {
     if (this.audience.details) {
       this.details.patchValue(this.audience.details);
     }
+    const yeet = await this.workroleService.getAudiencePrereqs();
   }
 
   ngOnChanges(): void {
