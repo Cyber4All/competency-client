@@ -61,11 +61,14 @@ export class DashboardComponent implements OnInit {
   async getCompetencies() {
     await this.competencyService
       .getAllCompetencies({
-        author: '636d5249768cc30058964c09', //replace this with your user id when you register
+        author: localStorage.getItem('userId') as string, //replace this with your user id when you register
         status: [`${Lifecycles.DRAFT}`, `${Lifecycles.REJECTED}`]
       })
       .then((res: any) => {
         this.search = res.data.search;
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 

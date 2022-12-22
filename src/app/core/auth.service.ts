@@ -134,6 +134,7 @@ export class AuthService {
    * @param token bearer token returned from service after succesful login
    */
   private storeToken(token: string) {
+    this.storeUser();
     if (token) {
       this.cookie.set(TOKEN_KEY, token, {
         expires: 1,
@@ -143,6 +144,10 @@ export class AuthService {
         sameSite: 'Lax',
       });
     }
+  }
+
+  private storeUser() {
+    localStorage.setItem('userId', this._user?._id as string);
   }
 
   /**
