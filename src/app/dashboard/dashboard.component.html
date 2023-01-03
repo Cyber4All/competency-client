@@ -40,7 +40,7 @@
 
 <ng-template #competencyTemplate>
     <div class="competency-card">
-        <div *ngFor="let competency of loadedCompetencies">
+        <div *ngFor="let competency of loadedCompetencies" class="competency-card_container">
             <cc-competency-card
                 [competency]="competency"
                 [isEdit]="false"
