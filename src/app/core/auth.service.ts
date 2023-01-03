@@ -56,8 +56,9 @@ export class AuthService {
           data:encrypted.data,
           publicKey: encrypted.publicKey
         }));
-      this.storeToken(res.bearer as any);
       this.user = res!.user;
+      this.storeToken(res.bearer as any);
+      this.initHeaders();
       return this.user!;
     } catch(e: any) {
       throw this.formatError(e);
@@ -139,7 +140,6 @@ export class AuthService {
       this.cookie.set(TOKEN_KEY, token, {
         expires: 1,
         path: '/',
-        domain: environment.host,
         secure: false,
         sameSite: 'Lax',
       });
@@ -155,6 +155,7 @@ export class AuthService {
    */
   private deleteToken() {
     this.user = undefined;
+    localStorage.removeItem('userId');
     /**
      * These parameters are now required by the library.
      * The '/' is just so that we can access the cookie for our domain.
