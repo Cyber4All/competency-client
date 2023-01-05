@@ -30,4 +30,22 @@ export class FileService {
       // returns the id of the documentation object
     });
   }
+
+  async deleteFile(competencyId: string, documentationIds: string | string[]) {
+    const documentationParams = (documentationIds instanceof Array) ? documentationIds : [documentationIds];
+    this.authService.initHeaders();
+    await lastValueFrom(
+      this.http.delete(
+        COMPETENCY_ROUTES.DELETE_DOCUMENTATION(competencyId),
+        {
+          params: {
+            ids: documentationParams
+          },
+          headers: this.authService.headers,
+          withCredentials: true,
+          responseType: 'json'
+        }
+      )
+    );
+  }
 }
