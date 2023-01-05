@@ -34,7 +34,7 @@ export class CompetencyCardComponent implements OnInit {
     if(!this.competency) {
       this.competency = this.COMPETENCY.data.competency;
     }
-    this.competencyId = this.competency.id;
+    this.competencyId = this.competency._id;
   }
 
   /**
