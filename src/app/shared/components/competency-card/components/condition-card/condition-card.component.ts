@@ -4,6 +4,7 @@ import { CompetencyService } from '../../../../../../app/core/competency.service
 import { Condition } from '../../../../../../entity/Condition';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { FileService } from 'src/app/core/file.service';
 @Component({
   selector: 'cc-condition-card',
   templateUrl: './condition-card.component.html',
@@ -27,7 +28,8 @@ export class ConditionCardComponent implements OnInit, OnChanges {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
   constructor(
-    private competencyService: CompetencyService
+    private competencyService: CompetencyService,
+    private fileService: FileService
   ) { }
 
   ngOnInit(): void {
@@ -110,5 +112,9 @@ export class ConditionCardComponent implements OnInit, OnChanges {
         }
       );
     }
+  }
+
+  async handleFileDelete(documentationId: string) {
+    await this.fileService.deleteFile(this.competencyId, documentationId);
   }
 }

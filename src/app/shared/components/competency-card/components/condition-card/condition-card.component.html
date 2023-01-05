@@ -6,9 +6,10 @@
     <h2>CONDITION</h2>
     <p>{{ tech.value }}</p>
     <p>{{ limitations.value }}</p>
-    <p *ngFor="let doc of condition.documentation">
+    <div *ngFor="let doc of condition.documentation">
         {{ doc.conditionId }} {{ doc.description }}
-    </p>
+        <button (click)="handleFileDelete(doc._id)">Delete</button>
+    </div>
 </ng-template>
 
 <!--Edit Condition Template-->
