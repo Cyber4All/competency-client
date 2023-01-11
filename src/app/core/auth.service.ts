@@ -106,11 +106,16 @@ export class AuthService {
    *
    * @returns boolean weather a user has a token or not
    */
-  public checkStatus(): Boolean {
+  public async checkStatus(actionsList?: [string]): Promise <boolean> {
     const token = this.retrieveToken();
-
-    if(token) {
-      // FIXME: verify token route needs to be implemented
+    //validating admin actions
+    if(token && actionsList) {
+      const res: any = await lastValueFrom(this.http
+        .post(USER_ROUTES.VALIDATE_ACTIONS(),{
+          token,
+          actionsList
+        }));
+      this.isAdmin.next(res.isValid);
       return true;
     } else {
       this.deleteToken();
