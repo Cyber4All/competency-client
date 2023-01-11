@@ -3,10 +3,15 @@ import { AuthService } from 'src/app/core/auth.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+class Permissions{
+    canActivate(): boolean{
+        return true;
+    }
+}
 @Injectable({
     providedIn: 'root'
   })
-export class AuthenticatedGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
     constructor(private auth: AuthService, private router: Router,){
     }
     canActivate(
