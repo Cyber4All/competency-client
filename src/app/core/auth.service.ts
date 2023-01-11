@@ -21,8 +21,8 @@ export class AuthService {
   private _status$: BehaviorSubject<Optional<User>> = new BehaviorSubject<
     Optional<User>
   >(undefined);
+  private isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean> (false);
   public headers = new HttpHeaders();
-
   constructor(
     private http: HttpClient,
     private encryptionService: EncryptionService,
