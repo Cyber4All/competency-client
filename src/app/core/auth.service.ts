@@ -21,7 +21,7 @@ export class AuthService {
   private _status$: BehaviorSubject<Optional<User>> = new BehaviorSubject<
     Optional<User>
   >(undefined);
-  private isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean> (false);
+  private _isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public headers = new HttpHeaders();
   constructor(
     private http: HttpClient,
@@ -102,20 +102,22 @@ export class AuthService {
   }
 
   /**
+   * Method to validate if an admin user is logged in
+   */
+  public validateAdminAccess() {
+    // Implement logic here
+  }
+
+  /**
    * Method to validate if a user is logged in
    *
    * @returns boolean weather a user has a token or not
    */
-  public async checkStatus(actionsList?: [string]): Promise <boolean> {
+  public checkStatus(): boolean {
     const token = this.retrieveToken();
     //validating admin actions
-    if(token && actionsList) {
-      const res: any = await lastValueFrom(this.http
-        .post(USER_ROUTES.VALIDATE_ACTIONS(),{
-          token,
-          actionsList
-        }));
-      this.isAdmin.next(res.isValid);
+    if(token) {
+      // TODO: Implement logic here of what client needs to do
       return true;
     } else {
       this.deleteToken();
