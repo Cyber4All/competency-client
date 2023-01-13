@@ -8,12 +8,19 @@ import { Injectable } from '@angular/core';
 export class AdminGuard implements CanActivate {
     constructor(private auth: AuthService, private router: Router,){
     }
-    async canActivate(
+     canActivate(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
-    ): Promise<boolean> {
-        // Implement validate admin here
-        this.router.navigate(['/dashboard']);
-        return false;
+    ): boolean {
+        let val = false;
+        this.auth.isAdmin.subscribe((isAdmin: boolean)=>{
+            if(isAdmin){
+                val = true;
+            }else{
+                this.router.navigate(['/dashboard']);
+                val = false;
+            }
+        });
+        return val;
     }
     }

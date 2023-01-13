@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
+import { Permissions } from '../../entity/permissions';
 
 
 const TOKEN_KEY = 'presence';
@@ -32,6 +33,10 @@ export class AuthService {
   set user(value: Optional<User>) {
     this._user = value;
     this._status$.next(value);
+  }
+
+  get isAdmin(): Observable<boolean>{
+    return this._isAdmin.asObservable();
   }
 
   get user() {
@@ -104,8 +109,19 @@ export class AuthService {
   /**
    * Method to validate if an admin user is logged in
    */
-  public validateAdminAccess() {
-    // Implement logic here
+  public async validateAdminAccess(): Promise <void> {
+    const permissions: string[] = [
+      Permissions.APPROVE,
+      Permissions.DEPRECATE,
+      Permissions.REJECT,
+      Permissions.REVIEW
+    ];
+    const token = this.retrieveToken(); //TO DO: pass userId and format body
+    await lastValueFrom(this.http
+      .post(USER_ROUTES.VALIDATE_ACTIONS(), {token, permissions}))
+      .then((res: any) => {
+        this._isAdmin.next(res.isValid);
+      });
   }
 
   /**

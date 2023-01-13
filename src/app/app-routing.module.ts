@@ -4,14 +4,14 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminGuard } from './shared/guards/admin.guard';
 import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
 
 const routes: Routes = [
   {
     path: 'admin/dashboard',
     component: AdminDashboardComponent,
-    // Add admin guard to list
-    canActivate: [AuthenticatedGuard],
+    canActivate: [AuthenticatedGuard, AdminGuard],
   },
   {
     path: 'dashboard',
