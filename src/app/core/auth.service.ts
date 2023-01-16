@@ -51,15 +51,15 @@ export class AuthService {
   }): Promise<User> {
     try {
       const encrypted = await this.encryptionService.encryptRSA(user);
-      const res = await lastValueFrom(this.http
+      const res: any = await lastValueFrom(this.http
         .post<{bearer: string, user: User}>(USER_ROUTES.REGISTER(), {
           data:encrypted.data,
           publicKey: encrypted.publicKey
         }));
-      this.user = res!.user;
+      this.user! = res!.user;
       this.storeToken(res.bearer as any);
       this.initHeaders();
-      return this.user!;
+      return this.user as User;
     } catch(e: any) {
       throw this.formatError(e);
     }
@@ -75,10 +75,10 @@ export class AuthService {
         .post(USER_ROUTES.LOGIN(), encrypted));
       //delete auth header when there is a successul login
       this.headers = new HttpHeaders().delete('Authorization');
-      this.user = res.user as User;
-      this.storeToken(res.bearer);
+      this.user! = res!.user;
+      this.storeToken(res.bearer as any);
       this.initHeaders();
-      return this.user;
+      return this.user as User;
     } catch(e: any) {
       throw this.formatError(e);
     }
@@ -147,7 +147,7 @@ export class AuthService {
   }
 
   private storeUser() {
-    localStorage.setItem('userId', this._user?._id as string);
+    localStorage.setItem('userId', this._user!._id as string);
   }
 
   /**
