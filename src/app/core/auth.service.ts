@@ -61,8 +61,9 @@ export class AuthService {
           data:encrypted.data,
           publicKey: encrypted.publicKey
         }));
-      this.storeToken(res.bearer as any);
       this.user = res!.user;
+      this.storeToken(res.bearer as any);
+      this.initHeaders();
       return this.user!;
     } catch(e: any) {
       throw this.formatError(e);
@@ -79,7 +80,7 @@ export class AuthService {
         .post(USER_ROUTES.LOGIN(), encrypted));
       //delete auth header when there is a successul login
       this.headers = new HttpHeaders().delete('Authorization');
-      this.user = res.user as User;
+      this.user = res!.user as User;
       this.storeToken(res.bearer);
       this.initHeaders();
       return this.user;
@@ -110,15 +111,15 @@ export class AuthService {
    * Method to validate if an admin user is logged in
    */
   public async validateAdminAccess(): Promise <void> {
-    const permissions: string[] = [
+    const token = this.retrieveToken();
+    const targetActions: string[] = [
       Permissions.APPROVE,
       Permissions.DEPRECATE,
       Permissions.REJECT,
       Permissions.REVIEW
     ];
-    const token = this.retrieveToken(); //TO DO: pass userId and format body
     await lastValueFrom(this.http
-      .post(USER_ROUTES.VALIDATE_ACTIONS(), {token, permissions}))
+      .post(USER_ROUTES.VALIDATE_ACTIONS(), {token, targetActions}))
       .then((res: any) => {
         this._isAdmin.next(res.isValid);
       });
@@ -143,6 +144,13 @@ export class AuthService {
   }
 
   /**
+   * Private method to store a userId in localstorage
+   */
+  private storeUser() {
+    localStorage.setItem('userId', this._user?._id as string);
+  }
+
+  /**
    * Private method to retrieve the token value
    *
    * @returns the bearer token from the user signed in
@@ -157,6 +165,7 @@ export class AuthService {
    * @param token bearer token returned from service after succesful login
    */
   private storeToken(token: string) {
+    this.storeUser();
     if (token) {
       this.cookie.set(TOKEN_KEY, token, {
         expires: 1,
@@ -173,6 +182,7 @@ export class AuthService {
    */
   private deleteToken() {
     this.user = undefined;
+    localStorage.removeItem('userId');
     /**
      * These parameters are now required by the library.
      * The '/' is just so that we can access the cookie for our domain.
