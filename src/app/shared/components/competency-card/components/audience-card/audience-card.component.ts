@@ -18,6 +18,7 @@ export class AudienceCardComponent implements OnInit, OnChanges {
   currIndex: number | null = null;
   type = new FormControl('', [Validators.required]);
   details = new FormControl('', [Validators.required]);
+  prereqs = [];
 
   constructor(
     private competencyService: CompetencyService,
@@ -30,10 +31,18 @@ export class AudienceCardComponent implements OnInit, OnChanges {
       this.type.patchValue(this.audience.type);
     }
     // If value exists, set details form control
-    if (this.audience.details) {
+    if(this.audience.details) {
       this.details.patchValue(this.audience.details);
     }
-    const yeet = await this.workroleService.getAudiencePrereqs();
+    // Only retrieve skills and abilitiy suggestions if editing a competency
+    if(this.isEdit) {
+      await this.workroleService.getAudiencePrereqs()
+        .then((prereqQuery: any) => {
+          if (prereqQuery.data.prereqSuggestions) {
+            this.prereqs = prereqQuery.data.prereqSuggestions;
+          }
+        });
+    }
   }
 
   ngOnChanges(): void {
