@@ -29,11 +29,6 @@ export class DragAndDropDirective {
     event.preventDefault();
     event.stopPropagation();
     this.fileOver.emit(false);
-    const files = event.dataTransfer.files;
-    if (files.length > 1) {
-      console.log('One file at a time, please!');
-    } else if (files.length > 0) {
-      this.fileDropped.emit(files);
-    }
+    this.fileDropped.emit(event.dataTransfer.files);
   }
 }

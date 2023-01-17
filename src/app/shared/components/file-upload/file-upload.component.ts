@@ -24,8 +24,9 @@ export class FileUploadComponent implements OnInit {
   }
 
   handleFileDropped(event: FileList) {
-    console.log(event[0]);
-    this.files.push(event[0]);
+    Array.from(event).forEach(file => {
+      this.files.push(file);
+    });
   }
 
   handleFileThroughInput(event: any) {
