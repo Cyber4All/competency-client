@@ -132,7 +132,6 @@ export class AuthService {
    */
   public checkStatus(): boolean {
     const token = this.retrieveToken();
-    //validating admin actions
     if(token) {
       // TODO: Implement logic here of what client needs to do
       return true;
