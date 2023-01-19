@@ -7,9 +7,7 @@ import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
 
-
 const TOKEN_KEY = 'presence';
-const SESSION_KEY = 'session';
 
 type Optional<T> = T | undefined;
 
@@ -17,7 +15,7 @@ type Optional<T> = T | undefined;
   providedIn: 'root'
 })
 export class AuthService {
-  private _user?: User; // Do not set this directly, instead use the setter method
+  private _user?: User; // Do not explicityly set a user, use the setter method
   private _status$: BehaviorSubject<Optional<User>> = new BehaviorSubject<
     Optional<User>
   >(undefined);
@@ -42,43 +40,56 @@ export class AuthService {
     return this._status$.asObservable();
   }
 
+  /**
+   * Method to register new users
+   *
+   * @param user - object of user email, name, pwd, org, and username
+   */
   async register(user: {
       email: string,
       name: string,
       password: string,
       organization: string,
       username: string
-  }): Promise<User> {
+  }): Promise<void> {
     try {
       const encrypted = await this.encryptionService.encryptRSA(user);
-      const res: any = await lastValueFrom(this.http
+      await lastValueFrom(this.http
         .post<{bearer: string, user: User}>(USER_ROUTES.REGISTER(), {
-          data:encrypted.data,
+          data: encrypted.data,
           publicKey: encrypted.publicKey
-        }));
-      this.user! = res!.user;
-      this.storeToken(res.bearer as any);
-      this.initHeaders();
-      return this.user as User;
+        }))
+        .then((res: any) => {
+          this.user! = res!.user;
+          this.storeToken(res.bearer as any);
+          this.initHeaders();
+        });
     } catch(e: any) {
       throw this.formatError(e);
     }
   }
 
-  async login(email: string, password: string): Promise<User> {
+  /**
+   * Method that allows a user to login
+   *
+   * @param email email of a users account trying to login
+   * @param password pwd of users account trying to login
+   */
+  async login(email: string, password: string): Promise<void> {
     try {
       const encrypted = await this.encryptionService.encryptRSA({
         email,
         password,
       });
-      const res: any = await lastValueFrom(this.http
-        .post(USER_ROUTES.LOGIN(), encrypted));
-      //delete auth header when there is a successul login
-      this.headers = new HttpHeaders().delete('Authorization');
-      this.user! = res!.user;
-      this.storeToken(res.bearer as any);
-      this.initHeaders();
-      return this.user as User;
+      await lastValueFrom(this.http
+        .post<{bearer: string, user: User}>(USER_ROUTES.LOGIN(), encrypted))
+        .then((res: any) => {
+          //delete auth header when there is a successul login
+          this.headers = new HttpHeaders().delete('Authorization');
+          this.user! = res!.user;
+          this.storeToken(res.bearer as any);
+          this.initHeaders();
+        });
     } catch(e: any) {
       throw this.formatError(e);
     }
@@ -107,16 +118,35 @@ export class AuthService {
    *
    * @returns boolean weather a user has a token or not
    */
-  public checkStatus(): Boolean {
+  public async checkStatus(): Promise<boolean> {
     const token = this.retrieveToken();
 
     if(token) {
-      // FIXME: verify token route needs to be implemented
+      await this.validateUser();
       return true;
     } else {
       this.deleteToken();
       this.clearAuthHeader();
       return false;
+    }
+  }
+
+  /**
+   * Private method to validate a user based on their stored token
+   */
+  private async validateUser(): Promise<void> {
+    try {
+      this.initHeaders();
+      await lastValueFrom(this.http
+        .get<{user: User}>(
+          USER_ROUTES.TOKEN(),
+          { headers: this.headers, withCredentials: true, responseType: 'json' }
+        ))
+        .then((res: any) => {
+          this.user! = res!.user;
+        });
+    } catch(e: any) {
+      throw this.formatError(e);
     }
   }
 
@@ -135,7 +165,6 @@ export class AuthService {
    * @param token bearer token returned from service after succesful login
    */
   private storeToken(token: string) {
-    this.storeUser();
     if (token) {
       this.cookie.set(TOKEN_KEY, token, {
         expires: 1,
@@ -146,16 +175,11 @@ export class AuthService {
     }
   }
 
-  private storeUser() {
-    localStorage.setItem('userId', this._user!._id as string);
-  }
-
   /**
    * Private method to enforce token removal when necessary
    */
   private deleteToken() {
     this.user = undefined;
-    localStorage.removeItem('userId');
     /**
      * These parameters are now required by the library.
      * The '/' is just so that we can access the cookie for our domain.
