@@ -34,10 +34,14 @@ export class FileUploadComponent implements OnInit {
   }
 
   async handleFileUpload(file: File, description: string) {
-    const sampleDesc = `${file.name} ${description}`;
-    await this.fileService.uploadFile(this.competencyId, sampleDesc);
+    await this.fileService.uploadFile(this.competencyId, file, description);
   }
 
+  /**
+   * Removes a file that was about to be submitted
+   *
+   * @param file The file to be removed
+   */
   removeFile(file: File) {
     const index = this.files.indexOf(file);
 
