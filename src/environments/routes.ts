@@ -8,6 +8,9 @@ export const USER_ROUTES = {
     REGISTER() {
         return `${environment.apiURL}/auth/register`;
     },
+    TOKEN() {
+        return `${environment.apiURL}/auth/token`;
+    },
     UPDATE_ACL_ACTIONS(userId: string) {
         return `${environment.apiURL}/users/${encodeURIComponent(userId)}/acl`;
     },
@@ -41,8 +44,8 @@ export const COMPETENCY_ROUTES = {
     CREATE_COMPETENCY() {
         return `${environment.apiURL}/competencies`;
     },
-    UPDATE_AUDIENCE(competencyId: string) {
-        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/audience`;
+    UPDATE_ACTOR(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/actor`;
     },
     UPDATE_BEHAVIOR(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/behavior`;

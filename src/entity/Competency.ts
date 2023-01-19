@@ -1,4 +1,4 @@
-import { Audience } from './audience';
+import { Actor } from './actor';
 import { Behavior } from './behavior';
 import { Condition } from './condition';
 import { Degree } from './degree';
@@ -11,7 +11,7 @@ export interface Competency {
   status: Lifecycles,
   authorId: string,
   version: number,
-  audience: Audience,
+  actor: Actor,
   condition: Condition,
   behavior: Behavior,
   degree: Degree,
@@ -27,7 +27,7 @@ export function CompetencyGraph(id: string) {
         status
         authorId
         version
-        audience {
+        actor {
           _id
           type
           details

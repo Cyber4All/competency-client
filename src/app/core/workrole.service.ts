@@ -12,7 +12,7 @@ import {
   getAllTasks,
   getCompleteTask
 } from '../../entity/workrole';
-import { getPreReqs } from 'src/entity/audience';
+import { getPreReqs } from '../../entity/actor';
 
 @Injectable({
   providedIn: 'root'
@@ -93,7 +93,7 @@ export class WorkroleService {
    *
    * @returns list of NICE knowledge and skills
    */
-  async getAudiencePrereqs() {
+  async getActorPrereqs() {
     const query = getPreReqs();
     return await lastValueFrom(this.http
       .post(

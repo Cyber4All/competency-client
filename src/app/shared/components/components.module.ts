@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CompetencyCardComponent } from './competency-card/competency-card.component';
-import { AudienceCardComponent } from './competency-card/components/audience-card/audience-card.component';
+import { ActorCardComponent } from './competency-card/components/actor-card/actor-card.component';
 import { BehaviorCardComponent } from './competency-card/components/behavior-card/behavior-card.component';
 import { ConditionCardComponent } from './competency-card/components/condition-card/condition-card.component';
 import { DegreeCardComponent } from './competency-card/components/degree-card/degree-card.component';
@@ -31,7 +31,7 @@ import { NotesCardComponent } from './competency-card/components/notes-card/note
 @NgModule({
   declarations: [
     CompetencyCardComponent,
-    AudienceCardComponent,
+    ActorCardComponent,
     BehaviorCardComponent,
     ConditionCardComponent,
     DegreeCardComponent,
