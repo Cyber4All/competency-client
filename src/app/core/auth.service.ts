@@ -6,6 +6,7 @@ import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
+import { SnackbarService} from './snackbar.service';
 
 
 const TOKEN_KEY = 'presence';
@@ -26,7 +27,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private encryptionService: EncryptionService,
-    private cookie: CookieService
+    private cookie: CookieService,
+    private snackbarService: SnackbarService
   ) { }
 
   set user(value: Optional<User>) {
@@ -60,7 +62,7 @@ export class AuthService {
       this.user = res!.user;
       return this.user!;
     } catch(e: any) {
-      throw this.formatError(e);
+      throw this.snackbarService.sendNotificationByError(e);
     }
   }
 
@@ -79,7 +81,7 @@ export class AuthService {
       this.initHeaders();
       return this.user;
     } catch(e: any) {
-      throw this.formatError(e);
+      throw this.snackbarService.sendNotificationByError(e);
     }
   }
 

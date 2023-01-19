@@ -17,7 +17,7 @@ export class SnackbarService  {
         //callbacks
     }> = new Subject();
 
-    sendNotificationByError(err: HttpErrorResponse){
+    public sendNotificationByError(err: HttpErrorResponse){
         let title = 'ERROR';
         let message = 'Something went wrong on our end. Please try again later!';
         if (err.status !== 429){
