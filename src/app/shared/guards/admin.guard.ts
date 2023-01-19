@@ -20,11 +20,7 @@ export class AdminGuard implements CanActivate {
         // Validate user actions for admin access
         await this.auth.validateAdminAccess();
         this.auth.isAdmin.subscribe((isAdmin: boolean) => {
-            if(isAdmin) {
-                adminUser = true;
-            } else {
-                adminUser = false;
-            }
+            adminUser = isAdmin;
         });
         // If not admin; redirect to author dashboard
         if (!adminUser) {

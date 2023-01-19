@@ -6,7 +6,7 @@ import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
-import { Permissions } from '../../entity/permissions';
+import { competencyAcl } from 'competency-acl';
 
 
 const TOKEN_KEY = 'presence';
@@ -61,7 +61,7 @@ export class AuthService {
           data:encrypted.data,
           publicKey: encrypted.publicKey
         }));
-      this.user = res!.user;
+      this.user = res.user;
       this.storeToken(res.bearer as any);
       this.initHeaders();
       return this.user!;
@@ -80,7 +80,7 @@ export class AuthService {
         .post(USER_ROUTES.LOGIN(), encrypted));
       //delete auth header when there is a successul login
       this.headers = new HttpHeaders().delete('Authorization');
-      this.user = res!.user as User;
+      this.user = res.user as User;
       this.storeToken(res.bearer);
       this.initHeaders();
       return this.user;
@@ -113,11 +113,12 @@ export class AuthService {
   public async validateAdminAccess(): Promise <void> {
     const token = this.retrieveToken();
     const targetActions: string[] = [
-      Permissions.APPROVE,
-      Permissions.DEPRECATE,
-      Permissions.REJECT,
-      Permissions.REVIEW
+      competencyAcl.competencies.getPublished,
+      competencyAcl.competencies.getDeprecated,
+      competencyAcl.competencies.getRejected,
+      competencyAcl.competencies.reviewSubmitted
     ];
+
     await lastValueFrom(this.http
       .post(USER_ROUTES.VALIDATE_ACTIONS(), {token, targetActions}))
       .then((res: any) => {

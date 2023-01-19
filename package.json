@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^13.3.11",
     "@angular/platform-browser-dynamic": "^13.3.11",
     "@angular/router": "^13.3.11",
+    "competency-acl": "^0.4.1",
     "ngx-cookie-service": "^13.2.1",
     "ngx-virtual-scroller": "^4.0.3",
     "query-string": "^7.1.1",
