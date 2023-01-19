@@ -13,6 +13,7 @@ export class DegreeCardComponent implements OnInit, OnChanges {
   @Input() isEdit = false;
   @Input() degree!: Degree;
   @Output() degreeChange = new EventEmitter<{update: string, value: Degree}>();
+  @Output() degreeUpdated = new EventEmitter<boolean>(false);
   currIndex: number | null = null;
   complete = new FormControl('');
   correct = new FormControl('');
@@ -57,6 +58,7 @@ export class DegreeCardComponent implements OnInit, OnChanges {
    */
    async updateDegree() {
     if(this.complete.valid && this.correct.valid && this.time.valid) {
+      this.degreeUpdated.emit(true);
       const res: any = await this.competencyService.updateDegree(
         this.competencyId,
         {

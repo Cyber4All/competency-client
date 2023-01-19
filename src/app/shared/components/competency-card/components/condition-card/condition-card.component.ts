@@ -20,6 +20,7 @@ export class ConditionCardComponent implements OnInit, OnChanges {
   @Input() isEdit = false;
   @Input() condition!: Condition;
   @Output() conditionChange = new EventEmitter<{update: string, value: Condition}>();
+  @Output() conditionUpdated = new EventEmitter<boolean>(false);
   tech = new FormControl([], [Validators.required]);
   limitations = new FormControl('', [Validators.required]);
   documentation = new FormControl('', [Validators.required]);
@@ -99,6 +100,7 @@ export class ConditionCardComponent implements OnInit, OnChanges {
    */
    async updateCondition() {
     if(this.tech.valid && this.limitations.valid && this.documentation.valid) {
+      this.conditionUpdated.emit(true);
       await this.competencyService.updateCondition(
         this.competencyId,
         {

@@ -1,8 +1,8 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatAccordionTogglePosition } from '@angular/material/expansion';
 import { Notes } from 'src/entity/notes';
-import { Audience } from '../../../../entity/audience';
+import { Actor } from '../../../../entity/actor';
 import { Behavior } from '../../../../entity/behavior';
 import { Competency } from '../../../../entity/competency';
 import { Condition } from '../../../../entity/condition';
@@ -18,6 +18,7 @@ export class CompetencyCardComponent implements OnInit {
   @Input() competency!: Competency;
   // Toggle for editing a competency
   @Input() isEdit = true;
+  @Output() isSavable = new EventEmitter<boolean>(false);
   // Current Competency ID
   competencyId = '';
   // Index to toggle cards *** Null closes all cards
@@ -26,6 +27,16 @@ export class CompetencyCardComponent implements OnInit {
   currIndex = 0;
   position: MatAccordionTogglePosition = 'before';
 
+  /**
+   * Boolean vars to track changes applied to a competency
+   * These are used to ensure we can delete a competency shell if no fields are updated
+   */
+  actorUpdated = false;
+  behaviorUpdated = false;
+  conditionUpdated = false;
+  degreeUpdated = false;
+  employabilityUpdated = false;
+
   constructor(
     public dialogRef: MatDialogRef<CompetencyCardComponent>,
     @Inject(MAT_DIALOG_DATA) public COMPETENCY: any,
@@ -33,7 +44,7 @@ export class CompetencyCardComponent implements OnInit {
 
   ngOnInit(): void {
     if(!this.competency) {
-      this.competency = this.COMPETENCY.data.competency;
+      this.competency = this.COMPETENCY;
     }
     this.competencyId = this.competency._id;
   }
@@ -47,11 +58,18 @@ export class CompetencyCardComponent implements OnInit {
     this.compIndex = index;
   }
 
-  /**
-   * Function to handle exit of builder
-   */
-  onNoClick(): void {
-    this.dialogRef.close();
+  checkUpdateStatus(): void {
+    if(
+      this.actorUpdated
+      && this.behaviorUpdated
+      && this.conditionUpdated
+      && this.degreeUpdated
+      && this.employabilityUpdated
+    ) {
+      this.isSavable.emit(true);
+    } else {
+      this.isSavable.emit(false);
+    }
   }
 
   /**
@@ -64,12 +82,12 @@ export class CompetencyCardComponent implements OnInit {
   updateCompetency(
     event: {
       update: string,
-      value: Audience | Behavior | Condition | Degree | Employability | Notes
+      value: Actor | Behavior | Condition | Degree | Employability | Notes
     }
   ): void {
     switch(event.update) {
-      case 'audience':
-        this.competency.audience = event.value as Audience;
+      case 'actor':
+        this.competency.actor = event.value as Actor;
         break;
       case 'behavior':
         this.competency.behavior = event.value as Behavior;
@@ -90,5 +108,6 @@ export class CompetencyCardComponent implements OnInit {
         console.log('yo you messed up dawg');
         break;
     }
+    this.checkUpdateStatus();
   }
 }

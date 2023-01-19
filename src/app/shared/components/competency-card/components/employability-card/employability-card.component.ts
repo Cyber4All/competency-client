@@ -13,6 +13,7 @@ export class EmployabilityCardComponent implements OnInit, OnChanges {
   @Input() isEdit = false;
   @Input() employability!: Employability;
   @Output() employabilityChange = new EventEmitter<{update: string, value: Employability}>();
+  @Output() employabilityUpdated = new EventEmitter<boolean>(false);
   currIndex: number | null = null;
   details = new FormControl('', [Validators.required]);
 
@@ -45,6 +46,7 @@ export class EmployabilityCardComponent implements OnInit, OnChanges {
    */
    async updateEmployability() {
     if(this.details.valid) {
+      this.employabilityUpdated.emit(true);
       const res: any = await this.competencyService.updateEmployability(
         this.competencyId,
         {

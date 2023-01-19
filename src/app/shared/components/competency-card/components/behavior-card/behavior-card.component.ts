@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, DoCheck, Output, EventEmitter, OnChanges, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
 import { CompetencyService } from '../../../../../core/competency.service';
@@ -17,6 +17,7 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
   @Input() isEdit = false;
   @Input() behavior!: Behavior;
   @Output() behaviorChange = new EventEmitter<{update: string, value: Behavior}>();
+  @Output() behaviorUpdated = new EventEmitter<boolean>(false);
   currIndex: number | null = null;
   task = new FormControl('');
   details = new FormControl('', [Validators.required]);
@@ -129,6 +130,7 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
       work_role: ''
     };
     if(this.task.valid && this.details.valid && this.workrole.valid) {
+      this.behaviorUpdated.emit(true);
       const selectedTask: Elements[] = this.tasks.filter((task: Elements) => {
         return task.description === this.task.value;
       });
