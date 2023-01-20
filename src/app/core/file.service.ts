@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { COMPETENCY_ROUTES } from 'src/environments/routes';
 import { AuthService } from './auth.service';
 
@@ -31,31 +31,33 @@ export class FileService {
     this.authService.initHeaders();
     const lambdaResponse: Lambda = await this.lambdaService(competencyId, file, 'post');
 
-    // format the give response
+    // format the lambda response
     const formData = new FormData();
     for (const [name, value] of Object.entries(lambdaResponse.fields)) {
       formData.append(name, value);
     }
-    console.log('formData', formData);
-    await lastValueFrom(
-      this.http.post(lambdaResponse.url, formData)
-    ).then((res) => {
-      console.log('Lambda Response', res);
-    });
+    formData.append('file', file);
 
-    // await lastValueFrom(
-    //   this.http.post(
-    //     COMPETENCY_ROUTES.CREATE_DOCUMENTATION(competencyId),
-    //     {
-    //       userId: this.authService.user?._id,
-    //       description: description,
-    //       uri: '', // to be implemented once Lambda route works in prod
-    //     },
-    //     { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
-    //   )
-    // ).then((res) => {
-    //   // returns the id of the documentation object
-    // });
+    // Sends a POST request to add the file to the s3 bucket (provided in the lambda response url)
+    this.http.post(lambdaResponse.url, formData);
+
+    // formats the uri to be stored in mongo, will be used for file retrieval and deleting a file
+    const fileURL = `https://cc-file-upload-bucket.s3.amazonaws.com/${this.authService.user?._id}/${competencyId}/${file.name}`;
+    console.log(fileURL);
+
+    await lastValueFrom(
+      this.http.post(
+        COMPETENCY_ROUTES.CREATE_DOCUMENTATION(competencyId),
+        {
+          userId: this.authService.user?._id,
+          description: description,
+          uri: fileURL,
+        },
+        { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
+      )
+    ).then((res) => {
+      console.log(res);
+    });
   }
 
   async deleteFile(competencyId: string, documentationIds: string | string[]) {
