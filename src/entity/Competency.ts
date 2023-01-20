@@ -25,7 +25,7 @@ export function CompetencyGraph(id: string) {
         status,
         authorId,
         version,
-        audience {
+        actor {
           type
           details
         },
