@@ -1,9 +1,7 @@
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { title } from 'process';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
+import { Subject } from 'rxjs';
 
 
 @Injectable({
@@ -13,11 +11,12 @@ export class SnackbarService  {
     public notification$: Subject<{
         title: string,
         message: string,
-        //color: SNACKBAR_COLOR;
-        //callbacks
+        color: SNACKBAR_COLOR;
+        callbacks?: { action: Function; display: string; style?: string }[];
     }> = new Subject();
 
     public sendNotificationByError(err: HttpErrorResponse){
+        console.log(err);
         let title = 'ERROR';
         let message = 'Something went wrong on our end. Please try again later!';
         if (err.status !== 429){
@@ -46,17 +45,17 @@ export class SnackbarService  {
                 break;
             case 429:
                 title = 'Too Many Requests';
-                message = 'Too manyy request, please try again in 1 hour';
+                message = 'Too many request, please try again in 1 hour';
                 break;
             default:
             title = 'Internal Service Error';
             message = 'Something went wrong on our end. Please  try again later.';
         }
-
+        console.log(title,'after switch', message);
         this.notification$.next({
             title: title,
             message: message,
-            //color:
+            color: SNACKBAR_COLOR.DANGER,
         });
     }
 

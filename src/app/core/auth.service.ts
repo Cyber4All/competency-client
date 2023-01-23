@@ -62,7 +62,8 @@ export class AuthService {
       this.user = res!.user;
       return this.user!;
     } catch(e: any) {
-      throw this.snackbarService.sendNotificationByError(e);
+      this.snackbarService.sendNotificationByError(e);
+      throw this.formatError(e);
     }
   }
 
@@ -81,7 +82,9 @@ export class AuthService {
       this.initHeaders();
       return this.user;
     } catch(e: any) {
-      throw this.snackbarService.sendNotificationByError(e);
+      console.log(e);
+     this.snackbarService.sendNotificationByError(e);
+     throw this.formatError(e);
     }
   }
 

@@ -6,6 +6,7 @@ import { AuthService } from '../../core/auth.service';
 import { Organization } from '../../../entity/organization';
 import { AuthValidationService } from '../../core/auth-validation.service';
 import { OrganizationService } from '../../core/organization.service';
+import { SnackbarService } from 'src/app/core/snackbar.service';
 
 @Component({
   selector: 'cc-register',
@@ -48,7 +49,8 @@ this.showDropdown = false;
     private auth: AuthService,
     private router: Router,
     private orgService: OrganizationService,
-    public authValidation: AuthValidationService
+    public authValidation: AuthValidationService,
+    private snackBarService: SnackbarService,
   ) { }
 
   ngOnInit(): void {
@@ -84,6 +86,7 @@ this.showDropdown = false;
         }
       })
       .catch((error: any) => {
+        this.snackBarService.sendNotificationByError(error);
         this.errMessage = error.message;
         this.authValidation.showError();
       });

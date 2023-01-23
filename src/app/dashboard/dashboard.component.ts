@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
   async getCompetencies() {
     await this.competencyService
       .getAllCompetencies({
-        author: this.user.id, //replace this with your user id when you register
+        author: '63cee8b1ffa8bc84821daed7', //replace this with your user id when you register
         status: [`${Lifecycles.DRAFT}`, `${Lifecycles.REJECTED}`]
       })
       .then((res: any) => {
