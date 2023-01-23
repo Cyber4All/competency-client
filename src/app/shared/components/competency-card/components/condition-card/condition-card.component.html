@@ -11,7 +11,7 @@
         {{ doc.conditionId }} {{ doc.description }}
         <button (click)="handleFileDelete(doc)">Delete</button>
     </div>
-    <button>Delete Many</button>
+    <button (click)="handleFileDelete(deleting)">Delete Many</button>
 </ng-template>
 
 <!--Edit Condition Template-->

@@ -65,15 +65,11 @@ export class FileService {
     this.authService.initHeaders();
     const docsToDelete = (documentation instanceof Array) ? documentation : [documentation];
     console.log(docsToDelete);
-
-    let fileName: string, LambdaResponse: { urls: string[] };
-    docsToDelete.forEach(async doc => {
-      fileName = this.parseFileName(doc.uri);
-      console.log(fileName);
-      LambdaResponse = await this.deleteLambdaService(competencyId, fileName);
-      console.log(LambdaResponse);
-      await lastValueFrom(this.http.delete(LambdaResponse.urls[0]));
-    });
+    const fileNameQuery = docsToDelete.map(doc => this.parseFileName(doc.uri)).join(',');
+    console.log(fileNameQuery);
+    const LambdaResponse: { urls: string[] } = await this.deleteLambdaService(competencyId, fileNameQuery);
+    console.log(LambdaResponse);
+    await Promise.all(LambdaResponse.urls.map(url => lastValueFrom(this.http.delete(url))));
     // for each documentation being deleted:
     //    grab the uri of the documentation
     //    parse the file name using parseFileName()
@@ -117,11 +113,10 @@ export class FileService {
       });
   }
 
-  private async deleteLambdaService(competencyId: string, fileName: string): Promise<any> {
-    console.log(COMPETENCY_ROUTES.DELETE_FILE_LAMBDA(competencyId, fileName));
+  private async deleteLambdaService(competencyId: string, filenames: string): Promise<any> {
     return await lastValueFrom(
       this.http.delete(
-        COMPETENCY_ROUTES.DELETE_FILE_LAMBDA(competencyId, fileName),
+        COMPETENCY_ROUTES.DELETE_FILE_LAMBDA(competencyId, filenames),
         {
           headers: this.authService.headers,
           withCredentials: true,
