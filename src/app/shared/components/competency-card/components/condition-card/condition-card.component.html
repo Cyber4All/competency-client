@@ -7,9 +7,11 @@
     <p>{{ tech.value }}</p>
     <p>{{ limitations.value }}</p>
     <div *ngFor="let doc of condition.documentation">
+        <input type="checkbox" (change)="changeMultipleDelete(doc, $event)">
         {{ doc.conditionId }} {{ doc.description }}
         <button (click)="handleFileDelete(doc)">Delete</button>
     </div>
+    <button>Delete Many</button>
 </ng-template>
 
 <!--Edit Condition Template-->

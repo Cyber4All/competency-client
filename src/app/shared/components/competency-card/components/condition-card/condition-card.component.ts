@@ -27,6 +27,7 @@ export class ConditionCardComponent implements OnInit, OnChanges {
   documentation = new FormControl('', [Validators.required]);
   technology: string[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  deleting: Documentation[] = [];
 
   constructor(
     private competencyService: CompetencyService,
@@ -115,7 +116,11 @@ export class ConditionCardComponent implements OnInit, OnChanges {
     }
   }
 
-  async handleFileDelete(documentation: Documentation) {
+  async handleFileDelete(documentation: Documentation | Documentation[]) {
     await this.fileService.deleteFile(this.competencyId, documentation);
+  }
+
+  async changeMultipleDelete(documentation: Documentation, event: any) {
+    event.target.checked ? this.deleting.push(documentation) : this.deleting.splice(this.deleting.indexOf(documentation), 1);
   }
 }
