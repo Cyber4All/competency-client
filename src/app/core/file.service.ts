@@ -5,7 +5,8 @@ import { Documentation } from 'src/entity/Documentation';
 import { COMPETENCY_ROUTES } from 'src/environments/routes';
 import { AuthService } from './auth.service';
 
-interface Lambda { // should I move this to entities?
+// the typing of the Lambda response when uploading a file
+interface Lambda {
   url: string,
   fields: {
     // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -28,10 +29,16 @@ export class FileService {
     private authService: AuthService
   ) { }
 
+  /**
+   * Logic for uploading a file to S3 and in the API
+   *
+   * @param competencyId the competency where the file will be uploaded
+   * @param file the file to be uploaded
+   * @param description the description to add to the documentation
+   */
   async uploadFile(competencyId: string, file: File, description: string) {
     this.authService.initHeaders();
     const lambdaResponse: Lambda = await this.uploadLambdaService(competencyId, file);
-    console.log(lambdaResponse);
 
     // format the lambda response
     const formData = new FormData();
@@ -39,12 +46,12 @@ export class FileService {
       formData.append(name, value);
     }
     formData.append('file', file);
-    // Sends a POST request to add the file to the s3 bucket (provided in the lambda response url)
+
+    // Adds the file to S3
     await lastValueFrom(this.http.post(lambdaResponse.url, formData));
 
     // formats the uri to be stored in mongo, will be used for file retrieval and deleting a file
     const fileURL = `https://cc-file-upload-bucket.s3.amazonaws.com/${this.authService.user?._id}/${competencyId}/${file.name}`;
-    console.log(fileURL);
 
     await lastValueFrom(
       this.http.post(
@@ -56,26 +63,21 @@ export class FileService {
         },
         { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
       )
-    ).then((res) => {
-      console.log(res);
-    });
+    ); // returns a response containing the id of the new documentation
   }
 
+  /**
+   * Logic for deleting documentation in the API and the file in S3
+   *
+   * @param competencyId The competency where the file will be deleted
+   * @param documentation a single documentation or an array of documentations that will be deleted
+   */
   async deleteFile(competencyId: string, documentation: Documentation | Documentation[]) {
     this.authService.initHeaders();
     const docsToDelete = (documentation instanceof Array) ? documentation : [documentation];
-    console.log(docsToDelete);
     const fileNameQuery = docsToDelete.map(doc => this.parseFileName(doc.uri)).join(',');
-    console.log(fileNameQuery);
     const LambdaResponse: { urls: string[] } = await this.deleteLambdaService(competencyId, fileNameQuery);
-    console.log(LambdaResponse);
     await Promise.all(LambdaResponse.urls.map(url => lastValueFrom(this.http.delete(url))));
-    // for each documentation being deleted:
-    //    grab the uri of the documentation
-    //    parse the file name using parseFileName()
-    //    send a request to lambda to delete the file
-    //    receive a url to s3 to delete it
-    //    delete the documentation in mongo
     await lastValueFrom(
       this.http.delete(
         COMPETENCY_ROUTES.DELETE_DOCUMENTATION(competencyId),
@@ -91,11 +93,25 @@ export class FileService {
     );
   }
 
+  /**
+   * Takes the uri linked to S3 and retrieves the filename
+   *
+   * @param uri the Uniform Resource Identifier of the file in S3 containing the filename
+   * @returns The filename
+   */
   public parseFileName(uri: string): string {
     const uriSplit = uri.split('/');
     return uriSplit[uriSplit.length - 1];
   }
 
+  /**
+   * Communicates with File Upload in Lambda to generate a presigned url
+   * to upload a file to S3
+   *
+   * @param competencyId The id of the competency containing the file to be uploaded
+   * @param file The file to be uploaded
+   * @returns A presigned url that adds the file to s3 and fields to attach to the request (see Lambda type for more info)
+   */
   private async uploadLambdaService(competencyId: string, file: File): Promise<any> {
     return await lastValueFrom(
         this.http.post(
@@ -108,11 +124,18 @@ export class FileService {
           { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
         )
       ).then((res) => {
-        console.log('Lambda Response', res);
         return res;
       });
   }
 
+  /**
+   * Communicates with File Upload in Lambda to generate presigned urls
+   * to delete files in S3 given the filenames to be deleted
+   *
+   * @param competencyId The id of the competency containing the file to be deleted
+   * @param filenames A comma separated string of filenames to be deleted
+   * @returns An array of urls used to delete each file in s3
+   */
   private async deleteLambdaService(competencyId: string, filenames: string): Promise<any> {
     return await lastValueFrom(
       this.http.delete(
@@ -124,7 +147,6 @@ export class FileService {
         }
       )
     ).then((res) => {
-      console.log('Lambda Response', res);
       return res;
     });
   }

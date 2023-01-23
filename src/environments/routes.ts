@@ -75,8 +75,8 @@ export const COMPETENCY_ROUTES = {
     UPLOAD_FILE_LAMBDA(competencyId: string) {
         return `${environment.fileUploadURL}/files?competencyId=${encodeURIComponent(competencyId)}`;
     },
-    DELETE_FILE_LAMBDA(competencyId: string, filename: string) {
+    DELETE_FILE_LAMBDA(competencyId: string, filenames: string) {
         // eslint-disable-next-line max-len
-        return `${environment.fileUploadURL}/files?competencyId=${encodeURIComponent(competencyId)}&filename=${encodeURIComponent(filename)}`;
+        return `${environment.fileUploadURL}/files?competencyId=${encodeURIComponent(competencyId)}&filename=${encodeURIComponent(filenames)}`;
     }
 };

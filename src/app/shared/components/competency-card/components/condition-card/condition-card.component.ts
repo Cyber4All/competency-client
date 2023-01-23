@@ -27,7 +27,7 @@ export class ConditionCardComponent implements OnInit, OnChanges {
   documentation = new FormControl('', [Validators.required]);
   technology: string[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  deleting: Documentation[] = [];
+  deletingMany: Documentation[] = [];
 
   constructor(
     private competencyService: CompetencyService,
@@ -35,7 +35,6 @@ export class ConditionCardComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.condition);
     // If value exists, set type form control
     if(this.condition.tech) {
       this.tech.patchValue(this.condition.tech);
@@ -116,11 +115,22 @@ export class ConditionCardComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * Method to delete a file and the associated documentation
+   *
+   * @param documentation The documentation(s) to be deleted
+   */
   async handleFileDelete(documentation: Documentation | Documentation[]) {
     await this.fileService.deleteFile(this.competencyId, documentation);
   }
 
+  /**
+   * Method to track what documentations will be deleted when "Delete Many" is clicked
+   *
+   * @param documentation the documentation to be added or deleted for deleting multiple files
+   * @param event whether or not the documentation is to be added or removed
+   */
   async changeMultipleDelete(documentation: Documentation, event: any) {
-    event.target.checked ? this.deleting.push(documentation) : this.deleting.splice(this.deleting.indexOf(documentation), 1);
+    event.target.checked ? this.deletingMany.push(documentation) : this.deletingMany.splice(this.deletingMany.indexOf(documentation), 1);
   }
 }
