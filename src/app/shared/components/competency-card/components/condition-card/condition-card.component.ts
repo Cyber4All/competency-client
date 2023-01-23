@@ -5,6 +5,7 @@ import { Condition } from '../../../../../../entity/Condition';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FileService } from 'src/app/core/file.service';
+import { Documentation } from 'src/entity/Documentation';
 @Component({
   selector: 'cc-condition-card',
   templateUrl: './condition-card.component.html',
@@ -114,7 +115,7 @@ export class ConditionCardComponent implements OnInit, OnChanges {
     }
   }
 
-  async handleFileDelete(documentationId: string) {
-    await this.fileService.deleteFile(this.competencyId, documentationId);
+  async handleFileDelete(documentation: Documentation) {
+    await this.fileService.deleteFile(this.competencyId, documentation);
   }
 }
