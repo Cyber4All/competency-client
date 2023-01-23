@@ -28,7 +28,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { FileUploadComponent } from './file-upload/file-upload.component';
-import { FileInfoComponent } from './file-info/file-info.component';
 import { SharedDirectivesModule } from '../directives/shared-directives.module';
 @NgModule({
   declarations: [
@@ -38,8 +37,7 @@ import { SharedDirectivesModule } from '../directives/shared-directives.module';
     ConditionCardComponent,
     DegreeCardComponent,
     EmployabilityCardComponent,
-    FileUploadComponent,
-    FileInfoComponent,
+    FileUploadComponent
   ],
   imports: [
     CommonModule,
@@ -69,8 +67,7 @@ import { SharedDirectivesModule } from '../directives/shared-directives.module';
   ],
   exports: [
     CompetencyCardComponent,
-    FileUploadComponent,
-    FileInfoComponent
+    FileUploadComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
