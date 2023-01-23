@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { Documentation } from 'src/entity/Documentation';
 import { COMPETENCY_ROUTES } from 'src/environments/routes';
 import { AuthService } from './auth.service';
 
-interface Lambda {
+interface Lambda { // should I move this to entities?
   url: string,
   fields: {
     // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -29,7 +30,8 @@ export class FileService {
 
   async uploadFile(competencyId: string, file: File, description: string) {
     this.authService.initHeaders();
-    const lambdaResponse: Lambda = await this.lambdaService(competencyId, file, 'post');
+    const lambdaResponse: Lambda = await this.uploadLambdaService(competencyId, file);
+    console.log(lambdaResponse);
 
     // format the lambda response
     const formData = new FormData();
@@ -37,9 +39,8 @@ export class FileService {
       formData.append(name, value);
     }
     formData.append('file', file);
-
     // Sends a POST request to add the file to the s3 bucket (provided in the lambda response url)
-    this.http.post(lambdaResponse.url, formData);
+    await lastValueFrom(this.http.post(lambdaResponse.url, formData));
 
     // formats the uri to be stored in mongo, will be used for file retrieval and deleting a file
     const fileURL = `https://cc-file-upload-bucket.s3.amazonaws.com/${this.authService.user?._id}/${competencyId}/${file.name}`;
@@ -60,19 +61,31 @@ export class FileService {
     });
   }
 
-  async deleteFile(competencyId: string, documentationIds: string | string[]) {
-    const documentationParams = (documentationIds instanceof Array) ? documentationIds : [documentationIds];
+  async deleteFile(competencyId: string, documentation: Documentation | Documentation[]) {
     this.authService.initHeaders();
-    //figure out deleting a file through lambda
-    // const lambdaResponse = await this.lambdaService(competencyId, documentationIds, 'delete');
-    // get the delete s3 link and use it to delete the file
-    // once confirmed, delete the file in our db (below)
+    const docsToDelete = (documentation instanceof Array) ? documentation : [documentation];
+    console.log(docsToDelete);
+
+    let fileName: string, LambdaResponse: { urls: string[] };
+    docsToDelete.forEach(async doc => {
+      fileName = this.parseFileName(doc.uri);
+      console.log(fileName);
+      LambdaResponse = await this.deleteLambdaService(competencyId, fileName);
+      console.log(LambdaResponse);
+      await lastValueFrom(this.http.delete(LambdaResponse.urls[0]));
+    });
+    // for each documentation being deleted:
+    //    grab the uri of the documentation
+    //    parse the file name using parseFileName()
+    //    send a request to lambda to delete the file
+    //    receive a url to s3 to delete it
+    //    delete the documentation in mongo
     await lastValueFrom(
       this.http.delete(
         COMPETENCY_ROUTES.DELETE_DOCUMENTATION(competencyId),
         {
           params: {
-            ids: documentationParams
+            ids: docsToDelete.map(doc => doc._id)
           },
           headers: this.authService.headers,
           withCredentials: true,
@@ -82,32 +95,42 @@ export class FileService {
     );
   }
 
-  private async lambdaService(competencyId: string, file: File, method: 'delete' | 'post'): Promise<any> {
+  public parseFileName(uri: string): string {
+    const uriSplit = uri.split('/');
+    return uriSplit[uriSplit.length - 1];
+  }
+
+  private async uploadLambdaService(competencyId: string, file: File): Promise<any> {
     return await lastValueFrom(
-      method === 'post' ?
         this.http.post(
           COMPETENCY_ROUTES.UPLOAD_FILE_LAMBDA(competencyId),
           {
-            filename: file.name,
-            filesize: file.size,
-            extension: file.name.split('.').pop()
+            filename: file?.name,
+            filesize: file?.size,
+            extension: file?.name.split('.').pop()
           },
           { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
-        ) :
-        this.http.delete(
-          COMPETENCY_ROUTES.UPLOAD_FILE_LAMBDA(competencyId),
-          {
-            headers: this.authService.headers,
-            withCredentials: true,
-            responseType: 'json',
-            body: {
-              filename: file.name
-            }
-          }
         )
       ).then((res) => {
         console.log('Lambda Response', res);
         return res;
       });
+  }
+
+  private async deleteLambdaService(competencyId: string, fileName: string): Promise<any> {
+    console.log(COMPETENCY_ROUTES.DELETE_FILE_LAMBDA(competencyId, fileName));
+    return await lastValueFrom(
+      this.http.delete(
+        COMPETENCY_ROUTES.DELETE_FILE_LAMBDA(competencyId, fileName),
+        {
+          headers: this.authService.headers,
+          withCredentials: true,
+          responseType: 'json',
+        }
+      )
+    ).then((res) => {
+      console.log('Lambda Response', res);
+      return res;
+    });
   }
 }
