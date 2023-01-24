@@ -7,7 +7,7 @@ import { CompetencyCardComponent } from '../shared/components/competency-card/co
 import { Competency } from '../../entity/competency';
 import { Lifecycles } from '../../entity/lifecycles';
 import { WorkroleService } from '../core/workrole.service';
-import { Search } from '../../entity/Search';
+import { Search } from '../../entity/search';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
