@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
+import { competencyAcl } from 'competency-acl';
 
 const TOKEN_KEY = 'presence';
 
@@ -19,8 +20,8 @@ export class AuthService {
   private _status$: BehaviorSubject<Optional<User>> = new BehaviorSubject<
     Optional<User>
   >(undefined);
+  private _isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public headers = new HttpHeaders();
-
   constructor(
     private http: HttpClient,
     private encryptionService: EncryptionService,
@@ -30,6 +31,10 @@ export class AuthService {
   set user(value: Optional<User>) {
     this._user = value;
     this._status$.next(value);
+  }
+
+  get isAdmin(): Observable<boolean>{
+    return this._isAdmin.asObservable();
   }
 
   get user() {
@@ -114,13 +119,31 @@ export class AuthService {
   }
 
   /**
+   * Method to validate if an admin user is logged in
+   */
+  public async validateAdminAccess(): Promise <void> {
+    const token = this.retrieveToken();
+    const targetActions: string[] = [
+      competencyAcl.competencies.getPublished,
+      competencyAcl.competencies.getDeprecated,
+      competencyAcl.competencies.getRejected,
+      competencyAcl.competencies.reviewSubmitted
+    ];
+
+    await lastValueFrom(this.http
+      .post(USER_ROUTES.VALIDATE_ACTIONS(), {token, targetActions}))
+      .then((res: any) => {
+        this._isAdmin.next(res.isValid);
+      });
+  }
+
+  /**
    * Method to validate if a user is logged in
    *
    * @returns boolean weather a user has a token or not
    */
   public async checkStatus(): Promise<boolean> {
     const token = this.retrieveToken();
-
     if(token) {
       await this.validateUser();
       return true;
@@ -180,6 +203,7 @@ export class AuthService {
    */
   private deleteToken() {
     this.user = undefined;
+    localStorage.removeItem('userId');
     /**
      * These parameters are now required by the library.
      * The '/' is just so that we can access the cookie for our domain.
