@@ -82,7 +82,6 @@ export class AuthService {
       this.initHeaders();
       return this.user;
     } catch(e: any) {
-      console.log(e);
      this.snackbarService.sendNotificationByError(e);
      throw this.formatError(e);
     }

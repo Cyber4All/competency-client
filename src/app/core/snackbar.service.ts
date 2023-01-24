@@ -16,14 +16,12 @@ export class SnackbarService  {
     }> = new Subject();
 
     public sendNotificationByError(err: HttpErrorResponse){
-        console.log(err);
         let title = 'ERROR';
         let message = 'Something went wrong on our end. Please try again later!';
         if (err.status !== 429){
             const apiError =   typeof err.error ===  'string' ? JSON.parse(err.error)  : err.error;
             message = apiError.message.charAt(0).toUpperCase()+apiError.message.substr(1);
         }
-        console.log(err.status);
 
         switch (err.status){
             case 400:
@@ -51,7 +49,6 @@ export class SnackbarService  {
             title = 'Internal Service Error';
             message = 'Something went wrong on our end. Please  try again later.';
         }
-        console.log(title,'after switch', message);
         this.notification$.next({
             title: title,
             message: message,

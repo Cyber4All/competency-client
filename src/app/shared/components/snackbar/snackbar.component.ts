@@ -52,25 +52,5 @@ export class SnackbarComponent implements OnInit {
     await action();
     this.snackBar.dismiss();
   }
-
-  /**
-   * Using the provided color enum, dynamically set the
-   * button styles
-   */
-  /*private setButtonStyle() {
-    switch (this.color) {
-      case SNACKBAR_COLOR.SUCCESS:
-        this.style = 'success';
-        break;
-      case SNACKBAR_COLOR.DANGER:
-        this.style = 'danger';
-        break;
-      case SNACKBAR_COLOR.WARNING:
-        this.style = 'warning';
-        break;
-      default:
-        this.style = 'primary';
-        break;
-    }*/
   }
 
