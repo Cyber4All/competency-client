@@ -22,9 +22,9 @@
             <mat-menu #tasks="matMenu">
                 <!-- <button mat-menu-item *ngFor="let obj of competencies" (click)="addFilter(obj.taskId, 3)">{{obj.taskId}}</button> -->
             </mat-menu>
-            <button mat-raised-button class="filter-button" aria-label="Filter Audience" matTooltip="Filter Audience" [matMenuTriggerFor]="aud">Audience &nbsp; <mat-icon>filter_list</mat-icon></button>
+            <button mat-raised-button class="filter-button" aria-label="Filter actor" matTooltip="Filter Actor" [matMenuTriggerFor]="aud">Actor &nbsp; <mat-icon>filter_list</mat-icon></button>
             <mat-menu #aud="matMenu">
-                <!-- <button mat-menu-item *ngFor="let obj of audience" (click)="addFilter(obj, 2)">The {{obj | titlecase }}</button> -->
+                <!-- <button mat-menu-item *ngFor="let obj of actor" (click)="addFilter(obj, 2)">The {{obj | titlecase }}</button> -->
             </mat-menu>
         </div>
     </div>
@@ -44,7 +44,9 @@
             <cc-competency-card
                 [competency]="competency"
                 [isEdit]="false"
+                (isSavable)="isSavable"
             ></cc-competency-card>
+            <button (click)="deleteCompetency(competency._id)">DELETE</button>
         </div>
     </div>
 </ng-template>
