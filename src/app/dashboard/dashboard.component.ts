@@ -134,6 +134,7 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
+   * Method to delete an entire competency and reset loaded competncy arrays
    *
    * @param competencyId
    */

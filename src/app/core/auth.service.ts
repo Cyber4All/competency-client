@@ -65,7 +65,7 @@ export class AuthService {
           publicKey: encrypted.publicKey
         }))
         .then((res: any) => {
-          this.user! = res!.user;
+          this.user = res!.user;
           this.storeToken(res.bearer as any);
           this.initHeaders();
           return Promise.resolve();
@@ -92,7 +92,7 @@ export class AuthService {
         .then((res: any) => {
           //delete auth header when there is a successul login
           this.headers = new HttpHeaders().delete('Authorization');
-          this.user! = res!.user;
+          this.user = res!.user;
           this.storeToken(res.bearer as any);
           this.initHeaders();
           return Promise.resolve();
@@ -159,7 +159,7 @@ export class AuthService {
           { headers: this.headers, withCredentials: true, responseType: 'json' }
         ))
         .then((res: any) => {
-          this.user! = res!.user;
+          this.user = res!.user;
         })
         .catch(() => {
           // User token expired; logout
