@@ -142,23 +142,14 @@ export class AuthService {
    *
    * @returns boolean weather a user has a token or not
    */
-  public async checkStatus(): Promise<boolean> {
+  public async checkStatus(): Promise<void> {
     const token = this.retrieveToken();
     if(token) {
-      await this.validateUser();
-      return true;
-    } else {
-      this.deleteToken();
-      this.clearAuthHeader();
-      return false;
-    }
-  }
-
-  /**
-   * Private method to validate a user based on their stored token
-   */
-  private async validateUser(): Promise<void> {
-    try {
+      // And we already have a user; resolve
+      if (this.user) {
+        return Promise.resolve();
+      }
+      // No user; retrieve user
       this.initHeaders();
       await lastValueFrom(this.http
         .get<{user: User}>(
@@ -167,9 +158,18 @@ export class AuthService {
         ))
         .then((res: any) => {
           this.user! = res!.user;
+        })
+        .catch(() => {
+          // User token expired; logout
+          this.deleteToken();
+        })
+        .finally(() => {
+          return Promise.resolve();
         });
-    } catch(e: any) {
-      throw this.formatError(e);
+    } else {
+      this.deleteToken();
+      this.clearAuthHeader();
+      return Promise.resolve();
     }
   }
 

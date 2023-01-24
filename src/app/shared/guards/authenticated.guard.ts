@@ -11,11 +11,11 @@ export class AuthenticatedGuard implements CanActivate {
     private router: Router
   ) {}
   async canActivate(): Promise<boolean> {
-    if(await this.auth.checkStatus()) {
-      return true;
-    } else {
+    await this.auth.checkStatus();
+    if (!this.auth.user) {
       this.router.navigate(['/login']);
       return false;
     }
+    return true;
   }
 }

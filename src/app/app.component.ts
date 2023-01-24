@@ -13,7 +13,8 @@ export class AppComponent implements OnInit{
     private auth: AuthService
   ) { }
 
-  ngOnInit() {
-    // TODO: Check user status here
+  async ngOnInit() {
+    // Check user status
+    await this.auth.checkStatus();
   }
 }
