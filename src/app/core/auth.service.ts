@@ -68,6 +68,7 @@ export class AuthService {
           this.user! = res!.user;
           this.storeToken(res.bearer as any);
           this.initHeaders();
+          return Promise.resolve();
         });
     } catch(e: any) {
       throw this.formatError(e);
@@ -94,6 +95,7 @@ export class AuthService {
           this.user! = res!.user;
           this.storeToken(res.bearer as any);
           this.initHeaders();
+          return Promise.resolve();
         });
     } catch(e: any) {
       throw this.formatError(e);
