@@ -27,6 +27,7 @@
         border: 2px solid #fff;
     }
 }
+
 .wrapper {
     padding: 40px;
     background-color: white;
@@ -60,28 +61,12 @@
     }
 
 }
-.competency-card {
-    margin: 0 10px;
 
-    .framework {
-        font-weight: bold;
-    }
-
-    .competency {
-        max-width: 80%;
-        float: left;
-    }
-
-    .actions {
-        width: 20%;
-        float: right;
-        right: 0;
-        padding: 10px 0;
-
-        button {
-            float: right;
-        }
-    }
+.competency-card_container {
+    padding: 5px;
+    margin: 10px;
+    border: 2px black solid;
+    border-radius: 4px;
 }
 
 mat-card {
@@ -114,61 +99,3 @@ mat-card {
       margin-bottom: 20px;
     }
   }
-
-.builder {
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .form {
-        width: 100%;
-        .example-form {
-            width: 100%;
-        }
-
-        .notice-bar {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            padding-bottom: 10px;
-
-            span {
-                margin-left: 5px;
-            }
-        }
-          
-        .example-full-width {
-            width: 100%;
-        }
-
-        mat-form-field {
-            width: 100%;
-            padding-bottom: 10px;
-
-            &.unit {
-                padding: 0 0 15px 5px;
-            }
-        }
-
-        .degree-fields {
-            display: flex;
-            flex-direction: row;
-        }
-    }
-}
-
-.competency-example {
-    color: white;
-    min-height: 80px;
-}
-
-.float-right {
-    float: right;
-
-    .logout {
-        border: 2px solid #C2175B;
-    }
-}
