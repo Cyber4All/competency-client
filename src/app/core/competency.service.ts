@@ -3,13 +3,26 @@ import { HttpClient } from '@angular/common/http';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { lastValueFrom } from 'rxjs';
-import { CompetencyGraph, CompetencySearch } from '../../entity/competency';
-import { Audience } from '../../entity/audience';
+import { Competency, CompetencyGraph, CompetencySearch } from '../../entity/competency';
+import { Actor } from '../../entity/actor';
 import { Degree } from '../../entity/degree';
 import { Condition } from '../../entity/condition';
 import { Behavior } from '../../entity/behavior';
 import { Employability } from '../../entity/employability';
+import { Notes } from 'src/entity/notes';
+import { Search } from 'src/entity/search';
 import { SnackbarService } from './snackbar.service';
+
+/**
+ * Function to toggle loading state display
+ *
+ * @param ms - time to toggle loading state
+ * @returns resolves promise within specified time
+ */
+export function sleep(ms: number): Promise<any> {
+  return new Promise((res) => setTimeout(res, ms));
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -35,7 +48,7 @@ export class CompetencyService {
         status?: string[],
         version?: number
       }
-    ) {
+    ): Promise<Search> {
     this.auth.initHeaders();
     const query = CompetencySearch(q);
     return lastValueFrom(this.http
@@ -44,8 +57,11 @@ export class CompetencyService {
         { query, userId: this.auth.user?._id },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
-      .catch((e)=> {
-        this.snackBarService.sendNotificationByError(e);
+      .then((res: any) => {
+        return res.data.search;
+      })
+      .catch((err) => {
+        this.snackBarService.sendNotificationByError(err);
       });
   }
 
@@ -55,7 +71,7 @@ export class CompetencyService {
    * @param competencyId competency to retreive
    * @returns full competency
    */
-  async getCompetencyById(competencyId: string) {
+  async getCompetencyById(competencyId: string): Promise<Competency> {
     this.auth.initHeaders();
     const query = CompetencyGraph(competencyId);
     return await lastValueFrom(this.http
@@ -64,6 +80,9 @@ export class CompetencyService {
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
+      .then((res: any) => {
+        return res.data.competency;
+      })
       .catch((e)=> {
         this.snackBarService.sendNotificationByError(e);
       });
@@ -106,18 +125,18 @@ export class CompetencyService {
   }
 
   /**
-   * Method to send audinece updates
+   * Method to send actor updates
    *
    * @param competencyId current competency being edited
-   * @param audienceUpdate updated fields of an audience attribute
+   * @param actorUpdate updated fields of an actor attribute
    * @returns null for successful request
    */
-  async updateAudience(competencyId: string, audienceUpdate: Audience) {
+  async updateActor(competencyId: string, actorUpdate: Actor) {
     this.auth.initHeaders();
     return await lastValueFrom(this.http
       .patch(
-        COMPETENCY_ROUTES.UPDATE_AUDIENCE(competencyId),
-        audienceUpdate,
+        COMPETENCY_ROUTES.UPDATE_ACTOR(competencyId),
+        actorUpdate,
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .catch((e)=> {
@@ -202,6 +221,19 @@ export class CompetencyService {
       ))
       .catch((e)=> {
         this.snackBarService.sendNotificationByError(e);
+      });
+  }
+
+  async updateNotes(competencyId: string, notesUpdate: Partial<Notes>) {
+    this.auth.initHeaders();
+    return await lastValueFrom(this.http
+      .patch(
+        COMPETENCY_ROUTES.UPDATE_NOTES(competencyId),
+        notesUpdate,
+        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+      ))
+      .catch((e)=> {
+        console.log(e);
       });
   }
 }

@@ -18,8 +18,9 @@ export class AppComponent implements OnInit{
     private _snackBar: MatSnackBar,
   ) { }
 
-  ngOnInit() {
-    // TODO: Check user status here
+  async ngOnInit() {
+    // Check user status
+    await this.auth.checkStatus();
     this.snackbarService.notification$
       .subscribe((notif) => {
         if (notif) {

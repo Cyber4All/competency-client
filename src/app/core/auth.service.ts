@@ -9,9 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { competencyAcl } from 'competency-acl';
 import { SnackbarService} from './snackbar.service';
 
-
 const TOKEN_KEY = 'presence';
-const SESSION_KEY = 'session';
 
 type Optional<T> = T | undefined;
 
@@ -19,7 +17,7 @@ type Optional<T> = T | undefined;
   providedIn: 'root'
 })
 export class AuthService {
-  private _user?: User; // Do not set this directly, instead use the setter method
+  private _user?: User; // Do not explicityly set a user, use the setter method
   private _status$: BehaviorSubject<Optional<User>> = new BehaviorSubject<
     Optional<User>
   >(undefined);
@@ -49,44 +47,59 @@ export class AuthService {
     return this._status$.asObservable();
   }
 
+  /**
+   * Method to register new users
+   *
+   * @param user - object of user email, name, pwd, org, and username
+   */
   async register(user: {
       email: string,
       name: string,
       password: string,
       organization: string,
       username: string
-  }): Promise<User> {
+  }): Promise<void> {
     try {
       const encrypted = await this.encryptionService.encryptRSA(user);
-      const res = await lastValueFrom(this.http
+      await lastValueFrom(this.http
         .post<{bearer: string, user: User}>(USER_ROUTES.REGISTER(), {
-          data:encrypted.data,
+          data: encrypted.data,
           publicKey: encrypted.publicKey
-        }));
-      this.user = res.user;
-      this.storeToken(res.bearer as any);
-      this.initHeaders();
-      return this.user!;
+        }))
+        .then((res: any) => {
+          this.user = res!.user;
+          this.storeToken(res.bearer as any);
+          this.initHeaders();
+          return Promise.resolve();
+        });
     } catch(e: any) {
       this.snackbarService.sendNotificationByError(e);
       throw this.formatError(e);
     }
   }
 
-  async login(email: string, password: string): Promise<User> {
+  /**
+   * Method that allows a user to login
+   *
+   * @param email email of a users account trying to login
+   * @param password pwd of users account trying to login
+   */
+  async login(email: string, password: string): Promise<void> {
     try {
       const encrypted = await this.encryptionService.encryptRSA({
         email,
         password,
       });
-      const res: any = await lastValueFrom(this.http
-        .post(USER_ROUTES.LOGIN(), encrypted));
-      //delete auth header when there is a successul login
-      this.headers = new HttpHeaders().delete('Authorization');
-      this.user = res.user as User;
-      this.storeToken(res.bearer);
-      this.initHeaders();
-      return this.user;
+      await lastValueFrom(this.http
+        .post<{bearer: string, user: User}>(USER_ROUTES.LOGIN(), encrypted))
+        .then((res: any) => {
+          //delete auth header when there is a successul login
+          this.headers = new HttpHeaders().delete('Authorization');
+          this.user = res!.user;
+          this.storeToken(res.bearer as any);
+          this.initHeaders();
+          return Promise.resolve();
+        });
     } catch(e: any) {
      this.snackbarService.sendNotificationByError(e);
      throw this.formatError(e);
@@ -135,23 +148,35 @@ export class AuthService {
    *
    * @returns boolean weather a user has a token or not
    */
-  public checkStatus(): boolean {
+  public async checkStatus(): Promise<void> {
     const token = this.retrieveToken();
     if(token) {
-      // TODO: Implement logic here of what client needs to do
-      return true;
+      // And we already have a user; resolve
+      if (this.user) {
+        return Promise.resolve();
+      }
+      // No user; retrieve user
+      this.initHeaders();
+      await lastValueFrom(this.http
+        .get<{user: User}>(
+          USER_ROUTES.TOKEN(),
+          { headers: this.headers, withCredentials: true, responseType: 'json' }
+        ))
+        .then((res: any) => {
+          this.user = res!.user;
+        })
+        .catch(() => {
+          // User token expired; logout
+          this.deleteToken();
+        })
+        .finally(() => {
+          return Promise.resolve();
+        });
     } else {
       this.deleteToken();
       this.clearAuthHeader();
-      return false;
+      return Promise.resolve();
     }
-  }
-
-  /**
-   * Private method to store a userId in localstorage
-   */
-  private storeUser() {
-    localStorage.setItem('userId', this._user?._id as string);
   }
 
   /**
@@ -169,12 +194,10 @@ export class AuthService {
    * @param token bearer token returned from service after succesful login
    */
   private storeToken(token: string) {
-    this.storeUser();
     if (token) {
       this.cookie.set(TOKEN_KEY, token, {
         expires: 1,
         path: '/',
-        domain: environment.host,
         secure: false,
         sameSite: 'Lax',
       });

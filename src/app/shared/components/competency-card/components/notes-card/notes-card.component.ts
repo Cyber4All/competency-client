@@ -1,40 +1,39 @@
 import { Component, Input, OnChanges, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { CompetencyService } from '../../../../../../app/core/competency.service';
-import { Employability } from '../../../../../../entity/employability';
+import { Notes } from 'src/entity/notes';
 @Component({
-  selector: 'cc-employability-card',
-  templateUrl: './employability-card.component.html',
-  styleUrls: ['./employability-card.component.scss']
+  selector: 'cc-notes-card',
+  templateUrl: './notes-card.component.html',
+  styleUrls: ['./notes-card.component.scss']
 })
-export class EmployabilityCardComponent implements OnInit, OnChanges {
+export class NotesCardComponent implements OnInit, OnChanges {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
-  @Input() employability!: Employability;
-  @Output() employabilityChange = new EventEmitter<{update: string, value: Employability}>();
-  @Output() employabilityUpdated = new EventEmitter<boolean>(false);
+  @Input() notes!: Notes;
+  @Output() notesChange = new EventEmitter<{update: string, value: Notes}>();
   currIndex: number | null = null;
   details = new FormControl('', [Validators.required]);
 
   constructor(
-    private competencyService: CompetencyService
+    private competencyService: CompetencyService,
   ) { }
 
   ngOnInit(): void {
     // If value exists, set details form control
-    if (this.employability.details) {
-      this.details.patchValue(this.employability.details);
+    if (this.notes.details) {
+      this.details.patchValue(this.notes.details);
     }
   }
 
   ngOnChanges(): void {
     // If any value updates, update parent component
     if(this.details.value) {
-      this.employabilityChange.emit({
+      this.notesChange.emit({
         update: 'employability',
         value: {
-          _id: this.employability._id,
+          _id: this.notes._id,
           details: this.details.value
         }
       });
@@ -44,13 +43,12 @@ export class EmployabilityCardComponent implements OnInit, OnChanges {
   /**
    * Method to advance to next step
    */
-   async updateEmployability() {
+   async updateNotes() {
     if(this.details.valid) {
-      this.employabilityUpdated.emit(true);
-      const res: any = await this.competencyService.updateEmployability(
+      const res: any = await this.competencyService.updateNotes(
         this.competencyId,
         {
-          _id: this.employability._id,
+          _id: this.notes._id,
           details: this.details.value
         }
       );
