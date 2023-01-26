@@ -32,7 +32,7 @@ export class AppComponent implements OnInit{
               callbacks: notif.callbacks,
             },
             duration:
-              notif.callbacks && notif.callbacks.length,
+              notif.callbacks && notif.callbacks.length > 0 ? undefined :4000 ,
             direction: 'ltr',
             panelClass: 'mat-snackbar',
           });
