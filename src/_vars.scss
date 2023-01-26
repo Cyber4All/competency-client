@@ -1,0 +1,57 @@
+$palette-accent: (
+  "lightest": hsl(226, 43%, 74%),
+  "lighter": hsl(226, 43%, 54%),
+  "default": hsl(226, 43%, 44%),
+  "darker": hsl(226, 43%, 34%),
+  "darkest": hsl(226, 43%, 24%),
+);
+
+@function color-accent($style: "default") {
+  @return map-get($palette-accent, $style);
+}
+
+$palette-success: (
+  "lightest": hsl(139, 47%, 70%),
+  "lighter": hsl(139, 61%, 50%),
+  "default": hsl(139, 61%, 40%),
+  "darker": hsl(139, 61%, 30%),
+  "darkest": hsl(139, 61%, 10%),
+);
+
+@function color-success($style: "default") {
+  @return map-get($palette-success, $style);
+}
+
+$palette-danger: (
+  "lightest": hsl(5, 81%, 76%),
+  "lighter": hsl(5, 73%, 56%),
+  "default": hsl(5, 73%, 46%),
+  "darker": hsl(5, 73%, 36%),
+  "darkest": hsl(5, 73%, 16%),
+);
+
+@function color-danger($style: "default") {
+  @return map-get($palette-danger, $style);
+}
+
+$palette-warning: (
+  "lightest": hsl(38, 100%, 80%),
+  "lighter": hsl(38, 100%, 60%),
+  "default": hsl(38, 100%, 50%),
+  "darker": hsl(38, 100%, 40%),
+  "darkest": hsl(38, 100%, 20%),
+);
+
+@function color-warning($style: "default") {
+  @return map-get($palette-warning, $style);
+}
+
+$palette-gray: (
+  1: hsl(220, 13%, 14%),
+  2: hsl(222, 12%, 28%),
+  3: hsl(222, 12%, 42%),
+  4: hsl(222, 12%, 56%),
+  5: hsl(221, 12%, 70%),
+  6: hsl(220, 12%, 90%),
+  7: hsl(0, 0%, 100%),
+);

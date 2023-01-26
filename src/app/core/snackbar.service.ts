@@ -33,7 +33,6 @@ export class SnackbarService  {
                 break;
             case 403:
                 title = 'Not Authorized';
-                message = 'You are not authorized to access this resource';
                 break;
             case 404:
                 title = 'Not Found';
@@ -43,7 +42,6 @@ export class SnackbarService  {
                 break;
             case 429:
                 title = 'Too Many Requests';
-                message = 'Too many request, please try again in 1 hour';
                 break;
             default:
             title = 'Internal Service Error';

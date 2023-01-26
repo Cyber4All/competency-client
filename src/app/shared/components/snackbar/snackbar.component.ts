@@ -53,4 +53,3 @@ export class SnackbarComponent implements OnInit {
     this.snackBar.dismiss();
   }
   }
-
