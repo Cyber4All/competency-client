@@ -2,11 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
-import { sleep, CompetencyService } from '../core/competency.service';
+import { CompetencyService } from '../core/competency.service';
 import { CompetencyCardComponent } from '../shared/components/competency-card/competency-card.component';
 import { Competency } from '../../entity/competency';
 import { Lifecycles } from '../../entity/lifecycles';
 import { Search } from '../../entity/search';
+import { sleep } from '../shared/functions/loading';
+import { BuilderService } from '../core/builder/builder.service';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -36,6 +38,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private competencyService: CompetencyService,
+    private builderService: BuilderService,
     private authService: AuthService,
     private router: Router,
   ) { }
@@ -157,7 +160,7 @@ export class DashboardComponent implements OnInit {
     // If !existingCompetency; we are creating a new competency object
     if(!existingCompetency) {
       // Create competency shell
-      const competencyShellId: any = await this.competencyService.createCompetency();
+      const competencyShellId: any = await this.builderService.createCompetency();
       // Retrieve full competency object
       const competencyQuery: any = await this.competencyService.getCompetencyById(competencyShellId.id);
       // Deconstruct GraphQL response

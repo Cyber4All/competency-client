@@ -9,18 +9,8 @@ import { Degree } from '../../entity/degree';
 import { Condition } from '../../entity/condition';
 import { Behavior } from '../../entity/behavior';
 import { Employability } from '../../entity/employability';
-import { Notes } from 'src/entity/notes';
-import { Search } from 'src/entity/search';
-
-/**
- * Function to toggle loading state display
- *
- * @param ms - time to toggle loading state
- * @returns resolves promise within specified time
- */
-export function sleep(ms: number): Promise<any> {
-  return new Promise((res) => setTimeout(res, ms));
-}
+import { Notes } from '../../entity/notes';
+import { Search } from '../../entity/search';
 @Injectable({
   providedIn: 'root'
 })
@@ -80,24 +70,6 @@ export class CompetencyService {
       .then((res: any) => {
         return res.data.competency;
       })
-      .catch((e)=> {
-        console.log(e);
-      });
-  }
-
-  /**
-   * Method to create the shell of a competency
-   *
-   * @returns new competency id
-   */
-  async createCompetency() {
-    this.auth.initHeaders();
-    return await lastValueFrom(this.http
-      .post(
-        COMPETENCY_ROUTES.CREATE_COMPETENCY(),
-        {},
-        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-      ))
       .catch((e)=> {
         console.log(e);
       });
