@@ -9,8 +9,8 @@ import { Degree } from '../../entity/degree';
 import { Condition } from '../../entity/condition';
 import { Behavior } from '../../entity/behavior';
 import { Employability } from '../../entity/employability';
-import { Notes } from 'src/entity/notes';
-import { Search } from 'src/entity/search';
+import { Notes } from '../../entity/notes';
+import { Search } from '../../entity/search';
 import { SnackbarService } from './snackbar.service';
 
 /**
