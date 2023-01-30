@@ -5,11 +5,11 @@ import { Condition } from '../../../../../../entity/condition';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
 @Component({
-  selector: 'cc-condition-card',
-  templateUrl: './condition-card.component.html',
-  styleUrls: ['./condition-card.component.scss']
+  selector: 'cc-context-builder',
+  templateUrl: './context-builder.component.html',
+  styleUrls: ['./context-builder.component.scss']
 })
-export class ConditionCardComponent implements OnInit, OnChanges {
+export class ContextBuilderComponent implements OnInit, OnChanges {
 
   /**
    * THIS IS STILL BEING WORKED ON

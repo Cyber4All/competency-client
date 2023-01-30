@@ -3,11 +3,11 @@ import { FormControl, Validators } from '@angular/forms';
 import { CompetencyService } from '../../../../../../app/core/competency.service';
 import { Employability } from '../../../../../../entity/employability';
 @Component({
-  selector: 'cc-employability-card',
-  templateUrl: './employability-card.component.html',
-  styleUrls: ['./employability-card.component.scss']
+  selector: 'cc-employability-builder',
+  templateUrl: './employability-builder.component.html',
+  styleUrls: ['./employability-builder.component.scss']
 })
-export class EmployabilityCardComponent implements OnInit, OnChanges {
+export class EmployabilityBuilderComponent implements OnInit, OnChanges {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;

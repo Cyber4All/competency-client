@@ -1,15 +1,14 @@
-import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { WorkroleService } from 'src/app/core/workrole.service';
-import { CompetencyService } from '../../../../../core/competency.service';
 import { Actor } from '../../../../../../entity/actor';
 
 @Component({
-  selector: 'cc-actor-card',
-  templateUrl: './actor-card.component.html',
-  styleUrls: ['./actor-card.component.scss']
+  selector: 'cc-actor-builder',
+  templateUrl: './actor-builder.component.html',
+  styleUrls: ['./actor-builder.component.scss']
 })
-export class ActorCardComponent implements OnInit {
+export class ActorBuilderComponent implements OnInit {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;

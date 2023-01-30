@@ -16,9 +16,7 @@ export class NotesCardComponent implements OnInit, OnChanges {
   currIndex: number | null = null;
   details = new FormControl('', [Validators.required]);
 
-  constructor(
-    private competencyService: CompetencyService,
-  ) { }
+  constructor( ) { }
 
   ngOnInit(): void {
     // If value exists, set details form control
@@ -38,20 +36,5 @@ export class NotesCardComponent implements OnInit, OnChanges {
         }
       });
     };
-  }
-
-  /**
-   * Method to advance to next step
-   */
-   async updateNotes() {
-    if(this.details.valid) {
-      const res: any = await this.competencyService.updateNotes(
-        this.competencyId,
-        {
-          _id: this.notes._id,
-          details: this.details.value
-        }
-      );
-    }
   }
 }

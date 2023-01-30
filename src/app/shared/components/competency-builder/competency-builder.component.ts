@@ -10,13 +10,12 @@ import { Degree } from '../../../../entity/degree';
 import { Employability } from '../../../../entity/employability';
 import { BuilderService } from '../../../core/builder/builder.service';
 import { CompetencyBuilder } from '../../../core/builder/competency-builder.class';
-
 @Component({
-  selector: 'cc-competency-card',
-  templateUrl: './competency-card.component.html',
-  styleUrls: ['./competency-card.component.scss']
+  selector: 'cc-competency-builder',
+  templateUrl: './competency-builder.component.html',
+  styleUrls: ['./competency-builder.component.scss']
 })
-export class CompetencyCardComponent implements OnInit {
+export class CompetencyBuilderComponent implements OnInit {
   @Input() competency!: CompetencyBuilder;
   // Toggle for editing a competency
   @Input() isEdit = true;
@@ -41,7 +40,7 @@ export class CompetencyCardComponent implements OnInit {
 
   constructor(
     private builderService: BuilderService,
-    public dialogRef: MatDialogRef<CompetencyCardComponent>,
+    public dialogRef: MatDialogRef<CompetencyBuilderComponent>,
     @Inject(MAT_DIALOG_DATA) public COMPETENCY: CompetencyBuilder,
   ) {}
 
@@ -125,7 +124,6 @@ export class CompetencyCardComponent implements OnInit {
       await this.builderService.updateNotes(competency._id, competency.notes);
       return Promise.resolve();
     } catch (err) {
-      console.log(err);
       return Promise.reject();
     }
   }

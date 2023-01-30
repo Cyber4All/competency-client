@@ -3,11 +3,11 @@ import { FormControl, Validators } from '@angular/forms';
 import { CompetencyService } from '../../../../../../app/core/competency.service';
 import { Degree } from '../../../../../../entity/degree';
 @Component({
-  selector: 'cc-degree-card',
-  templateUrl: './degree-card.component.html',
-  styleUrls: ['./degree-card.component.scss']
+  selector: 'cc-degree-builder',
+  templateUrl: './degree-builder.component.html',
+  styleUrls: ['./degree-builder.component.scss']
 })
-export class DegreeCardComponent implements OnInit, OnChanges {
+export class DegreeBuilderComponent implements OnInit, OnChanges {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;

@@ -28,6 +28,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { NotesCardComponent } from './competency-card/components/notes-card/notes-card.component';
+import { CompetencyBuilderComponent } from './competency-builder/competency-builder.component';
+import { ActorBuilderComponent } from './competency-builder/components/actor-builder/actor-builder.component';
+import { BehaviorBuilderComponent } from './competency-builder/components/behavior-builder/behavior-builder.component';
+import { ContextBuilderComponent } from './competency-builder/components/context-builder/context-builder.component';
+import { DegreeBuilderComponent } from './competency-builder/components/degree-builder/degree-builder.component';
+import { EmployabilityBuilderComponent } from './competency-builder/components/employability-builder/employability-builder.component';
+import { NotesBuilderComponent } from './competency-builder/components/notes-builder/notes-builder.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -37,6 +44,13 @@ import { NotesCardComponent } from './competency-card/components/notes-card/note
     DegreeCardComponent,
     EmployabilityCardComponent,
     NotesCardComponent,
+    CompetencyBuilderComponent,
+    ActorBuilderComponent,
+    BehaviorBuilderComponent,
+    ContextBuilderComponent,
+    DegreeBuilderComponent,
+    EmployabilityBuilderComponent,
+    NotesBuilderComponent,
   ],
   imports: [
     CommonModule,

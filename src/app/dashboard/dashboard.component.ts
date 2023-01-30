@@ -9,6 +9,7 @@ import { Lifecycles } from '../../entity/lifecycles';
 import { Search } from '../../entity/search';
 import { sleep } from '../shared/functions/loading';
 import { BuilderService } from '../core/builder/builder.service';
+import { CompetencyBuilder } from '../core/builder/competency-builder.class';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -19,7 +20,7 @@ export class DashboardComponent implements OnInit {
   // Loading visual for competency list
   loading = true;
   // Array of complete competency objects
-  loadedCompetencies: Competency[] = [];
+  loadedCompetencies: CompetencyBuilder[] = [];
   // Object for search results
   search: Search = {
     competencies: [],
@@ -90,7 +91,19 @@ export class DashboardComponent implements OnInit {
       this.search.competencies.map(async (comp: Competency) => {
         await this.competencyService.getCompetencyById(comp._id)
           .then((comp: Competency) => {
-            this.loadedCompetencies.push(comp);
+            const competency: CompetencyBuilder = new CompetencyBuilder(
+              comp._id,
+              comp.status,
+              comp.authorId,
+              comp.version,
+              comp.actor,
+              comp.behavior,
+              comp.condition,
+              comp.degree,
+              comp.employability,
+              comp.notes
+            );
+            this.loadedCompetencies.push(competency);
           });
       });
     }
@@ -156,19 +169,26 @@ export class DashboardComponent implements OnInit {
    * @param existingCompetency - Opens the builder with a pre-selected competency
    */
   async openCompetencyBuilder(existingCompetency?: Competency) {
-    let competency!: Competency;
     // If !existingCompetency; we are creating a new competency object
     if(!existingCompetency) {
       // Create competency shell
       const competencyShellId: any = await this.builderService.createCompetency();
       // Retrieve full competency object
-      const competencyQuery: any = await this.competencyService.getCompetencyById(competencyShellId.id);
-      // Deconstruct GraphQL response
-      competency = competencyQuery;
-    } else {
-      // Competency existed; we are opening builder from dashboard
-      competency = existingCompetency;
+      existingCompetency = await this.competencyService.getCompetencyById(competencyShellId.id);
     }
+    // Create new instance of competency builder
+    const competency: CompetencyBuilder = new CompetencyBuilder(
+      existingCompetency._id,
+      existingCompetency.status,
+      existingCompetency.authorId,
+      existingCompetency.version,
+      existingCompetency.actor,
+      existingCompetency.behavior,
+      existingCompetency.condition,
+      existingCompetency.degree,
+      existingCompetency.employability,
+      existingCompetency.notes
+    );
     // Open dialog ref for builder
     const dialogRef = this.dialog.open(CompetencyCardComponent, {
       height: '700px',

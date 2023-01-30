@@ -41,11 +41,11 @@
 <ng-template #competencyTemplate>
     <div class="competency-card">
         <div *ngFor="let competency of loadedCompetencies" class="competency-card_container">
-            <cc-competency-card
+            <cc-competency-builder
                 [competency]="competency"
                 [isEdit]="false"
                 (isSavable)="isSavable"
-            ></cc-competency-card>
+            ></cc-competency-builder>
             <button (click)="deleteCompetency(competency._id)">DELETE</button>
         </div>
     </div>

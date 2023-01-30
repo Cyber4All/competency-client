@@ -52,7 +52,7 @@
     <span *ngIf="isEdit">
       <mat-dialog-actions>
         <button mat-button [mat-dialog-close]="false">DELETE</button>
-        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>SUBMIT</button>
+        <button (click)="saveCompetency()" cdkFocusInitial>SUBMIT</button>
       </mat-dialog-actions> 
     </span>   
   </form>
