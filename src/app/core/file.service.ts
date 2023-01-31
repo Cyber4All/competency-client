@@ -63,7 +63,11 @@ export class FileService {
         },
         { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
       )
-    ); // returns a response containing the id of the new documentation
+    ).then(res => {
+      console.log('Documentation created!', res);
+    }).catch(e => {
+      console.log(e); // TODO: Swap for toaster component
+    });
   }
 
   /**
@@ -90,7 +94,11 @@ export class FileService {
           responseType: 'json'
         }
       )
-    );
+    ).then(res => {
+      console.log('Documentation deleted!');
+    }).catch(e => {
+      console.log(e); // TODO: Swap for toaster component
+    });
   }
 
   /**
@@ -125,6 +133,8 @@ export class FileService {
         )
       ).then((res) => {
         return res;
+      }).catch(e => {
+        console.log(e); // Swap for toaster component
       });
   }
 
@@ -148,6 +158,8 @@ export class FileService {
       )
     ).then((res) => {
       return res;
+    }).catch(e => {
+      console.log(e); // Swap for toaster component
     });
   }
 }
