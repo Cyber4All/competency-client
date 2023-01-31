@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
+import { competencyAcl } from 'competency-acl';
 
 
 const TOKEN_KEY = 'presence';
@@ -21,8 +22,8 @@ export class AuthService {
   private _status$: BehaviorSubject<Optional<User>> = new BehaviorSubject<
     Optional<User>
   >(undefined);
+  private _isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public headers = new HttpHeaders();
-
   constructor(
     private http: HttpClient,
     private encryptionService: EncryptionService,
@@ -32,6 +33,10 @@ export class AuthService {
   set user(value: Optional<User>) {
     this._user = value;
     this._status$.next(value);
+  }
+
+  get isAdmin(): Observable<boolean>{
+    return this._isAdmin.asObservable();
   }
 
   get user() {
@@ -56,8 +61,9 @@ export class AuthService {
           data:encrypted.data,
           publicKey: encrypted.publicKey
         }));
+      this.user = res.user;
       this.storeToken(res.bearer as any);
-      this.user = res!.user;
+      this.initHeaders();
       return this.user!;
     } catch(e: any) {
       throw this.formatError(e);
@@ -102,21 +108,46 @@ export class AuthService {
   }
 
   /**
+   * Method to validate if an admin user is logged in
+   */
+  public async validateAdminAccess(): Promise <void> {
+    const token = this.retrieveToken();
+    const targetActions: string[] = [
+      competencyAcl.competencies.getPublished,
+      competencyAcl.competencies.getDeprecated,
+      competencyAcl.competencies.getRejected,
+      competencyAcl.competencies.reviewSubmitted
+    ];
+
+    await lastValueFrom(this.http
+      .post(USER_ROUTES.VALIDATE_ACTIONS(), {token, targetActions}))
+      .then((res: any) => {
+        this._isAdmin.next(res.isValid);
+      });
+  }
+
+  /**
    * Method to validate if a user is logged in
    *
    * @returns boolean weather a user has a token or not
    */
-  public checkStatus(): Boolean {
+  public checkStatus(): boolean {
     const token = this.retrieveToken();
-
     if(token) {
-      // FIXME: verify token route needs to be implemented
+      // TODO: Implement logic here of what client needs to do
       return true;
     } else {
       this.deleteToken();
       this.clearAuthHeader();
       return false;
     }
+  }
+
+  /**
+   * Private method to store a userId in localstorage
+   */
+  private storeUser() {
+    localStorage.setItem('userId', this._user?._id as string);
   }
 
   /**
@@ -134,6 +165,7 @@ export class AuthService {
    * @param token bearer token returned from service after succesful login
    */
   private storeToken(token: string) {
+    this.storeUser();
     if (token) {
       this.cookie.set(TOKEN_KEY, token, {
         expires: 1,
@@ -150,6 +182,7 @@ export class AuthService {
    */
   private deleteToken() {
     this.user = undefined;
+    localStorage.removeItem('userId');
     /**
      * These parameters are now required by the library.
      * The '/' is just so that we can access the cookie for our domain.
