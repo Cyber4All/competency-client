@@ -1,8 +1,6 @@
 <form>
   <div ccDragAndDrop class="drop-zone" (fileOver)="handleFileOver($event)" (fileDropped)="handleFileDropped($event)">
     <div *ngIf="!fileOver else dropFile">
-      <!-- Are these all the accepted file types? -->
-      <!-- Ask how to change this change event to go straight to handleFileDropped() -->
       <input (change)="handleFileThroughInput($event)" type="file" /> <br />
       <h3>Drag and Drop a File Here!</h3>
       <p>Or click here to add a file</p>
