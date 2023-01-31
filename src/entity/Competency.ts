@@ -22,18 +22,18 @@ export function CompetencyGraph(id: string) {
     {
       competency(competencyId:"${id}") {
         _id
-        status,
-        authorId,
-        version,
+        status
+        authorId
+        version
         actor {
           type
           details
-        },
+        }
         behavior {
           tasks
           details
           work_role
-        },
+        }
         condition {
           tech
           limitations
@@ -43,12 +43,12 @@ export function CompetencyGraph(id: string) {
               description
               uri
           }
-        },
+        }
         degree {
           complete
           correct
           time
-        },
+        }
         employability {
           details
         }
