@@ -7,11 +7,14 @@
     <p>{{ tech.value }}</p>
     <p>{{ limitations.value }}</p>
     <!-- Documentation Template -->
-    <div *ngFor="let doc of condition.documentation">
-        <input type="checkbox" (change)="changeMultipleDelete(doc, $event)">
-        {{ doc.conditionId }} {{ doc.description }}
-        <button (click)="handleFileDelete(doc)">Delete</button>
+    <div *ngIf="condition.documentation.length > 0">
+        <div *ngFor="let doc of condition?.documentation">
+            <input type="checkbox" (change)="changeMultipleDelete(doc, $event)">
+            {{ doc.conditionId }} {{ doc.description }}
+            <button (click)="handleFileDelete(doc)">Delete</button>
+        </div>
     </div>
+    
     <button (click)="handleFileDelete(deletingMany)">Delete Many</button>
     <!-- End of Documentation Template -->
 </ng-template>

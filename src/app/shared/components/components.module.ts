@@ -38,7 +38,7 @@ import { NotesCardComponent } from './competency-card/components/notes-card/note
     ConditionCardComponent,
     DegreeCardComponent,
     EmployabilityCardComponent,
-    FileUploadComponent
+    FileUploadComponent,
     NotesCardComponent,
   ],
   imports: [
