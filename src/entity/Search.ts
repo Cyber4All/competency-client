@@ -1,4 +1,4 @@
-import { Competency } from './Competency';
+import { Competency } from './competency';
 
 export interface Search {
     competencies: Competency[]

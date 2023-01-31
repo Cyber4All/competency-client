@@ -1,11 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
 import { FormArray, FormControl, Validators } from '@angular/forms';
 import { CompetencyService } from '../../../../../../app/core/competency.service';
-import { Condition } from '../../../../../../entity/Condition';
+import { Condition } from '../../../../../../entity/condition';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FileService } from 'src/app/core/file.service';
-import { Documentation } from 'src/entity/Documentation';
+import { Documentation } from 'src/entity/documentation';
 @Component({
   selector: 'cc-condition-card',
   templateUrl: './condition-card.component.html',

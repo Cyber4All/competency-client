@@ -1,12 +1,12 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatAccordionTogglePosition } from '@angular/material/expansion';
-import { Audience } from '../../../../entity/Audience';
-import { Behavior } from '../../../../entity/Behavior';
-import { Competency } from '../../../../entity/Competency';
-import { Condition } from '../../../../entity/Condition';
-import { Degree } from '../../../../entity/Degree';
-import { Employability } from '../../../../entity/Employability';
+import { Audience } from '../../../../entity/audience';
+import { Behavior } from '../../../../entity/behavior';
+import { Competency } from '../../../../entity/competency';
+import { Condition } from '../../../../entity/condition';
+import { Degree } from '../../../../entity/degree';
+import { Employability } from '../../../../entity/employability';
 
 @Component({
   selector: 'cc-competency-card',
@@ -68,7 +68,7 @@ export class CompetencyCardComponent implements OnInit {
   ): void {
     switch(event.update) {
       case 'audience':
-        this.competency.audience = event.value as Audience;
+        this.competency.actor = event.value as Audience;
         break;
       case 'behavior':
         this.competency.behavior = event.value as Behavior;
