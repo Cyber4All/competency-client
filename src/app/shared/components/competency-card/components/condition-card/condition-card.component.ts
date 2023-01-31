@@ -3,9 +3,9 @@ import { FormArray, FormControl, Validators } from '@angular/forms';
 import { CompetencyService } from '../../../../../../app/core/competency.service';
 import { Condition } from '../../../../../../entity/condition';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FileService } from 'src/app/core/file.service';
 import { Documentation } from 'src/entity/documentation';
+import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
 @Component({
   selector: 'cc-condition-card',
   templateUrl: './condition-card.component.html',
@@ -22,12 +22,13 @@ export class ConditionCardComponent implements OnInit, OnChanges {
   @Input() isEdit = false;
   @Input() condition!: Condition;
   @Output() conditionChange = new EventEmitter<{update: string, value: Condition}>();
+  @Output() conditionUpdated = new EventEmitter<boolean>(false);
   tech = new FormControl([], [Validators.required]);
   limitations = new FormControl('', [Validators.required]);
   documentation = new FormControl('', [Validators.required]);
   technology: string[] = [];
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
   deletingMany: Documentation[] = [];
+  readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
 
   constructor(
     private competencyService: CompetencyService,
@@ -103,6 +104,7 @@ export class ConditionCardComponent implements OnInit, OnChanges {
    */
    async updateCondition() {
     if(this.tech.valid && this.limitations.valid && this.documentation.valid) {
+      this.conditionUpdated.emit(true);
       await this.competencyService.updateCondition(
         this.competencyId,
         {

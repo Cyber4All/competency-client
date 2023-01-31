@@ -1,20 +1,22 @@
-import { Audience } from './audience';
+import { Actor } from './actor';
 import { Behavior } from './behavior';
 import { Condition } from './condition';
 import { Degree } from './degree';
 import { Employability } from './employability';
 import { Lifecycles } from './lifecycles';
+import { Notes } from './notes';
 
 export interface Competency {
   _id: string,
   status: Lifecycles,
   authorId: string,
   version: number,
-  actor: Audience,
+  actor: Actor,
   condition: Condition,
   behavior: Behavior,
   degree: Degree,
-  employability: Employability
+  employability: Employability,
+  notes: Notes
 }
 
 export function CompetencyGraph(id: string) {
@@ -26,6 +28,7 @@ export function CompetencyGraph(id: string) {
         authorId
         version
         actor {
+          _id
           type
           details
         }
@@ -50,6 +53,10 @@ export function CompetencyGraph(id: string) {
           time
         }
         employability {
+          details
+        },
+        notes {
+          _id
           details
         }
       }

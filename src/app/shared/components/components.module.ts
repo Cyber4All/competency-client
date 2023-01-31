@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CompetencyCardComponent } from './competency-card/competency-card.component';
-import { AudienceCardComponent } from './competency-card/components/audience-card/audience-card.component';
+import { ActorCardComponent } from './competency-card/components/actor-card/actor-card.component';
 import { BehaviorCardComponent } from './competency-card/components/behavior-card/behavior-card.component';
 import { ConditionCardComponent } from './competency-card/components/condition-card/condition-card.component';
 import { DegreeCardComponent } from './competency-card/components/degree-card/degree-card.component';
@@ -29,15 +29,17 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SharedDirectivesModule } from '../directives/shared-directives.module';
+import { NotesCardComponent } from './competency-card/components/notes-card/notes-card.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
-    AudienceCardComponent,
+    ActorCardComponent,
     BehaviorCardComponent,
     ConditionCardComponent,
     DegreeCardComponent,
     EmployabilityCardComponent,
     FileUploadComponent
+    NotesCardComponent,
   ],
   imports: [
     CommonModule,

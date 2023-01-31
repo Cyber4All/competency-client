@@ -12,6 +12,7 @@ import {
   getAllTasks,
   getCompleteTask
 } from '../../entity/workrole';
+import { getPreReqs } from '../../entity/actor';
 
 @Injectable({
   providedIn: 'root'
@@ -83,6 +84,21 @@ export class WorkroleService {
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
         { query },
+        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+      ));
+  }
+
+  /**
+   * Method to retreive a list of NICE knowledge statements and NICE skills
+   *
+   * @returns list of NICE knowledge and skills
+   */
+  async getActorPrereqs() {
+    const query = getPreReqs();
+    return await lastValueFrom(this.http
+      .post(
+        COMPETENCY_ROUTES.GRAPH_QUERY(),
+        {query},
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ));
   }

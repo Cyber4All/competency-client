@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, DoCheck, Output, EventEmitter, OnChanges, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
 import { CompetencyService } from '../../../../../core/competency.service';
@@ -17,6 +17,7 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
   @Input() isEdit = false;
   @Input() behavior!: Behavior;
   @Output() behaviorChange = new EventEmitter<{update: string, value: Behavior}>();
+  @Output() behaviorUpdated = new EventEmitter<boolean>(false);
   currIndex: number | null = null;
   task = new FormControl('');
   details = new FormControl('', [Validators.required]);
@@ -124,11 +125,12 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
   async updateBehavior() {
     const behaviorUpdate = {
       _id: this.behavior._id,
-      task: '',
+      tasks: '',
       details: this.details.value,
       work_role: ''
     };
     if(this.task.valid && this.details.valid && this.workrole.valid) {
+      this.behaviorUpdated.emit(true);
       const selectedTask: Elements[] = this.tasks.filter((task: Elements) => {
         return task.description === this.task.value;
       });
@@ -136,7 +138,7 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
         return workrole.work_role === this.workrole.value;
       });
       if(selectedTask.length > 0) {
-        behaviorUpdate.task = selectedTask[0]._id ?? '';
+        behaviorUpdate.tasks = selectedTask[0]._id ?? '';
       }
       if(selectedWorkrole.length > 0) {
         behaviorUpdate.work_role = selectedWorkrole[0]._id ?? '';

@@ -1,18 +1,20 @@
-<ng-container class="competency-card_container">
+<ng-container class="competency-card_container" onclick="onNoClick()">
   <form>
     <mat-accordion class="competency-constructor_accordion" [multi]="true"[togglePosition]="position">
-      <!--Audience-->
-      <cc-audience-card
+      <!--Actor-->
+      <cc-actor-card
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
-        [audience] = "competency.actor"
-        (audienceChange) = "updateCompetency($event)"
-      ></cc-audience-card>
+        [actor] = "competency.actor"
+        (actorUpdated) = "actorUpdated"
+        (actorChange) = "updateCompetency($event)"
+      ></cc-actor-card>
       <!--Behavior-->
       <cc-behavior-card
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
         [behavior] = "competency.behavior"
+        (behaviorUpdated) = "behaviorUpdated"
         (behaviorChange) = "updateCompetency($event)"
       ></cc-behavior-card>
       <!--Condition-->
@@ -20,6 +22,7 @@
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
         [condition] = "competency.condition"
+        (conditionUpdated) = "conditionUpdated"
         (conditionChange) = "updateCompetency($event)"
       ></cc-condition-card>
       <!--Degree-->
@@ -27,6 +30,7 @@
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
         [degree] = "competency.degree"
+        (degreeUpdated) = "degreeUpdated"
         (degreeChange) = "updateCompetency($event)"
       ></cc-degree-card>
       <!--Employability-->
@@ -34,8 +38,22 @@
         [competencyId] = "competencyId"
         [isEdit]="isEdit"
         [employability] = "competency.employability"
+        (employabilityUpdated) = "employabilityUpdated"
         (employabilityChange) = "updateCompetency($event)"
       ></cc-employability-card>
+      <!--Notes-->
+      <cc-notes-card
+        [competencyId]="competencyId"
+        [isEdit]="isEdit"
+        [notes]="competency.notes"
+        (notesChange)="updateCompetency($event)"
+      ></cc-notes-card>
     </mat-accordion>
+    <span *ngIf="isEdit">
+      <mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="false">DELETE</button>
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>SUBMIT</button>
+      </mat-dialog-actions> 
+    </span>   
   </form>
 </ng-container>
