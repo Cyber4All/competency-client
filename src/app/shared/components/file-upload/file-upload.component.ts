@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FileService } from 'src/app/core/file.service';
+import { MimeTypes } from 'src/entity/mimeTypes';
 
 @Component({
   selector: 'cc-file-upload',
@@ -31,14 +32,20 @@ export class FileUploadComponent implements OnInit {
   }
 
   /**
-   * Records all entered files when they are dropped or entered into the
-   * drag-and-drop area
+   * Validates that the file follows the proper extensions, and
+   * adds the file to the list
    *
    * @param event A list of files received from the user
    */
   handleFileDropped(event: FileList) {
+    let extension: string;
     Array.from(event).forEach(file => {
-      this.files.push(file);
+      extension = file.name.split('.')[1];
+      if((Object.values(MimeTypes) as string[]).includes(extension)) {
+        this.files.push(file);
+      } else {
+        console.log(extension, 'does not work'); // TODO: Replace with toaster message
+      }
     });
   }
 
