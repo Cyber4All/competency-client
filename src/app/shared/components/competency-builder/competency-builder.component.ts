@@ -4,7 +4,6 @@ import { MatAccordionTogglePosition } from '@angular/material/expansion';
 import { Notes } from 'src/entity/notes';
 import { Actor } from '../../../../entity/actor';
 import { Behavior } from '../../../../entity/behavior';
-import { Competency } from '../../../../entity/competency';
 import { Condition } from '../../../../entity/condition';
 import { Degree } from '../../../../entity/degree';
 import { Employability } from '../../../../entity/employability';
