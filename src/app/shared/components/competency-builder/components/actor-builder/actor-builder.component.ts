@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { WorkroleService } from 'src/app/core/workrole.service';
+import { debounceTime } from 'rxjs';
 import { Actor } from '../../../../../../entity/actor';
 
 @Component({
@@ -14,17 +14,37 @@ export class ActorBuilderComponent implements OnInit {
   @Input() isEdit = false;
   @Input() actor!: Actor;
   @Output() actorChange = new EventEmitter<{update: string, value: Actor}>();
-  @Output() actorUpdated = new EventEmitter<boolean>(false);
   currIndex: number | null = null;
   type = new FormControl('', [Validators.required]);
   details = new FormControl('', [Validators.required]);
-  prereqs = [];
 
-  constructor(
-    private workroleService: WorkroleService
-  ) {}
+  constructor( ) {}
 
   async ngOnInit(): Promise<void> {
+    this.type.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((typeUpdate: string) => {
+        this.actorChange.emit({
+          update: 'actor',
+          value: {
+            _id: this.actor._id,
+            type: typeUpdate,
+            details: this.details.value
+          }
+        });
+      });
+    this.details.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((detailsUpdate: string) => {
+        this.actorChange.emit({
+          update: 'actor',
+          value: {
+            _id: this.actor._id,
+            type: this.type.value,
+            details: detailsUpdate
+          }
+        });
+      });
     // If value exists, set type form control
     if(this.actor.type) {
       this.type.patchValue(this.actor.type);
@@ -33,29 +53,5 @@ export class ActorBuilderComponent implements OnInit {
     if(this.actor.details) {
       this.details.patchValue(this.actor.details);
     }
-    // Only retrieve skills and abilitiy suggestions if editing a competency
-    if(this.isEdit) {
-      await this.workroleService.getActorPrereqs()
-        .then((prereqQuery: any) => {
-          if (prereqQuery.data.prereqSuggestions) {
-            this.prereqs = prereqQuery.data.prereqSuggestions;
-          }
-        });
-    }
   }
-
-  // ngOnChanges(): void {
-  //   // If any value updates, update parent component
-  //   console.log("on changes?")
-  //   if(this.type.value || this.details.value) {
-  //     this.actorChange.emit({
-  //       update: 'actor',
-  //       value: {
-  //         _id: this.actor._id,
-  //         type: this.type.value,
-  //         details: this.details.value
-  //       }
-  //     });
-  //   };
-  // }
 }

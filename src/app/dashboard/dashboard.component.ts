@@ -3,13 +3,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
-import { CompetencyCardComponent } from '../shared/components/competency-card/competency-card.component';
 import { Competency } from '../../entity/competency';
 import { Lifecycles } from '../../entity/lifecycles';
 import { Search } from '../../entity/search';
 import { sleep } from '../shared/functions/loading';
 import { BuilderService } from '../core/builder/builder.service';
 import { CompetencyBuilder } from '../core/builder/competency-builder.class';
+import { CompetencyBuilderComponent } from '../shared/components/competency-builder/competency-builder.component';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   // Loading visual for competency list
   loading = true;
   // Array of complete competency objects
-  loadedCompetencies: CompetencyBuilder[] = [];
+  loadedCompetencies: Competency[] = [];
   // Object for search results
   search: Search = {
     competencies: [],
@@ -91,19 +91,7 @@ export class DashboardComponent implements OnInit {
       this.search.competencies.map(async (comp: Competency) => {
         await this.competencyService.getCompetencyById(comp._id)
           .then((comp: Competency) => {
-            const competency: CompetencyBuilder = new CompetencyBuilder(
-              comp._id,
-              comp.status,
-              comp.authorId,
-              comp.version,
-              comp.actor,
-              comp.behavior,
-              comp.condition,
-              comp.degree,
-              comp.employability,
-              comp.notes
-            );
-            this.loadedCompetencies.push(competency);
+            this.loadedCompetencies.push(comp);
           });
       });
     }
@@ -190,7 +178,7 @@ export class DashboardComponent implements OnInit {
       existingCompetency.notes
     );
     // Open dialog ref for builder
-    const dialogRef = this.dialog.open(CompetencyCardComponent, {
+    const dialogRef = this.dialog.open(CompetencyBuilderComponent, {
       height: '700px',
       width: '900px',
       data: competency

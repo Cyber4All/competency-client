@@ -1,7 +1,5 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { WorkroleService } from 'src/app/core/workrole.service';
-import { CompetencyService } from '../../../../../core/competency.service';
 import { Actor } from '../../../../../../entity/actor';
 
 @Component({
@@ -19,10 +17,8 @@ export class ActorCardComponent implements OnInit {
   currIndex: number | null = null;
   type = new FormControl('', [Validators.required]);
   details = new FormControl('', [Validators.required]);
-  prereqs = [];
 
   constructor(
-    private workroleService: WorkroleService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -33,15 +29,6 @@ export class ActorCardComponent implements OnInit {
     // If value exists, set details form control
     if(this.actor.details) {
       this.details.patchValue(this.actor.details);
-    }
-    // Only retrieve skills and abilitiy suggestions if editing a competency
-    if(this.isEdit) {
-      await this.workroleService.getActorPrereqs()
-        .then((prereqQuery: any) => {
-          if (prereqQuery.data.prereqSuggestions) {
-            this.prereqs = prereqQuery.data.prereqSuggestions;
-          }
-        });
     }
   }
 

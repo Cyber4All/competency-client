@@ -17,7 +17,7 @@ import { CompetencyBuilder } from '../../../core/builder/competency-builder.clas
   styleUrls: ['./competency-card.component.scss']
 })
 export class CompetencyCardComponent implements OnInit {
-  @Input() competency!: CompetencyBuilder;
+  @Input() competency!: Competency;
   // Toggle for editing a competency
   @Input() isEdit = true;
   @Output() isSavable = new EventEmitter<boolean>(false);
@@ -90,43 +90,27 @@ export class CompetencyCardComponent implements OnInit {
   ): void {
     switch(event.update) {
       case 'actor':
-        this.competency.setActor(event.value as Actor);
+        this.competency.actor = event.value as Actor;
         break;
       case 'behavior':
-        this.competency.setBehavior(event.value as Behavior);
+        this.competency.behavior = event.value as Behavior;
         break;
       case 'condition':
-        this.competency.setCondition(event.value as Condition);
+        this.competency.condition = event.value as Condition;
         break;
       case 'degree':
-        this.competency.setDegree(event.value as Degree);
+        this.competency.degree = event.value as Degree;
         break;
       case 'employability':
-        this.competency.setEmployability(event.value as Employability);
+        this.competency.employability = event.value as Employability;
         break;
       case 'notes':
-        this.competency.setNotes(event.value as Notes);
+        this.competency.notes = event.value as Notes;
         break;
       default:
         console.log('yo you messed up dawg');
         break;
     }
     this.checkUpdateStatus();
-  }
-
-  async saveCompetency(): Promise<void> {
-    try {
-      const competency = this.competency.build();
-      await this.builderService.updateActor(competency._id, competency.actor);
-      await this.builderService.updateBehavior(competency._id, competency.behavior);
-      await this.builderService.updateCondition(competency._id, competency.condition);
-      await this.builderService.updateDegree(competency._id, competency.degree);
-      await this.builderService.updateEmployability(competency._id, competency.employability);
-      await this.builderService.updateNotes(competency._id, competency.notes);
-      return Promise.resolve();
-    } catch (err) {
-      console.log(err);
-      return Promise.reject();
-    }
   }
 }

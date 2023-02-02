@@ -1,20 +1,16 @@
-import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
-import { FormArray, FormControl, Validators } from '@angular/forms';
-import { CompetencyService } from '../../../../../../app/core/competency.service';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Condition } from '../../../../../../entity/condition';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
+import { debounceTime } from 'rxjs';
+import { Documentation } from '../../../../../../entity/documentation';
 @Component({
   selector: 'cc-context-builder',
   templateUrl: './context-builder.component.html',
   styleUrls: ['./context-builder.component.scss']
 })
-export class ContextBuilderComponent implements OnInit, OnChanges {
-
-  /**
-   * THIS IS STILL BEING WORKED ON
-   * DOCUMENTATION IS BROKEN ATM (11/11/22)
-   */
+export class ContextBuilderComponent implements OnInit {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
@@ -23,13 +19,52 @@ export class ContextBuilderComponent implements OnInit, OnChanges {
   @Output() conditionUpdated = new EventEmitter<boolean>(false);
   tech = new FormControl([], [Validators.required]);
   limitations = new FormControl('', [Validators.required]);
-  documentation = new FormControl('', [Validators.required]);
+  documentation = new FormControl([], [Validators.required]);
   technology: string[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.tech.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((techUpdate: string[]) => {
+        this.conditionChange.emit({
+          update: 'condition',
+          value: {
+            _id: this.condition._id,
+            tech: techUpdate,
+            limitations: this.limitations.value,
+            documentation: this.documentation.value
+          }
+        });
+      });
+    this.limitations.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((limitationsUpdate: string) => {
+        this.conditionChange.emit({
+          update: 'condition',
+          value: {
+            _id: this.condition._id,
+            tech: this.tech.value,
+            limitations: limitationsUpdate,
+            documentation: this.documentation.value
+          }
+        });
+      });
+    this.documentation.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((documentationUpdate: Documentation[]) => {
+        this.conditionChange.emit({
+          update: 'condition',
+          value: {
+            _id: this.condition._id,
+            tech: this.tech.value,
+            limitations: this.limitations.value,
+            documentation: documentationUpdate
+          }
+        });
+      });
     // If value exists, set type form control
     if(this.condition.tech) {
       this.tech.patchValue(this.condition.tech);
@@ -42,21 +77,6 @@ export class ContextBuilderComponent implements OnInit, OnChanges {
     if (this.condition.documentation) {
       this.documentation.patchValue(this.condition.documentation);
     }
-  }
-
-  ngOnChanges(): void {
-    // If any value updates, update parent component
-    if(this.tech.value || this.limitations.value || this.documentation.value) {
-      this.conditionChange.emit({
-        update: 'condition',
-        value: {
-          _id: this.condition._id,
-          tech: this.tech.value,
-          limitations: this.limitations.value,
-          documentation: this.documentation.value
-        }
-      });
-    };
   }
 
   /**

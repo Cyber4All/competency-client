@@ -1,13 +1,13 @@
 import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { CompetencyService } from '../../../../../../app/core/competency.service';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs';
 import { Degree } from '../../../../../../entity/degree';
 @Component({
   selector: 'cc-degree-builder',
   templateUrl: './degree-builder.component.html',
   styleUrls: ['./degree-builder.component.scss']
 })
-export class DegreeBuilderComponent implements OnInit, OnChanges {
+export class DegreeBuilderComponent implements OnInit {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
@@ -22,6 +22,45 @@ export class DegreeBuilderComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
+    this.complete.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((completeChange: string) => {
+        this.degreeChange.emit({
+          update: 'degree',
+          value: {
+            _id: this.degree._id,
+            complete: completeChange,
+            correct: this.correct.value,
+            time: this.time.value
+          }
+        });
+      });
+    this.correct.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((correctChange: string) => {
+        this.degreeChange.emit({
+          update: 'degree',
+          value: {
+            _id: this.degree._id,
+            complete: this.complete.value,
+            correct: correctChange,
+            time: this.time.value
+          }
+        });
+      });
+    this.time.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((timeChange) => {
+        this.degreeChange.emit({
+          update: 'degree',
+          value: {
+            _id: this.degree._id,
+            complete: this.complete.value,
+            correct: this.correct.value,
+            time: timeChange
+          }
+        });
+      });
     // If value exists, set type form control
     if(this.degree.complete) {
       this.complete.patchValue(this.degree.complete);
@@ -34,20 +73,5 @@ export class DegreeBuilderComponent implements OnInit, OnChanges {
     if (this.degree.correct) {
       this.correct.patchValue(this.degree.correct);
     }
-  }
-
-  ngOnChanges(): void {
-    // If any value updates, update parent component
-    if(this.complete.value || this.correct.value || this.time.value) {
-      this.degreeChange.emit({
-        update: 'degree',
-        value: {
-          _id: this.degree._id,
-          complete: this.complete.value,
-          correct: this.correct.value,
-          time: this.time.value
-        }
-      });
-    };
   }
 }

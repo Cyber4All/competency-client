@@ -1,13 +1,13 @@
-import { Component, Input, OnChanges, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { CompetencyService } from '../../../../../../app/core/competency.service';
+import { debounceTime } from 'rxjs';
 import { Employability } from '../../../../../../entity/employability';
 @Component({
   selector: 'cc-employability-builder',
   templateUrl: './employability-builder.component.html',
   styleUrls: ['./employability-builder.component.scss']
 })
-export class EmployabilityBuilderComponent implements OnInit, OnChanges {
+export class EmployabilityBuilderComponent implements OnInit {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
@@ -20,22 +20,20 @@ export class EmployabilityBuilderComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
+    this.details.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((detailsChange: string) => {
+        this.employabilityChange.emit({
+          update: 'employability',
+          value: {
+            _id: this.employability._id,
+            details: detailsChange
+          }
+        });
+      });
     // If value exists, set details form control
     if (this.employability.details) {
       this.details.patchValue(this.employability.details);
     }
-  }
-
-  ngOnChanges(): void {
-    // If any value updates, update parent component
-    if(this.details.value) {
-      this.employabilityChange.emit({
-        update: 'employability',
-        value: {
-          _id: this.employability._id,
-          details: this.details.value
-        }
-      });
-    };
   }
 }

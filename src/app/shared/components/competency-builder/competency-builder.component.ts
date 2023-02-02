@@ -27,16 +27,6 @@ export class CompetencyBuilderComponent implements OnInit {
   currIndex = 0;
   position: MatAccordionTogglePosition = 'before';
 
-  /**
-   * Boolean vars to track changes applied to a competency
-   * These are used to ensure we can delete a competency shell if no fields are updated
-   */
-  actorUpdated = false;
-  behaviorUpdated = false;
-  conditionUpdated = false;
-  degreeUpdated = false;
-  employabilityUpdated = false;
-
   constructor(
     private builderService: BuilderService,
     public dialogRef: MatDialogRef<CompetencyBuilderComponent>,
@@ -57,20 +47,6 @@ export class CompetencyBuilderComponent implements OnInit {
    */
   setView(index: number | null): void {
     this.compIndex = index;
-  }
-
-  checkUpdateStatus(): void {
-    if(
-      this.actorUpdated
-      && this.behaviorUpdated
-      && this.conditionUpdated
-      && this.degreeUpdated
-      && this.employabilityUpdated
-    ) {
-      this.isSavable.emit(true);
-    } else {
-      this.isSavable.emit(false);
-    }
   }
 
   /**
@@ -109,7 +85,6 @@ export class CompetencyBuilderComponent implements OnInit {
         console.log('yo you messed up dawg');
         break;
     }
-    this.checkUpdateStatus();
   }
 
   async saveCompetency(): Promise<void> {
@@ -121,8 +96,10 @@ export class CompetencyBuilderComponent implements OnInit {
       await this.builderService.updateDegree(competency._id, competency.degree);
       await this.builderService.updateEmployability(competency._id, competency.employability);
       await this.builderService.updateNotes(competency._id, competency.notes);
+      this.dialogRef.close(true);
       return Promise.resolve();
     } catch (err) {
+      console.log(err);
       return Promise.reject();
     }
   }

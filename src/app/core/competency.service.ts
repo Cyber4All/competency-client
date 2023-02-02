@@ -37,6 +37,10 @@ export class CompetencyService {
       }
     ): Promise<Search> {
     this.auth.initHeaders();
+    // Format to uppercase for GraphQL
+    if (q && q.status) {
+      q.status = q.status.map((val) => val.toUpperCase());
+    }
     const query = CompetencySearch(q);
     return lastValueFrom(this.http
       .post(

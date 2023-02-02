@@ -94,9 +94,9 @@ export class CompetencyBuilder extends Competency {
         if (!this.authorId || this.authorId === null || this.authorId === undefined) {
             throw new Error('Competency author is not valid');
         }
-        // if (!(this.status in Lifecycles)) {
-        //     throw new Error('Competency is not in a valid state');
-        // }
+        if ((!this.status)) {
+            throw new Error('Competency is not in a valid state');
+        }
         if (!this.actor.details || !this.actor.type) {
             throw new Error('Actor is incomplete');
         }

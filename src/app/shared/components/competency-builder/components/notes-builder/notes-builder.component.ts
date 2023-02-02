@@ -1,13 +1,13 @@
-import { Component, Input, OnChanges, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { CompetencyService } from '../../../../../../app/core/competency.service';
 import { Notes } from 'src/entity/notes';
+import { debounceTime } from 'rxjs';
 @Component({
   selector: 'cc-notes-builder',
   templateUrl: './notes-builder.component.html',
   styleUrls: ['./notes-builder.component.scss']
 })
-export class NotesBuilderComponent implements OnInit, OnChanges {
+export class NotesBuilderComponent implements OnInit {
 
   @Input() competencyId!: string;
   @Input() isEdit = false;
@@ -19,22 +19,20 @@ export class NotesBuilderComponent implements OnInit, OnChanges {
   constructor( ) { }
 
   ngOnInit(): void {
+    this.details.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((notesUpdate: string) => {
+        this.notesChange.emit({
+          update: 'notes',
+          value: {
+            _id: this.notes._id,
+            details: this.details.value
+          }
+        });
+      });
     // If value exists, set details form control
     if (this.notes.details) {
       this.details.patchValue(this.notes.details);
     }
-  }
-
-  ngOnChanges(): void {
-    // If any value updates, update parent component
-    if(this.details.value) {
-      this.notesChange.emit({
-        update: 'employability',
-        value: {
-          _id: this.notes._id,
-          details: this.details.value
-        }
-      });
-    };
   }
 }

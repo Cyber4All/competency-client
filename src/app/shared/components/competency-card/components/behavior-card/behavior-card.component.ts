@@ -35,9 +35,9 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
     // If value exists, set type form control
     if(this.behavior.tasks) {
       await this.workroleService.getCompelteTask(this.behavior.tasks)
-        .then((taskQuery: any) => {
-          this.task.patchValue(taskQuery.data.task.description);
-        });
+      .then((taskQuery: any) => {
+        this.task.setValue(this.task.value, taskQuery.data.task.description);
+      });
     }
     // If value exists, set details form control
     if (this.behavior.details) {
@@ -123,30 +123,6 @@ export class BehaviorCardComponent implements OnInit, OnChanges {
    * Method to advance to next step
    */
   async updateBehavior() {
-    const behaviorUpdate = {
-      _id: this.behavior._id,
-      tasks: '',
-      details: this.details.value,
-      work_role: ''
-    };
-    if(this.task.valid && this.details.valid && this.workrole.valid) {
-      this.behaviorUpdated.emit(true);
-      const selectedTask: Elements[] = this.tasks.filter((task: Elements) => {
-        return task.description === this.task.value;
-      });
-      const selectedWorkrole: Workrole[] = this.workroles.filter((workrole: Workrole) => {
-        return workrole.work_role === this.workrole.value;
-      });
-      if(selectedTask.length > 0) {
-        behaviorUpdate.tasks = selectedTask[0]._id ?? '';
-      }
-      if(selectedWorkrole.length > 0) {
-        behaviorUpdate.work_role = selectedWorkrole[0]._id ?? '';
-      }
-      const res: any = await this.competencyService.updateBehavior(
-        this.competencyId,
-        behaviorUpdate
-      );
-    }
+    throw Error ('METHOD NOT IMPLEMENTED');
   }
 }

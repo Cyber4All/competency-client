@@ -49,11 +49,5 @@
         (notesChange)="updateCompetency($event)"
       ></cc-notes-card>
     </mat-accordion>
-    <span *ngIf="isEdit">
-      <mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="false">DELETE</button>
-        <button (click)="saveCompetency()" cdkFocusInitial>SUBMIT</button>
-      </mat-dialog-actions> 
-    </span>   
   </form>
 </ng-container>
