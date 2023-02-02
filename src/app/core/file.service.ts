@@ -64,7 +64,7 @@ export class FileService {
         { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
       )
     ).then(res => {
-      console.log('Documentation created!', res);
+      console.log('Documentation created!', res); // TODO: Swap for toaster component
     }).catch(e => {
       console.log(e); // TODO: Swap for toaster component
     });
@@ -95,7 +95,7 @@ export class FileService {
         }
       )
     ).then(res => {
-      console.log('Documentation deleted!');
+      console.log('Documentation deleted!'); // TODO: Swap for toaster component
     }).catch(e => {
       console.log(e); // TODO: Swap for toaster component
     });
