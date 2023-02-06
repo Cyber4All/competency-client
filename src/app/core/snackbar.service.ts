@@ -15,6 +15,13 @@ export class SnackbarService  {
         callbacks?: { action: Function; display: string; style?: string }[];
     }> = new Subject();
 
+   /**
+    *
+    * takes a http error response and formats it to have a title and message that is parsed from the API
+    *
+    * @param err http error response
+    *
+    */
     public sendNotificationByError(err: HttpErrorResponse){
         let title = 'ERROR';
         let message = 'Something went wrong on our end. Please try again later!';
@@ -25,8 +32,8 @@ export class SnackbarService  {
 
         switch (err.status){
             case 400:
-            title = 'Invalid Input';
-            break;
+                title = 'Invalid Input';
+                break;
             case 401:
                 title = 'Not logged in';
                 message = 'Please log in to continue';
@@ -44,8 +51,8 @@ export class SnackbarService  {
                 title = 'Too Many Requests';
                 break;
             default:
-            title = 'Internal Service Error';
-            message = 'Something went wrong on our end. Please  try again later.';
+                title = 'Internal Service Error';
+                message = 'Something went wrong on our end. Please  try again later.';
         }
         this.notification$.next({
             title: title,
