@@ -9,6 +9,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthModule } from './auth/auth.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SharedModule } from './shared/shared.module';
 import { AdminDashboardModule } from './admin-dashboard/admin-dashboard.module';
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AdminDashboardModule } from './admin-dashboard/admin-dashboard.module';
     AuthModule,
     MatSnackBarModule,
     MatDialogModule,
+    SharedModule,
     AdminDashboardModule,
   ],
   providers: [
