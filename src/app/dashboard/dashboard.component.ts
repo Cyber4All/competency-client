@@ -181,7 +181,8 @@ export class DashboardComponent implements OnInit {
     const dialogRef = this.dialog.open(CompetencyBuilderComponent, {
       height: '700px',
       width: '900px',
-      data: competency
+      data: competency,
+      position: {right:'10px', bottom: '10px'}
     });
     // After close of builder; handle drafts/unsavable and dashboard list
     dialogRef.afterClosed().subscribe(async (isDraft: boolean) => {
