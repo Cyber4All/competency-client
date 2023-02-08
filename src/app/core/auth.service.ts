@@ -7,6 +7,7 @@ import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
 import { competencyAcl } from 'competency-acl';
+import { SnackbarService} from './snackbar.service';
 
 const TOKEN_KEY = 'presence';
 
@@ -25,7 +26,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private encryptionService: EncryptionService,
-    private cookie: CookieService
+    private cookie: CookieService,
+    private snackbarService: SnackbarService
   ) { }
 
   set user(value: Optional<User>) {
@@ -71,6 +73,7 @@ export class AuthService {
           return Promise.resolve();
         });
     } catch(e: any) {
+      this.snackbarService.sendNotificationByError(e);
       throw this.formatError(e);
     }
   }
@@ -98,7 +101,8 @@ export class AuthService {
           return Promise.resolve();
         });
     } catch(e: any) {
-      throw this.formatError(e);
+     this.snackbarService.sendNotificationByError(e);
+     throw this.formatError(e);
     }
   }
 

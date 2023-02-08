@@ -29,6 +29,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SharedDirectivesModule } from '../directives/shared-directives.module';
+import  {SnackbarComponent} from './snackbar/snackbar.component';
 import { NotesCardComponent } from './competency-card/components/notes-card/notes-card.component';
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { NotesCardComponent } from './competency-card/components/notes-card/note
     EmployabilityCardComponent,
     FileUploadComponent,
     NotesCardComponent,
+    SnackbarComponent,
   ],
   imports: [
     CommonModule,

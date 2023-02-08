@@ -9,8 +9,9 @@ import { Degree } from '../../entity/degree';
 import { Condition } from '../../entity/condition';
 import { Behavior } from '../../entity/behavior';
 import { Employability } from '../../entity/employability';
-import { Notes } from 'src/entity/notes';
-import { Search } from 'src/entity/search';
+import { Notes } from '../../entity/notes';
+import { Search } from '../../entity/search';
+import { SnackbarService } from './snackbar.service';
 
 /**
  * Function to toggle loading state display
@@ -21,6 +22,7 @@ import { Search } from 'src/entity/search';
 export function sleep(ms: number): Promise<any> {
   return new Promise((res) => setTimeout(res, ms));
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,6 +30,7 @@ export class CompetencyService {
   constructor(
     private http: HttpClient,
     private auth: AuthService,
+    private snackBarService: SnackbarService
   ) {}
 
   /**
@@ -58,7 +61,7 @@ export class CompetencyService {
         return res.data.search;
       })
       .catch((err) => {
-        console.log(err);
+        this.snackBarService.sendNotificationByError(err);
       });
   }
 
@@ -81,7 +84,7 @@ export class CompetencyService {
         return res.data.competency;
       })
       .catch((e)=> {
-        console.log(e);
+        this.snackBarService.sendNotificationByError(e);
       });
   }
 
@@ -99,7 +102,7 @@ export class CompetencyService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .catch((e)=> {
-        console.log(e);
+        this.snackBarService.sendNotificationByError(e);
       });
   }
 
@@ -117,7 +120,7 @@ export class CompetencyService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .catch((e)=> {
-        console.log(e);
+        this.snackBarService.sendNotificationByError(e);
       });
   }
 
@@ -137,7 +140,7 @@ export class CompetencyService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .catch((e)=> {
-        console.log(e);
+        this.snackBarService.sendNotificationByError(e);
       });
   }
 
@@ -157,7 +160,7 @@ export class CompetencyService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .catch((e)=> {
-        console.log(e);
+        this.snackBarService.sendNotificationByError(e);
       });
   }
 
@@ -177,7 +180,7 @@ export class CompetencyService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .catch((e)=> {
-        console.log(e);
+        this.snackBarService.sendNotificationByError(e);
       });
   }
 
@@ -197,7 +200,7 @@ export class CompetencyService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .catch((e)=> {
-        console.log(e);
+        this.snackBarService.sendNotificationByError(e);
       });
   }
 
@@ -217,7 +220,7 @@ export class CompetencyService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .catch((e)=> {
-        console.log(e);
+        this.snackBarService.sendNotificationByError(e);
       });
   }
 

@@ -11,6 +11,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedModule } from './shared/shared.module';
 import { AdminDashboardModule } from './admin-dashboard/admin-dashboard.module';
+import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -28,6 +29,7 @@ import { AdminDashboardModule } from './admin-dashboard/admin-dashboard.module';
     MatDialogModule,
     SharedModule,
     AdminDashboardModule,
+    SharedModule,
   ],
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },
