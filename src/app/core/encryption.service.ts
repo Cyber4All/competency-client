@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
 import { retry } from 'rxjs/operators';
 import { USER_ROUTES } from '../../environments/routes';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -42,12 +44,11 @@ export class EncryptionService {
    */
   private async importPublicKey() {
     // Get key from backend
-    const publicKey = (
-      await this.http
+    const publicKey = (await lastValueFrom(
+      this.http
         .get<{ publicKey: string }>(USER_ROUTES.GENERATE_KEYS())
         .pipe(retry(3))
-        .toPromise()
-    )?.publicKey;
+    )).publicKey;
 
     // Parse out the key using RSA-OAEP and a SHA256 hash
     return {

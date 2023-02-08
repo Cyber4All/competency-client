@@ -77,5 +77,12 @@ export const COMPETENCY_ROUTES = {
     },
     GRAPH_QUERY() {
         return `${environment.apiURL}/graphql`;
+    },
+    UPLOAD_FILE_LAMBDA(competencyId: string) {
+        return `${environment.fileUploadURL}/files?competencyId=${encodeURIComponent(competencyId)}`;
+    },
+    DELETE_FILE_LAMBDA(competencyId: string, filenames: string) {
+        // eslint-disable-next-line max-len
+        return `${environment.fileUploadURL}/files?competencyId=${encodeURIComponent(competencyId)}&filename=${encodeURIComponent(filenames)}`;
     }
 };

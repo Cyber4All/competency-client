@@ -27,6 +27,8 @@ import { AppRoutingModule } from '../../app-routing.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+import { SharedDirectivesModule } from '../directives/shared-directives.module';
 import  {SnackbarComponent} from './snackbar/snackbar.component';
 import { NotesCardComponent } from './competency-card/components/notes-card/notes-card.component';
 @NgModule({
@@ -37,6 +39,7 @@ import { NotesCardComponent } from './competency-card/components/notes-card/note
     ConditionCardComponent,
     DegreeCardComponent,
     EmployabilityCardComponent,
+    FileUploadComponent,
     NotesCardComponent,
     SnackbarComponent,
   ],
@@ -63,10 +66,12 @@ import { NotesCardComponent } from './competency-card/components/notes-card/note
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     MatTooltipModule,
-    MatChipsModule
+    MatChipsModule,
+    SharedDirectivesModule
   ],
   exports: [
-    CompetencyCardComponent
+    CompetencyCardComponent,
+    FileUploadComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
