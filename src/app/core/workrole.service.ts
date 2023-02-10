@@ -13,6 +13,8 @@ import {
   getCompleteTask
 } from '../../entity/workrole';
 import { getPreReqs } from '../../entity/actor';
+import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,7 @@ export class WorkroleService {
   constructor(
     private http: HttpClient,
     private auth: AuthService,
+    private snackBarService: SnackbarService,
   ) {}
 
   /**
@@ -36,7 +39,13 @@ export class WorkroleService {
         COMPETENCY_ROUTES.GRAPH_QUERY(),
         {query},
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-      ));
+      ))
+      .catch((err) => {
+        err = GraphErrorHandler.handleError(err);
+        if (err) {
+          this.snackBarService.sendNotificationByError(err);
+        }
+      });
   }
 
   /**
@@ -53,7 +62,13 @@ export class WorkroleService {
         COMPETENCY_ROUTES.GRAPH_QUERY(),
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-      ));
+      ))
+      .catch((err) => {
+        err = GraphErrorHandler.handleError(err);
+        if (err) {
+          this.snackBarService.sendNotificationByError(err);
+        }
+      });
   }
 
   /**
@@ -69,7 +84,13 @@ export class WorkroleService {
         COMPETENCY_ROUTES.GRAPH_QUERY(),
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-      ));
+      ))
+      .catch((err) => {
+        err = GraphErrorHandler.handleError(err);
+        if (err) {
+          this.snackBarService.sendNotificationByError(err);
+        }
+      });
   }
 
   /**
@@ -85,7 +106,13 @@ export class WorkroleService {
         COMPETENCY_ROUTES.GRAPH_QUERY(),
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-      ));
+      ))
+      .catch((err) => {
+        err = GraphErrorHandler.handleError(err);
+        if (err) {
+          this.snackBarService.sendNotificationByError(err);
+        }
+      });
   }
 
   /**
@@ -100,6 +127,12 @@ export class WorkroleService {
         COMPETENCY_ROUTES.GRAPH_QUERY(),
         {query},
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-      ));
+      ))
+      .catch((err) => {
+        err = GraphErrorHandler.handleError(err);
+        if (err) {
+          this.snackBarService.sendNotificationByError(err);
+        }
+      });
   }
 }
