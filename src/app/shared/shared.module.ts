@@ -1,14 +1,17 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from './components/components.module';
+import { SharedDirectivesModule } from './directives/shared-directives.module';
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    ComponentsModule
+    ComponentsModule,
+    SharedDirectivesModule,
   ],
   exports: [
-    ComponentsModule
+    ComponentsModule,
+    SharedDirectivesModule,
   ],
 })
 export class SharedModule { }

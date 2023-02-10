@@ -27,6 +27,9 @@ import { AppRoutingModule } from '../../app-routing.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+import { SharedDirectivesModule } from '../directives/shared-directives.module';
+import  {SnackbarComponent} from './snackbar/snackbar.component';
 import { NotesCardComponent } from './competency-card/components/notes-card/notes-card.component';
 import { CompetencyBuilderComponent } from './competency-builder/competency-builder.component';
 import { ActorBuilderComponent } from './competency-builder/components/actor-builder/actor-builder.component';
@@ -43,6 +46,7 @@ import { NotesBuilderComponent } from './competency-builder/components/notes-bui
     ConditionCardComponent,
     DegreeCardComponent,
     EmployabilityCardComponent,
+    FileUploadComponent,
     NotesCardComponent,
     CompetencyBuilderComponent,
     ActorBuilderComponent,
@@ -51,6 +55,7 @@ import { NotesBuilderComponent } from './competency-builder/components/notes-bui
     DegreeBuilderComponent,
     EmployabilityBuilderComponent,
     NotesBuilderComponent,
+    SnackbarComponent,
   ],
   imports: [
     CommonModule,
@@ -75,10 +80,12 @@ import { NotesBuilderComponent } from './competency-builder/components/notes-bui
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     MatTooltipModule,
-    MatChipsModule
+    MatChipsModule,
+    SharedDirectivesModule
   ],
   exports: [
-    CompetencyCardComponent
+    CompetencyCardComponent,
+    FileUploadComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

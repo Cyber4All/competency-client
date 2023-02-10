@@ -85,7 +85,7 @@ export class Competency {
 
 export function CompetencyGraph(id: string) {
   return `
-    query {
+    {
       competency(competencyId:"${id}") {
         _id
         status
@@ -95,31 +95,28 @@ export function CompetencyGraph(id: string) {
           _id
           type
           details
-        },
+        }
         behavior {
-          _id
           tasks
           details
           work_role
-        },
+        }
         condition {
-          _id
           tech
           limitations
           documentation {
-            conditionId
-            description
-            uri
+              _id
+              conditionId
+              description
+              uri
           }
-        },
+        }
         degree {
-          _id
           complete
           correct
           time
-        },
+        }
         employability {
-          _id
           details
         },
         notes {
@@ -142,13 +139,15 @@ export function CompetencySearch(
   }
 ) {
   return `
-    query {
-      search(text:"${query?.text ?? ''}",
-      page:${query?.page ?? 0},
-      limit:${query?.limit ?? 0}, 
-      author:"${query?.author ?? ''}",
-      status:[${query?.status ?? ''}],
-      version:${query?.version ?? 0}) {
+    {
+      search(
+        text:"${query?.text ?? ''}",
+        page:${query?.page ?? 0},
+        limit:${query?.limit ?? 0}, 
+        author:"${query?.author ?? ''}",
+        status:[${query?.status ?? 'DRAFT'}],
+        version:${query?.version ?? 0}
+      ) {
         competencies {
           _id
         }
