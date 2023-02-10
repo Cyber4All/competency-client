@@ -12,7 +12,7 @@ import { Employability } from '../../entity/employability';
 import { Notes } from '../../entity/notes';
 import { Search } from '../../entity/search';
 import { SnackbarService } from './snackbar.service';
-import { GraphErrorHandler } from '../shared/functions/error-handler/GraphErrorHandler';
+import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 
 /**
  * Function to toggle loading state display
