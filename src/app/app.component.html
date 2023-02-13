@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+<main>
+    <div *ngIf="!isDowntime">
+        <router-outlet></router-outlet>
+    </div>
+    <div *ngIf="isDowntime">
+        <cc-banner *ngIf="bannerService.isVisible"></cc-banner>
+    </div> 
+</main>
