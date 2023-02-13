@@ -11,6 +11,6 @@ export class UtilityService {
 
     async getDowntime(): Promise<Downtime> {
      // return await lastValueFrom(this.http.get<Downtime>(UTITLITY_ROUTES.GET_DOWNTIME()))
-        return {'isDown': true, 'message': 'The service is down!'};
+        return {'isDown': false, 'message': undefined};
     }
 }
