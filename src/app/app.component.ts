@@ -4,7 +4,6 @@ import { SnackbarService } from './core/snackbar.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent, SNACKBAR_COLOR } from '../app/shared/components/snackbar/snackbar.component';
 import { BannerService } from './core/banner.service';
-import { UtilityService } from './core/utility.service';
 
 @Component({
   selector: 'cc-app-root',
@@ -19,7 +18,6 @@ export class AppComponent implements OnInit{
     private auth: AuthService,
     private snackbarService: SnackbarService,
     private _snackBar: MatSnackBar,
-    private utilityService: UtilityService,
     public bannerService: BannerService
   ) { }
 
@@ -53,14 +51,13 @@ export class AppComponent implements OnInit{
    *
    */
   async checkDowntime() {
-        const downtime = await this.utilityService.getDowntime();
-        this.isDowntime = downtime.isDown;
-        if (this.isDowntime && downtime.message) {
-          this.bannerService.setBannerMessage(downtime.message);
-          this.bannerService.setRoute();
-          this.bannerService.displayBanner();
-        } else if (this.isDowntime) {
-          this.bannerService.setRoute();
-        }
+    const downtime = await this.bannerService.getDowntime();
+    this.isDowntime = downtime.isDown;
+    if (this.isDowntime) {
+      this.bannerService.redirectToDowntime();
+    } else if (downtime.message) {
+      this.bannerService.setBannerMessage(downtime.message);
+      this.bannerService.displayBanner();
+    }
   }
 }
