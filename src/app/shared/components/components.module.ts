@@ -31,6 +31,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SharedDirectivesModule } from '../directives/shared-directives.module';
 import  {SnackbarComponent} from './snackbar/snackbar.component';
 import { NotesCardComponent } from './competency-card/components/notes-card/notes-card.component';
+import { BannerComponent } from './banner/banner.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -42,6 +43,7 @@ import { NotesCardComponent } from './competency-card/components/notes-card/note
     FileUploadComponent,
     NotesCardComponent,
     SnackbarComponent,
+    BannerComponent
   ],
   imports: [
     CommonModule,
@@ -71,7 +73,8 @@ import { NotesCardComponent } from './competency-card/components/notes-card/note
   ],
   exports: [
     CompetencyCardComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    BannerComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

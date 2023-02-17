@@ -11,7 +11,7 @@ import { SharedDirectivesModule } from './directives/shared-directives.module';
   ],
   exports: [
     ComponentsModule,
-    SharedDirectivesModule,
+    SharedDirectivesModule
   ],
 })
 export class SharedModule { }
