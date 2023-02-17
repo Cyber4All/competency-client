@@ -4,6 +4,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DowntimeComponent } from './shared/components/downtime/downtime.component';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
 
@@ -32,7 +33,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'downtime'
+    path: 'downtime',
+    component: DowntimeComponent
   },
   {
     path: '**',
