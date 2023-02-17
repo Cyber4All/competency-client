@@ -60,6 +60,7 @@ export class BannerService {
      * @returns Promise<Downtime> a downtime object
      */
     async getDowntime(): Promise<Downtime> {
+    // TODO update when downtime service is implemented
     //return await lastValueFrom(this.http.get<Downtime>(UTITLITY_ROUTES.GET_DOWNTIME()))
       return {'isDown': false, 'message': undefined};
      }
