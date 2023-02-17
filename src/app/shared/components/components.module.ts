@@ -32,7 +32,6 @@ import { SharedDirectivesModule } from '../directives/shared-directives.module';
 import  {SnackbarComponent} from './snackbar/snackbar.component';
 import { NotesCardComponent } from './competency-card/components/notes-card/notes-card.component';
 import { BannerComponent } from './banner/banner.component';
-import { DowntimeComponent } from './downtime/downtime.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -44,8 +43,7 @@ import { DowntimeComponent } from './downtime/downtime.component';
     FileUploadComponent,
     NotesCardComponent,
     SnackbarComponent,
-    BannerComponent,
-    DowntimeComponent
+    BannerComponent
   ],
   imports: [
     CommonModule,
@@ -76,8 +74,7 @@ import { DowntimeComponent } from './downtime/downtime.component';
   exports: [
     CompetencyCardComponent,
     FileUploadComponent,
-    BannerComponent,
-    DowntimeComponent
+    BannerComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
