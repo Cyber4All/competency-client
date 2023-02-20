@@ -4,19 +4,21 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { BetaWelcomeComponent } from './shared/components/beta-welcome/beta-welcome.component';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
+import { BetaGuard } from './shared/guards/beta.guard';
 
 const routes: Routes = [
   {
     path: 'admin/dashboard',
     component: AdminDashboardComponent,
-    canActivate: [AuthenticatedGuard, AdminGuard],
+    canActivate: [AuthenticatedGuard, AdminGuard, BetaGuard],
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthenticatedGuard],
+    canActivate: [AuthenticatedGuard, BetaGuard],
   },
   {
     path: 'login',
@@ -33,6 +35,10 @@ const routes: Routes = [
   },
   {
     path: 'downtime'
+  },
+  {
+    path: 'welcome',
+    component: BetaWelcomeComponent
   },
   {
     path: '**',
