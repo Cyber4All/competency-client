@@ -22,6 +22,7 @@ export class AuthService {
     Optional<User>
   >(undefined);
   private _isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private _isBetaUser: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public headers = new HttpHeaders();
   constructor(
     private http: HttpClient,
@@ -37,6 +38,10 @@ export class AuthService {
 
   get isAdmin(): Observable<boolean>{
     return this._isAdmin.asObservable();
+  }
+
+  get isBetaUser(): Observable<boolean>{
+    return this._isBetaUser.asObservable();
   }
 
   get user() {
@@ -140,6 +145,37 @@ export class AuthService {
       .post(USER_ROUTES.VALIDATE_ACTIONS(), {token, targetActions}))
       .then((res: any) => {
         this._isAdmin.next(res.isValid);
+      });
+  }
+
+  /**
+   * Method to validate if a beta user is logged in
+   */
+  public async validateBetaAccess(): Promise <void> {
+    const token = this.retrieveToken();
+    const targetActions: string[] = [
+      competencyAcl.competencies.getWildcard,
+      competencyAcl.competencies.deleteDraft,
+      competencyAcl.competencies.create,
+      competencyAcl.actor.updateDraft,
+      competencyAcl.condition.updateDraft,
+      competencyAcl.documentation.uploadDraft,
+      competencyAcl.documentation.updateDraft,
+      competencyAcl.behavior.updateDraft,
+      competencyAcl.degree.updateDraft,
+      competencyAcl.employability.updateDraft,
+      competencyAcl.notes.updateDraft,
+      competencyAcl.user.getProfile,
+      competencyAcl.user.updateAccount,
+      competencyAcl.search.wildcard,
+      competencyAcl.lifecycle.submit,
+      competencyAcl.lifecycle.cancelSubmission
+    ];
+
+    await lastValueFrom(this.http
+      .post(USER_ROUTES.VALIDATE_ACTIONS(), {token, targetActions}))
+      .then((res: any) => {
+        this._isBetaUser.next(res.isValid);
       });
   }
 
