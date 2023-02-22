@@ -130,10 +130,10 @@ export class AuthService {
   public async validateAdminAccess(): Promise <void> {
     const token = this.retrieveToken();
     const targetActions: string[] = [
-      competencyAcl.competencies.getPublished,
-      competencyAcl.competencies.getDeprecated,
-      competencyAcl.competencies.getRejected,
-      competencyAcl.competencies.reviewSubmitted
+      competencyAcl.competencies.reviewSubmitted,
+      competencyAcl.lifecycle.deprecate,
+      competencyAcl.lifecycle.reject,
+      competencyAcl.lifecycle.approve
     ];
 
     await lastValueFrom(this.http
