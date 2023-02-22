@@ -6,7 +6,7 @@ import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
-import { competencyAcl } from 'competency-acl';
+import { basic_user_permissions, competencyAcl } from 'competency-acl';
 import { SnackbarService} from './snackbar.service';
 
 const TOKEN_KEY = 'presence';
@@ -153,24 +153,7 @@ export class AuthService {
    */
   public async validateBetaAccess(): Promise <void> {
     const token = this.retrieveToken();
-    const targetActions: string[] = [
-      competencyAcl.competencies.getWildcard,
-      competencyAcl.competencies.deleteDraft,
-      competencyAcl.competencies.create,
-      competencyAcl.actor.updateDraft,
-      competencyAcl.condition.updateDraft,
-      competencyAcl.documentation.uploadDraft,
-      competencyAcl.documentation.updateDraft,
-      competencyAcl.behavior.updateDraft,
-      competencyAcl.degree.updateDraft,
-      competencyAcl.employability.updateDraft,
-      competencyAcl.notes.updateDraft,
-      competencyAcl.user.getProfile,
-      competencyAcl.user.updateAccount,
-      competencyAcl.search.wildcard,
-      competencyAcl.lifecycle.submit,
-      competencyAcl.lifecycle.cancelSubmission
-    ];
+    const targetActions: string[] = basic_user_permissions;
 
     await lastValueFrom(this.http
       .post(USER_ROUTES.VALIDATE_ACTIONS(), {token, targetActions}))
