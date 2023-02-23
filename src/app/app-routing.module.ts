@@ -32,6 +32,9 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'downtime'
+  },
+  {
     path: '**',
     redirectTo: '/dashboard'
   }

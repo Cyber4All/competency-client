@@ -12,6 +12,7 @@ import { Employability } from '../../entity/employability';
 import { Notes } from '../../entity/notes';
 import { Search } from '../../entity/search';
 import { SnackbarService } from './snackbar.service';
+import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 
 /**
  * Function to toggle loading state display
@@ -65,7 +66,10 @@ export class CompetencyService {
         return res.data.search;
       })
       .catch((err) => {
-        this.snackBarService.sendNotificationByError(err);
+        err = GraphErrorHandler.handleError(err);
+        if (err) {
+          this.snackBarService.sendNotificationByError(err);
+        }
       });
   }
 
@@ -87,8 +91,11 @@ export class CompetencyService {
       .then((res: any) => {
         return res.data.competency;
       })
-      .catch((e)=> {
-        this.snackBarService.sendNotificationByError(e);
+      .catch((err)=> {
+        err = GraphErrorHandler.handleError(err);
+        if (err) {
+          this.snackBarService.sendNotificationByError(err);
+        }
       });
   }
 

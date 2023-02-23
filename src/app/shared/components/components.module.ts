@@ -29,7 +29,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SharedDirectivesModule } from '../directives/shared-directives.module';
-import  {SnackbarComponent} from './snackbar/snackbar.component';
+import { SnackbarComponent } from './snackbar/snackbar.component';
 import { NotesCardComponent } from './competency-card/components/notes-card/notes-card.component';
 import { CompetencyBuilderComponent } from './competency-builder/competency-builder.component';
 import { ActorBuilderComponent } from './competency-builder/components/actor-builder/actor-builder.component';
@@ -38,6 +38,7 @@ import { ContextBuilderComponent } from './competency-builder/components/context
 import { DegreeBuilderComponent } from './competency-builder/components/degree-builder/degree-builder.component';
 import { EmployabilityBuilderComponent } from './competency-builder/components/employability-builder/employability-builder.component';
 import { NotesBuilderComponent } from './competency-builder/components/notes-builder/notes-builder.component';
+import { BannerComponent } from './banner/banner.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -56,6 +57,7 @@ import { NotesBuilderComponent } from './competency-builder/components/notes-bui
     EmployabilityBuilderComponent,
     NotesBuilderComponent,
     SnackbarComponent,
+    BannerComponent
   ],
   imports: [
     CommonModule,
@@ -85,7 +87,8 @@ import { NotesBuilderComponent } from './competency-builder/components/notes-bui
   ],
   exports: [
     CompetencyCardComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    BannerComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
