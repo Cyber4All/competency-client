@@ -6,7 +6,7 @@ import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
-import { competencyAcl } from 'competency-acl';
+import { basic_user_permissions, competencyAcl } from 'competency-acl';
 import { SnackbarService} from './snackbar.service';
 
 const TOKEN_KEY = 'presence';
@@ -22,6 +22,7 @@ export class AuthService {
     Optional<User>
   >(undefined);
   private _isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private _isBetaUser: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public headers = new HttpHeaders();
   constructor(
     private http: HttpClient,
@@ -37,6 +38,10 @@ export class AuthService {
 
   get isAdmin(): Observable<boolean>{
     return this._isAdmin.asObservable();
+  }
+
+  get isBetaUser(): Observable<boolean>{
+    return this._isBetaUser.asObservable();
   }
 
   get user() {
@@ -130,16 +135,30 @@ export class AuthService {
   public async validateAdminAccess(): Promise <void> {
     const token = this.retrieveToken();
     const targetActions: string[] = [
-      competencyAcl.competencies.getPublished,
-      competencyAcl.competencies.getDeprecated,
-      competencyAcl.competencies.getRejected,
-      competencyAcl.competencies.reviewSubmitted
+      competencyAcl.competencies.reviewSubmitted,
+      competencyAcl.lifecycle.deprecate,
+      competencyAcl.lifecycle.reject,
+      competencyAcl.lifecycle.approve
     ];
 
     await lastValueFrom(this.http
       .post(USER_ROUTES.VALIDATE_ACTIONS(), {token, targetActions}))
       .then((res: any) => {
         this._isAdmin.next(res.isValid);
+      });
+  }
+
+  /**
+   * Method to validate if a beta user is logged in
+   */
+  public async validateBetaAccess(): Promise <void> {
+    const token = this.retrieveToken();
+    const targetActions: string[] = basic_user_permissions;
+
+    await lastValueFrom(this.http
+      .post(USER_ROUTES.VALIDATE_ACTIONS(), {token, targetActions}))
+      .then((res: any) => {
+        this._isBetaUser.next(res.isValid);
       });
   }
 
