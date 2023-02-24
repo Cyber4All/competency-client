@@ -114,6 +114,10 @@ export class DashboardComponent implements OnInit {
     this.filterApplied = true;
   }
 
+  performSearch(searchText: any) {
+    console.log(searchText);
+  }
+
   /**
    * Method to find competencies by specified filters
    */

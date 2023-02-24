@@ -32,6 +32,9 @@ import { SharedDirectivesModule } from '../directives/shared-directives.module';
 import  {SnackbarComponent} from './snackbar/snackbar.component';
 import { NotesCardComponent } from './competency-card/components/notes-card/notes-card.component';
 import { BannerComponent } from './banner/banner.component';
+import { PrimaryNavComponent } from './primary-nav/primary-nav.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { UserMenuComponent } from './user-menu/user-menu.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -43,7 +46,10 @@ import { BannerComponent } from './banner/banner.component';
     FileUploadComponent,
     NotesCardComponent,
     SnackbarComponent,
-    BannerComponent
+    BannerComponent,
+    PrimaryNavComponent,
+    SearchBarComponent,
+    UserMenuComponent
   ],
   imports: [
     CommonModule,
@@ -74,7 +80,10 @@ import { BannerComponent } from './banner/banner.component';
   exports: [
     CompetencyCardComponent,
     FileUploadComponent,
-    BannerComponent
+    BannerComponent,
+    PrimaryNavComponent,
+    SearchBarComponent,
+    UserMenuComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
