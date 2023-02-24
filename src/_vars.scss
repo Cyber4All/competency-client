@@ -1,11 +1,11 @@
 @use 'sass:list';
 
 $palette-accent: (
-  "lightest": hsl(226, 43%, 74%),
-  "lighter": hsl(226, 43%, 54%),
-  "default": hsl(226, 43%, 44%),
-  "darker": hsl(226, 43%, 34%),
-  "darkest": hsl(226, 43%, 24%),
+  "lightest": hsl(219, 43%, 74%),
+  "lighter": hsl(219, 43%, 54%),
+  "default": hsl(219, 66%, 53%),
+  "darker": hsl(219, 43%, 34%),
+  "darkest": hsl(219, 43%, 24%),
 );
 
 @function color-accent($style: "default") {
@@ -57,3 +57,9 @@ $palette-gray: (
   6: hsl(220, 12%, 90%),
   7: hsl(0, 0%, 100%),
 );
+
+$dark-overlay: rgba(0, 0, 0, 0.4);
+
+@function color-gray($style: 3) {
+  @return map-get($palette-gray, $style);
+};
