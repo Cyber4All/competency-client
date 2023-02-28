@@ -62,7 +62,7 @@ export class CompetencyBuilder extends Competency {
         return this;
     }
 
-    setBehavior(update: {tasks: string, work_role: string, details: string}) {
+    setBehavior(update: {tasks: string[], work_role: string, details: string}) {
         this.behavior = update;
         return this;
     }

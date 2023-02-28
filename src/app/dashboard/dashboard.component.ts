@@ -179,10 +179,10 @@ export class DashboardComponent implements OnInit {
     );
     // Open dialog ref for builder
     const dialogRef = this.dialog.open(CompetencyBuilderComponent, {
-      height: '700px',
+      height: '600px',
       width: '900px',
       data: competency,
-      position: {right:'10px', bottom: '10px'}
+      position: {right:'10px', bottom: '0px'}
     });
     // After close of builder; handle drafts/unsavable and dashboard list
     dialogRef.afterClosed().subscribe(async (isDraft: boolean) => {
@@ -191,9 +191,6 @@ export class DashboardComponent implements OnInit {
       if((isDraft === undefined && !this.isSavable) || !isDraft) {
         // Competency is neither savable nor being saved as draft; delete shell
         await this.deleteCompetency(competency._id);
-        this.search.competencies = [];
-        this.loadedCompetencies = [];
-        await this.initDashboard();
       } else if (isDraft) {
         // Update user dashboard with newly created competencies
         this.search.competencies = [];

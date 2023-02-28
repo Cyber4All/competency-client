@@ -1,71 +1,71 @@
-.builder {
+/* Clear floats after the columns */
+.competency-builder_builder {
+  display: inline-flex;
+  width: 100%;
 
-    .mat-expansion-panel-header-title,
-    .mat-expansion-panel-header-description {
-    flex-basis: 0;
+  .competency-builder_navbar {
+    width: 100%;
+    color: white;
+    position: relative;
+    height: 100%;
+
+    .competency-builder_navbar-buttons {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+
+      button {
+        display: block;
+        padding: 15px;
+        margin: 15px 0 0 15px;
+        text-align: left;
+      }
     }
-
-    .mat-expansion-panel-header-description {
-    justify-content: space-between;
-    align-items: center;
-    }
-
-    .mat-form-field + .mat-form-field {
-    margin-left: 8px;
-    }
-
-  .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
   }
 
-  .form {
+  .competency-builder_form {
+    position: relative;
+    width: 100%;
+
+    .competency-builder_form-buttons {
+      position: absolute;
+      bottom: 0%;
+      right: 0%;
       width: 100%;
-      .example-form {
-          width: 100%;
-      }
 
-      .notice-bar {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          padding-bottom: 10px;
-
-          span {
-              margin-left: 5px;
-          }
+      button {
+        display: inline-flex;
+        padding: 15px;
+        margin: 15px 15px 0 0;
+        text-align: right;
+        float: right;
       }
-        
-      .example-full-width {
-          width: 100%;
-      }
-
-      mat-form-field {
-          width: 100%;
-          padding-bottom: 10px;
-
-          &.unit {
-              padding: 0 0 15px 5px;
-          }
-      }
-
-      .degree-fields {
-          display: flex;
-          flex-direction: row;
-      }
+    }
   }
-}
 
-.competency-example {
-  color: white;
-  min-height: 80px;
-}
+  /**
+    Create two unequal columns that floats next to each other
+    NOTE: The following classes MUST remain in this order below the above classes
+        * column
+        * left
+        * right
+  **/
+  .column {
+    padding: 10px;
+    height: 500px; /* Should be removed. Only for demonstration */
+  }
 
-.float-right {
-  float: right;
+  .left {
+    width: 15%;
+  }
 
-  .logout {
-      border: 2px solid #C2175B;
+  .right {
+    width: 80%;
+    overflow-y: auto;
+    div {
+      width: 100%;
+    }
   }
 }

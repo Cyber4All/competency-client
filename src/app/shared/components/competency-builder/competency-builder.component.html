@@ -1,54 +1,81 @@
-<ng-container class="competency-card_container" onclick="onNoClick()">
-    <form>
-      <mat-accordion class="competency-constructor_accordion" [multi]="true"[togglePosition]="position">
-        <!--Actor-->
+<ng-container class="competency-builder_container" onclick="onNoClick()">
+  <div class="competency-builder_control">
+    <p>yeetus</p>
+  </div>
+  <div class="competency-builder_builder">
+    <div class="competency-builder_navbar column left">
+      <div class="competency-builder_navbar-buttons">
+        <button (click)="setView(0)">Actor</button>
+        <button (click)="setView(1)">Behavior</button>
+        <button (click)="setView(2)">Context</button>
+        <button (click)="setView(3)">Degree</button>
+        <button (click)="setView(4)">Employability</button>
+        <button (click)="setView(5)">Notes</button>
+        <button (click)="setView(6)">Review</button>
+      </div>
+    </div>
+    <div class="competency-builder_form column right">
+      <!--Actor-->
+      <ng-container *ngIf="currIndex === 0">
         <cc-actor-builder
           [competencyId] = "competencyId"
           [isEdit]="isEdit"
           [actor] = "competency.actor"
           (actorChange) = "updateCompetency($event)"
         ></cc-actor-builder>
-        <!--Behavior-->
+      </ng-container>
+      <!--Behavior-->
+      <ng-container *ngIf="currIndex === 1">
         <cc-behavior-builder
           [competencyId] = "competencyId"
           [isEdit]="isEdit"
           [behavior] = "competency.behavior"
           (behaviorChange) = "updateCompetency($event)"
         ></cc-behavior-builder>
-        <!--Condition-->
+      </ng-container>
+      <!--Condition-->
+      <ng-container *ngIf="currIndex === 2">
         <cc-context-builder
           [competencyId] = "competencyId"
           [isEdit]="isEdit"
           [condition] = "competency.condition"
           (conditionChange) = "updateCompetency($event)"
         ></cc-context-builder>
-        <!--Degree-->
+      </ng-container>
+      <!--Degree-->
+      <ng-container *ngIf="currIndex === 3">
         <cc-degree-builder
           [competencyId] = "competencyId"
           [isEdit]="isEdit"
           [degree] = "competency.degree"
           (degreeChange) = "updateCompetency($event)"
         ></cc-degree-builder>
-        <!--Employability-->
+      </ng-container>
+      <!--Employability-->
+      <ng-container *ngIf="currIndex === 4">
         <cc-employability-builder
           [competencyId] = "competencyId"
           [isEdit]="isEdit"
           [employability] = "competency.employability"
           (employabilityChange) = "updateCompetency($event)"
         ></cc-employability-builder>
-        <!--Notes-->
+      </ng-container>
+      <!--Notes-->
+      <ng-container *ngIf="currIndex === 5">
         <cc-notes-builder
           [competencyId]="competencyId"
           [isEdit]="isEdit"
           [notes]="competency.notes"
           (notesChange)="updateCompetency($event)"
         ></cc-notes-builder>
-      </mat-accordion>
-      <span *ngIf="isEdit">
-        <mat-dialog-actions>
-          <button mat-button [mat-dialog-close]="false">DELETE</button>
-          <button (click)="saveCompetency()" cdkFocusInitial>SUBMIT</button>
-        </mat-dialog-actions> 
-      </span>   
-    </form>
+      </ng-container>
+      <!--TODO: Implement Preview-->
+      <ng-container *ngIf="currIndex === 6">review</ng-container>
+      <!--Action Buttons-->
+      <div class="competency-builder_form-buttons">
+        <button [mat-dialog-close]="false">DELETE</button>
+        <button (click)="saveCompetency()">SUBMIT</button>
+      </div>
+    </div>
+  </div>
 </ng-container>

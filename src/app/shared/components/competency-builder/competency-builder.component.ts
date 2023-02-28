@@ -21,8 +21,6 @@ export class CompetencyBuilderComponent implements OnInit {
   @Output() isSavable = new EventEmitter<boolean>(false);
   // Current Competency ID
   competencyId = '';
-  // Index to toggle cards *** Null closes all cards
-  compIndex: number | null = null;
   // Index of current open card component
   currIndex = 0;
   position: MatAccordionTogglePosition = 'before';
@@ -41,12 +39,12 @@ export class CompetencyBuilderComponent implements OnInit {
   }
 
   /**
-   * Opens selected builder view and closes last opened
+   * Opens selected builder view
    *
    * @param index location of selected builder element
    */
-  setView(index: number | null): void {
-    this.compIndex = index;
+  setView(index: number): void {
+    this.currIndex = index;
   }
 
   /**

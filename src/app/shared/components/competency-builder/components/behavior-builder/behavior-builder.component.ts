@@ -19,7 +19,7 @@ export class BehaviorBuilderComponent implements OnInit {
   @Output() behaviorUpdated = new EventEmitter<boolean>(false);
   currIndex: number | null = null;
   task = new FormControl('');
-  savedTask = '';
+  savedTask: string[] = [];
   details = new FormControl('', [Validators.required]);
   workrole = new FormControl('');
   savedWorkrole = '';
@@ -35,15 +35,16 @@ export class BehaviorBuilderComponent implements OnInit {
     this.task.valueChanges
       .pipe(debounceTime(1000))
       .subscribe(() => {
-        const selectedTask: Elements[] = this.tasks.filter((task: Elements) => {
-          return task.description === this.task.value;
+        this.tasks.filter((task: Elements) => {
+          if(task.description === this.task.value) {
+            this.savedTask.push(task._id!);
+          }
         });
-        this.savedTask = selectedTask[0]._id!;
         this.behaviorChange.emit({
           update: 'behavior',
           value: {
             _id: this.behavior._id,
-            tasks: selectedTask[0]._id!,
+            tasks: this.savedTask,
             details: this.details.value,
             work_role: this.savedWorkrole
           }
@@ -81,9 +82,11 @@ export class BehaviorBuilderComponent implements OnInit {
       });
     // If value exists, set type form control
     if(this.behavior.tasks) {
-      await this.workroleService.getCompelteTask(this.behavior.tasks)
-      .then((taskQuery: any) => {
-        this.task.setValue(this.task.value, taskQuery.data.task.description);
+      this.behavior.tasks.map(async (task: string) => {
+        await this.workroleService.getCompelteTask(task)
+        .then((taskQuery: any) => {
+          this.task.setValue([...this.task.value, taskQuery.data.task.description]);
+        });
       });
     }
     // If value exists, set details form control
