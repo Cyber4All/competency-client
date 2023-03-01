@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angu
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { Degree } from '../../../../../../entity/degree';
+import { BuilderService } from '../../../../../core/builder/builder.service';
 @Component({
   selector: 'cc-degree-builder',
   templateUrl: './degree-builder.component.html',
@@ -9,19 +10,21 @@ import { Degree } from '../../../../../../entity/degree';
 })
 export class DegreeBuilderComponent implements OnInit {
 
-  @Input() competencyId!: string;
-  @Input() isEdit = false;
   @Input() degree!: Degree;
   @Output() degreeChange = new EventEmitter<{update: string, value: Degree}>();
-  @Output() degreeUpdated = new EventEmitter<boolean>(false);
-  currIndex: number | null = null;
+  templateIndex = 0;
   complete = new FormControl('');
   correct = new FormControl('');
   time = new FormControl('');
 
-  constructor() { }
+  constructor(
+    public builderService: BuilderService
+  ) {}
 
   ngOnInit(): void {
+    this.builderService.templateIndex.subscribe((index: number) => {
+      this.templateIndex = index;
+    });
     this.complete.valueChanges
       .pipe(debounceTime(1000))
       .subscribe((completeChange: string) => {

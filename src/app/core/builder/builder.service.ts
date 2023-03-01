@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { lastValueFrom } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { COMPETENCY_ROUTES } from '../../../environments/routes';
 import { Actor } from '../../../entity/actor';
 import { Degree } from '../../../entity/degree';
@@ -14,6 +14,25 @@ import { Notes } from '../../../entity/notes';
     providedIn: 'root'
 })
 export class BuilderService {
+    private _builderIndex: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+    private _templateIndex: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+    // Builder index observable for child components conditional rendering
+    get builderIndex(): Observable<number> {
+        return this._builderIndex.asObservable();
+    }
+    // Builder submenu index observable for child components conditional rendering
+    get templateIndex(): Observable<number> {
+        return this._templateIndex.asObservable();
+    }
+    // Updates current builder index
+    public setBuilderIndex(value: number) {
+        this._builderIndex.next(value);
+    }
+    // Updates current submenu index
+    public setTemplateIndex(value: number) {
+        this._templateIndex.next(value);
+    }
+
     constructor(
         private http: HttpClient,
         private auth: AuthService,

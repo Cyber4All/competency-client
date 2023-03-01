@@ -9,11 +9,8 @@ import { debounceTime } from 'rxjs';
 })
 export class NotesBuilderComponent implements OnInit {
 
-  @Input() competencyId!: string;
-  @Input() isEdit = false;
   @Input() notes!: Notes;
   @Output() notesChange = new EventEmitter<{update: string, value: Notes}>();
-  currIndex: number | null = null;
   details = new FormControl('', [Validators.required]);
 
   constructor( ) { }

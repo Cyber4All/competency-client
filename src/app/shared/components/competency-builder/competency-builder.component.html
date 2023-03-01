@@ -5,21 +5,28 @@
   <div class="competency-builder_builder">
     <div class="competency-builder_navbar column left">
       <div class="competency-builder_navbar-buttons">
-        <button (click)="setView(0)">Actor</button>
-        <button (click)="setView(1)">Behavior</button>
-        <button (click)="setView(2)">Context</button>
-        <button (click)="setView(3)">Degree</button>
-        <button (click)="setView(4)">Employability</button>
-        <button (click)="setView(5)">Notes</button>
-        <button (click)="setView(6)">Review</button>
+        <button (click)="builderService.setBuilderIndex(0)">Actor</button>
+        <button (click)="builderService.setBuilderIndex(1)">Behavior</button>
+        <button (click)="builderService.setBuilderIndex(2); builderService.setTemplateIndex(0)">Context</button>
+        <ng-container *ngIf="currIndex === 2">
+          <button (click)="builderService.setTemplateIndex(0)" class="buidler_navbar-submenu">Description</button>
+          <button (click)="builderService.setTemplateIndex(1)" class="buidler_navbar-submenu">Technology</button>
+          <button (click)="builderService.setTemplateIndex(2)" class="buidler_navbar-submenu">Documentation</button>
+        </ng-container>
+        <button (click)="builderService.setBuilderIndex(3); builderService.setTemplateIndex(0)">Degree</button>
+        <ng-container *ngIf="currIndex === 3">
+          <button (click)="builderService.setTemplateIndex(0)" class="buidler_navbar-submenu">Description</button>
+          <button (click)="builderService.setTemplateIndex(1)" class="buidler_navbar-submenu">Rubric</button>
+        </ng-container>
+        <button (click)="builderService.setBuilderIndex(4)">Employability</button>
+        <button (click)="builderService.setBuilderIndex(5)">Notes</button>
+        <button (click)="builderService.setBuilderIndex(6)">Review</button>
       </div>
     </div>
     <div class="competency-builder_form column right">
       <!--Actor-->
       <ng-container *ngIf="currIndex === 0">
         <cc-actor-builder
-          [competencyId] = "competencyId"
-          [isEdit]="isEdit"
           [actor] = "competency.actor"
           (actorChange) = "updateCompetency($event)"
         ></cc-actor-builder>
@@ -27,8 +34,6 @@
       <!--Behavior-->
       <ng-container *ngIf="currIndex === 1">
         <cc-behavior-builder
-          [competencyId] = "competencyId"
-          [isEdit]="isEdit"
           [behavior] = "competency.behavior"
           (behaviorChange) = "updateCompetency($event)"
         ></cc-behavior-builder>
@@ -36,8 +41,6 @@
       <!--Condition-->
       <ng-container *ngIf="currIndex === 2">
         <cc-context-builder
-          [competencyId] = "competencyId"
-          [isEdit]="isEdit"
           [condition] = "competency.condition"
           (conditionChange) = "updateCompetency($event)"
         ></cc-context-builder>
@@ -45,8 +48,6 @@
       <!--Degree-->
       <ng-container *ngIf="currIndex === 3">
         <cc-degree-builder
-          [competencyId] = "competencyId"
-          [isEdit]="isEdit"
           [degree] = "competency.degree"
           (degreeChange) = "updateCompetency($event)"
         ></cc-degree-builder>
@@ -54,8 +55,6 @@
       <!--Employability-->
       <ng-container *ngIf="currIndex === 4">
         <cc-employability-builder
-          [competencyId] = "competencyId"
-          [isEdit]="isEdit"
           [employability] = "competency.employability"
           (employabilityChange) = "updateCompetency($event)"
         ></cc-employability-builder>
@@ -63,8 +62,6 @@
       <!--Notes-->
       <ng-container *ngIf="currIndex === 5">
         <cc-notes-builder
-          [competencyId]="competencyId"
-          [isEdit]="isEdit"
           [notes]="competency.notes"
           (notesChange)="updateCompetency($event)"
         ></cc-notes-builder>

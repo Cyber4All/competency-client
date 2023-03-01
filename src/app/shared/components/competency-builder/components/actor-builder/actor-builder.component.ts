@@ -10,11 +10,8 @@ import { Actor } from '../../../../../../entity/actor';
 })
 export class ActorBuilderComponent implements OnInit {
 
-  @Input() competencyId!: string;
-  @Input() isEdit = false;
   @Input() actor!: Actor;
   @Output() actorChange = new EventEmitter<{update: string, value: Actor}>();
-  currIndex: number | null = null;
   type = new FormControl('', [Validators.required]);
   details = new FormControl('', [Validators.required]);
 

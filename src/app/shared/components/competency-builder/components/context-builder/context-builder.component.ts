@@ -5,6 +5,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
 import { debounceTime } from 'rxjs';
 import { Documentation } from '../../../../../../entity/documentation';
+import { BuilderService } from '../../../../../core/builder/builder.service';
 @Component({
   selector: 'cc-context-builder',
   templateUrl: './context-builder.component.html',
@@ -12,20 +13,23 @@ import { Documentation } from '../../../../../../entity/documentation';
 })
 export class ContextBuilderComponent implements OnInit {
 
-  @Input() competencyId!: string;
-  @Input() isEdit = false;
   @Input() condition!: Condition;
   @Output() conditionChange = new EventEmitter<{update: string, value: Condition}>();
-  @Output() conditionUpdated = new EventEmitter<boolean>(false);
+  templateIndex = 0;
   tech = new FormControl([], [Validators.required]);
   limitations = new FormControl('', [Validators.required]);
   documentation = new FormControl([], [Validators.required]);
   technology: string[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
 
-  constructor() { }
+  constructor(
+    public builderService: BuilderService
+  ) { }
 
   ngOnInit(): void {
+    this.builderService.templateIndex.subscribe((index: number) => {
+      this.templateIndex = index;
+    });
     this.tech.valueChanges
       .pipe(debounceTime(1000))
       .subscribe((techUpdate: string[]) => {

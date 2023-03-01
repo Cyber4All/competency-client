@@ -12,12 +12,8 @@ import { Elements } from '../../../../../../entity/elements';
 })
 export class BehaviorBuilderComponent implements OnInit {
 
-  @Input() competencyId!: string;
-  @Input() isEdit = false;
   @Input() behavior!: Behavior;
   @Output() behaviorChange = new EventEmitter<{update: string, value: Behavior}>();
-  @Output() behaviorUpdated = new EventEmitter<boolean>(false);
-  currIndex: number | null = null;
   task = new FormControl('');
   savedTask: string[] = [];
   details = new FormControl('', [Validators.required]);

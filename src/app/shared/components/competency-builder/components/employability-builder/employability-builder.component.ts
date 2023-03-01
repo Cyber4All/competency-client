@@ -9,12 +9,8 @@ import { Employability } from '../../../../../../entity/employability';
 })
 export class EmployabilityBuilderComponent implements OnInit {
 
-  @Input() competencyId!: string;
-  @Input() isEdit = false;
   @Input() employability!: Employability;
   @Output() employabilityChange = new EventEmitter<{update: string, value: Employability}>();
-  @Output() employabilityUpdated = new EventEmitter<boolean>(false);
-  currIndex: number | null = null;
   details = new FormControl('', [Validators.required]);
 
   constructor() { }

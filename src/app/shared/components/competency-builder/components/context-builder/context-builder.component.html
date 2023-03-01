@@ -1,29 +1,17 @@
 <!-- Toggle template for edit and viewing condition-->
-<ng-container *ngIf="!isEdit; then viewConditionTemplate else editConditionTemplate"></ng-container>
-
-<!--View Condition Template-->
-<ng-template #viewConditionTemplate>
-    <h2>CONDITION</h2>
-    <p>{{ tech.value }}</p>
-    <p>{{ limitations.value }}</p>
-    <p>{{ documentation.value }}</p>
-</ng-template>
-
-<!--Edit Condition Template-->
-<ng-template #editConditionTemplate>
-    <mat-expansion-panel  class="competency_edit-condition-container">
-        <mat-expansion-panel-header>
-        <mat-panel-title>
-            Condition
-        </mat-panel-title>
-        </mat-expansion-panel-header>
-        <!--Condition description-->
-        <div class="edit-condition_description">
-            Describe the scenario in which the competency is demonstrated. Specify any resources, tools, or technology and identify
-            any limitations here.
-        </div>
+<ng-container class="competency_edit-condition-container">
+    <ng-container *ngIf="templateIndex === 0">
+        <!--Limitations form field-->
+        <p>yeet 1</p>
+        <!-- <mat-form-field appearance="fill" color="primary">
+            <mat-label>Limitations</mat-label>
+            <textarea matInput [formControl]="limitations"></textarea>
+        </mat-form-field> -->
+    </ng-container>
+    <ng-container *ngIf="templateIndex === 1">
         <!--Technology form field-->
-        <mat-form-field appearance="fill" color="primary">
+        <p>yeet 2</p>
+        <!-- <mat-form-field appearance="fill" color="primary">
             <mat-label>Technology</mat-label>
             <input
                 placeholder="Add a new technology..."
@@ -43,19 +31,11 @@
                     </button>
                 </mat-chip>
             </mat-chip-list>
-            <mat-error *ngIf="tech.invalid">You must specify at least one piece of technology required for this competency</mat-error>
-        </mat-form-field>
-        <!--Limitations form field-->
-        <mat-form-field appearance="fill" color="primary">
-            <mat-label>Limitations</mat-label>
-            <textarea matInput [formControl]="limitations"></textarea>
-            <mat-error *ngIf="limitations.invalid">Check limits!</mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
+    </ng-container>
+    <ng-container *ngIf="templateIndex === 2">
+        <p>yeet 3</p>
         <!--Documenation form filed-->
-        <mat-form-field appearance="fill" color="primary">
-            <mat-label>Documentation</mat-label>
-            <input matInput [formControl]="documentation">
-            <mat-error *ngIf="documentation.invalid">Check docs!</mat-error>
-        </mat-form-field>
-    </mat-expansion-panel>
-</ng-template>
+        <cc-file-upload></cc-file-upload>
+    </ng-container>
+</ng-container>
