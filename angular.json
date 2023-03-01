@@ -42,7 +42,10 @@
                 "src"
               ]
             },
-            "scripts": [] 
+            "scripts": [] ,
+            "allowedCommonJsDependencies": [
+              "competency-acl"
+            ]
           },
           "configurations": {
             "production": {

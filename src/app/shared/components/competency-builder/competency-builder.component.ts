@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatAccordionTogglePosition } from '@angular/material/expansion';
 import { Notes } from 'src/entity/notes';
 import { Actor } from '../../../../entity/actor';
 import { Behavior } from '../../../../entity/behavior';
@@ -18,16 +17,16 @@ import { SNACKBAR_COLOR } from '../snackbar/snackbar.component';
   templateUrl: './competency-builder.component.html',
   styleUrls: ['./competency-builder.component.scss']
 })
-export class CompetencyBuilderComponent implements OnInit {
+export class CompetencyBuilderComponent implements OnInit, OnDestroy {
   @Input() competency!: CompetencyBuilder;
   // Toggle for editing a competency
   @Input() isEdit = true;
   // Current Competency ID
   competencyId = '';
-  // Index of current open card component
+  // Index of current open builder component
   currIndex = 0;
+  // Index of current open builder component submenu template
   templateIndex = 0;
-  position: MatAccordionTogglePosition = 'before';
 
   constructor(
     public builderService: BuilderService,
@@ -36,16 +35,27 @@ export class CompetencyBuilderComponent implements OnInit {
     private snackBarService: SnackbarService
   ) {}
 
+  @HostListener('window:beforeunload', ['$event']) public OnBeforeUnload(event: any) {
+    const confirmationMessage = '\o/';
+    console.log('cond');
+    event.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
+    return confirmationMessage;              // Gecko, WebKit, Chrome <34
+  }
+
   ngOnInit(): void {
+    // Subscribe to the current index of the builder form component
     this.builderService.builderIndex.subscribe((index: number) => {
       this.currIndex = index;
     });
+    // Subscribe to the current index of the builder form component submenu template
     this.builderService.templateIndex.subscribe((index: number) => {
       this.templateIndex = index;
     });
+    // If the competency is not passed in as input, set competency to injected dialog data
     if(!this.competency) {
       this.competency = this.COMPETENCY;
     }
+    // Set the current competency ID for inputs in child components
     this.competencyId = this.competency._id;
   }
 
@@ -82,11 +92,18 @@ export class CompetencyBuilderComponent implements OnInit {
         this.competency.setNotes(event.value as Notes);
         break;
       default:
-        console.log('yo you messed up dawg');
+        this.snackBarService.notification$.next({
+          message: 'Yo you messed up dawg. Something went big wrong nahmean?',
+          title: 'Competency Not Updated',
+          color: SNACKBAR_COLOR.WARNING
+        });
         break;
     }
   }
 
+  /**
+   * Method to store a competency
+   */
   async saveCompetency(): Promise<void> {
     try {
       const competency: Competency = this.competency.build();
@@ -97,19 +114,34 @@ export class CompetencyBuilderComponent implements OnInit {
       await this.builderService.updateEmployability(competency._id, competency.employability);
       await this.builderService.updateNotes(competency._id, competency.notes);
       this.dialogRef.close(true);
-      return Promise.resolve();
-    } catch (err) {
-      console.log(err);
+      this.snackBarService.notification$.next({
+        message: 'Competency Saved',
+        title: 'success',
+        color: SNACKBAR_COLOR.SUCCESS
+      });
+    } catch (err: any) {
       if (err instanceof HttpErrorResponse) {
         this.snackBarService.sendNotificationByError(err as HttpErrorResponse);
+      } else if (err.message) {
+        this.snackBarService.notification$.next({
+          message: err.message,
+          title: 'Competency Not Submitted',
+          color: SNACKBAR_COLOR.DANGER
+        });
       } else {
         this.snackBarService.notification$.next({
-          message: 'Something went wrong. Please try again.',
-          title: 'error',
-          color: SNACKBAR_COLOR.WARNING
+          message: 'Something went wrong, please try again later',
+          title: 'Competency Not Submitted',
+          color: SNACKBAR_COLOR.DANGER
         });
       }
-      return Promise.reject();
     }
+  }
+
+  /**
+   * Method to destroy host listener on component tear down
+   */
+  ngOnDestroy(): void {
+    window.removeEventListener('beforeunload', this.ngOnDestroy.bind(this));
   }
 }
