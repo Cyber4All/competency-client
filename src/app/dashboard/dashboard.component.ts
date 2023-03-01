@@ -115,6 +115,7 @@ export class DashboardComponent implements OnInit {
   }
 
   performSearch(searchText: any) {
+    //TODO Actually perform the search
     console.log(searchText);
   }
 

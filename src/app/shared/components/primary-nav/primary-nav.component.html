@@ -5,11 +5,12 @@
     </div>
     <div class="search">
         <div class="search-wrapper">
-            <cc-search-bar></cc-search-bar>
+            <cc-search-bar (search)="sendSearch($event)"></cc-search-bar>
         </div>
     </div>
     <div class="profile">
         <cc-user-menu></cc-user-menu>
     </div>
 </div>
+
 

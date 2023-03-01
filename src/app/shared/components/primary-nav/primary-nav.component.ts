@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'cc-primary-nav',
@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrimaryNavComponent implements OnInit {
 
+  @Output() search = new EventEmitter<string>();
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  sendSearch(value: any) {
+    this.search.emit(value);
   }
 
 }

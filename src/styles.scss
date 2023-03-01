@@ -1,3 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: white;}
+body { margin: 0; font-family: Source Sans Pro, "Helvetica Neue", sans-serif; background-color: white;}
+
+/*THIS IS ONLY TEMPORARY UNTIL WE REDO THE COLORS IN AUTH. I COULD NOT SEE IT TO MAKE IT OUT.*/
+
+.mat-form-field-wrapper {
+    background-color: green !important;
+}
