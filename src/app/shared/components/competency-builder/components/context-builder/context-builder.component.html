@@ -1,17 +1,16 @@
 <!-- Toggle template for edit and viewing condition-->
 <ng-container class="competency_edit-condition-container">
     <ng-container *ngIf="templateIndex === 0">
+        <!--Scenario form field-->
+        <label>Scenario</label>
+        <textarea matInput [formControl]="scenario"></textarea>
         <!--Limitations form field-->
-        <p>yeet 1</p>
-        <!-- <mat-form-field appearance="fill" color="primary">
-            <mat-label>Limitations</mat-label>
-            <textarea matInput [formControl]="limitations"></textarea>
-        </mat-form-field> -->
+        <label>Limitations</label>
+        <textarea matInput [formControl]="limitations"></textarea>
     </ng-container>
     <ng-container *ngIf="templateIndex === 1">
         <!--Technology form field-->
-        <p>yeet 2</p>
-        <!-- <mat-form-field appearance="fill" color="primary">
+        <mat-form-field appearance="fill" color="primary">
             <mat-label>Technology</mat-label>
             <input
                 placeholder="Add a new technology..."
@@ -31,7 +30,7 @@
                     </button>
                 </mat-chip>
             </mat-chip-list>
-        </mat-form-field> -->
+        </mat-form-field>
     </ng-container>
     <ng-container *ngIf="templateIndex === 2">
         <p>yeet 3</p>

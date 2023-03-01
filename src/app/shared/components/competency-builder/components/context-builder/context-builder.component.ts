@@ -16,6 +16,7 @@ export class ContextBuilderComponent implements OnInit {
   @Input() condition!: Condition;
   @Output() conditionChange = new EventEmitter<{update: string, value: Condition}>();
   templateIndex = 0;
+  scenario = new FormControl('', [Validators.required]);
   tech = new FormControl([], [Validators.required]);
   limitations = new FormControl('', [Validators.required]);
   documentation = new FormControl([], [Validators.required]);
@@ -30,6 +31,20 @@ export class ContextBuilderComponent implements OnInit {
     this.builderService.templateIndex.subscribe((index: number) => {
       this.templateIndex = index;
     });
+    this.scenario.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((scenarioUpdate: string) => {
+        this.conditionChange.emit({
+          update: 'condition',
+          value: {
+            _id: this.condition._id,
+            scenario: scenarioUpdate,
+            tech: this.tech.value,
+            limitations: this.limitations.value,
+            documentation: this.documentation.value
+          }
+        });
+      });
     this.tech.valueChanges
       .pipe(debounceTime(1000))
       .subscribe((techUpdate: string[]) => {
@@ -37,6 +52,7 @@ export class ContextBuilderComponent implements OnInit {
           update: 'condition',
           value: {
             _id: this.condition._id,
+            scenario: this.scenario.value,
             tech: techUpdate,
             limitations: this.limitations.value,
             documentation: this.documentation.value
@@ -50,6 +66,7 @@ export class ContextBuilderComponent implements OnInit {
           update: 'condition',
           value: {
             _id: this.condition._id,
+            scenario: this.scenario.value,
             tech: this.tech.value,
             limitations: limitationsUpdate,
             documentation: this.documentation.value
@@ -63,6 +80,7 @@ export class ContextBuilderComponent implements OnInit {
           update: 'condition',
           value: {
             _id: this.condition._id,
+            scenario: this.scenario.value,
             tech: this.tech.value,
             limitations: this.limitations.value,
             documentation: documentationUpdate
