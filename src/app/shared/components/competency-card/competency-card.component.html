@@ -1,53 +1,17 @@
-<ng-container class="competency-card_container" onclick="onNoClick()">
-  <form>
-    <mat-accordion class="competency-constructor_accordion" [multi]="true"[togglePosition]="position">
-      <!--Actor-->
-      <cc-actor-card
-        [competencyId] = "competencyId"
-        [isEdit]="isEdit"
-        [actor] = "competency.actor"
-        (actorUpdated) = "actorUpdated"
-        (actorChange) = "updateCompetency($event)"
-      ></cc-actor-card>
-      <!--Behavior-->
-      <cc-behavior-card
-        [competencyId] = "competencyId"
-        [isEdit]="isEdit"
-        [behavior] = "competency.behavior"
-        (behaviorUpdated) = "behaviorUpdated"
-        (behaviorChange) = "updateCompetency($event)"
-      ></cc-behavior-card>
-      <!--Condition-->
-      <cc-condition-card
-        [competencyId] = "competencyId"
-        [isEdit]="isEdit"
-        [condition] = "competency.condition"
-        (conditionUpdated) = "conditionUpdated"
-        (conditionChange) = "updateCompetency($event)"
-      ></cc-condition-card>
-      <!--Degree-->
-      <cc-degree-card
-        [competencyId] = "competencyId"
-        [isEdit]="isEdit"
-        [degree] = "competency.degree"
-        (degreeUpdated) = "degreeUpdated"
-        (degreeChange) = "updateCompetency($event)"
-      ></cc-degree-card>
-      <!--Employability-->
-      <cc-employability-card
-        [competencyId] = "competencyId"
-        [isEdit]="isEdit"
-        [employability] = "competency.employability"
-        (employabilityUpdated) = "employabilityUpdated"
-        (employabilityChange) = "updateCompetency($event)"
-      ></cc-employability-card>
-      <!--Notes-->
-      <cc-notes-card
-        [competencyId]="competencyId"
-        [isEdit]="isEdit"
-        [notes]="competency.notes"
-        (notesChange)="updateCompetency($event)"
-      ></cc-notes-card>
-    </mat-accordion>
-  </form>
+<ng-container class="competency-card_container">
+  <div class="competency-constructor_accordion">
+    <!--Actor Card Preview-->
+    <ng-container class="competency_edit-actor-container">
+      <h2>ACTOR</h2>
+      <p>{{ competency.actor.type }}</p>
+      <p>{{ competency.actor.details }}</p>
+    </ng-container>
+    <!--Behavior Card Preview-->
+    <ng-container class="competency_edit-behavior-container">
+      <h2>BEHAVIOR</h2>
+      <p>{{ competency.behavior.details }}</p>
+      <p>Completing: {{ competency.behavior.tasks }}</p>
+      <p>Acting as a {{ competency.behavior.work_role }}</p>
+    </ng-container>
+  </div>
 </ng-container>
