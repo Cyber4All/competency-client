@@ -26,6 +26,7 @@ $buttonWidth: 135px;
       cursor: pointer;
       input {
         border: solid map-get($palette-gray, 5) 1px;
+        border-right: none;
         border-radius: 6px 0px 0px 6px;
         height: 100%;
       }
@@ -36,7 +37,7 @@ $buttonWidth: 135px;
 
       .icon {
         cursor: pointer;
-        color: color-gray(7);
+        color: color-gray(9);
         border-radius: 0px 6px 6px 0px;
         border: none;
         width: 50px;
