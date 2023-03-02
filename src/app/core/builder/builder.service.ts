@@ -39,7 +39,7 @@ export class BuilderService {
         return this._behaviorErrors.asObservable();
     }
     // Errors observable for condition builder
-    get conditionErrors(): Observable<BuilderValidation[]> {
+    get contextErrors(): Observable<BuilderValidation[]> {
         return this._conditionErrors.asObservable();
     }
     // Errors observable for degree builder
