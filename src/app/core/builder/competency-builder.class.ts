@@ -103,7 +103,7 @@ export class CompetencyBuilder extends Competency {
             ...this.validateEmployability()
         ];
         // Filter out invalid fields
-        const builderErrors = builderValidation.filter((validation: BuilderValidation) => validation.isValid === false);
+        const builderErrors = builderValidation.filter((validation: BuilderValidation) => !validation.isValid);
         // If any invalid fields are found, throw an error and return invalid fields to builder
         if (builderErrors.length > 0) {
             throw new BuilderError('builder', 'builder', false, 'Please ensure all required fields are complete.', builderErrors);
