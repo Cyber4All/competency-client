@@ -10,6 +10,7 @@ import { Behavior } from '../../../entity/behavior';
 import { Employability } from '../../../entity/employability';
 import { Notes } from '../../../entity/notes';
 import { BuilderError, BuilderValidation } from '../../../entity/builder-validation';
+import { SnackbarService } from '../snackbar.service';
 
 @Injectable({
     providedIn: 'root'
@@ -89,6 +90,7 @@ export class BuilderService {
     constructor(
         private http: HttpClient,
         private auth: AuthService,
+        private snackBarService: SnackbarService
     ) {}
 
     /**
@@ -105,7 +107,7 @@ export class BuilderService {
             { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
         ))
         .catch((e)=> {
-            console.log(e);
+            this.snackBarService.sendNotificationByError(e);
         });
     }
 
@@ -125,7 +127,7 @@ export class BuilderService {
             { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
         ))
         .catch((e)=> {
-            console.log(e);
+            this.snackBarService.sendNotificationByError(e);
         });
     }
 
@@ -145,7 +147,7 @@ export class BuilderService {
             { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
         ))
         .catch((e)=> {
-            console.log(e);
+            this.snackBarService.sendNotificationByError(e);
         });
     }
 
@@ -165,7 +167,7 @@ export class BuilderService {
             { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
         ))
         .catch((e)=> {
-            console.log(e);
+            this.snackBarService.sendNotificationByError(e);
         });
     }
 
@@ -185,7 +187,7 @@ export class BuilderService {
             { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
         ))
         .catch((e)=> {
-            console.log(e);
+            this.snackBarService.sendNotificationByError(e);
         });
     }
 
@@ -205,7 +207,7 @@ export class BuilderService {
             { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
         ))
         .catch((e)=> {
-            console.log(e);
+            this.snackBarService.sendNotificationByError(e);
         });
     }
 
@@ -225,7 +227,7 @@ export class BuilderService {
             { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
         ))
         .catch((e)=> {
-            console.log(e);
+            this.snackBarService.sendNotificationByError(e);
         });
     }
 }
