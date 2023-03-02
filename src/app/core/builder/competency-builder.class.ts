@@ -7,7 +7,7 @@ import { Documentation } from '../../../entity/documentation';
 import { Employability } from '../../../entity/employability';
 import { Lifecycles } from '../../../entity/lifecycles';
 import { Notes } from '../../../entity/notes';
-
+import { BuilderValidation } from '../../../entity/builder-validation';
 export class CompetencyBuilder extends Competency {
     _id!: string;
     status!: Lifecycles;
@@ -67,7 +67,7 @@ export class CompetencyBuilder extends Competency {
         return this;
     }
 
-    setCondition(update: {limitations: string, tech: string[], documentation: Documentation[]}) {
+    setCondition(update: {scenario: string, limitations: string, tech: string[], documentation: Documentation[]}) {
         this.condition = update;
         return this;
     }
@@ -82,35 +82,23 @@ export class CompetencyBuilder extends Competency {
         return this;
     }
 
-    setNotes(updates: {details: string}) {
-        this.notes = updates;
+    setNotes(update: {details: string}) {
+        this.notes = update;
         return this;
     }
 
     build() {
-        if (!this._id || this._id === null || this._id === undefined) {
-            throw new Error('Competency ID is not valid');
-        }
-        if (!this.authorId || this.authorId === null || this.authorId === undefined) {
-            throw new Error('Competency author is not valid');
-        }
-        if ((!this.status)) {
-            throw new Error('Competency is not in a valid state');
-        }
-        if (!this.actor.details || !this.actor.type) {
-            throw new Error('Actor is incomplete');
-        }
-        if (!this.behavior.details || !this.behavior.tasks || !this.behavior.work_role) {
-            throw new Error('Behavior is incomplete');
-        }
-        if (!this.condition.limitations || !this.condition.tech) {
-            throw new Error('Condition is incomplete');
-        }
-        if (!this.degree.time || !this.degree.complete || !this.degree.correct) {
-            throw new Error('Degree is incomplete');
-        }
-        if (!this.employability.details) {
-            throw new Error('Employability is incomplete');
+        const builderValidation: BuilderValidation[] = [
+            ...this.validateActor(),
+            ...this.validateBehavior(),
+            ...this.validateCondition(),
+            ...this.validateDegree(),
+            ...this.validateEmployability()
+        ];
+        const builderErrors = builderValidation.filter((validation: BuilderValidation) => validation.isValid === false);
+        if (builderErrors.length > 0) {
+            console.log(builderValidation, builderErrors);
+            throw new Error('Please ensure all required fields are filled out.');
         }
         return new Competency(
             this._id,
@@ -125,5 +113,165 @@ export class CompetencyBuilder extends Competency {
             this.notes
         );
     }
+    validateActor(): BuilderValidation[] {
+        const actorErrors: BuilderValidation[] = [];
+        if (!this.actor.details || !this.actor.type) {
+            if (!this.actor.details) {
+                actorErrors.push({
+                    type: 'actor',
+                    attribute: 'details',
+                    isValid: false,
+                    message: 'Actor details are required.'
+                });
+            }
+            if (!this.actor.type) {
+                actorErrors.push({
+                    type: 'actor',
+                    attribute: 'type',
+                    isValid: false,
+                    message: 'An actor type is required.'
+                });
+            }
+        } else {
+            actorErrors.push({
+                type: 'actor',
+                isValid: true
+            });
+        }
+        return actorErrors;
+    }
 
+    validateBehavior(): BuilderValidation[] {
+        const behaviorErrors: BuilderValidation[] = [];
+        if (!this.behavior.details || !this.behavior.work_role || !this.behavior.tasks) {
+            if (!this.behavior.details) {
+                behaviorErrors.push({
+                    type: 'behavior',
+                    attribute: 'details',
+                    isValid: false,
+                    message: 'Behavior details are required.'
+                });
+            }
+            if (!this.behavior.work_role) {
+                behaviorErrors.push({
+                    type: 'behavior',
+                    attribute: 'work_role',
+                    isValid: false,
+                    message: 'A work-role is required.'
+                });
+            }
+            if (!this.behavior.tasks) {
+                behaviorErrors.push({
+                    type: 'behavior',
+                    attribute: 'tasks',
+                    isValid: false,
+                    message: 'At least one task is required.'
+                });
+            }
+        } else {
+            behaviorErrors.push({
+                type: 'behavior',
+                isValid: true
+            });
+        }
+        return behaviorErrors;
+    }
+
+    validateCondition(): BuilderValidation[] {
+        const conditionErrors: BuilderValidation[] = [];
+        if (!this.condition.scenario || !this.condition.limitations || !this.condition.tech || !this.condition.documentation) {
+            if (!this.condition.scenario) {
+                conditionErrors.push({
+                    type: 'condition',
+                    attribute: 'scenario',
+                    isValid: false,
+                    message: 'Scenario is required.'
+                });
+            }
+            if (!this.condition.limitations) {
+                conditionErrors.push({
+                    type: 'condition',
+                    attribute: 'limitations',
+                    isValid: false,
+                    message: 'Limitations are required.'
+                });
+            }
+            if (!this.condition.tech) {
+                conditionErrors.push({
+                    type: 'condition',
+                    attribute: 'tech',
+                    isValid: false,
+                    message: 'At least one technology is required.'
+                });
+            }
+            if (!this.condition.documentation) {
+                conditionErrors.push({
+                    type: 'condition',
+                    attribute: 'documentation',
+                    isValid: false,
+                    message: 'At least one documentation is required.'
+                });
+            }
+        } else {
+            conditionErrors.push({
+                type: 'condition',
+                isValid: true
+            });
+        }
+        return conditionErrors;
+    }
+
+    validateDegree(): BuilderValidation[] {
+        const degreeErrors: BuilderValidation[] = [];
+        if (!this.degree.time || !this.degree.correct || !this.degree.complete) {
+            if (!this.degree.time) {
+                degreeErrors.push({
+                    type: 'degree',
+                    attribute: 'time',
+                    isValid: false,
+                    message: 'Time is required.'
+                });
+            }
+            if (!this.degree.correct) {
+                degreeErrors.push({
+                    type: 'degree',
+                    attribute: 'correct',
+                    isValid: false,
+                    message: 'Correctness is required.'
+                });
+            }
+            if (!this.degree.complete) {
+                degreeErrors.push({
+                    type: 'degree',
+                    attribute: 'complete',
+                    isValid: false,
+                    message: 'Completeness is required.'
+                });
+            }
+        } else {
+            degreeErrors.push({
+                type: 'degree',
+                isValid: true
+            });
+        }
+        return degreeErrors;
+    }
+
+    validateEmployability(): BuilderValidation[] {
+        const employabilityErrors: BuilderValidation[] = [];
+        if (!this.employability.details) {
+            employabilityErrors.push({
+                type: 'employability',
+                attribute: 'details',
+                isValid: false,
+                message: 'Employability is required'
+            });
+        } else {
+            employabilityErrors.push({
+                type: 'employability',
+                isValid: true
+            });
+        }
+        return employabilityErrors;
+    }
 }
