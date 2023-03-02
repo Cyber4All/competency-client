@@ -9,6 +9,7 @@ import { Condition } from '../../../entity/condition';
 import { Behavior } from '../../../entity/behavior';
 import { Employability } from '../../../entity/employability';
 import { Notes } from '../../../entity/notes';
+import { BuilderError, BuilderValidation } from '../../../entity/builder-validation';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +17,11 @@ import { Notes } from '../../../entity/notes';
 export class BuilderService {
     private _builderIndex: BehaviorSubject<number> = new BehaviorSubject<number>(0);
     private _templateIndex: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+    private _actorErrors: BehaviorSubject<BuilderValidation[]> = new BehaviorSubject<BuilderValidation[]>([]);
+    private _behaviorErrors: BehaviorSubject<BuilderValidation[]> = new BehaviorSubject<BuilderValidation[]>([]);
+    private _conditionErrors: BehaviorSubject<BuilderValidation[]> = new BehaviorSubject<BuilderValidation[]>([]);
+    private _degreeErrors: BehaviorSubject<BuilderValidation[]> = new BehaviorSubject<BuilderValidation[]>([]);
+    private _employabilityErrors: BehaviorSubject<BuilderValidation[]> = new BehaviorSubject<BuilderValidation[]>([]);
     // Builder index observable for child components conditional rendering
     get builderIndex(): Observable<number> {
         return this._builderIndex.asObservable();
@@ -24,6 +30,26 @@ export class BuilderService {
     get templateIndex(): Observable<number> {
         return this._templateIndex.asObservable();
     }
+    // Errors observable for actor builder
+    get actorErrors(): Observable<BuilderValidation[]> {
+        return this._actorErrors.asObservable();
+    }
+    // Errors observable for behavior builder
+    get behaviorErrors(): Observable<BuilderValidation[]> {
+        return this._behaviorErrors.asObservable();
+    }
+    // Errors observable for condition builder
+    get conditionErrors(): Observable<BuilderValidation[]> {
+        return this._conditionErrors.asObservable();
+    }
+    // Errors observable for degree builder
+    get degreeErrors(): Observable<BuilderValidation[]> {
+        return this._degreeErrors.asObservable();
+    }
+    // Errors observable for employability builder
+    get employabilityErrors(): Observable<BuilderValidation[]> {
+        return this._employabilityErrors.asObservable();
+    }
     // Updates current builder index
     public setBuilderIndex(value: number) {
         this._builderIndex.next(value);
@@ -31,6 +57,33 @@ export class BuilderService {
     // Updates current submenu index
     public setTemplateIndex(value: number) {
         this._templateIndex.next(value);
+    }
+    // Updates current state of builder errors
+    public setBuilderErrors(value: BuilderError) {
+        this._actorErrors.next([]);
+        this._behaviorErrors.next([]);
+        this._conditionErrors.next([]);
+        this._degreeErrors.next([]);
+        this._employabilityErrors.next([]);
+        value.errors.map((error: BuilderValidation) => {
+            switch(error.type) {
+                case 'actor':
+                    this._actorErrors.next((this._actorErrors.value, [error]));
+                    break;
+                case 'behavior':
+                    this._behaviorErrors.next((this._behaviorErrors.value, [error]));
+                    break;
+                case 'condition':
+                    this._conditionErrors.next((this._conditionErrors.value, [error]));
+                    break;
+                case 'degree':
+                    this._degreeErrors.next((this._degreeErrors.value, [error]));
+                    break;
+                case 'employability':
+                    this._employabilityErrors.next((this._employabilityErrors.value, [error]));
+                    break;
+            }
+        });
     }
 
     constructor(

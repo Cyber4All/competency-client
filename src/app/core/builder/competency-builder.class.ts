@@ -7,7 +7,7 @@ import { Documentation } from '../../../entity/documentation';
 import { Employability } from '../../../entity/employability';
 import { Lifecycles } from '../../../entity/lifecycles';
 import { Notes } from '../../../entity/notes';
-import { BuilderValidation } from '../../../entity/builder-validation';
+import { BuilderError, BuilderValidation } from '../../../entity/builder-validation';
 export class CompetencyBuilder extends Competency {
     _id!: string;
     status!: Lifecycles;
@@ -87,7 +87,14 @@ export class CompetencyBuilder extends Competency {
         return this;
     }
 
+    /**
+     * Method to build a competency object
+     *
+     * @throws BuilderValidation errors if any required fields are missing.
+     * @returns Competency
+     */
     build() {
+        // Validate all required fields are present
         const builderValidation: BuilderValidation[] = [
             ...this.validateActor(),
             ...this.validateBehavior(),
@@ -95,10 +102,11 @@ export class CompetencyBuilder extends Competency {
             ...this.validateDegree(),
             ...this.validateEmployability()
         ];
+        // Filter out invalid fields
         const builderErrors = builderValidation.filter((validation: BuilderValidation) => validation.isValid === false);
+        // If any invalid fields are found, throw an error and return invalid fields to builder
         if (builderErrors.length > 0) {
-            console.log(builderValidation, builderErrors);
-            throw new Error('Please ensure all required fields are filled out.');
+            throw new BuilderError('builder', 'builder', false, 'Please ensure all required fields are complete.', builderErrors);
         }
         return new Competency(
             this._id,
@@ -113,6 +121,7 @@ export class CompetencyBuilder extends Competency {
             this.notes
         );
     }
+
     validateActor(): BuilderValidation[] {
         const actorErrors: BuilderValidation[] = [];
         if (!this.actor.details || !this.actor.type) {

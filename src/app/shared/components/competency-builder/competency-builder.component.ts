@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Notes } from 'src/entity/notes';
 import { Actor } from '../../../../entity/actor';
 import { Behavior } from '../../../../entity/behavior';
+import { BuilderError } from '../../../../entity/builder-validation';
 import { Competency } from '../../../../entity/competency';
 import { Condition } from '../../../../entity/condition';
 import { Degree } from '../../../../entity/degree';
@@ -19,25 +20,23 @@ import { SNACKBAR_COLOR } from '../snackbar/snackbar.component';
 })
 export class CompetencyBuilderComponent implements OnInit, OnDestroy {
   @Input() competency!: CompetencyBuilder;
-  // Toggle for editing a competency
-  @Input() isEdit = true;
   // Current Competency ID
   competencyId = '';
   // Index of current open builder component
   currIndex = 0;
-  // Index of current open builder component submenu template
+  // Index of current open builder component's submenu
   templateIndex = 0;
 
   constructor(
     public builderService: BuilderService,
     public dialogRef: MatDialogRef<CompetencyBuilderComponent>,
-    @Inject(MAT_DIALOG_DATA) public COMPETENCY: CompetencyBuilder,
+    @Inject(MAT_DIALOG_DATA) private COMPETENCY: CompetencyBuilder,
     private snackBarService: SnackbarService
   ) {}
 
+  // Method to prevent user from leaving the page without saving competency data
   @HostListener('window:beforeunload', ['$event']) public OnBeforeUnload(event: any) {
     const confirmationMessage = '\o/';
-    console.log('cond');
     event.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
     return confirmationMessage;              // Gecko, WebKit, Chrome <34
   }
@@ -47,7 +46,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     this.builderService.builderIndex.subscribe((index: number) => {
       this.currIndex = index;
     });
-    // Subscribe to the current index of the builder form component submenu template
+    // Subscribe to the current index of the builder form component's submenu
     this.builderService.templateIndex.subscribe((index: number) => {
       this.templateIndex = index;
     });
@@ -60,7 +59,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Parent method to update attributes of a competency
+   * Parent method to update attributes of a competency using the competency builder class
    *
    * @param event is an event from the child componenet updating part of the competency
    * @update <string> is the competency attribute being updated
@@ -95,24 +94,27 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
         this.snackBarService.notification$.next({
           message: 'Yo you messed up dawg. Something went big wrong nahmean?',
           title: 'Competency Not Updated',
-          color: SNACKBAR_COLOR.WARNING
+          color: SNACKBAR_COLOR.DANGER
         });
         break;
     }
   }
 
   /**
-   * Method to store a competency
+   * Method to save all competency data to the database
    */
   async saveCompetency(): Promise<void> {
     try {
+      // Build the competency builder class object into a competency entity
       const competency: Competency = this.competency.build();
+      // Update the competency in the database
       await this.builderService.updateActor(competency._id, competency.actor);
       await this.builderService.updateBehavior(competency._id, competency.behavior);
       await this.builderService.updateCondition(competency._id, competency.condition);
       await this.builderService.updateDegree(competency._id, competency.degree);
       await this.builderService.updateEmployability(competency._id, competency.employability);
       await this.builderService.updateNotes(competency._id, competency.notes);
+      // Close the dialog and send a success notification
       this.dialogRef.close(true);
       this.snackBarService.notification$.next({
         message: 'Competency Saved',
@@ -120,8 +122,18 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
         color: SNACKBAR_COLOR.SUCCESS
       });
     } catch (err: any) {
+      // Check for HttpErrorResponse first, check for builder errors,
+      // then check for a message and send a notification, else send a generic error notification
       if (err instanceof HttpErrorResponse) {
+        // I don't think this works when multiple errors are returned from the api
         this.snackBarService.sendNotificationByError(err as HttpErrorResponse);
+      } else if (err instanceof BuilderError) {
+        this.builderService.setBuilderErrors(err as BuilderError);
+        this.snackBarService.notification$.next({
+          message: err.message,
+          title: 'Competency Not Submitted',
+          color: SNACKBAR_COLOR.DANGER
+        });
       } else if (err.message) {
         this.snackBarService.notification$.next({
           message: err.message,
