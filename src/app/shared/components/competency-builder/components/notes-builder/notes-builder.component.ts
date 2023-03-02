@@ -11,7 +11,7 @@ export class NotesBuilderComponent implements OnInit {
 
   @Input() notes!: Notes;
   @Output() notesChange = new EventEmitter<{update: string, value: Notes}>();
-  details = new FormControl('', [Validators.required]);
+  details = new FormControl('');
 
   constructor( ) { }
 
