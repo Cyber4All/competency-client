@@ -6,6 +6,7 @@ import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
 import { debounceTime } from 'rxjs';
 import { Documentation } from '../../../../../../entity/documentation';
 import { BuilderService } from '../../../../../core/builder/builder.service';
+import { BuilderValidation } from '../../../../../../entity/builder-validation';
 @Component({
   selector: 'cc-context-builder',
   templateUrl: './context-builder.component.html',
@@ -15,11 +16,13 @@ export class ContextBuilderComponent implements OnInit {
 
   @Input() condition!: Condition;
   @Output() conditionChange = new EventEmitter<{update: string, value: Condition}>();
+  contextErrors: BuilderValidation[] = [];
+
   templateIndex = 0;
-  scenario = new FormControl('', [Validators.required]);
-  tech = new FormControl([], [Validators.required]);
-  limitations = new FormControl('', [Validators.required]);
-  documentation = new FormControl([], [Validators.required]);
+  scenario = new FormControl('');
+  tech = new FormControl([]);
+  limitations = new FormControl('');
+  documentation = new FormControl([]);
   technology: string[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
 
@@ -28,12 +31,34 @@ export class ContextBuilderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // Subscribe to context errors
+    this.builderService.contextErrors.subscribe((errors: BuilderValidation[]) => {
+      // Iterate through errors
+      errors.map((error: BuilderValidation) => {
+        // If error is not already in local contextErrors array, add it
+        if (this.contextErrors.findIndex((contextError: BuilderValidation) => {
+          return contextError.attribute === error.attribute;
+        }) === -1) {
+          this.contextErrors.push(error);
+        }
+        // Set form validation errors
+        this.displayErrors();
+      });
+    });
+    // Subscribe to template index
     this.builderService.templateIndex.subscribe((index: number) => {
       this.templateIndex = index;
     });
+    // Subscribe to scenario form control
     this.scenario.valueChanges
       .pipe(debounceTime(1000))
       .subscribe((scenarioUpdate: string) => {
+        // Remove scenario error from contextErrors array
+        this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
+          return error.attribute !== 'scenario';
+        });
+        this.scenario.setErrors({error: false});
+        // Emit context scenario change to parent builder component
         this.conditionChange.emit({
           update: 'condition',
           value: {
@@ -45,9 +70,16 @@ export class ContextBuilderComponent implements OnInit {
           }
         });
       });
+    // Subscribe to tech form control
     this.tech.valueChanges
       .pipe(debounceTime(1000))
       .subscribe((techUpdate: string[]) => {
+        // Remove tech error from contextErrors array
+        this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
+          return error.attribute !== 'tech';
+        });
+        this.tech.setErrors({error: false});
+        // Emit context tech change to parent builder component
         this.conditionChange.emit({
           update: 'condition',
           value: {
@@ -59,9 +91,16 @@ export class ContextBuilderComponent implements OnInit {
           }
         });
       });
+    // Subscribe to limitations form control
     this.limitations.valueChanges
       .pipe(debounceTime(1000))
       .subscribe((limitationsUpdate: string) => {
+        // Remove limitations error from contextErrors array
+        this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
+          return error.attribute !== 'limitations';
+        });
+        this.limitations.setErrors({error: false});
+        // Emit context limitations change to parent builder component
         this.conditionChange.emit({
           update: 'condition',
           value: {
@@ -73,9 +112,16 @@ export class ContextBuilderComponent implements OnInit {
           }
         });
       });
+    // Subscribe to documentation form control
     this.documentation.valueChanges
       .pipe(debounceTime(1000))
       .subscribe((documentationUpdate: Documentation[]) => {
+        // Remove documentation error from contextErrors array
+        this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
+          return error.attribute !== 'documentation';
+        });
+        this.documentation.setErrors({error: false});
+        // Emit context documentation change to parent builder component
         this.conditionChange.emit({
           update: 'condition',
           value: {
@@ -133,5 +179,27 @@ export class ContextBuilderComponent implements OnInit {
       // Update form control with new technology array
       this.tech.patchValue(this.technology);
     }
+  }
+
+  displayErrors(): void {
+    // Iterate through contextErrors array
+    this.contextErrors.map((contextError: BuilderValidation) => {
+      // If error is for scenario, set scenario form control error
+      if (contextError.attribute === 'scenario') {
+        this.scenario.setErrors({error: true});
+      }
+      // If error is for tech, set tech form control error
+      if (contextError.attribute === 'tech') {
+        this.tech.setErrors({error: true});
+      }
+      // If error is for limitations, set limitations form control error
+      if (contextError.attribute === 'limitations') {
+        this.limitations.setErrors({error: true});
+      }
+      // If error is for documentation, set documentation form control error
+      if (contextError.attribute === 'documentation') {
+        this.documentation.setErrors({error: true});
+      }
+    });
   }
 }
