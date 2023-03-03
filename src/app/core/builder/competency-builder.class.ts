@@ -122,6 +122,11 @@ export class CompetencyBuilder extends Competency {
         );
     }
 
+    /**
+     * Validates all required attributes of the actor object
+     *
+     * @returns <BuilderValidation>[] - Array of validation objects
+     */
     validateActor(): BuilderValidation[] {
         const actorErrors: BuilderValidation[] = [];
         if (!this.actor.details || !this.actor.type) {
@@ -150,6 +155,11 @@ export class CompetencyBuilder extends Competency {
         return actorErrors;
     }
 
+    /**
+     * Validates all required attributes of the behavior object
+     *
+     * @returns <BuilderValidation>[] - Array of validation objects
+     */
     validateBehavior(): BuilderValidation[] {
         const behaviorErrors: BuilderValidation[] = [];
         if (!this.behavior.details || !this.behavior.work_role || !this.behavior.tasks) {
@@ -186,6 +196,11 @@ export class CompetencyBuilder extends Competency {
         return behaviorErrors;
     }
 
+    /**
+     * Validates all required attributes of the condition object
+     *
+     * @returns <BuilderValidation>[] - Array of validation objects
+     */
     validateCondition(): BuilderValidation[] {
         const conditionErrors: BuilderValidation[] = [];
         if (!this.condition.scenario || !this.condition.limitations || !this.condition.tech || !this.condition.documentation) {
@@ -230,6 +245,11 @@ export class CompetencyBuilder extends Competency {
         return conditionErrors;
     }
 
+    /**
+     * Validates all required attributes of the degree object
+     *
+     * @returns <BuilderValidation>[] - Array of validation objects
+     */
     validateDegree(): BuilderValidation[] {
         const degreeErrors: BuilderValidation[] = [];
         if (!this.degree.time || !this.degree.correct || !this.degree.complete) {
@@ -266,6 +286,11 @@ export class CompetencyBuilder extends Competency {
         return degreeErrors;
     }
 
+    /**
+     * Validates all required attributes of the employability object
+     *
+     * @returns <BuilderValidation>[] - Array of validation objects
+     */
     validateEmployability(): BuilderValidation[] {
         const employabilityErrors: BuilderValidation[] = [];
         if (!this.employability.details) {
