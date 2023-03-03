@@ -4,7 +4,7 @@ import {
 } from '@angular/common/http';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
-import { lastValueFrom } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import {
   getCompleteWorkRole,
   Workrole,
@@ -15,11 +15,20 @@ import {
 import { getPreReqs } from '../../entity/actor';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 import { SnackbarService } from './snackbar.service';
+import { Elements } from '../../entity/elements';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkroleService {
+  private _workroles: BehaviorSubject<Workrole[]> = new BehaviorSubject<Workrole[]>([]);
+  private _tasks: BehaviorSubject<Elements[]> = new BehaviorSubject<Elements[]>([]);
+  get workroles(): Observable<Workrole[]> {
+    return this._workroles.asObservable();
+  }
+  get tasks(): Observable<Elements[]> {
+    return this._tasks.asObservable();
+  }
   constructor(
     private http: HttpClient,
     private auth: AuthService,
@@ -31,15 +40,43 @@ export class WorkroleService {
    *
    * @returns array of workrole ids from NICE DB
    */
-  async getAllWorkroles() {
+  async getAllWorkroles(): Promise<void> {
     this.auth.initHeaders();
     const query = getAllWorkRoles();
-    return await lastValueFrom(this.http
-      .post<[Workrole]>(
+    await lastValueFrom(this.http
+      .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
         {query},
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
+      .then((workrolesQuery: any) => {
+        this._workroles.next(workrolesQuery.data.workroles);
+      })
+      .catch((err) => {
+        err = GraphErrorHandler.handleError(err);
+        if (err) {
+          this.snackBarService.sendNotificationByError(err);
+        }
+      });
+  }
+
+  /**
+   * Method to retrive all task ids from NICE DB
+   *
+   * @returns array of task ids
+   */
+  async getAllTasks(): Promise<void> {
+    this.auth.initHeaders();
+    const query = getAllTasks();
+    await lastValueFrom(this.http
+      .post(
+        COMPETENCY_ROUTES.GRAPH_QUERY(),
+        { query },
+        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+      ))
+      .then((tasksQuery: any) => {
+        this._tasks.next(tasksQuery.data.tasks);
+      })
       .catch((err) => {
         err = GraphErrorHandler.handleError(err);
         if (err) {
@@ -59,28 +96,6 @@ export class WorkroleService {
     const query = getCompleteWorkRole(workroleId);
     return await lastValueFrom(this.http
       .post<Workrole>(
-        COMPETENCY_ROUTES.GRAPH_QUERY(),
-        { query },
-        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-      ))
-      .catch((err) => {
-        err = GraphErrorHandler.handleError(err);
-        if (err) {
-          this.snackBarService.sendNotificationByError(err);
-        }
-      });
-  }
-
-  /**
-   * Method to retrive all task ids from NICE DB
-   *
-   * @returns array of task ids
-   */
-  async getAllTasks() {
-    this.auth.initHeaders();
-    const query = getAllTasks();
-    return await lastValueFrom(this.http
-      .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }

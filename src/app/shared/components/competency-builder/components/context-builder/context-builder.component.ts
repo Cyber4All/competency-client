@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Condition } from '../../../../../../entity/condition';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';

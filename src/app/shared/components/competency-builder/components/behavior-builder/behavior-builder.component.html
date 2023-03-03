@@ -1,9 +1,70 @@
 <!--Behavior Builder-->
 <ng-container class="competency_edit-behavior-container">
   <!--Behavior workrole selection field-->
-  <div appearance="fill" color="primary">
+  <!-- <div appearance="fill" color="primary">
     <label>Workrole</label>
-    <input type="text"
+    <mat-form-field appearance="fill">
+      <mat-label>Organization</mat-label>
+      <input 
+      matInput 
+      formControlName="organization" 
+      (keyup)="keyup($event)">
+    <mat-error *ngIf="regFormGroup.get('organization')?.invalid">{{authValidation.getInputErrorMessage(regFormGroup.get('organization')!)}}</mat-error>
+
+    </mat-form-field>
+    <ul
+    *ngIf="showDropdown"
+    (onBlur)="closeDropdown()"
+    class="org-dropdown_list"
+    >
+    <ng-container
+    *ngTemplateOutlet="loading ? loadingTemplate : resultsTemplate"
+    ></ng-container>
+  </ul> -->
+    <!-- organization dropdown template -->
+    <!-- <ng-template #resultsTemplate>
+      <ng-container
+        *ngIf="searchResults && searchResults.length; else noResultsTemplate"
+      >
+          <virtual-scroller
+          #scroll
+          [style.height]="scrollerHeight"
+          [bufferAmount]="5"
+          [enableUnequalChildrenSizes]="true"
+          [items]="searchResults"
+          >
+              <li
+                  class="org-dropdown_list-item"
+                  *ngFor="let org of scroll.viewPortItems"
+                  (click)="selectOrg(org)"
+              >
+                  {{ org.name }}
+              </li>
+              <div class="other-box" (click)="selectOrg()">
+                  <li class="other-option">
+                  Other
+                  </li>
+              </div>
+          </virtual-scroller>
+      </ng-container>
+    </ng-template>
+
+    <ng-template #noResultsTemplate>
+      <div class="other-box">
+        <li class="other-option" (click)="selectOrg()">
+          Other
+        </li>
+      </div>
+    </ng-template>
+
+    <ng-template #loadingTemplate>
+      <span class="org-dropdown__message">
+        <i class="far fa-spinner-third fa-spin">
+          Loading
+        </i>
+      </span>
+    </ng-template> -->
+    <!-- <input type="text"
             placeholder="Choose a workrole"
             aria-label="Workrole"
             matInput
@@ -13,12 +74,73 @@
       <mat-option *ngFor="let workrole of filteredWorkroles | async" [value]="workrole">
         {{workrole}}
       </mat-option>
-    </mat-autocomplete>
-  </div>
+    </mat-autocomplete> -->
+  <!-- </div> -->
   <!--Behavior task selection field-->
-  <div appearance="fill" color="primary">
+  <!-- <div appearance="fill" color="primary">
     <label>Task</label>
-    <input type="text"
+    <mat-form-field appearance="fill">
+      <mat-label>Organization</mat-label>
+      <input 
+      matInput 
+      formControlName="organization" 
+      (keyup)="keyup($event)">
+    <mat-error *ngIf="regFormGroup.get('organization')?.invalid">{{authValidation.getInputErrorMessage(regFormGroup.get('organization')!)}}</mat-error>
+
+    </mat-form-field>
+    <ul
+    *ngIf="showDropdown"
+    (onBlur)="closeDropdown()"
+    class="org-dropdown_list"
+    >
+    <ng-container
+    *ngTemplateOutlet="loading ? loadingTemplate : resultsTemplate"
+    ></ng-container>
+  </ul> -->
+    <!-- organization dropdown template -->
+    <!-- <ng-template #resultsTemplate>
+      <ng-container
+        *ngIf="searchResults && searchResults.length; else noResultsTemplate"
+      >
+          <virtual-scroller
+          #scroll
+          [style.height]="scrollerHeight"
+          [bufferAmount]="5"
+          [enableUnequalChildrenSizes]="true"
+          [items]="searchResults"
+          >
+              <li
+                  class="org-dropdown_list-item"
+                  *ngFor="let org of scroll.viewPortItems"
+                  (click)="selectOrg(org)"
+              >
+                  {{ org.name }}
+              </li>
+              <div class="other-box" (click)="selectOrg()">
+                  <li class="other-option">
+                  Other
+                  </li>
+              </div>
+          </virtual-scroller>
+      </ng-container>
+    </ng-template>
+
+    <ng-template #noResultsTemplate>
+      <div class="other-box">
+        <li class="other-option" (click)="selectOrg()">
+          Other
+        </li>
+      </div>
+    </ng-template>
+
+    <ng-template #loadingTemplate>
+      <span class="org-dropdown__message">
+        <i class="far fa-spinner-third fa-spin">
+          Loading
+        </i>
+      </span>
+    </ng-template> -->
+    <!-- <input type="text"
             placeholder="Choose a task"
             aria-label="Task"
             matInput
@@ -28,8 +150,8 @@
       <mat-option *ngFor="let task of filteredTasks | async" [value]="task">
         {{task}}
       </mat-option>
-    </mat-autocomplete>
-  </div>
+    </mat-autocomplete> -->
+  <!-- </div> -->
   <!--Behavior description form field-->
   <div appearance="fill" color="primary">
     <label>Task Description</label>

@@ -33,6 +33,7 @@ import { DegreeBuilderComponent } from './competency-builder/components/degree-b
 import { EmployabilityBuilderComponent } from './competency-builder/components/employability-builder/employability-builder.component';
 import { NotesBuilderComponent } from './competency-builder/components/notes-builder/notes-builder.component';
 import { BannerComponent } from './banner/banner.component';
+import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -71,7 +72,8 @@ import { BannerComponent } from './banner/banner.component';
     ReactiveFormsModule,
     MatTooltipModule,
     MatChipsModule,
-    SharedDirectivesModule
+    SharedDirectivesModule,
+    VirtualScrollerModule,
   ],
   exports: [
     CompetencyCardComponent,

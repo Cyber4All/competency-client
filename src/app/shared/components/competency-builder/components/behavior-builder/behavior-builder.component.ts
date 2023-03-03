@@ -19,9 +19,22 @@ export class BehaviorBuilderComponent implements OnInit {
   behaviorErrors: BuilderValidation[] = [];
 
   task = new FormControl('');
-  savedTask: string[] = [];
-  details = new FormControl('');
   workrole = new FormControl('');
+  details = new FormControl('');
+
+  /**
+   * 2. Subscribe to tasks and workroles observables
+   *  2.1. Set tasks and workroles in builder
+   * 3. Accept input for workrole and task
+   *  3.1 Search for workrole and update observable
+   *  3.2 Search for task and update observable
+   *  3.3 Set workrole and task in builder (through observable)
+   *  3.4 Virtural Scroller displays new input of tasks and workroles
+   * 4. Select task or workrole
+   *  4.1 selected id gets added to builder class
+   */
+
+  savedTask: string[] = [];
   savedWorkrole = '';
   workroles: Workrole[] = [];
   tasks: Elements[] = [];
@@ -33,6 +46,12 @@ export class BehaviorBuilderComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    if (!this.behavior.work_role) {
+      await this.workroleService.getAllWorkroles();
+    }
+    if (this.behavior.tasks.length === 0) {
+      await this.workroleService.getAllTasks();
+    }
     // Subscribe to behavior errors
     this.builderService.behaviorErrors.subscribe((errors: BuilderValidation[]) => {
       // Iterate through errors
@@ -47,6 +66,30 @@ export class BehaviorBuilderComponent implements OnInit {
         this.displayErrors();
       });
     });
+    // Subscribe to workrole form control
+    this.workrole.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe(() => {
+        const selectedWorkrole: Workrole[] = this.workroles.filter((workrole: Workrole) => {
+          return workrole.work_role === this.workrole.value;
+        });
+        this.savedWorkrole = selectedWorkrole[0]._id;
+        // Remove workrole error from behaviorErrors array
+        this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
+          return error.attribute !== 'work_role';
+        });
+        this.workrole.setErrors({error: false});
+        // Emit behavior workrole change to parent builder component
+        this.behaviorChange.emit({
+          update: 'behavior',
+          value: {
+            _id: this.behavior._id,
+            tasks: this.savedTask,
+            details: this.details.value,
+            work_role: selectedWorkrole[0]._id!
+          }
+        });
+      });
     // Subscribe to task form control
     this.task.valueChanges
       .pipe(debounceTime(1000))
@@ -72,30 +115,6 @@ export class BehaviorBuilderComponent implements OnInit {
           }
         });
       });
-    // Subscribe to workrole form control
-    this.workrole.valueChanges
-      .pipe(debounceTime(1000))
-      .subscribe(() => {
-        const selectedWorkrole: Workrole[] = this.workroles.filter((workrole: Workrole) => {
-          return workrole.work_role === this.workrole.value;
-        });
-        this.savedWorkrole = selectedWorkrole[0]._id;
-        // Remove workrole error from behaviorErrors array
-        this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
-          return error.attribute !== 'work_role';
-        });
-        this.workrole.setErrors({error: false});
-        // Emit behavior workrole change to parent builder component
-        this.behaviorChange.emit({
-          update: 'behavior',
-          value: {
-            _id: this.behavior._id,
-            tasks: this.savedTask,
-            details: this.details.value,
-            work_role: selectedWorkrole[0]._id!
-          }
-        });
-      });
     // Subscribe to details form control
     this.details.valueChanges
       .pipe(debounceTime(1000))
@@ -116,78 +135,44 @@ export class BehaviorBuilderComponent implements OnInit {
           }
         });
       });
-    // If value exists, set type form control
+    // If work_role exists, set workrole form value
+    if (this.behavior.work_role) {
+      this.workroles = [];
+      await this.workroleService.getCompleteWorkrole(this.behavior.work_role)
+      .then((workroleQuery: any) => {
+        this.workroles.push(workroleQuery.data.workrole);
+        this.workrole.patchValue(workroleQuery.data.workrole.work_role);
+      });
+    }
+    // If value exists, set type form value
     if(this.behavior.tasks) {
       this.behavior.tasks.map(async (task: string) => {
+        this.tasks = [];
         await this.workroleService.getCompelteTask(task)
         .then((taskQuery: any) => {
+          this.tasks.push(taskQuery.data.task);
           this.task.setValue([...this.task.value, taskQuery.data.task.description]);
         });
       });
     }
-    // If value exists, set details form control
+    // If details exists, set details form value
     if (this.behavior.details) {
       this.details.patchValue(this.behavior.details);
     }
-    // If value exists, set workrole form control
-    if (this.behavior.work_role) {
-      await this.workroleService.getCompleteWorkrole(this.behavior.work_role)
-      .then((workroleQuery: any) => {
-        this.workrole.patchValue(workroleQuery.data.workrole.work_role);
+    // Subscribe to workroles as they are updated in the service
+    this.workroleService.workroles.subscribe((workroles: Workrole[]) => {
+      this.workroles = [];
+      workroles.map((workrole: Workrole) => {
+        this.workroles.push(workrole);
       });
-    }
-    // Set list of all workrole tasks
-    await this.workroleService.getAllTasks()
-    .then((tasksQuery: any) => {
-      this.tasks = tasksQuery.data.tasks;
     });
-    // Set list of all workroles
-    await this.workroleService.getAllWorkroles()
-    .then((workrolesQuery: any) => {
-      this.workroles = workrolesQuery.data.workroles;
+    // Subscribe to tasks as they are updated in the service
+    this.workroleService.tasks.subscribe((tasks: Elements[]) => {
+      this.tasks = [];
+      tasks.map((task: Elements) => {
+        this.tasks.push(task);
+      });
     });
-    // Pipe filtered tasks input to match dropdown list
-    this.filteredTasks = this.task.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterTasks(value || '')),
-    );
-    // Pipe filtred workroles input to match dropdown list
-    this.filteredWorkroles = this.workrole.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterWorkroles(value || '')),
-    );
-  }
-
-  /**
-   * Method to filter tasks based on search input
-   *
-   * @param value keyword input for tasks
-   * @returns filtered list of tasks
-   */
-  private _filterTasks(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    const tasks = this.tasks.map((obj: Elements) => {
-      return obj.description;
-    });
-
-    return tasks.filter(option => option.toLowerCase().includes(filterValue));
-  }
-
-  /**
-   * Method to filter workroles based on search input
-   *
-   * @param value keyword input for workroles
-   * @returns list of filtered workroles
-   */
-  private _filterWorkroles(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    const work_roles = this.workroles.map((obj: Workrole) => {
-      return obj.work_role;
-    });
-
-    return work_roles.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   displayErrors(): void {
@@ -208,78 +193,3 @@ export class BehaviorBuilderComponent implements OnInit {
     });
   }
 }
-
-/*
-//   async ngOnInit(): Promise<void> {
-//     // If value exists, set type form control
-//     // if(this.behavior.tasks) {
-//     //   await this.workroleService.getCompelteTask(this.behavior.tasks)
-//     //   .then((taskQuery: any) => {
-//     //     this.task.setValue(this.task.value, taskQuery.data.task.description);
-//     //   });
-//     // }
-//     // If value exists, set details form control
-//     // if (this.behavior.details) {
-//     //   this.details.patchValue(this.behavior.details);
-//     // }
-//     // // If value exists, set workrole form control
-//     // if (this.behavior.work_role) {
-//     //   await this.workroleService.getCompleteWorkrole(this.behavior.work_role)
-//     //   .then((workroleQuery: any) => {
-//     //     this.workrole.patchValue(workroleQuery.data.workrole.work_role);
-//     //   });
-//     // }
-//     // // Set list of all workrole tasks
-//     // await this.workroleService.getAllTasks()
-//     // .then((tasksQuery: any) => {
-//     //   this.tasks = tasksQuery.data.tasks;
-//     // });
-//     // // Set list of all workroles
-//     // await this.workroleService.getAllWorkroles()
-//     // .then((workrolesQuery: any) => {
-//     //   this.workroles = workrolesQuery.data.workroles;
-//     // });
-//     // // Pipe filtered tasks input to match dropdown list
-//     // this.filteredTasks = this.task.valueChanges.pipe(
-//     //   startWith(''),
-//     //   map(value => this._filterTasks(value || '')),
-//     // );
-//     // // Pipe filtred workroles input to match dropdown list
-//     // this.filteredWorkroles = this.workrole.valueChanges.pipe(
-//     //   startWith(''),
-//     //   map(value => this._filterWorkroles(value || '')),
-//     // );
-//   }
-
-//   /**
-//    * Method to filter tasks based on search input
-//    *
-//    * @param value keyword input for tasks
-//    * @returns filtered list of tasks
-//    */
-//   // private _filterTasks(value: string): string[] {
-//   //   const filterValue = value.toLowerCase();
-
-//   //   const tasks = this.tasks.map((obj: Elements) => {
-//   //     return obj.description;
-//   //   });
-
-//   //   return tasks.filter(option => option.toLowerCase().includes(filterValue));
-//   // }
-
-//   /**
-//    * Method to filter workroles based on search input
-//    *
-//    * @param value keyword input for workroles
-//    * @returns list of filtered workroles
-//    */
-//   // private _filterWorkroles(value: string): string[] {
-//   //   const filterValue = value.toLowerCase();
-
-//   //   const work_roles = this.workroles.map((obj: Workrole) => {
-//   //     return obj.work_role;
-//   //   });
-
-//   //   return work_roles.filter(option => option.toLowerCase().includes(filterValue));
-//   // }
-// } */
