@@ -1,0 +1,19 @@
+@import "vars";
+// TODO Since this particular button is not in the mocks I didn't build out a component for buttons, but this is a starting point
+button {
+    float: right;
+    border: solid color-gray(5) 1px;
+    border-radius: 4px;
+    background-color: color-gray(8);
+    height: 40px;
+    padding: 10px;
+    color: color-gray(2);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+button:hover {
+    cursor:pointer;
+}
