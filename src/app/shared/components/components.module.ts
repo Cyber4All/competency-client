@@ -35,6 +35,7 @@ import { BannerComponent } from './banner/banner.component';
 import { PrimaryNavComponent } from './primary-nav/primary-nav.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -75,7 +76,8 @@ import { UserMenuComponent } from './user-menu/user-menu.component';
     ReactiveFormsModule,
     MatTooltipModule,
     MatChipsModule,
-    SharedDirectivesModule
+    SharedDirectivesModule,
+    RouterModule
   ],
   exports: [
     CompetencyCardComponent,

@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { Subject, filter, takeUntil } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'cc-search-bar',
@@ -19,27 +19,15 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   @Output() search = new EventEmitter<string>();
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute
     ) { }
 
   ngOnInit() {
-    // force search bar to reflect current search
-    this.router.events.pipe(
-      filter(x => x instanceof NavigationEnd),
-      takeUntil(this.destroyed$)
-    ).subscribe((x: any) => {
-      const textParam = this.route.snapshot.queryParamMap.get('text');
-
-      // if we're on the dashboard check if there are filter values to be had
-      if (x.url.match(/\/dashboard.*/)) {
-        if (textParam) {
-          this.searchValue = textParam;
-        } else {
-          this.searchValue = '';
-        }
-      }
-    });
+    // force search bar to reflect current search value
+    const textValue = this.route.snapshot.queryParamMap.get('text');
+    if(textValue) {
+      this.searchValue = textValue;
+    }
   }
 
   togglePlaceholder() {
