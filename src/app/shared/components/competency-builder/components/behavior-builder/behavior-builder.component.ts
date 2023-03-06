@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { debounceTime, map, Observable, startWith } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { debounceTime, Observable, Subject } from 'rxjs';
 import { WorkroleService } from '../../../../../core/workrole.service';
 import { Behavior } from '../../../../../../entity/behavior';
 import { Workrole } from '../../../../../../entity/workrole';
@@ -16,43 +16,53 @@ export class BehaviorBuilderComponent implements OnInit {
 
   @Input() behavior!: Behavior;
   @Output() behaviorChange = new EventEmitter<{update: string, value: Behavior}>();
+  // Builder - Behavior validation errors
   behaviorErrors: BuilderValidation[] = [];
-
+  // Virtual Scroller
+  scrollerHeight = '100px';
+  // Form controls for workrole and task
   task = new FormControl('');
   workrole = new FormControl('');
   details = new FormControl('');
-
+  // Search input for workrole and task
+  workroleInput$: Subject<string> = new Subject<string>();
+  taskInput$: Subject<string> = new Subject<string>();
+  // Workrole and task arrays
+  workroles: Workrole[] = [];
+  tasks: Elements[] = [];
+  // Selected workrole and task from virtual scroller
+  selectedWorkrole!: Workrole;
+  selectedTask!: Elements[];
   /**
-   * 2. Subscribe to tasks and workroles observables
-   *  2.1. Set tasks and workroles in builder
    * 3. Accept input for workrole and task
-   *  3.1 Search for workrole and update observable
-   *  3.2 Search for task and update observable
    *  3.3 Set workrole and task in builder (through observable)
    *  3.4 Virtural Scroller displays new input of tasks and workroles
    * 4. Select task or workrole
    *  4.1 selected id gets added to builder class
    */
 
-  savedTask: string[] = [];
-  savedWorkrole = '';
-  workroles: Workrole[] = [];
-  tasks: Elements[] = [];
   filteredWorkroles: Observable<string[]> = new Observable();
   filteredTasks: Observable<string[]> = new Observable();
+  loading = false;
   constructor(
     private workroleService: WorkroleService,
     private builderService: BuilderService
   ) {}
 
   async ngOnInit(): Promise<void> {
+    /**
+     * 1. Get all workroles and tasks from service if they are not set in behavior
+     */
     if (!this.behavior.work_role) {
       await this.workroleService.getAllWorkroles();
     }
     if (this.behavior.tasks.length === 0) {
       await this.workroleService.getAllTasks();
     }
-    // Subscribe to behavior errors
+
+    /**
+     * 2. Subscribe to Behavior Builder Errors
+     */
     this.builderService.behaviorErrors.subscribe((errors: BuilderValidation[]) => {
       // Iterate through errors
       errors.map((error: BuilderValidation) => {
@@ -66,37 +76,62 @@ export class BehaviorBuilderComponent implements OnInit {
         this.displayErrors();
       });
     });
+
+    /**
+     * 3. Subscribe to workroles and tasks as they are updated in the builder-service
+     */
+    // Subscribe to workroles as they are updated in the service
+    this.workroleService.workroles.subscribe((workroles: Workrole[]) => {
+      this.workroles = [];
+      workroles.map((workrole: Workrole) => {
+        this.workroles.push(workrole);
+      });
+    });
+    // Subscribe to tasks as they are updated in the service
+    this.workroleService.tasks.subscribe((tasks: Elements[]) => {
+      this.tasks = [];
+      tasks.map((task: Elements) => {
+        this.tasks.push(task);
+      });
+    });
+
+    /**
+     * 4. Subscribe to form controls
+     */
     // Subscribe to workrole form control
     this.workrole.valueChanges
       .pipe(debounceTime(1000))
-      .subscribe(() => {
-        const selectedWorkrole: Workrole[] = this.workroles.filter((workrole: Workrole) => {
-          return workrole.work_role === this.workrole.value;
-        });
-        this.savedWorkrole = selectedWorkrole[0]._id;
-        // Remove workrole error from behaviorErrors array
-        this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
-          return error.attribute !== 'work_role';
-        });
-        this.workrole.setErrors({error: false});
-        // Emit behavior workrole change to parent builder component
-        this.behaviorChange.emit({
-          update: 'behavior',
-          value: {
-            _id: this.behavior._id,
-            tasks: this.savedTask,
-            details: this.details.value,
-            work_role: selectedWorkrole[0]._id!
-          }
-        });
+      .subscribe((workroleSearch: string) => {
+        // capture text input, search input for workrole description
+        if (workroleSearch.length > 0) {
+          this.workroleService.searchWorkroles(workroleSearch);
+        } else {
+          // Remove workrole error from behaviorErrors array
+          this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
+            return error.attribute !== 'work_role';
+          });
+          this.workrole.setErrors({error: false});
+          // Emit behavior workrole change to parent builder component
+          this.behaviorChange.emit({
+            update: 'behavior',
+            value: {
+              _id: this.behavior._id,
+              tasks: this.behavior.tasks,
+              details: this.details.value,
+              work_role: this.selectedWorkrole._id!
+            }
+          });
+        }
       });
     // Subscribe to task form control
     this.task.valueChanges
       .pipe(debounceTime(1000))
       .subscribe(() => {
+        // Get task ids from Elements array
+        const taskIds: string[] = [];
         this.tasks.filter((task: Elements) => {
           if(task.description === this.task.value) {
-            this.savedTask.push(task._id!);
+            taskIds.push(task._id!);
           }
         });
         // Remove task error from behaviorErrors array
@@ -109,9 +144,9 @@ export class BehaviorBuilderComponent implements OnInit {
           update: 'behavior',
           value: {
             _id: this.behavior._id,
-            tasks: this.savedTask,
+            tasks: taskIds,
             details: this.details.value,
-            work_role: this.savedWorkrole
+            work_role: this.behavior.work_role,
           }
         });
       });
@@ -129,28 +164,37 @@ export class BehaviorBuilderComponent implements OnInit {
           update: 'behavior',
           value: {
             _id: this.behavior._id,
-            tasks: this.savedTask,
+            tasks: this.behavior.tasks,
             details: detailsUpdate,
-            work_role: this.savedWorkrole
+            work_role: this.behavior.work_role,
           }
         });
       });
+
+    /**
+     * 5. Set form values if they exist
+     */
     // If work_role exists, set workrole form value
     if (this.behavior.work_role) {
       this.workroles = [];
+      // The work_role ObjectId is stored on a competnecy
       await this.workroleService.getCompleteWorkrole(this.behavior.work_role)
       .then((workroleQuery: any) => {
         this.workroles.push(workroleQuery.data.workrole);
-        this.workrole.patchValue(workroleQuery.data.workrole.work_role);
+        this.selectedWorkrole = workroleQuery.data.workrole;
+        this.workrole.patchValue(workroleQuery.data.workrole._id);
       });
     }
-    // If value exists, set type form value
+    // If tasks exists, set type form value
     if(this.behavior.tasks) {
+      this.tasks = [];
+      this.selectedTask = [];
+      // The tasks ObjectIds are stored on a competency
       this.behavior.tasks.map(async (task: string) => {
-        this.tasks = [];
         await this.workroleService.getCompelteTask(task)
         .then((taskQuery: any) => {
           this.tasks.push(taskQuery.data.task);
+          this.selectedTask.push(taskQuery.data.task);
           this.task.setValue([...this.task.value, taskQuery.data.task.description]);
         });
       });
@@ -159,21 +203,35 @@ export class BehaviorBuilderComponent implements OnInit {
     if (this.behavior.details) {
       this.details.patchValue(this.behavior.details);
     }
-    // Subscribe to workroles as they are updated in the service
-    this.workroleService.workroles.subscribe((workroles: Workrole[]) => {
-      this.workroles = [];
-      workroles.map((workrole: Workrole) => {
-        this.workroles.push(workrole);
+
+    /**
+     * 6. Subscribe to search inputs
+     */
+    // Subscribe to workrole search input
+    this.workroleInput$.pipe(debounceTime(650))
+      .subscribe( async (value: string) => {
+        (await this.workroleService.searchWorkroles(value.trim()));
+        this.loading = false;
       });
-    });
-    // Subscribe to tasks as they are updated in the service
-    this.workroleService.tasks.subscribe((tasks: Elements[]) => {
-      this.tasks = [];
-      tasks.map((task: Elements) => {
-        this.tasks.push(task);
+    // Subscribe to task search input
+    this.taskInput$.pipe(debounceTime(650))
+      .subscribe( async (value: string) => {
+        await this.workroleService.searchTasks(value.trim());
       });
-    });
   }
+
+  /**
+   * Registers typing events from the organization input
+   *
+   * @param event The typing event
+   */
+    keyup(event: any) {
+      this.workroleInput$.next(event.target.value);
+    }
+
+    taskKeyup(event: any) {
+      this.taskInput$.next(event.target.value);
+    }
 
   displayErrors(): void {
     // Iterate through behavior errors

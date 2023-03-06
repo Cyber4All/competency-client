@@ -1,16 +1,17 @@
 <!--Behavior Builder-->
 <ng-container class="competency_edit-behavior-container">
   <!--Behavior workrole selection field-->
+  <input 
+    formControlName="workrole" 
+    (keyup)="keyup($event)">
   <!-- <div appearance="fill" color="primary">
     <label>Workrole</label>
     <mat-form-field appearance="fill">
-      <mat-label>Organization</mat-label>
+      <mat-label>Workrole</mat-label>
       <input 
       matInput 
-      formControlName="organization" 
+      formControlName="workrole" 
       (keyup)="keyup($event)">
-    <mat-error *ngIf="regFormGroup.get('organization')?.invalid">{{authValidation.getInputErrorMessage(regFormGroup.get('organization')!)}}</mat-error>
-
     </mat-form-field>
     <ul
     *ngIf="showDropdown"
@@ -21,35 +22,30 @@
     *ngTemplateOutlet="loading ? loadingTemplate : resultsTemplate"
     ></ng-container>
   </ul> -->
-    <!-- organization dropdown template -->
+    <!-- workrole dropdown template -->
     <!-- <ng-template #resultsTemplate>
       <ng-container
-        *ngIf="searchResults && searchResults.length; else noResultsTemplate"
+        *ngIf="workroles && workroles.length; else noResultsTemplate"
       >
           <virtual-scroller
           #scroll
           [style.height]="scrollerHeight"
           [bufferAmount]="5"
           [enableUnequalChildrenSizes]="true"
-          [items]="searchResults"
+          [items]="workroles"
           >
               <li
                   class="org-dropdown_list-item"
-                  *ngFor="let org of scroll.viewPortItems"
-                  (click)="selectOrg(org)"
+                  *ngFor="let role of scroll.viewPortItems"
+                  (click)="selectWorkrole(role)"
               >
-                  {{ org.name }}
+                  {{ role.work_role }}
               </li>
-              <div class="other-box" (click)="selectOrg()">
-                  <li class="other-option">
-                  Other
-                  </li>
-              </div>
           </virtual-scroller>
       </ng-container>
-    </ng-template>
+    </ng-template> -->
 
-    <ng-template #noResultsTemplate>
+    <!-- <ng-template #noResultsTemplate>
       <div class="other-box">
         <li class="other-option" (click)="selectOrg()">
           Other
@@ -64,19 +60,11 @@
         </i>
       </span>
     </ng-template> -->
-    <!-- <input type="text"
-            placeholder="Choose a workrole"
-            aria-label="Workrole"
-            matInput
-            [formControl]="workrole"
-            [matAutocomplete]="workroles">
-    <mat-autocomplete #workroles="matAutocomplete">
-      <mat-option *ngFor="let workrole of filteredWorkroles | async" [value]="workrole">
-        {{workrole}}
-      </mat-option>
-    </mat-autocomplete> -->
   <!-- </div> -->
   <!--Behavior task selection field-->
+  <input 
+  formControlName="task" 
+  (keyup)="taskKeyup($event)">
   <!-- <div appearance="fill" color="primary">
     <label>Task</label>
     <mat-form-field appearance="fill">
