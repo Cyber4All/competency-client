@@ -34,6 +34,7 @@ import { EmployabilityBuilderComponent } from './competency-builder/components/e
 import { NotesBuilderComponent } from './competency-builder/components/notes-builder/notes-builder.component';
 import { BannerComponent } from './banner/banner.component';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
+import { PreviewCompetencyComponent } from './preview-competency/preview-competency.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -46,7 +47,8 @@ import { VirtualScrollerModule } from 'ngx-virtual-scroller';
     EmployabilityBuilderComponent,
     NotesBuilderComponent,
     SnackbarComponent,
-    BannerComponent
+    BannerComponent,
+    PreviewCompetencyComponent
   ],
   imports: [
     CommonModule,

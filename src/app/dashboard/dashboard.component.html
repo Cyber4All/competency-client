@@ -43,6 +43,7 @@
         <div *ngFor="let competency of loadedCompetencies" class="competency-card_container">
             <cc-competency-card
                 [competency]="competency"
+                (click)="openCompetencyPreview(competency)"
             ></cc-competency-card>
             <button (click)="deleteCompetency(competency._id)">DELETE</button>
         </div>

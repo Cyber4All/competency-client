@@ -10,6 +10,7 @@ import { sleep } from '../shared/functions/loading';
 import { BuilderService } from '../core/builder/builder.service';
 import { CompetencyBuilder } from '../core/builder/competency-builder.class';
 import { CompetencyBuilderComponent } from '../shared/components/competency-builder/competency-builder.component';
+import { PreviewCompetencyComponent } from '../shared/components/preview-competency/preview-competency.component';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -199,6 +200,12 @@ export class DashboardComponent implements OnInit {
       } else {
         // isDraft can be undefined; Throw a toaster error stating something went wrong.
       }
+    });
+  }
+
+  async openCompetencyPreview(competency: Competency) {
+    const dialogRef = this.dialog.open(PreviewCompetencyComponent, {
+      autoFocus: false
     });
   }
 
