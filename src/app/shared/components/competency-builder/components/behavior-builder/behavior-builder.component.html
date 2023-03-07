@@ -34,8 +34,9 @@
       ></ng-container>
     </ul>
     <ng-container *ngIf="selectedTask && selectedTask.length > 0" class="task-pill_container">
+      <!--Add hover and focus for tootip of entire task description-->
       <div class="task-pill_name" *ngFor="let task of selectedTask">
-        {{ task.element_id | titlecase }} - {{ task.description }}
+        {{ task.element_id | titlecase }}
         <button
           attr.aria-label="Remove {{ task.element_id | titlecase }} as an affiliated task"
           class="task-delete"
