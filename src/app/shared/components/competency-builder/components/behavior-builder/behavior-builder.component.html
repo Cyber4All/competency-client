@@ -1,148 +1,107 @@
 <!--Behavior Builder-->
 <ng-container class="competency_edit-behavior-container">
   <!--Behavior workrole selection field-->
-  <input 
-    formControlName="workrole" 
-    (keyup)="keyup($event)">
-  <!-- <div appearance="fill" color="primary">
-    <label>Workrole</label>
-    <mat-form-field appearance="fill">
-      <mat-label>Workrole</mat-label>
-      <input 
-      matInput 
-      formControlName="workrole" 
-      (keyup)="keyup($event)">
-    </mat-form-field>
-    <ul
-    *ngIf="showDropdown"
-    (onBlur)="closeDropdown()"
-    class="org-dropdown_list"
+  <div appearance="fill" color="primary">
+    <input
+      [ngModel]="selectedWorkrole ? selectedWorkrole.work_role : ''"
+      (keyup)="workroleKeyup($event)"
+      placeholder="Search for a workrole"
+      #workroleInput
     >
-    <ng-container
-    *ngTemplateOutlet="loading ? loadingTemplate : resultsTemplate"
-    ></ng-container>
-  </ul> -->
-    <!-- workrole dropdown template -->
-    <!-- <ng-template #resultsTemplate>
+    <ul
+      *ngIf="showWorkrolesDropdown"
+      (onBlur)="closeDropdown()"
+      class="org-dropdown_list"
+    >
       <ng-container
-        *ngIf="workroles && workroles.length; else noResultsTemplate"
-      >
-          <virtual-scroller
-          #scroll
-          [style.height]="scrollerHeight"
-          [bufferAmount]="5"
-          [enableUnequalChildrenSizes]="true"
-          [items]="workroles"
-          >
-              <li
-                  class="org-dropdown_list-item"
-                  *ngFor="let role of scroll.viewPortItems"
-                  (click)="selectWorkrole(role)"
-              >
-                  {{ role.work_role }}
-              </li>
-          </virtual-scroller>
-      </ng-container>
-    </ng-template> -->
-
-    <!-- <ng-template #noResultsTemplate>
-      <div class="other-box">
-        <li class="other-option" (click)="selectOrg()">
-          Other
-        </li>
-      </div>
-    </ng-template>
-
-    <ng-template #loadingTemplate>
-      <span class="org-dropdown__message">
-        <i class="far fa-spinner-third fa-spin">
-          Loading
-        </i>
-      </span>
-    </ng-template> -->
-  <!-- </div> -->
+        *ngTemplateOutlet="loading ? loadingTemplate : workroleResultsTemplate"
+      ></ng-container>
+    </ul>
+  </div>
   <!--Behavior task selection field-->
-  <input 
-  formControlName="task" 
-  (keyup)="taskKeyup($event)">
-  <!-- <div appearance="fill" color="primary">
-    <label>Task</label>
-    <mat-form-field appearance="fill">
-      <mat-label>Organization</mat-label>
-      <input 
-      matInput 
-      formControlName="organization" 
-      (keyup)="keyup($event)">
-    <mat-error *ngIf="regFormGroup.get('organization')?.invalid">{{authValidation.getInputErrorMessage(regFormGroup.get('organization')!)}}</mat-error>
-
-    </mat-form-field>
-    <ul
-    *ngIf="showDropdown"
-    (onBlur)="closeDropdown()"
-    class="org-dropdown_list"
+  <div appearance="fill" color="primary">
+    <input 
+      placeholder="Search for a task"
+      (keyup)="taskKeyup($event)"
     >
-    <ng-container
-    *ngTemplateOutlet="loading ? loadingTemplate : resultsTemplate"
-    ></ng-container>
-  </ul> -->
-    <!-- organization dropdown template -->
-    <!-- <ng-template #resultsTemplate>
+    <ul
+      *ngIf="showTasksDropdown"
+      (onBlur)="closeDropdown()"
+      class="org-dropdown_list"
+    >
       <ng-container
-        *ngIf="searchResults && searchResults.length; else noResultsTemplate"
-      >
-          <virtual-scroller
-          #scroll
-          [style.height]="scrollerHeight"
-          [bufferAmount]="5"
-          [enableUnequalChildrenSizes]="true"
-          [items]="searchResults"
-          >
-              <li
-                  class="org-dropdown_list-item"
-                  *ngFor="let org of scroll.viewPortItems"
-                  (click)="selectOrg(org)"
-              >
-                  {{ org.name }}
-              </li>
-              <div class="other-box" (click)="selectOrg()">
-                  <li class="other-option">
-                  Other
-                  </li>
-              </div>
-          </virtual-scroller>
-      </ng-container>
-    </ng-template>
-
-    <ng-template #noResultsTemplate>
-      <div class="other-box">
-        <li class="other-option" (click)="selectOrg()">
-          Other
-        </li>
-      </div>
-    </ng-template>
-
-    <ng-template #loadingTemplate>
-      <span class="org-dropdown__message">
-        <i class="far fa-spinner-third fa-spin">
-          Loading
-        </i>
-      </span>
-    </ng-template> -->
-    <!-- <input type="text"
-            placeholder="Choose a task"
-            aria-label="Task"
-            matInput
-            [formControl]="task"
-            [matAutocomplete]="tasks">
-    <mat-autocomplete #tasks="matAutocomplete">
-      <mat-option *ngFor="let task of filteredTasks | async" [value]="task">
-        {{task}}
-      </mat-option>
-    </mat-autocomplete> -->
-  <!-- </div> -->
+        *ngTemplateOutlet="loading ? loadingTemplate : taskResultsTemplate"
+      ></ng-container>
+    </ul>
+    <ng-container>yeetus goes here</ng-container>
+  </div>
   <!--Behavior description form field-->
   <div appearance="fill" color="primary">
     <label>Task Description</label>
     <textarea placeholder="Provide a description for your task" [formControl]="details"></textarea>
   </div>
 </ng-container>
+
+<!-- workrole dropdown template -->
+<ng-template #workroleResultsTemplate>
+  <ng-container
+    *ngIf="workroles && workroles.length; else noResultsTemplate"
+  >
+    <virtual-scroller
+      #scroll
+      [style.height]="scrollerHeight"
+      [bufferAmount]="7"
+      [enableUnequalChildrenSizes]="true"
+      [items]="workroles"
+      >
+          <li
+              class="org-dropdown_list-item"
+              *ngFor="let role of scroll.viewPortItems"
+              (click)="selectedWorkrole = role; closeDropdown();"
+          >
+              {{ role.work_role }}
+          </li>
+      </virtual-scroller>
+  </ng-container>
+</ng-template>
+
+<!--Task dropdown template-->
+<ng-template #taskResultsTemplate>
+  <ng-container
+    *ngIf="tasks && tasks.length; else noResultsTemplate"
+  >
+    <virtual-scroller
+      #scroll
+      [style.height]="scrollerHeight"
+      [bufferAmount]="7"
+      [enableUnequalChildrenSizes]="true"
+      [items]="tasks"
+      >
+          <li
+              class="org-dropdown_list-item"
+              *ngFor="let task of scroll.viewPortItems"
+              (click)="selectedTask.push(task); closeDropdown();"
+          >
+              {{ task.element_id | titlecase }} - {{ task.description }}
+          </li>
+      </virtual-scroller>
+  </ng-container>
+</ng-template>
+
+<!--Loading template-->
+<ng-template #loadingTemplate>
+  <span class="org-dropdown__message">
+    <i class="far fa-spinner-third fa-spin">
+      Loading
+    </i>
+  </span>
+</ng-template> 
+
+<!--No Results Template-->
+<ng-template #noResultsTemplate>
+  <div class="other-box">
+    <li class="other-option">
+      No Results Found
+    </li>
+  </div>
+</ng-template>

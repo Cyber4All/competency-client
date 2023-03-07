@@ -18,8 +18,11 @@ export class BehaviorBuilderComponent implements OnInit {
   @Output() behaviorChange = new EventEmitter<{update: string, value: Behavior}>();
   // Builder - Behavior validation errors
   behaviorErrors: BuilderValidation[] = [];
-  // Virtual Scroller
+  // Virtual Scroller and dropdowns
   scrollerHeight = '100px';
+  showWorkrolesDropdown = false;
+  showTasksDropdown = false;
+  loading = false;
   // Form controls for workrole and task
   task = new FormControl('');
   workrole = new FormControl('');
@@ -43,7 +46,6 @@ export class BehaviorBuilderComponent implements OnInit {
 
   filteredWorkroles: Observable<string[]> = new Observable();
   filteredTasks: Observable<string[]> = new Observable();
-  loading = false;
   constructor(
     private workroleService: WorkroleService,
     private builderService: BuilderService
@@ -101,27 +103,22 @@ export class BehaviorBuilderComponent implements OnInit {
     // Subscribe to workrole form control
     this.workrole.valueChanges
       .pipe(debounceTime(1000))
-      .subscribe((workroleSearch: string) => {
-        // capture text input, search input for workrole description
-        if (workroleSearch.length > 0) {
-          this.workroleService.searchWorkroles(workroleSearch);
-        } else {
-          // Remove workrole error from behaviorErrors array
-          this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
-            return error.attribute !== 'work_role';
-          });
-          this.workrole.setErrors({error: false});
-          // Emit behavior workrole change to parent builder component
-          this.behaviorChange.emit({
-            update: 'behavior',
-            value: {
-              _id: this.behavior._id,
-              tasks: this.behavior.tasks,
-              details: this.details.value,
-              work_role: this.selectedWorkrole._id!
-            }
-          });
-        }
+      .subscribe(() => {
+        // Remove workrole error from behaviorErrors array
+        this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
+          return error.attribute !== 'work_role';
+        });
+        this.workrole.setErrors({error: false});
+        // Emit behavior workrole change to parent builder component
+        this.behaviorChange.emit({
+          update: 'behavior',
+          value: {
+            _id: this.behavior._id,
+            tasks: this.behavior.tasks,
+            details: this.behavior.details,
+            work_role: this.selectedWorkrole._id!
+          }
+        });
       });
     // Subscribe to task form control
     this.task.valueChanges
@@ -210,28 +207,62 @@ export class BehaviorBuilderComponent implements OnInit {
     // Subscribe to workrole search input
     this.workroleInput$.pipe(debounceTime(650))
       .subscribe( async (value: string) => {
-        (await this.workroleService.searchWorkroles(value.trim()));
+        await this.workroleService.searchWorkroles(value.trim());
         this.loading = false;
       });
+    this.workroleInput$.subscribe((value: string) => {
+      if (value && value !== '') {
+        this.showWorkrolesDropdown = true;
+        this.loading = true;
+      } else {
+        this.showWorkrolesDropdown = false;
+      }
+    });
     // Subscribe to task search input
     this.taskInput$.pipe(debounceTime(650))
       .subscribe( async (value: string) => {
         await this.workroleService.searchTasks(value.trim());
+        this.loading = false;
+      });
+      this.taskInput$.subscribe((value: string) => {
+        if (value && value !== '') {
+          this.showTasksDropdown = true;
+          this.loading = true;
+        } else {
+          this.showTasksDropdown = false;
+        }
       });
   }
 
   /**
-   * Registers typing events from the organization input
+   * Registers typing events from the workrole input
    *
    * @param event The typing event
    */
-    keyup(event: any) {
-      this.workroleInput$.next(event.target.value);
-    }
+  workroleKeyup(event: any) {
+    this.workroleInput$.next(event.target.value);
+  }
 
-    taskKeyup(event: any) {
-      this.taskInput$.next(event.target.value);
+  /**
+   * Registers typing events from the task input
+   *
+   * @param event The typing event
+   */
+  taskKeyup(event: any) {
+    this.taskInput$.next(event.target.value);
+  }
+
+  /**
+   * Closes either dropdown menu
+   */
+  closeDropdown() {
+    if (this.showWorkrolesDropdown) {
+      this.showWorkrolesDropdown = false;
     }
+    if (this.showTasksDropdown) {
+      this.showTasksDropdown = false;
+    }
+  }
 
   displayErrors(): void {
     // Iterate through behavior errors
