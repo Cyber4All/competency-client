@@ -210,7 +210,9 @@ export class DashboardComponent implements OnInit {
 
   async openCompetencyPreview(competency: Competency) {
     const dialogRef = this.dialog.open(PreviewCompetencyComponent, {
-      autoFocus: false
+      autoFocus: false,
+      data: competency,
+      panelClass: 'competency-preview-dialog'
     });
   }
 

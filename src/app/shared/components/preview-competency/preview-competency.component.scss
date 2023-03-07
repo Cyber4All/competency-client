@@ -1,4 +1,11 @@
 .header {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+.mat-dialog-content {
+  margin: 0;
 }
