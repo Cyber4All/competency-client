@@ -52,7 +52,7 @@ export class ActorBuilderComponent implements OnInit {
           value: {
             _id: this.actor._id,
             type: typeUpdate,
-            details: this.details.value
+            details: this.actor.details
           }
         });
       });
@@ -70,7 +70,7 @@ export class ActorBuilderComponent implements OnInit {
           update: 'actor',
           value: {
             _id: this.actor._id,
-            type: this.type.value,
+            type: this.actor.type,
             details: detailsUpdate
           }
         });

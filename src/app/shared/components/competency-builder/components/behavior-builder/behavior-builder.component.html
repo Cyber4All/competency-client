@@ -1,7 +1,7 @@
 <!--Behavior Builder-->
-<div class="competency_edit-behavior-container">
+<ng-container class="competency_edit-behavior-container">
   <!--Behavior workrole selection field-->
-  <div>
+  <ng-container>
     <input
       [ngModel]="selectedWorkrole ? selectedWorkrole.work_role : ''"
       (keyup)="workroleKeyup($event)"
@@ -17,9 +17,9 @@
         *ngTemplateOutlet="loading ? loadingTemplate : workroleResultsTemplate"
       ></ng-container>
     </ul>
-  </div>
+  </ng-container>
   <!--Behavior task selection field-->
-  <div>
+  <ng-container>
     <input 
       placeholder="Search for a task"
       (keyup)="taskKeyup($event)"
@@ -33,7 +33,7 @@
         *ngTemplateOutlet="loading ? loadingTemplate : taskResultsTemplate"
       ></ng-container>
     </ul>
-    <div *ngIf="selectedTask && selectedTask.length > 0" class="task-pill_container">
+    <ng-container *ngIf="selectedTask && selectedTask.length > 0" class="task-pill_container">
       <!--Add hover and focus for tootip of entire task description-->
       <div class="task-pill_name" *ngFor="let task of selectedTask">
         {{ task.element_id | titlecase }}
@@ -45,14 +45,14 @@
           <i class="far fa-trash-alt"></i>
         </button>
       </div>
-    </div>
-  </div>
+    </ng-container>
+  </ng-container>
   <!--Behavior description form field-->
-  <div>
+  <ng-container>
     <label>Task Description</label>
     <textarea placeholder="Provide a description for your task" [formControl]="details"></textarea>
-  </div>
-</div>
+  </ng-container>
+</ng-container>
 
 <!-- workrole dropdown template -->
 <ng-template #workroleResultsTemplate>

@@ -1,17 +1,17 @@
 <!-- Toggle template for edit and viewing condition-->
-<div class="competency_edit-condition-container">
+<ng-container class="competency_edit-condition-container">
     <!--Description form field-->
-    <div *ngIf="templateIndex === 0">
+    <ng-container *ngIf="templateIndex === 0">
         <!--Scenario form field-->
         <label>Scenario</label>
         <textarea [formControl]="scenario"></textarea>
         <!--Limitations form field-->
         <label>Limitations</label>
         <textarea [formControl]="limitations"></textarea>
-    </div>
+    </ng-container>
     <!--Technology form field-->
-    <div *ngIf="templateIndex === 1" class="condition_technology-container">
-        <div *ngFor="let tech of technology">
+    <ng-container *ngIf="templateIndex === 1" class="condition_technology-container">
+        <ng-container *ngFor="let tech of technology">
             <button
                 (click)="removeTechnology(tech)"
                 class="chip"
@@ -21,15 +21,15 @@
                     <icon>X</icon>
                 </button>
             </button>
-        </div>
+        </ng-container>
         <input
             placeholder="Specify technology required to complete this competency..."
             (keydown)="addTechnology($event)"
             [(ngModel)]="techInput"
         >
-    </div>
+    </ng-container>
     <!--Documenation form filed-->
-    <div *ngIf="templateIndex === 2">
+    <ng-container *ngIf="templateIndex === 2">
         <cc-file-upload></cc-file-upload>
-    </div>
-</div>
+    </ng-container>
+</ng-container>

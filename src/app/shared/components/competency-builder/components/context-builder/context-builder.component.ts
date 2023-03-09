@@ -63,9 +63,9 @@ export class ContextBuilderComponent implements OnInit {
           value: {
             _id: this.condition._id,
             scenario: scenarioUpdate,
-            tech: this.tech.value,
-            limitations: this.limitations.value,
-            documentation: this.documentation.value
+            tech: this.condition.tech,
+            limitations: this.condition.limitations,
+            documentation: this.condition.documentation
           }
         });
       });
@@ -83,10 +83,10 @@ export class ContextBuilderComponent implements OnInit {
           update: 'condition',
           value: {
             _id: this.condition._id,
-            scenario: this.scenario.value,
+            scenario: this.condition.scenario,
             tech: techUpdate,
-            limitations: this.limitations.value,
-            documentation: this.documentation.value
+            limitations: this.condition.limitations,
+            documentation: this.condition.documentation
           }
         });
       });
@@ -104,10 +104,10 @@ export class ContextBuilderComponent implements OnInit {
           update: 'condition',
           value: {
             _id: this.condition._id,
-            scenario: this.scenario.value,
-            tech: this.tech.value,
+            scenario: this.condition.scenario,
+            tech: this.condition.tech,
             limitations: limitationsUpdate,
-            documentation: this.documentation.value
+            documentation: this.condition.documentation
           }
         });
       });
@@ -125,9 +125,9 @@ export class ContextBuilderComponent implements OnInit {
           update: 'condition',
           value: {
             _id: this.condition._id,
-            scenario: this.scenario.value,
-            tech: this.tech.value,
-            limitations: this.limitations.value,
+            scenario: this.condition.scenario,
+            tech: this.condition.tech,
+            limitations: this.condition.limitations,
             documentation: documentationUpdate
           }
         });
