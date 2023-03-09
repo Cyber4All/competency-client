@@ -12,6 +12,7 @@ export class PreviewCompetencyComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: Competency) { }
 
   ngOnInit(): void {
+    console.log(this.data);
   }
 
 }
