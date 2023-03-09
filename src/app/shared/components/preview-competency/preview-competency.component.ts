@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Competency } from 'src/entity/competency';
 
@@ -9,10 +9,15 @@ import { Competency } from 'src/entity/competency';
 })
 export class PreviewCompetencyComponent implements OnInit {
 
+  updateSubmission = new EventEmitter();
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: Competency) { }
 
   ngOnInit(): void {
-    console.log(this.data);
+  }
+
+  onUpdateSubmission(): void {
+    this.updateSubmission.emit();
   }
 
 }

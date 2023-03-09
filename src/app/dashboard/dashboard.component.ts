@@ -214,6 +214,12 @@ export class DashboardComponent implements OnInit {
       data: competency,
       panelClass: 'competency-preview-dialog'
     });
+
+    // Detects if the "Update Submission" button is clicked
+    dialogRef.componentInstance.updateSubmission.subscribe(() => {
+      dialogRef.close();
+      this.openCompetencyBuilder(competency);
+    });
   }
 
   /**

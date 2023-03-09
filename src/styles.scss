@@ -9,16 +9,14 @@ body { margin: 0; font-family: Source Sans Pro, "Helvetica Neue", sans-serif; ba
 }
 
 .competency-preview-dialog {
-    color: white;
+  color: white;
+  width: 80%;
+  height: 80%;
 
-    .mat-dialog-title {
-        background-color: #EFEFEF;
-    }
-  
-    mat-dialog-container {
-      background-color: white;
-      color: black;
-      padding: 0;
-      overflow: hidden;
-    }
+  mat-dialog-container {
+    background-color: white;
+    color: black;
+    padding: 0;
+    overflow: hidden;
   }
+}
