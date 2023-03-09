@@ -2,8 +2,18 @@
     .edit-condition_description {
         margin: 20px 10px;
     }
-    mat-form-field {
-        display: block;
-        margin: 10px 0;
+
+    .condition_technology-container {
+        margin: 20px 10px;
+        display: flex;
+
+        .chip {
+            display: inline-block;
+            padding: 0 25px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+        }
     }
 }

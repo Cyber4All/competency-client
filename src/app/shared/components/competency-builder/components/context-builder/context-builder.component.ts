@@ -1,8 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Condition } from '../../../../../../entity/condition';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
 import { debounceTime } from 'rxjs';
 import { Documentation } from '../../../../../../entity/documentation';
 import { BuilderService } from '../../../../../core/builder/builder.service';
@@ -16,16 +14,17 @@ export class ContextBuilderComponent implements OnInit {
 
   @Input() condition!: Condition;
   @Output() conditionChange = new EventEmitter<{update: string, value: Condition}>();
+  // Builder - Behavior validation errors
   contextErrors: BuilderValidation[] = [];
-
   templateIndex = 0;
+  // Form controls
   scenario = new FormControl('');
   tech = new FormControl([]);
   limitations = new FormControl('');
   documentation = new FormControl([]);
+  // Temp variables for technology form control
   technology: string[] = [];
-  readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
-
+  techInput = '';
   constructor(
     public builderService: BuilderService
   ) { }
@@ -133,8 +132,13 @@ export class ContextBuilderComponent implements OnInit {
           }
         });
       });
+    // If scenario exists, set scenario form control
+    if (this.condition.scenario) {
+      this.scenario.patchValue(this.condition.scenario);
+    }
     // If value exists, set type form control
     if(this.condition.tech) {
+      this.technology = this.condition.tech;
       this.tech.patchValue(this.condition.tech);
     }
     // If value exists, set details form control
@@ -148,21 +152,26 @@ export class ContextBuilderComponent implements OnInit {
   }
 
   /**
-   * Method to add a technology string
+   * Method to add a new technology string
    *
    * @param event input event for creating a chip component
    */
-  addTechnology(event: MatChipInputEvent) {
-    // Get value
-    const value = (event.value || '').trim();
-    // Only update if value exists
-    if(value) {
-      this.technology.push(value);
-      // Patch form control with new technology array
-      this.tech.patchValue(this.technology);
+  addTechnology(event: KeyboardEvent) {
+    // Check for Enter and Tab keyboard events
+    if (event.key === 'Enter' || event.key === 'Tab') {
+      // Prevent default event
+      event.preventDefault();
+      // Get current value of input field
+      const value = this.techInput.trim();
+      if (value) {
+        // Add value to technology array
+        this.technology.push(value);
+        // Patch form control with new technology array
+        this.tech.patchValue(this.technology);
+        // Clear input field
+        this.techInput = '';
+      }
     }
-    // Clear input
-    event.chipInput!.clear();
   }
 
   /**

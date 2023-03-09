@@ -24,8 +24,6 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
   competencyId = '';
   // Index of current open builder component
   currIndex = 0;
-  // Index of current open builder component's submenu
-  templateIndex = 0;
 
   constructor(
     public builderService: BuilderService,
@@ -45,10 +43,6 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     // Subscribe to the current index of the builder form component
     this.builderService.builderIndex.subscribe((index: number) => {
       this.currIndex = index;
-    });
-    // Subscribe to the current index of the builder form component's submenu
-    this.builderService.templateIndex.subscribe((index: number) => {
-      this.templateIndex = index;
     });
     // If the competency is not passed in as input, set competency to injected dialog data
     if(!this.competency) {
