@@ -79,8 +79,9 @@ import { BuilderNavbarComponent } from './competency-builder/components/builder-
   ],
   exports: [
     CompetencyCardComponent,
+    CompetencyBuilderComponent,
     FileUploadComponent,
-    BannerComponent
+    BannerComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

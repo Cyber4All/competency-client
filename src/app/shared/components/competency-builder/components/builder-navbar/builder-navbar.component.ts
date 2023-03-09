@@ -7,12 +7,16 @@ import { BuilderService } from '../../../../../core/builder/builder.service';
   styleUrls: ['./builder-navbar.component.scss']
 })
 export class BuilderNavbarComponent implements OnInit {
-  @Input() currIndex!: number;
+  currIndex!: number;
 
   constructor(
     public builderService: BuilderService,
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.builderService.builderIndex.subscribe((index: number) => {
+      this.currIndex = index;
+    });
+  }
 
 }

@@ -48,3 +48,11 @@
         </div>
     </div>
 </ng-template>
+
+<cc-competency-builder
+    ccBuilder
+    *ngIf="openBuilder"
+    [competency]="newCompetency"
+    [options]="{ showExitButton: true, padding: true, exitButtonColor: 'black' }"
+    (close)="closeBuilder($event)"
+></cc-competency-builder>
