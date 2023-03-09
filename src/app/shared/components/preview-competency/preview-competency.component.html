@@ -1,7 +1,7 @@
 <div class="header">
   <h2>Insert Competency Title Here</h2>
   <a mat-dialog-close>
-    <i class="far fa-times"></i>
+    <i class="far fa-times fa-2x"></i>
   </a>
 </div>
 
@@ -26,7 +26,7 @@
   <div>
     <p><b>Documentation:</b></p>
     <ul>
-      <li *ngFor="let doc of data.condition.documentation">{{ doc._id }}</li>
+      <li *ngFor="let doc of data.condition.documentation">{{ doc.uri ? doc.uri : "empty uri yeet" }}</li>
       <ng-container *ngIf="!data.condition.documentation.length" [ngTemplateOutlet]="noDocs"></ng-container>
     </ul>
   </div>
@@ -41,7 +41,7 @@
 </div>
 
 <div class="footer">
-  <p>Submitted Aug 9, 1983</p>
+  <p>Submitted December 32, 2133</p>
   <button (click)="onUpdateSubmission()">Update Submission</button>
 </div>
 
