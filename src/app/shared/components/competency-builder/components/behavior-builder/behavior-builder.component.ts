@@ -23,7 +23,7 @@ export class BehaviorBuilderComponent implements OnInit {
   showWorkrolesDropdown = false;
   showTasksDropdown = false;
   loading = false;
-  // Form controls for workrole and task
+  // Form controls
   task = new FormControl('');
   workrole = new FormControl('');
   details = new FormControl('');
@@ -36,14 +36,7 @@ export class BehaviorBuilderComponent implements OnInit {
   // Selected workrole and task from virtual scroller
   selectedWorkrole!: Workrole;
   selectedTask!: Elements[];
-  /**
-   * 3. Accept input for workrole and task
-   *  3.3 Set workrole and task in builder (through observable)
-   *  3.4 Virtural Scroller displays new input of tasks and workroles
-   * 4. Select task or workrole
-   *  4.1 selected id gets added to builder class
-   */
-
+  // Filtered workroles and tasks
   filteredWorkroles: Observable<string[]> = new Observable();
   filteredTasks: Observable<string[]> = new Observable();
   constructor(
@@ -142,7 +135,7 @@ export class BehaviorBuilderComponent implements OnInit {
           value: {
             _id: this.behavior._id,
             tasks: taskIds,
-            details: this.details.value,
+            details: this.behavior.details,
             work_role: this.behavior.work_role,
           }
         });

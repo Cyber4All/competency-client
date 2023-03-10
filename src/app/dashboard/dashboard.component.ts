@@ -11,6 +11,8 @@ import { BuilderService } from '../core/builder/builder.service';
 import { CompetencyBuilder } from '../core/builder/competency-builder.class';
 import { CompetencyBuilderComponent } from '../shared/components/competency-builder/competency-builder.component';
 import { PreviewCompetencyComponent } from '../shared/components/preview-competency/preview-competency.component';
+import { SnackbarService } from '../core/snackbar.service';
+import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -36,6 +38,9 @@ export class DashboardComponent implements OnInit {
   };
   // Boolean toggle for 'clear filters' button
   filterApplied = false;
+  // Builder vars
+  newCompetency!: CompetencyBuilder;
+  openBuilder = false;
 
   constructor(
     private dialog: MatDialog,
@@ -43,6 +48,7 @@ export class DashboardComponent implements OnInit {
     private builderService: BuilderService,
     private authService: AuthService,
     private router: Router,
+    private snackBar: SnackbarService
   ) { }
 
   async ngOnInit() {
@@ -171,7 +177,7 @@ export class DashboardComponent implements OnInit {
       existingCompetency = await this.competencyService.getCompetencyById(competencyShellId.id);
     }
     // Create new instance of competency builder
-    const competency: CompetencyBuilder = new CompetencyBuilder(
+    this.newCompetency = new CompetencyBuilder(
       existingCompetency._id,
       existingCompetency.status,
       existingCompetency.authorId,
@@ -183,29 +189,32 @@ export class DashboardComponent implements OnInit {
       existingCompetency.employability,
       existingCompetency.notes
     );
-    // Open dialog ref for builder
-    const dialogRef = this.dialog.open(CompetencyBuilderComponent, {
-      height: '600px',
-      width: '900px',
-      data: competency,
-      position: {right:'10px', bottom: '0px'}
-    });
-    // After close of builder; handle drafts/unsavable and dashboard list
-    dialogRef.afterClosed().subscribe(async (isDraft: boolean) => {
-      // Enforce loading state
-      this.loading = true;
-      if((isDraft === undefined && !this.isSavable) || !isDraft) {
-        // Competency is neither savable nor being saved as draft; delete shell
-        await this.deleteCompetency(competency._id);
-      } else if (isDraft) {
-        // Update user dashboard with newly created competencies
-        this.search.competencies = [];
-        this.loadedCompetencies = [];
-        await this.initDashboard();
-      } else {
-        // isDraft can be undefined; Throw a toaster error stating something went wrong.
-      }
-    });
+    this.openBuilder = true;
+  }
+
+  async closeBuilder(isDraft: any) {
+    console.log(isDraft, this.isSavable);
+    // Enforce loading state
+    this.loading = true;
+    this.openBuilder = false;
+    if((isDraft === undefined && !this.isSavable) || !isDraft) {
+      console.log('maximus?');
+      // Competency is neither savable nor being saved as draft; delete shell
+      await this.deleteCompetency(this.newCompetency._id);
+    } else if (isDraft) {
+      console.log('yeetus?');
+      // Update user dashboard with newly created competencies
+      this.search.competencies = [];
+      this.loadedCompetencies = [];
+      await this.initDashboard();
+    } else {
+      // isDraft can be undefined; Throw a toaster error stating something went wrong.
+      this.snackBar.notification$.next({
+        title: 'Something went wrong!',
+        message: 'Your competency may not have been saved. Please try again.',
+        color: SNACKBAR_COLOR.DANGER
+      });
+    }
   }
 
   async openCompetencyPreview(competency: Competency) {

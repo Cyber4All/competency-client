@@ -56,8 +56,8 @@ export class DegreeBuilderComponent implements OnInit {
           value: {
             _id: this.degree._id,
             complete: completeChange,
-            correct: this.correct.value,
-            time: this.time.value
+            correct: this.degree.correct,
+            time: this.degree.time
           }
         });
       });
@@ -75,9 +75,9 @@ export class DegreeBuilderComponent implements OnInit {
           update: 'degree',
           value: {
             _id: this.degree._id,
-            complete: this.complete.value,
+            complete: this.degree.complete,
             correct: correctChange,
-            time: this.time.value
+            time: this.degree.time
           }
         });
       });
@@ -95,8 +95,8 @@ export class DegreeBuilderComponent implements OnInit {
           update: 'degree',
           value: {
             _id: this.degree._id,
-            complete: this.complete.value,
-            correct: this.correct.value,
+            complete: this.degree.complete,
+            correct: this.degree.correct,
             time: timeChange
           }
         });

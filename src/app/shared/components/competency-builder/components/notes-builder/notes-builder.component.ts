@@ -23,7 +23,7 @@ export class NotesBuilderComponent implements OnInit {
           update: 'notes',
           value: {
             _id: this.notes._id,
-            details: this.details.value
+            details: notesUpdate
           }
         });
       });

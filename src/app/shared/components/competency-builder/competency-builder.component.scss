@@ -4,25 +4,8 @@
   width: 100%;
 
   .competency-builder_navbar {
-    width: 100%;
     color: white;
     position: relative;
-    height: 100%;
-
-    .competency-builder_navbar-buttons {
-      margin: 0;
-      position: absolute;
-      top: 50%;
-      -ms-transform: translateY(-50%);
-      transform: translateY(-50%);
-
-      button {
-        display: block;
-        padding: 15px;
-        margin: 15px 0 0 15px;
-        text-align: left;
-      }
-    }
   }
 
   .competency-builder_form {

@@ -24,13 +24,9 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
   competencyId = '';
   // Index of current open builder component
   currIndex = 0;
-  // Index of current open builder component's submenu
-  templateIndex = 0;
 
   constructor(
     public builderService: BuilderService,
-    public dialogRef: MatDialogRef<CompetencyBuilderComponent>,
-    @Inject(MAT_DIALOG_DATA) private COMPETENCY: CompetencyBuilder,
     private snackBarService: SnackbarService
   ) {}
 
@@ -46,14 +42,6 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     this.builderService.builderIndex.subscribe((index: number) => {
       this.currIndex = index;
     });
-    // Subscribe to the current index of the builder form component's submenu
-    this.builderService.templateIndex.subscribe((index: number) => {
-      this.templateIndex = index;
-    });
-    // If the competency is not passed in as input, set competency to injected dialog data
-    if(!this.competency) {
-      this.competency = this.COMPETENCY;
-    }
     // Set the current competency ID for inputs in child components
     this.competencyId = this.competency._id;
   }
@@ -115,7 +103,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
       await this.builderService.updateEmployability(competency._id, competency.employability);
       await this.builderService.updateNotes(competency._id, competency.notes);
       // Close the dialog and send a success notification
-      this.dialogRef.close(true);
+      // this.dialogRef.close(true); ==> fix me
       this.snackBarService.notification$.next({
         message: 'Competency Saved',
         title: 'success',

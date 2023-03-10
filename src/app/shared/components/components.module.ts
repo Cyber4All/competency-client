@@ -39,6 +39,7 @@ import { PrimaryNavComponent } from './primary-nav/primary-nav.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
 import { RouterModule } from '@angular/router';
+import { BuilderNavbarComponent } from './competency-builder/components/builder-navbar/builder-navbar.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -55,7 +56,8 @@ import { RouterModule } from '@angular/router';
     PreviewCompetencyComponent,
     PrimaryNavComponent,
     SearchBarComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    BuilderNavbarComponent
   ],
   imports: [
     CommonModule,
@@ -87,6 +89,7 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     CompetencyCardComponent,
+    CompetencyBuilderComponent,
     FileUploadComponent,
     BannerComponent,
     PrimaryNavComponent,
