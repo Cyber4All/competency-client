@@ -8,20 +8,26 @@
 <div class="content">
   <div class="actor bottom-bordered content-section">
     <h2>Actor</h2>
-    <p><b>Type:</b> {{ data.actor.type ? data.actor.type : "empty type yeet" }}</p>
-    <p><b>Details:</b> {{ data.actor.details ? data.actor.details : "empty details yeet"}}</p>
+    <p><b>Type:</b> {{ data.actor.type ? data.actor.type : "No type specified." }}</p>
+    <p><b>Details:</b> {{ data.actor.details ? data.actor.details : "No details specified."}}</p>
   </div>
   <div class="behavior bottom-bordered content-section">
     <h2>Behavior</h2>
-    <p><b>Workrole:</b> {{ data.behavior.work_role ? data.behavior.work_role : "empty workrole yeet"}}</p>
+    <p><b>Workrole:</b> {{ data.behavior.work_role ? data.behavior.work_role : "No workrole specified."}}</p>
     <!-- Ask about tasks -->
-    <p><b>Task:</b> {{ data.behavior.tasks.length ? data.behavior.tasks : "empty tasks yeet" }}</p>
-    <p><b>Details:</b> {{ data.behavior.details ? data.behavior.details : "empty details yeet" }}</p>
+    <div>
+      <p><b>Tasks:</b></p>
+      <ul>
+        <li *ngFor="let task of data.behavior.tasks">{{ task }}</li>
+        <ng-container *ngIf="!data.behavior.tasks.length" [ngTemplateOutlet]="noTasks"></ng-container>
+      </ul>
+    </div>
+    <p><b>Details:</b> {{ data.behavior.details ? data.behavior.details : "No details specified." }}</p>
   </div>
   <div class="condition bottom-bordered content-section">
     <h2>Condition</h2>
-    <p><b>Situation:</b> {{ data.condition.scenario ? data.condition.scenario : "empty scenario yeet"}}</p>
-    <p><b>Limitations:</b> {{ data.condition.limitations ? data.condition.limitations : "empty limitations yeet"}}</p>
+    <p><b>Situation:</b> {{ data.condition.scenario ? data.condition.scenario : "No scenario specified"}}</p>
+    <p><b>Limitations:</b> {{ data.condition.limitations ? data.condition.limitations : "No limitations specified."}}</p>
     <div>
       <p><b>Technology:</b></p>
       <ul>
@@ -32,24 +38,24 @@
     <div>
       <p><b>Documentation:</b></p>
       <ul>
-        <li *ngFor="let doc of data.condition.documentation">{{ doc.uri ? doc.uri : "empty uri yeet" }}</li>
+        <li *ngFor="let doc of data.condition.documentation">{{ doc.uri ? doc.uri : "No URI specified." }}</li>
         <ng-container *ngIf="!data.condition.documentation.length" [ngTemplateOutlet]="noDocs"></ng-container>
       </ul>
     </div>
   </div>
   <div class="degree bottom-bordered content-section">
     <h2>Degree</h2>
-    <p><b>Time:</b> {{ data.degree.time ? data.degree.time : "no time yeet"}}</p>
-    <p><b>Completeness:</b> {{ data.degree.complete ? data.degree.complete : "no complete yeet"}}</p>
-    <p><b>Correctness:</b> {{ data.degree.correct ? data.degree.correct : "no correct yeet" }}</p>
+    <p><b>Time:</b> {{ data.degree.time ? data.degree.time : "No time specified."}}</p>
+    <p><b>Completeness:</b> {{ data.degree.complete ? data.degree.complete : "No completeness specified."}}</p>
+    <p><b>Correctness:</b> {{ data.degree.correct ? data.degree.correct : "No correctness specified." }}</p>
   </div>
   <div class="employability bottom-bordered content-section">
     <h2>Employability</h2>
-    <p>{{ data.employability.details ? data.employability.details : "no details yeet"}}</p>
+    <p>{{ data.employability.details ? data.employability.details : "No details specified."}}</p>
   </div>
   <div class="notes content-section">
     <h2>Notes</h2>
-    <p>{{ data.notes.details ? data.notes.details : "no notes details yeet"}}</p>
+    <p>{{ data.notes.details ? data.notes.details : "No notes specified."}}</p>
   </div>
 </div>
 
@@ -59,10 +65,14 @@
   <button (click)="onUpdateSubmission()" class="submit">UPDATE SUBMISSION</button>
 </div>
 
+<ng-template #noTasks>
+  <p>No tasks specified.</p>
+</ng-template>
+
 <ng-template #noDocs>
-  <p>No documentation yeet</p>
+  <p>No documentation specified.</p>
 </ng-template>
 
 <ng-template #noTech>
-  <p>No tech yeet</p>
+  <p>No technology specified.</p>
 </ng-template>
