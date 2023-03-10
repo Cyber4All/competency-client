@@ -1,43 +1,56 @@
 <div class="header">
   <h2>Insert Competency Title Here</h2>
-  <a mat-dialog-close>
+  <button mat-dialog-close>
     <i class="far fa-times fa-2x"></i>
-  </a>
+  </button>
 </div>
 
 <div class="content">
-  <h2>Actor</h2>
-  <p><b>Type:</b> {{ data.actor.type ? data.actor.type : "empty type yeet" }}</p>
-  <p><b>Details:</b> {{ data.actor.details ? data.actor.details : "empty details yeet"}}</p>
-  <h2>Behavior</h2>
-  <p><b>Workrole:</b> {{ data.behavior.work_role ? data.behavior.work_role : "empty workrole yeet"}}</p>
-  <p><b>Task:</b> {{ data.behavior.tasks ? data.behavior.tasks : "empty tasks yeet" }}</p>
-  <p><b>Details:</b> {{ data.behavior.details ? data.behavior.details : "empty details yeet" }}</p>
-  <h2>Condition</h2>
-  <p><b>Situation:</b> {{ data.condition.scenario ? data.condition.scenario : "empty scenario yeet"}}</p>
-  <p><b>Limitations:</b> {{ data.condition.limitations ? data.condition.limitations : "empty limitations yeet"}}</p>
-  <div>
-    <p><b>Technology:</b></p>
-    <ul>
-      <li *ngFor="let tech of data.condition.tech">{{ tech }}</li>
-      <ng-container *ngIf="!data.condition.tech.length" [ngTemplateOutlet]="noTech"></ng-container>
-    </ul>
+  <div class="actor bottom-bordered content-section">
+    <h2>Actor</h2>
+    <p><b>Type:</b> {{ data.actor.type ? data.actor.type : "empty type yeet" }}</p>
+    <p><b>Details:</b> {{ data.actor.details ? data.actor.details : "empty details yeet"}}</p>
   </div>
-  <div>
-    <p><b>Documentation:</b></p>
-    <ul>
-      <li *ngFor="let doc of data.condition.documentation">{{ doc.uri ? doc.uri : "empty uri yeet" }}</li>
-      <ng-container *ngIf="!data.condition.documentation.length" [ngTemplateOutlet]="noDocs"></ng-container>
-    </ul>
+  <div class="behavior bottom-bordered content-section">
+    <h2>Behavior</h2>
+    <p><b>Workrole:</b> {{ data.behavior.work_role ? data.behavior.work_role : "empty workrole yeet"}}</p>
+    <!-- Ask about tasks -->
+    <p><b>Task:</b> {{ data.behavior.tasks.length ? data.behavior.tasks : "empty tasks yeet" }}</p>
+    <p><b>Details:</b> {{ data.behavior.details ? data.behavior.details : "empty details yeet" }}</p>
   </div>
-  <h2>Degree</h2>
-  <p><b>Time:</b> {{ data.degree.time ? data.degree.time : "no time yeet"}}</p>
-  <p><b>Completeness:</b> {{ data.degree.complete ? data.degree.complete : "no complete yeet"}}</p>
-  <p><b>Correctness:</b> {{ data.degree.correct ? data.degree.correct : "no correct yeet" }}</p>
-  <h2>Employability</h2>
-  <p>{{ data.employability.details ? data.employability.details : "no details yeet"}}</p>
-  <h2>Notes</h2>
-  <p>{{ data.notes.details ? data.notes.details : "no notes details yeet"}}</p>
+  <div class="condition bottom-bordered content-section">
+    <h2>Condition</h2>
+    <p><b>Situation:</b> {{ data.condition.scenario ? data.condition.scenario : "empty scenario yeet"}}</p>
+    <p><b>Limitations:</b> {{ data.condition.limitations ? data.condition.limitations : "empty limitations yeet"}}</p>
+    <div>
+      <p><b>Technology:</b></p>
+      <ul>
+        <li *ngFor="let tech of data.condition.tech">{{ tech }}</li>
+        <ng-container *ngIf="!data.condition.tech.length" [ngTemplateOutlet]="noTech"></ng-container>
+      </ul>
+    </div>
+    <div>
+      <p><b>Documentation:</b></p>
+      <ul>
+        <li *ngFor="let doc of data.condition.documentation">{{ doc.uri ? doc.uri : "empty uri yeet" }}</li>
+        <ng-container *ngIf="!data.condition.documentation.length" [ngTemplateOutlet]="noDocs"></ng-container>
+      </ul>
+    </div>
+  </div>
+  <div class="degree bottom-bordered content-section">
+    <h2>Degree</h2>
+    <p><b>Time:</b> {{ data.degree.time ? data.degree.time : "no time yeet"}}</p>
+    <p><b>Completeness:</b> {{ data.degree.complete ? data.degree.complete : "no complete yeet"}}</p>
+    <p><b>Correctness:</b> {{ data.degree.correct ? data.degree.correct : "no correct yeet" }}</p>
+  </div>
+  <div class="employability bottom-bordered content-section">
+    <h2>Employability</h2>
+    <p>{{ data.employability.details ? data.employability.details : "no details yeet"}}</p>
+  </div>
+  <div class="notes content-section">
+    <h2>Notes</h2>
+    <p>{{ data.notes.details ? data.notes.details : "no notes details yeet"}}</p>
+  </div>
 </div>
 
 <div class="footer">
