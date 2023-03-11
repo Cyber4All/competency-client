@@ -35,12 +35,12 @@
     </ul>
     <ng-container *ngIf="selectedTask && selectedTask.length > 0" class="task-pill_container">
       <!--Add hover and focus for tootip of entire task description-->
-      <div class="task-pill_name" *ngFor="let task of selectedTask">
-        {{ task.element_id | titlecase }}
+      <div class="task-pill_name" *ngFor="let niceTask of selectedTask">
+        {{ niceTask.element_id | titlecase }}
         <button
-          attr.aria-label="Remove {{ task.element_id | titlecase }} as an affiliated task"
+          attr.aria-label="Remove {{ niceTask.element_id | titlecase }} as an affiliated task"
           class="task-delete"
-          (click)="selectedTask.splice(selectedTask.indexOf(task), 1)"
+          (click)="selectedTask.splice(selectedTask.indexOf(niceTask), 1); task.patchValue(true);"
         >
           <i class="far fa-trash-alt"></i>
         </button>
@@ -69,7 +69,7 @@
           <li
               class="org-dropdown_list-item"
               *ngFor="let role of scroll.viewPortItems"
-              (click)="selectedWorkrole = role; closeDropdown();"
+              (click)="selectedWorkrole = role; closeDropdown(); workrole.patchValue(true);"
           >
               {{ role.work_role }}
           </li>
@@ -91,10 +91,10 @@
       >
           <li
               class="org-dropdown_list-item"
-              *ngFor="let task of scroll.viewPortItems"
-              (click)="selectedTask.push(task); closeDropdown();"
+              *ngFor="let niceTask of scroll.viewPortItems"
+              (click)="selectedTask.push(niceTask); closeDropdown(); task.patchValue(true);"
           >
-              {{ task.element_id | titlecase }} - {{ task.description }}
+              {{ niceTask.element_id | titlecase }} - {{ niceTask.description }}
           </li>
       </virtual-scroller>
   </ng-container>

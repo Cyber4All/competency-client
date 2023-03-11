@@ -35,7 +35,7 @@ export class BehaviorBuilderComponent implements OnInit {
   tasks: Elements[] = [];
   // Selected workrole and task from virtual scroller
   selectedWorkrole!: Workrole;
-  selectedTask!: Elements[];
+  selectedTask: Elements[] = [];
   // Filtered workroles and tasks
   filteredWorkroles: Observable<string[]> = new Observable();
   filteredTasks: Observable<string[]> = new Observable();
@@ -118,11 +118,8 @@ export class BehaviorBuilderComponent implements OnInit {
       .pipe(debounceTime(1000))
       .subscribe(() => {
         // Get task ids from Elements array
-        const taskIds: string[] = [];
-        this.tasks.filter((task: Elements) => {
-          if(task.description === this.task.value) {
-            taskIds.push(task._id!);
-          }
+        const taskIds: string[] = this.selectedTask.map((task: Elements) => {
+          return task._id!;
         });
         // Remove task error from behaviorErrors array
         this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
@@ -176,7 +173,7 @@ export class BehaviorBuilderComponent implements OnInit {
       });
     }
     // If tasks exists, set type form value
-    if(this.behavior.tasks) {
+    if(this.behavior.tasks.length > 0) {
       this.tasks = [];
       this.selectedTask = [];
       // The tasks ObjectIds are stored on a competency
@@ -203,6 +200,13 @@ export class BehaviorBuilderComponent implements OnInit {
         await this.workroleService.searchWorkroles(value.trim());
         this.loading = false;
       });
+
+    // Subscribe to task search input
+    this.taskInput$.pipe(debounceTime(650))
+      .subscribe( async (value: string) => {
+        await this.workroleService.searchTasks(value.trim());
+        this.loading = false;
+      });
     this.workroleInput$.subscribe((value: string) => {
       if (value && value !== '') {
         this.showWorkrolesDropdown = true;
@@ -211,20 +215,15 @@ export class BehaviorBuilderComponent implements OnInit {
         this.showWorkrolesDropdown = false;
       }
     });
-    // Subscribe to task search input
-    this.taskInput$.pipe(debounceTime(650))
-      .subscribe( async (value: string) => {
-        await this.workroleService.searchTasks(value.trim());
-        this.loading = false;
-      });
-      this.taskInput$.subscribe((value: string) => {
-        if (value && value !== '') {
-          this.showTasksDropdown = true;
-          this.loading = true;
-        } else {
-          this.showTasksDropdown = false;
-        }
-      });
+
+    this.taskInput$.subscribe((value: string) => {
+      if (value && value !== '') {
+        this.showTasksDropdown = true;
+        this.loading = true;
+      } else {
+        this.showTasksDropdown = false;
+      }
+    });
   }
 
   /**
