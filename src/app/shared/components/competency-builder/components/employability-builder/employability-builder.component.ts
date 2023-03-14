@@ -37,7 +37,7 @@ export class EmployabilityBuilderComponent implements OnInit {
     });
     // Subscribe to details form control
     this.details.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((detailsChange: string) => {
         // Remove details error from employabilityErrors array
         this.employabilityErrors = this.employabilityErrors.filter((error: BuilderValidation) => {

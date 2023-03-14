@@ -95,7 +95,7 @@ export class BehaviorBuilderComponent implements OnInit {
      */
     // Subscribe to workrole form control
     this.workrole.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe(() => {
         // Remove workrole error from behaviorErrors array
         this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
@@ -115,7 +115,7 @@ export class BehaviorBuilderComponent implements OnInit {
       });
     // Subscribe to task form control
     this.task.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe(() => {
         // Get task ids from Elements array
         const taskIds: string[] = this.selectedTask.map((task: Elements) => {
@@ -139,7 +139,7 @@ export class BehaviorBuilderComponent implements OnInit {
       });
     // Subscribe to details form control
     this.details.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((detailsUpdate: string) => {
         // Remove details error from behaviorErrors array
         this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {

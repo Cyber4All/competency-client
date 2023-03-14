@@ -50,7 +50,7 @@ export class ContextBuilderComponent implements OnInit {
     });
     // Subscribe to scenario form control
     this.scenario.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((scenarioUpdate: string) => {
         // Remove scenario error from contextErrors array
         this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
@@ -71,7 +71,7 @@ export class ContextBuilderComponent implements OnInit {
       });
     // Subscribe to tech form control
     this.tech.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((techUpdate: string[]) => {
         // Remove tech error from contextErrors array
         this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
@@ -92,7 +92,7 @@ export class ContextBuilderComponent implements OnInit {
       });
     // Subscribe to limitations form control
     this.limitations.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((limitationsUpdate: string) => {
         // Remove limitations error from contextErrors array
         this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
@@ -113,7 +113,7 @@ export class ContextBuilderComponent implements OnInit {
       });
     // Subscribe to documentation form control
     this.documentation.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((documentationUpdate: Documentation[]) => {
         // Remove documentation error from contextErrors array
         this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
