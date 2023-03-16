@@ -77,7 +77,7 @@
 </ng-template>
 
 <ng-template #adminHeader>
-  <div class="admin header">
+  <div class="admin header" [ngClass]="this.data.status.toString()">
     <div class="left-corner">
       <h2>{{ this.data.behavior.work_role }} - {{ this.data.behavior.tasks[0].split(":")[0] }}</h2>
       <p><b>Task: </b>{{ this.data.behavior.tasks[0] }}</p>

@@ -15,7 +15,8 @@
   }
 
   button {
-    background-color: color-gray(8);
+    background-color: inherit;
+    color: inherit;
     border: 0px;
     margin-right: 5px;
     padding: 5px 10px;
@@ -25,12 +26,14 @@
     }
 
     &:active {
-      background-color: color-gray(6);
+      opacity: 0.5;
       border-radius: 1000px;
     }
   }
 
   &.admin {
+    color: white;
+
     p {
       margin: 0
     }
@@ -50,7 +53,9 @@
         }
       }
     }
-    
+  }
+  &.draft {
+    background-color: #8E0080;
   }
 }
 
