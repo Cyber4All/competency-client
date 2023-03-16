@@ -1,4 +1,4 @@
-<div class="header">
+<div *ngIf="!isAdmin else adminHeader" class="header">
   <h2>Insert Competency Title Here</h2>
   <button mat-dialog-close>
     <i class="far fa-times fa-2x"></i>
@@ -14,7 +14,6 @@
   <div class="behavior bottom-bordered content-section">
     <h2>Behavior</h2>
     <p><b>Workrole:</b> {{ data.behavior.work_role ? data.behavior.work_role : "No workrole specified."}}</p>
-    <!-- Ask about tasks -->
     <div>
       <p><b>Tasks:</b></p>
       <ul>
@@ -75,4 +74,23 @@
 
 <ng-template #noTech>
   <p>No technology specified.</p>
+</ng-template>
+
+<ng-template #adminHeader>
+  <div class="admin header">
+    <div class="left-corner">
+      <h2>{{ this.data.behavior.work_role }} - {{ this.data.behavior.tasks[0].split(":")[0] }}</h2>
+      <p><b>Task: </b>{{ this.data.behavior.tasks[0] }}</p>
+    </div>
+    <div class="right-corner">
+      <div class="status">
+        <i class="far fa-file-edit fa-2x"></i>
+        <p><b>Draft</b></p>
+      </div>
+      
+      <button mat-dialog-close>
+        <i class="far fa-times fa-2x"></i>
+      </button>
+    </div>
+  </div>
 </ng-template>

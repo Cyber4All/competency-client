@@ -29,7 +29,6 @@ import { AdminDashboardModule } from './admin-dashboard/admin-dashboard.module';
     MatDialogModule,
     SharedModule,
     AdminDashboardModule,
-    SharedModule,
   ],
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },

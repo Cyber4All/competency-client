@@ -29,6 +29,29 @@
       border-radius: 1000px;
     }
   }
+
+  &.admin {
+    p {
+      margin: 0
+    }
+
+    .right-corner {
+      display: flex;
+
+      .status {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-right: 50px;
+  
+        p {
+          font-size: font();
+          margin-left: 5px;
+        }
+      }
+    }
+    
+  }
 }
 
 .content {
