@@ -32,17 +32,17 @@ export class FilteringDropdownsComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     // if title is Workrole or Task, then shared search bar should be used
-    this.searchbar = this.title === DropdownType.workrole || this.title === DropdownType.task;
+    this.searchbar = this.title === DropdownType.Workrole || this.title === DropdownType.Task;
 
     // Set items based on the type of the dropdown
     switch(this.title) {
-      case DropdownType.status:
+      case DropdownType.Status:
         // Set items to the value of the Lifecycles enum
         Object.values(Lifecycles).forEach((value: string) => {
           this.items.push({ id: value, name: value });
         });
         break;
-      case DropdownType.workrole:
+      case DropdownType.Workrole:
         // Set items to the workroles returned from the API
         await this.workroleService.getAllWorkroles().then((workrolesQuery: any) => {
           workrolesQuery.data.workroles.forEach((workrole: Workrole) => {
@@ -50,7 +50,7 @@ export class FilteringDropdownsComponent implements OnInit {
           });
         });
         break;
-      case DropdownType.task:
+      case DropdownType.Task:
         // Set items to the tasks returned from the API
         await this.workroleService.getAllTasks().then((tasksQuery: any) => {
           tasksQuery.data.tasks.forEach((task: Elements) => {
@@ -58,7 +58,7 @@ export class FilteringDropdownsComponent implements OnInit {
           });
         });
         break;
-      case DropdownType.actor:
+      case DropdownType.Actor:
         // Set items to a list of audiences
         this.items = [];
         break;
