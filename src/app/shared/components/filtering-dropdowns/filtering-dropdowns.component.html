@@ -8,7 +8,7 @@
     <!-- Dropdown Menu triggered toggled by the dropdown button -->
     <mat-menu #dropdown="matMenu" class="dropdown-wrapper">
             <!-- Searchbar used to filter the 'filter items' -->
-            <div mat-menu-item *ngIf="searchbar" class="searchbar">
+            <div *ngIf="searchbar" class="searchbar" (click)="$event.stopPropagation()">
                 <cc-search-bar></cc-search-bar>
             </div>
 
