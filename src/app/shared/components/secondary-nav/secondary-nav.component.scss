@@ -11,21 +11,37 @@
     .dropdowns {
         display: grid;
         grid-template-columns: repeat(4, min-content);
-        gap: 0 30px;
+        gap: 0 1vh;
         
-        padding: 15px 30px;
+        padding: 1vh 2vh;
     }
 
     .buttons {
         display: grid;
         grid-template-columns: repeat(2, min-content);
-        gap: 0 30px;
+        gap: 0 1vh;
 
-        padding: 15px 30px;
+        padding: 1vh 2vh;
+
+        .help {
+            border: 1px solid color-gray(6);
+
+            &:hover {
+                opacity: 0.5;
+            }
+        }
 
         .builder {
-            background: #376ED6;
-            color: #FFFFFF;            
+            background-color: color-accent();
+            color: white;
+            border: 0;
+            box-shadow: 0px 6px 12px -6px color-accent();
+
+            &:hover {
+                opacity: 0.5;
+            }
         }
+
+        
     }
 }
