@@ -39,26 +39,26 @@ export class FilteringDropdownsComponent implements OnInit {
       case DropdownType.status:
         // Set items to the value of the Lifecycles enum
         Object.values(Lifecycles).forEach((value: string) => {
- this.items.push({ id: value, name: value });
-});
+          this.items.push({ id: value, name: value });
+        });
         break;
       case DropdownType.workrole:
         // Set items to the workroles returned from the API
         await this.workroleService.getAllWorkroles().then((workrolesQuery: any) => {
           workrolesQuery.data.workroles.forEach((workrole: Workrole) => {
- this.items.push({ id: workrole._id, name: workrole.work_role });
-});
+          this.items.push({ id: workrole._id, name: workrole.work_role });
+          });
         });
         break;
       case DropdownType.task:
         // Set items to the tasks returned from the API
         await this.workroleService.getAllTasks().then((tasksQuery: any) => {
           tasksQuery.data.tasks.forEach((task: Elements) => {
- this.items.push({ id: task._id, name: `${task.element_id} - ${task.description}` });
-});
+            this.items.push({ id: task._id, name: `${task.element_id} - ${task.description}` });
+          });
         });
         break;
-      case DropdownType.audience:
+      case DropdownType.actor:
         // Set items to a list of audiences
         this.items = [];
         break;
