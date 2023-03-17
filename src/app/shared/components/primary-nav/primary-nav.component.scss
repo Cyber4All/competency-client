@@ -10,7 +10,8 @@
     margin: 0 auto;
 
     .logo {
-        width: 25%;
+        max-width: 25%;
+        flex-grow: 1;
         float: left;
         padding: 12px;
 
@@ -20,17 +21,20 @@
     }
 
     .search {
-        width: 50%;
+        max-width: 50%;
+        flex-grow: 1;
         float: left;
 
         .search-wrapper {
-            width: 70%;
+            max-width: 70%;
+            flex-grow: 1;
             margin: 0 auto;
         }
     }
 
     .profile {
-        width: 25%;
+        max-width: 25%;
+        flex-grow: 1;
         float: left;
         margin: 25px;
     }
