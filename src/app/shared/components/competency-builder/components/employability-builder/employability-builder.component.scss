@@ -1,9 +1,21 @@
 .competency_edit-employability-container {
-    .edit-employability_description {
-        margin: 20px 10px;
+    display: flex;
+    flex-direction: column;
+
+    label{
+        font-size: 18px;
+        font-weight: 400;
+        color: #1F2228;
     }
-    mat-form-field {
-        display: block;
-        margin: 10px 0;
+    textarea{
+        width: 550px;
+        height: 130px;
+        border: 1px solid;
+        border-color: #C6CBD2;
+        border-radius: 6px;
+        margin-top: 10px;
+        font-family: Arial;
+        font-size: 14px;
+        padding: 15px;
     }
 }

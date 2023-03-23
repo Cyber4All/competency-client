@@ -1,7 +1,8 @@
 <!--Behavior Builder-->
-<ng-container class="competency_edit-behavior-container">
+<div class="competency_edit-behavior-container">
   <!--Behavior workrole selection field-->
   <ng-container>
+    <label>Work Role</label>
     <input
       [ngModel]="selectedWorkrole ? selectedWorkrole.work_role : ''"
       (keyup)="workroleKeyup($event)"
@@ -20,6 +21,7 @@
   </ng-container>
   <!--Behavior task selection field-->
   <ng-container>
+    <label class="task">Task</label>
     <input 
       placeholder="Search for a task"
       (keyup)="taskKeyup($event)"
@@ -49,10 +51,10 @@
   </ng-container>
   <!--Behavior description form field-->
   <ng-container>
-    <label>Task Description</label>
+    <label class="task_description">Task Description</label>
     <textarea placeholder="Provide a description for your task" [formControl]="details"></textarea>
   </ng-container>
-</ng-container>
+</div>
 
 <!-- workrole dropdown template -->
 <ng-template #workroleResultsTemplate>

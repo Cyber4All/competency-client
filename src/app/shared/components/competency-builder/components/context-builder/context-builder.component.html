@@ -1,27 +1,25 @@
 <!-- Toggle template for edit and viewing condition-->
-<ng-container class="competency_edit-condition-container">
+<div class="competency_edit-condition-container">
     <!--Description form field-->
-    <ng-container *ngIf="templateIndex === 0">
+    <ng-container *ngIf="templateIndex === 0" class="condition_description-container">
         <!--Scenario form field-->
-        <label>Scenario</label>
-        <textarea [formControl]="scenario"></textarea>
+        <label class="scenario">Scenario</label>
+        <textarea class="textarea" [formControl]="scenario"></textarea>
         <!--Limitations form field-->
-        <label>Limitations</label>
-        <textarea [formControl]="limitations"></textarea>
+        <label class="limitations">Limitations</label>
+        <textarea class="textarea" [formControl]="limitations"></textarea>
     </ng-container>
     <!--Technology form field-->
     <ng-container *ngIf="templateIndex === 1" class="condition_technology-container">
-        <ng-container *ngFor="let tech of technology">
-            <button
+        <label>Technology</label>
+        <div class="tech-list">
+            <button *ngFor="let tech of technology"
                 (click)="removeTechnology(tech)"
                 class="chip"
             >
-                {{ tech }}
-                <button>
-                    <icon>X</icon>
-                </button>
+                {{ tech }} <p>X</p>
             </button>
-        </ng-container>
+        </div>
         <input
             placeholder="Specify technology required to complete this competency..."
             (keydown)="addTechnology($event)"
@@ -29,7 +27,7 @@
         >
     </ng-container>
     <!--Documenation form filed-->
-    <ng-container *ngIf="templateIndex === 2">
+    <ng-container *ngIf="templateIndex === 2" class="condition_file-container">
         <cc-file-upload></cc-file-upload>
     </ng-container>
-</ng-container>
+</div>

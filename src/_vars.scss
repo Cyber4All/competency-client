@@ -1,11 +1,11 @@
 @use 'sass:list';
 
 $palette-accent: (
-  "lightest": hsl(226, 43%, 74%),
-  "lighter": hsl(226, 43%, 54%),
-  "default": hsl(226, 43%, 44%),
-  "darker": hsl(226, 43%, 34%),
-  "darkest": hsl(226, 43%, 24%),
+  "lightest": hsl(219, 43%, 74%),
+  "lighter": hsl(219, 43%, 54%),
+  "default": hsl(219, 66%, 53%),
+  "darker": hsl(219, 43%, 34%),
+  "darkest": hsl(219, 43%, 24%),
 );
 
 @function color-accent($style: "default") {
@@ -49,11 +49,38 @@ $palette-warning: (
 }
 
 $palette-gray: (
-  1: hsl(220, 13%, 14%),
-  2: hsl(222, 12%, 28%),
-  3: hsl(222, 12%, 42%),
-  4: hsl(222, 12%, 56%),
-  5: hsl(221, 12%, 70%),
-  6: hsl(220, 12%, 90%),
-  7: hsl(0, 0%, 100%),
+  1: hsl(220, 13%, 14%), 
+  2: hsl(216, 5%, 40%),
+  3: hsl(216, 12%, 42%),
+  4: hsl(216, 12%, 56%),
+  5: hsl(216, 12%, 64%),
+  6: hsl(216, 12%, 70%),
+  7: hsl(216, 12%, 80%),
+  8: hsl(217, 12%, 90%),
+  9: hsl(212, 0%, 90%),  
+  10: hsl(0, 0%, 100%),
 );
+
+$dark-overlay: rgba(0, 0, 0, 0.4);
+
+@function color-gray($style: 3) {
+  @return map-get($palette-gray, $style);
+};
+
+$font-size: (
+  1: 12px,
+  2: 14px,
+  3: 16px,
+  4: 18px,
+  5: 20px,
+  6: 24px,
+  7: 30px,
+);
+
+@function font($style: 3) {
+  @return map-get($font-size, $style);
+}
+
+textarea{
+  font: 400 14px/20px Roboto Helvetica Neue sans-serif;
+}

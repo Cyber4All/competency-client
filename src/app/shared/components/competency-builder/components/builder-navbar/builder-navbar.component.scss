@@ -1,14 +1,41 @@
-.competency-builder_navbar-buttons {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+@import "vars";
 
-    button {
+.competency-builder_navbar-buttons {
+    // margin: 0;
+    // position: absolute;
+    // top: 50%;
+    // -ms-transform: translateY(-50%);
+    // transform: translateY(-50%);
+
+    .primary_nav {
         display: block;
-        padding: 15px;
-        margin: 15px 0 0 15px;
         text-align: left;
+        padding: 15px 20px;
+        border-radius: 6px 6px 0px 0px;
+        font-size: 18px;
+        font-weight: 400px;
+        margin-left: 20px;
+        margin-right: 10px;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+    .choosen {
+        background-color: #E9F0FE;
+        color: #376ED6;
+        font-weight: 600;
+    }
+    .greyout {
+        color: #5E6978;
+        transition: background-color 500ms, color 500ms;
+    }
+
+    .buidler_navbar-submenu{
+        margin-left: 50px;
+        margin-top: 5px;
+        color: #5E6978;
+        &:hover{
+            cursor: pointer;
+        }
     }
 }

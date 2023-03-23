@@ -1,30 +1,36 @@
-/* Clear floats after the columns */
-.competency-builder_builder {
-  display: inline-flex;
-  width: 100%;
+@import "vars";
 
-  .competency-builder_navbar {
+/* Clear floats after the columns */
+.competency-builder_container{
+  display: flex;
+  flex-direction: column;
+
+.competency-builder_builder {
+  display: flex;
+  flex-direction: row;
+  // width: 100%;
+
+  .column{
+    height: fit-content;
+    padding-top: 30px;
+  }
+  .left {
     color: white;
     position: relative;
   }
 
-  .competency-builder_form {
-    position: relative;
-    width: 100%;
+  .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 450px;
+    width: 550px;
+    padding-left: 20px;
+    border-left: 1px solid #C6CBD2;
 
-    .competency-builder_form-buttons {
-      position: absolute;
-      bottom: 0%;
-      right: 0%;
-      width: 100%;
-
-      button {
-        display: inline-flex;
-        padding: 15px;
-        margin: 15px 15px 0 0;
-        text-align: right;
-        float: right;
-      }
+    .competency-builder_form-buttons{
+      display: flex;
+      justify-content: right;
     }
   }
 
@@ -35,20 +41,29 @@
         * left
         * right
   **/
-  .column {
-    padding: 10px;
-    height: 500px; /* Should be removed. Only for demonstration */
-  }
+  // .column {
+  //   padding: 10px;
+  //   height: 500px; /* Should be removed. Only for demonstration */
+  // }
 
-  .left {
-    width: 15%;
-  }
+  // .left {
+  //   width: 15%;
+  // }
 
-  .right {
-    width: 80%;
-    overflow-y: auto;
-    div {
-      width: 100%;
-    }
+  // .right {
+  //   width: 80%;
+  //   overflow-y: auto;
+  //   div {
+  //     width: 100%;
+  //   }
+  // }
+}
+.competency-builder_control{
+  background-color: #EFEFEF;
+  padding: 10px 20px;
+  .header{
+    size: 18px;
+    font-weight: 600;
   }
+}
 }
