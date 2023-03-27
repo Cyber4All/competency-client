@@ -55,8 +55,12 @@
       <!--Action Buttons-->
       </div>
       <div class="competency-builder_form-buttons">
-        <button [mat-dialog-close]="false">DELETE</button>
-        <button (click)="closeBuilder()">SAVE</button>
+        <button class="back">BACK</button>
+        <div>
+          <button [mat-dialog-close]="false" class="review">REVIEW COMPETENCY</button>
+          <button (click)="closeBuilder()" class="next">ON TO THE NEXT</button>
+        </div>
+
       </div>
     </div>
   </div>

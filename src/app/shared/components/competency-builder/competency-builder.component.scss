@@ -31,18 +31,49 @@
     
 
     .content{
-      margin-bottom: 40px;
+      margin-bottom: 50px;
     }
 
 
     .competency-builder_form-buttons{
       display: flex;
-      justify-content: right;
+      justify-content: space-between;
       position: fixed;
       bottom: 0px;
       padding: 20px 0;
       width: 585px;
       background-color: white;
+
+      .review{
+        padding: 10px 20px;
+        color: #454545;
+        background-color: #f7f7f7;
+        border: 1px solid #DFDFDF;
+        border-radius: 4px;
+      }
+      .review:hover{
+        cursor: pointer;
+      }
+      .next{
+        padding: 10px 20px;
+        color: #f7f7f7;
+        background-color: #376ED6;
+        box-shadow: 0px 6px 12px -6px #376ED6;
+        border-radius: 4px;
+        border: none;
+        margin-left: 30px;
+      }
+      .next:hover{
+        cursor: pointer;
+      }
+      .back{
+        background-color: transparent;
+        border: none;
+      }
+      .back:hover{
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
   }
 
