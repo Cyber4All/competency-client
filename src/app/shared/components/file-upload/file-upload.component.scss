@@ -1,9 +1,10 @@
 .drop-zone {
   position: relative;
-  width: 450px;
-  height: 200px;
+  width: 550px;
+  height: 150px;
   text-align: center;
-  border: 1px dashed black;
+  border: 1px dashed #636772;
+  border-radius: 6px;
 
   input {
     opacity: 0;

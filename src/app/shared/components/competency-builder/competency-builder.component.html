@@ -5,6 +5,7 @@
   <div class="competency-builder_builder">
     <cc-builder-navbar class="column left"></cc-builder-navbar>
     <div class="competency-builder_form column right">
+      <div class="content">
       <!--Actor-->
       <ng-container *ngIf="currIndex === 0">
         <cc-actor-builder
@@ -52,7 +53,7 @@
       <!--TODO: Implement Preview-->
       <ng-container *ngIf="currIndex === 6">Preview coming soon</ng-container>
       <!--Action Buttons-->
-
+      </div>
       <div class="competency-builder_form-buttons">
         <button [mat-dialog-close]="false">DELETE</button>
         <button (click)="closeBuilder()">SAVE</button>

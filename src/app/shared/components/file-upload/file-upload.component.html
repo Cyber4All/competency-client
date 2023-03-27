@@ -1,9 +1,12 @@
 <form>
   <div ccDragAndDrop class="drop-zone" (fileOver)="handleFileOver($event)" (fileDropped)="handleFileDropped($event)">
     <div *ngIf="!fileOver else dropFile">
-      <input (change)="handleFileThroughInput($event)" type="file" /> <br />
-      <h3>Drag and Drop a File Here!</h3>
-      <p>Or click here to add a file</p>
+      <input (change)="handleFileThroughInput($event)" type="file" /> 
+      <div>
+        <h3>Drag and Drop a File Here!</h3>
+        <p>Or click here to add a file</p>
+      </div>
+      
     </div>
     
   </div>

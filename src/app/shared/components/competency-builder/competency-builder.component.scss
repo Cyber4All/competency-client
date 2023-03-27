@@ -8,15 +8,15 @@
 .competency-builder_builder {
   display: flex;
   flex-direction: row;
-  // width: 100%;
 
   .column{
     height: fit-content;
-    padding-top: 30px;
+    
   }
   .left {
     color: white;
     position: relative;
+    padding-top: 30px;
   }
 
   .right {
@@ -24,13 +24,25 @@
     flex-direction: column;
     justify-content: space-between;
     height: 450px;
-    width: 550px;
-    padding-left: 20px;
+    padding: 30px 20px;
+    overflow-y: auto;
+
     border-left: 1px solid #C6CBD2;
+    
+
+    .content{
+      margin-bottom: 40px;
+    }
+
 
     .competency-builder_form-buttons{
       display: flex;
       justify-content: right;
+      position: fixed;
+      bottom: 0px;
+      padding: 20px 0;
+      width: 585px;
+      background-color: white;
     }
   }
 
