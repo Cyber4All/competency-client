@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BuilderModule } from './builder/builder.module';
 import { DragAndDropDirective } from './drag-and-drop.directive';
 
 
@@ -7,8 +8,12 @@ import { DragAndDropDirective } from './drag-and-drop.directive';
   declarations: [
     DragAndDropDirective,
   ],
+  imports: [
+    BuilderModule,
+  ],
   exports: [
     DragAndDropDirective,
+    BuilderModule,
   ]
 })
 export class SharedDirectivesModule { }

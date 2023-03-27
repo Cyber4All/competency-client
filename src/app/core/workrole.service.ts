@@ -10,12 +10,15 @@ import {
   Workrole,
   getAllWorkRoles,
   getAllTasks,
-  getCompleteTask
+  getCompleteTask,
+  queryWorkroles,
+  queryTasks
 } from '../../entity/workrole';
 import { getPreReqs } from '../../entity/actor';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 import { SnackbarService } from './snackbar.service';
 import { Elements } from '../../entity/elements';
+import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
 
 @Injectable({
   providedIn: 'root'
@@ -122,6 +125,86 @@ export class WorkroleService {
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
+      .catch((err) => {
+        err = GraphErrorHandler.handleError(err);
+        if (err) {
+          this.snackBarService.sendNotificationByError(err);
+        }
+      });
+  }
+
+  /**
+   * Method to perform a text search on workroles
+   *
+   * @param search text query
+   */
+  async searchWorkroles(search: string): Promise<void> {
+    const query = queryWorkroles(search);
+    await lastValueFrom(this.http
+      .post(
+        COMPETENCY_ROUTES.GRAPH_QUERY(),
+        { query },
+        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+      ))
+      .then((workrolesQuery: any) => {
+        if (workrolesQuery.data.searchWorkroles && workrolesQuery.data.searchWorkroles.length > 0) {
+          this._workroles.next(workrolesQuery.data.searchWorkroles);
+        } else if (workrolesQuery.errors) {
+          this._workroles.next([]);
+          this.snackBarService.notification$.next({
+            message: workrolesQuery.errors[0].message,
+            title: 'Workrole Not Found',
+            color: SNACKBAR_COLOR.DANGER
+          });
+        } else {
+          this._workroles.next([]);
+          this.snackBarService.notification$.next({
+            message: 'Something went wrong. If this error persists, please contact us at info@secured.team',
+            title: 'Internal Server Error',
+            color: SNACKBAR_COLOR.DANGER
+          });
+        }
+      })
+      .catch((err) => {
+        err = GraphErrorHandler.handleError(err);
+        if (err) {
+          this.snackBarService.sendNotificationByError(err);
+        }
+      });
+  }
+
+  /**
+   * Method to perform a text search on tasks
+   *
+   * @param search text query
+   */
+  async searchTasks(search: string): Promise<void> {
+    const query = queryTasks(search);
+    await lastValueFrom(this.http
+      .post(
+        COMPETENCY_ROUTES.GRAPH_QUERY(),
+        { query },
+        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+      ))
+      .then((tasksQuery: any) => {
+        if (tasksQuery.data.searchTasks && tasksQuery.data.searchTasks.length > 0) {
+          this._tasks.next(tasksQuery.data.searchTasks);
+        } else if (tasksQuery.errors) {
+          this._tasks.next([]);
+          this.snackBarService.notification$.next({
+            message: tasksQuery.errors[0].message,
+            title: 'Task Not Found',
+            color: SNACKBAR_COLOR.DANGER
+          });
+        } else {
+          this._tasks.next([]);
+          this.snackBarService.notification$.next({
+            message: 'Something went wrong. If this error persists, please contact us at info@secured.team',
+            title: 'Internal Server Error',
+            color: SNACKBAR_COLOR.DANGER
+          });
+        }
+      })
       .catch((err) => {
         err = GraphErrorHandler.handleError(err);
         if (err) {

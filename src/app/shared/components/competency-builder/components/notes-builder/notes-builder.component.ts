@@ -17,13 +17,13 @@ export class NotesBuilderComponent implements OnInit {
 
   ngOnInit(): void {
     this.details.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((notesUpdate: string) => {
         this.notesChange.emit({
           update: 'notes',
           value: {
             _id: this.notes._id,
-            details: this.details.value
+            details: notesUpdate
           }
         });
       });

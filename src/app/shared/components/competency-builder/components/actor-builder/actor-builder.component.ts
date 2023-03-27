@@ -39,7 +39,7 @@ export class ActorBuilderComponent implements OnInit {
     });
     // Subscribe to type form control
     this.type.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((typeUpdate: string) => {
         // Remove type error from actorErrors array
         this.actorErrors = this.actorErrors.filter((error: BuilderValidation) => {
@@ -52,13 +52,13 @@ export class ActorBuilderComponent implements OnInit {
           value: {
             _id: this.actor._id,
             type: typeUpdate,
-            details: this.details.value
+            details: this.actor.details
           }
         });
       });
     // Subscribe to details form control
     this.details.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((detailsUpdate: string) => {
         // Remove details error from actorErrors array
         this.actorErrors = this.actorErrors.filter((error: BuilderValidation) => {
@@ -70,7 +70,7 @@ export class ActorBuilderComponent implements OnInit {
           update: 'actor',
           value: {
             _id: this.actor._id,
-            type: this.type.value,
+            type: this.actor.type,
             details: detailsUpdate
           }
         });

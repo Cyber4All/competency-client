@@ -1,8 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Condition } from '../../../../../../entity/condition';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
 import { debounceTime } from 'rxjs';
 import { Documentation } from '../../../../../../entity/documentation';
 import { BuilderService } from '../../../../../core/builder/builder.service';
@@ -16,16 +14,17 @@ export class ContextBuilderComponent implements OnInit {
 
   @Input() condition!: Condition;
   @Output() conditionChange = new EventEmitter<{update: string, value: Condition}>();
+  // Builder - Behavior validation errors
   contextErrors: BuilderValidation[] = [];
-
   templateIndex = 0;
+  // Form controls
   scenario = new FormControl('');
   tech = new FormControl([]);
   limitations = new FormControl('');
   documentation = new FormControl([]);
+  // Temp variables for technology form control
   technology: string[] = [];
-  readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
-
+  techInput = '';
   constructor(
     public builderService: BuilderService
   ) { }
@@ -51,7 +50,7 @@ export class ContextBuilderComponent implements OnInit {
     });
     // Subscribe to scenario form control
     this.scenario.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((scenarioUpdate: string) => {
         // Remove scenario error from contextErrors array
         this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
@@ -64,15 +63,15 @@ export class ContextBuilderComponent implements OnInit {
           value: {
             _id: this.condition._id,
             scenario: scenarioUpdate,
-            tech: this.tech.value,
-            limitations: this.limitations.value,
-            documentation: this.documentation.value
+            tech: this.condition.tech,
+            limitations: this.condition.limitations,
+            documentation: this.condition.documentation
           }
         });
       });
     // Subscribe to tech form control
     this.tech.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((techUpdate: string[]) => {
         // Remove tech error from contextErrors array
         this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
@@ -84,16 +83,16 @@ export class ContextBuilderComponent implements OnInit {
           update: 'condition',
           value: {
             _id: this.condition._id,
-            scenario: this.scenario.value,
+            scenario: this.condition.scenario,
             tech: techUpdate,
-            limitations: this.limitations.value,
-            documentation: this.documentation.value
+            limitations: this.condition.limitations,
+            documentation: this.condition.documentation
           }
         });
       });
     // Subscribe to limitations form control
     this.limitations.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((limitationsUpdate: string) => {
         // Remove limitations error from contextErrors array
         this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
@@ -105,16 +104,16 @@ export class ContextBuilderComponent implements OnInit {
           update: 'condition',
           value: {
             _id: this.condition._id,
-            scenario: this.scenario.value,
-            tech: this.tech.value,
+            scenario: this.condition.scenario,
+            tech: this.condition.tech,
             limitations: limitationsUpdate,
-            documentation: this.documentation.value
+            documentation: this.condition.documentation
           }
         });
       });
     // Subscribe to documentation form control
     this.documentation.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((documentationUpdate: Documentation[]) => {
         // Remove documentation error from contextErrors array
         this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
@@ -126,15 +125,20 @@ export class ContextBuilderComponent implements OnInit {
           update: 'condition',
           value: {
             _id: this.condition._id,
-            scenario: this.scenario.value,
-            tech: this.tech.value,
-            limitations: this.limitations.value,
+            scenario: this.condition.scenario,
+            tech: this.condition.tech,
+            limitations: this.condition.limitations,
             documentation: documentationUpdate
           }
         });
       });
+    // If scenario exists, set scenario form control
+    if (this.condition.scenario) {
+      this.scenario.patchValue(this.condition.scenario);
+    }
     // If value exists, set type form control
     if(this.condition.tech) {
+      this.technology = this.condition.tech;
       this.tech.patchValue(this.condition.tech);
     }
     // If value exists, set details form control
@@ -148,21 +152,26 @@ export class ContextBuilderComponent implements OnInit {
   }
 
   /**
-   * Method to add a technology string
+   * Method to add a new technology string
    *
    * @param event input event for creating a chip component
    */
-  addTechnology(event: MatChipInputEvent) {
-    // Get value
-    const value = (event.value || '').trim();
-    // Only update if value exists
-    if(value) {
-      this.technology.push(value);
-      // Patch form control with new technology array
-      this.tech.patchValue(this.technology);
+  addTechnology(event: KeyboardEvent) {
+    // Check for Enter and Tab keyboard events
+    if (event.key === 'Enter' || event.key === 'Tab') {
+      // Prevent default event
+      event.preventDefault();
+      // Get current value of input field
+      const value = this.techInput.trim();
+      if (value) {
+        // Add value to technology array
+        this.technology.push(value);
+        // Patch form control with new technology array
+        this.tech.patchValue(this.technology);
+        // Clear input field
+        this.techInput = '';
+      }
     }
-    // Clear input
-    event.chipInput!.clear();
   }
 
   /**

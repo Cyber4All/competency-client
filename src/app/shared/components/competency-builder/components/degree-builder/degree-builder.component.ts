@@ -43,7 +43,7 @@ export class DegreeBuilderComponent implements OnInit {
     });
     // Subscribe to complete form control
     this.complete.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((completeChange: string) => {
         // Remove complete error from degreeErrors array
         this.degreeErrors = this.degreeErrors.filter((error: BuilderValidation) => {
@@ -56,14 +56,14 @@ export class DegreeBuilderComponent implements OnInit {
           value: {
             _id: this.degree._id,
             complete: completeChange,
-            correct: this.correct.value,
-            time: this.time.value
+            correct: this.degree.correct,
+            time: this.degree.time
           }
         });
       });
     // Subscribe to correct form control
     this.correct.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((correctChange: string) => {
         // Remove correct error from degreeErrors array
         this.degreeErrors = this.degreeErrors.filter((error: BuilderValidation) => {
@@ -75,15 +75,15 @@ export class DegreeBuilderComponent implements OnInit {
           update: 'degree',
           value: {
             _id: this.degree._id,
-            complete: this.complete.value,
+            complete: this.degree.complete,
             correct: correctChange,
-            time: this.time.value
+            time: this.degree.time
           }
         });
       });
     // Subscribe to time form control
     this.time.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((timeChange) => {
         // Remove time error from degreeErrors array
         this.degreeErrors = this.degreeErrors.filter((error: BuilderValidation) => {
@@ -95,8 +95,8 @@ export class DegreeBuilderComponent implements OnInit {
           update: 'degree',
           value: {
             _id: this.degree._id,
-            complete: this.complete.value,
-            correct: this.correct.value,
+            complete: this.degree.complete,
+            correct: this.degree.correct,
             time: timeChange
           }
         });

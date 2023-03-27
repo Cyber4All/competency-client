@@ -13,7 +13,8 @@ import { CompetencyBuilderComponent } from '../shared/components/competency-buil
 import { WorkroleService } from '../core/workrole.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-
+import { SnackbarService } from '../core/snackbar.service';
+import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -41,6 +42,10 @@ export class DashboardComponent implements AfterViewInit {
   // Boolean toggle for 'clear filters' button
   filterApplied = false;
   unsubscribe: Subject<void> = new Subject();
+  // Builder vars
+  newCompetency!: CompetencyBuilder;
+  openBuilder = false;
+
   constructor(
     private dialog: MatDialog,
     private competencyService: CompetencyService,
@@ -49,6 +54,7 @@ export class DashboardComponent implements AfterViewInit {
     private workRoleService: WorkroleService,
     private router: Router,
     private route: ActivatedRoute,
+    private snackBar: SnackbarService
   ) { }
 
   async ngAfterViewInit() {
@@ -269,7 +275,7 @@ export class DashboardComponent implements AfterViewInit {
       existingCompetency = await this.competencyService.getCompetencyById(competencyShellId.id);
     }
     // Create new instance of competency builder
-    const competency: CompetencyBuilder = new CompetencyBuilder(
+    this.newCompetency = new CompetencyBuilder(
       existingCompetency._id,
       existingCompetency.status,
       existingCompetency.authorId,
@@ -281,29 +287,22 @@ export class DashboardComponent implements AfterViewInit {
       existingCompetency.employability,
       existingCompetency.notes
     );
-    // Open dialog ref for builder
-    const dialogRef = this.dialog.open(CompetencyBuilderComponent, {
-      height: '600px',
-      width: '900px',
-      data: competency,
-      position: {right:'10px', bottom: '0px'}
-    });
-    // After close of builder; handle drafts/unsavable and dashboard list
-    dialogRef.afterClosed().subscribe(async (isDraft: boolean) => {
-      // Enforce loading state
-      this.loading = true;
-      if((isDraft === undefined && !this.isSavable) || !isDraft) {
-        // Competency is neither savable nor being saved as draft; delete shell
-        await this.deleteCompetency(competency._id);
-      } else if (isDraft) {
-        // Update user dashboard with newly created competencies
-        this.search.competencies = [];
-        this.loadedCompetencies = [];
-        await this.initDashboard();
-      } else {
-        // isDraft can be undefined; Throw a toaster error stating something went wrong.
-      }
-    });
+    this.openBuilder = true;
+  }
+
+  async closeBuilder(isDraft: any) {
+    // Enforce loading state
+    this.loading = true;
+    this.openBuilder = false;
+    if(!isDraft && isDraft !== undefined) {
+      // Competency is neither savable nor being saved as draft; delete shell
+      await this.deleteCompetency(this.newCompetency._id);
+    } else {
+      // Update user dashboard with newly created competencies
+      this.search.competencies = [];
+      this.loadedCompetencies = [];
+      await this.initDashboard();
+    }
   }
 
   /**

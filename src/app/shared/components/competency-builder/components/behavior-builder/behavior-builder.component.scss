@@ -1,6 +1,36 @@
 .competency_edit-behavior-container {
-    display: block;
+    display: inline-block;
     .edit-behavior_description {
         margin: 20px 10px;
+    }
+
+    .task_pill_container {
+        position: relative;
+        width: fit-content;
+        padding: 5px;
+        color: hsl(226, 43%, 34%);
+        background-color: hsl(0, 0%, 100%);
+        border: 1px solid hsl(226, 43%, 44%);
+        border-radius: 3px;
+        display: block;
+
+        .task-delete {
+            color: hsl(5, 73%, 46%);
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            border-radius: 3px;
+        
+            &:hover,
+            &:focus {
+              color: white;
+              background: hsl(5, 73%, 46%);
+        
+              .svg-inline--fa,
+              .icon {
+                color: white;
+              }
+            }
+        }
     }
 }

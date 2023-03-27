@@ -1,27 +1,10 @@
-<ng-container class="competency-builder_container">
+<div class="competency-builder_container">
   <div class="competency-builder_control">
-    <p>yeetus</p>
+    <p>New Competency</p>
   </div>
   <div class="competency-builder_builder">
     <div class="competency-builder_navbar column left">
-      <div class="competency-builder_navbar-buttons">
-        <button (click)="builderService.setBuilderIndex(0)">Actor</button>
-        <button (click)="builderService.setBuilderIndex(1)">Behavior</button>
-        <button (click)="builderService.setBuilderIndex(2); builderService.setTemplateIndex(0)">Context</button>
-        <ng-container *ngIf="currIndex === 2">
-          <button (click)="builderService.setTemplateIndex(0)" class="buidler_navbar-submenu">Description</button>
-          <button (click)="builderService.setTemplateIndex(1)" class="buidler_navbar-submenu">Technology</button>
-          <button (click)="builderService.setTemplateIndex(2)" class="buidler_navbar-submenu">Documentation</button>
-        </ng-container>
-        <button (click)="builderService.setBuilderIndex(3); builderService.setTemplateIndex(0)">Degree</button>
-        <ng-container *ngIf="currIndex === 3">
-          <button (click)="builderService.setTemplateIndex(0)" class="buidler_navbar-submenu">Description</button>
-          <button (click)="builderService.setTemplateIndex(1)" class="buidler_navbar-submenu">Rubric</button>
-        </ng-container>
-        <button (click)="builderService.setBuilderIndex(4)">Employability</button>
-        <button (click)="builderService.setBuilderIndex(5)">Notes</button>
-        <button (click)="builderService.setBuilderIndex(6)">Review</button>
-      </div>
+      <cc-builder-navbar></cc-builder-navbar>
     </div>
     <div class="competency-builder_form column right">
       <!--Actor-->
@@ -73,8 +56,8 @@
       <!--Action Buttons-->
       <div class="competency-builder_form-buttons">
         <button [mat-dialog-close]="false">DELETE</button>
-        <button (click)="saveCompetency()">SUBMIT</button>
+        <button (click)="closeBuilder()">SAVE</button>
       </div>
     </div>
   </div>
-</ng-container>
+</div>
