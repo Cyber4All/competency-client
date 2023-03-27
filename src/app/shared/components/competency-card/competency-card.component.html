@@ -1,17 +1,36 @@
-<ng-container class="competency-card_container">
+<div class="competency-card_container">
+  <!--Status Preview -->
+  <div class="competency_edit-status-container {{ competency.status }}">
+  
+    <p class="competency_card-status" >
+      <span *ngIf="competency.status === lifecycle.DRAFT" >
+        <i class="fas fa-file-edit fa-2x"></i>
+      </span>
+      <span *ngIf="competency.status === lifecycle.SUBMITTED">
+        <i class="fas fa-file-exclamation fa-2x"></i>
+      </span>
+      <span *ngIf="competency.status === lifecycle.DEPRECATED">
+        <i class="fas fa-file-minus fa-2x"></i>
+      </span>
+      <span *ngIf="competency.status === lifecycle.REJECTED">
+        <i class="fas fa-file-times fa-2x"></i>
+      </span>        
+      <span *ngIf="competency.status === lifecycle.PUBLISHED">
+        <i class="fas fa-file-check fa-2x"></i>
+      </span>
+      <b class="competency_card_status_text">{{ competency.status }}</b>
+    </p>
+  </div>
   <div class="competency-constructor_accordion">
     <!--Actor Card Preview-->
-    <ng-container class="competency_edit-actor-container">
-      <h2>ACTOR</h2>
-      <p>{{ competency.actor.type }}</p>
-      <p>{{ competency.actor.details }}</p>
-    </ng-container>
+    <div class="competency_edit-actor-container">
+      <p class="competency_card-actor"><b>Actor</b>: {{ competency.actor.type }}</p>
+    </div>
     <!--Behavior Card Preview-->
-    <ng-container class="competency_edit-behavior-container">
-      <h2>BEHAVIOR</h2>
-      <p>{{ competency.behavior.details }}</p>
-      <p>Completing: {{ competency.behavior.tasks }}</p>
-      <p>Acting as a {{ competency.behavior.work_role }}</p>
-    </ng-container>
+    <div class="competency_edit-behavior-container">
+      <p class="competency_card-workrole"><b>Work Role</b>: {{ competency.behavior.work_role }}</p>
+      <p class="competency_card-task"><b>Task</b>: {{ competency.behavior.tasks }}</p>
+      <p class="competency_card-description"><b>Description</b>: {{ competency.behavior.details }}</p>
+    </div>
   </div>
-</ng-container>
+</div>

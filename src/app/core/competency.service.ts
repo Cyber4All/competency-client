@@ -4,7 +4,7 @@ import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { lastValueFrom } from 'rxjs';
 import { Competency, CompetencyGraph, CompetencySearch } from '../../entity/competency';
-import { Search } from '../../entity/search';
+import { CompetencyCardSearch, Search } from '../../entity/search';
 import { SnackbarService } from './snackbar.service';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 
@@ -109,5 +109,35 @@ export class CompetencyService {
       .catch((e)=> {
         this.snackBarService.sendNotificationByError(e);
       });
+  }
+
+  /**
+   * Method to retrieve some fields of a competency for the competency card
+   *
+   * @param competencyId is the id of competency to retrieve
+   * @returns Promise with competency status, actor.type, behavior.[tasks, work_role, details]
+   */
+  async getCompetencyCard(competencyId: string): Promise<Competency> {
+  this.auth.initHeaders();
+  const query = CompetencyCardSearch(competencyId);
+  return await lastValueFrom(this.http
+    .post(
+      COMPETENCY_ROUTES.GRAPH_QUERY(),
+      { query },
+      { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+    ))
+    .then((res: any) => {
+      if (res.data.competency.status) {
+        // Format first letter to uppercase
+        res.data.competency.status = res.data.competency.status.charAt(0).toUpperCase() + res.data.competency.status.slice(1);
+      }
+      return res.data.competency;
+    })
+    .catch((err)=> {
+      err = GraphErrorHandler.handleError(err);
+      if (err) {
+        this.snackBarService.sendNotificationByError(err);
+      }
+    });
   }
 }

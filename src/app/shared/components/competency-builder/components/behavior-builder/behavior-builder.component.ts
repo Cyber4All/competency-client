@@ -148,7 +148,7 @@ export class BehaviorBuilderComponent implements OnInit {
     if(this.behavior.tasks) {
       this.behavior.tasks.map(async (task: string) => {
         this.tasks = [];
-        await this.workroleService.getCompelteTask(task)
+        await this.workroleService.getCompleteTask(task)
         .then((taskQuery: any) => {
           this.tasks.push(taskQuery.data.task);
           this.task.setValue([...this.task.value, taskQuery.data.task.description]);

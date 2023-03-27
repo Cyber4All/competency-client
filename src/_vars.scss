@@ -1,11 +1,11 @@
 @use 'sass:list';
 
 $palette-accent: (
-  "lightest": hsl(226, 43%, 74%),
-  "lighter": hsl(226, 43%, 54%),
-  "default": hsl(226, 43%, 44%),
-  "darker": hsl(226, 43%, 34%),
-  "darkest": hsl(226, 43%, 24%),
+  "lightest": hsl(219, 43%, 74%),
+  "lighter": hsl(219, 43%, 54%),
+  "default": hsl(219, 66%, 53%),
+  "darker": hsl(219, 43%, 34%),
+  "darkest": hsl(219, 43%, 24%),
 );
 
 @function color-accent($style: "default") {
@@ -49,11 +49,18 @@ $palette-warning: (
 }
 
 $palette-gray: (
-  1: hsl(220, 13%, 14%),
-  2: hsl(222, 12%, 28%),
-  3: hsl(222, 12%, 42%),
-  4: hsl(222, 12%, 56%),
-  5: hsl(221, 12%, 70%),
-  6: hsl(220, 12%, 90%),
-  7: hsl(0, 0%, 100%),
+  1: hsl(220, 13%, 14%), 
+  2: hsl(216, 5%, 40%),
+  3: hsl(216, 12%, 42%),
+  4: hsl(216, 12%, 56%),
+  5: hsl(216, 12%, 64%),
+  6: hsl(216, 12%, 70%),
+  7: hsl(216, 12%, 80%),
+  8: hsl(217, 12%, 90%),
 );
+
+$status_draft: linear-gradient(88.15deg, #8E0080 0%, rgba(142, 0, 128, 0.7) 100%);
+$status_published: linear-gradient(88.15deg, #0B861F 0%, rgba(11, 134, 31, 0.7) 100%);
+$status_submitted: linear-gradient(88.15deg, #2168BA 0%, rgba(33, 104, 186, 0.7) 100%);
+$status_rejected: linear-gradient(88.15deg, #B71515 0%, rgba(183, 21, 21, 0.7) 100%);
+$status_deprecated: linear-gradient(88.15deg, #525252 0%, rgba(82, 82, 82, 0.7) 100%);

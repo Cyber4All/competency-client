@@ -114,7 +114,7 @@ export class WorkroleService {
    * @param taskId element object id
    * @returns complete element object
    */
-  async getCompelteTask(taskId: string) {
+  async getCompleteTask(taskId: string) {
     const query = getCompleteTask(taskId);
     return await lastValueFrom(this.http
       .post(

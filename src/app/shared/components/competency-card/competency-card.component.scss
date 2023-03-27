@@ -1,3 +1,5 @@
+@import 'vars.scss';
+
 .builder {
 
     .mat-expansion-panel-header-title,
@@ -68,4 +70,62 @@
   .logout {
       border: 2px solid #C2175B;
   }
+}
+
+.competency-constructor_accordion {
+    margin: 0 20px 0;
+}
+
+.competency_edit-status-container {
+    padding-top: 12px;
+    padding-left: 20px;
+    margin-bottom: 26px;
+    border-bottom: 1px solid #DFDFDF;
+    color: #FFFFFF;
+}
+
+.competency_card-status {
+    // make sure every child element is in middle of parent
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.competency_card_status_text {
+    margin-left: 15px;
+}
+::ng-deep .competency_card-description, ::ng-deep .competency_card-task {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    white-space: pre-wrap;
+}
+
+::ng-deep .competency_card-description {
+    -webkit-line-clamp: 5;
+}
+
+::ng-deep .competency_card-task {
+    -webkit-line-clamp: 3;
+}
+
+.Draft {
+    background: $status_draft;
+}
+
+.Submitted {
+    background: $status_submitted;
+}
+
+.Deprecated {
+    background: $status_deprecated;
+}
+
+.Published {
+    background: $status_published;
+}
+
+.Rejected {
+    background: $status_rejected;
 }
