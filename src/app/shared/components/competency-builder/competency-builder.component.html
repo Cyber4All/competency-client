@@ -55,8 +55,9 @@
       <ng-container *ngIf="currIndex === 6">Preview coming soon</ng-container>
       <!--Action Buttons-->
       <div class="competency-builder_form-buttons">
-        <button [mat-dialog-close]="false">DELETE</button>
-        <button (click)="closeBuilder()">SAVE</button>
+        <button *ngIf="currIndex < 5" (click)="builderService.setBuilderIndex(currIndex + 1); setTemplateButton();">{{ templateText }}</button>
+        <button *ngIf="currIndex !== 6" (click)="builderService.setBuilderIndex(6)">{{ indexButton.REVIEW }}</button>
+        <button *ngIf="currIndex !== 0" (click)="builderService.setBuilderIndex(currIndex - 1); setTemplateButton();"> <-- BACK</button>
       </div>
     </div>
   </div>
