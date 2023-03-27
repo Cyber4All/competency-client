@@ -55,12 +55,9 @@
       <!--Action Buttons-->
       </div>
       <div class="competency-builder_form-buttons">
-        <button class="back">BACK</button>
-        <div>
-          <button [mat-dialog-close]="false" class="review">REVIEW COMPETENCY</button>
-          <button (click)="closeBuilder()" class="next">ON TO THE NEXT</button>
-        </div>
-
+        <button *ngIf="currIndex < 5" (click)="builderService.setBuilderIndex(currIndex + 1); setTemplateButton();">{{ templateText }}</button>
+        <button *ngIf="currIndex !== 6" (click)="builderService.setBuilderIndex(6)">{{ indexButton.REVIEW }}</button>
+        <button *ngIf="currIndex !== 0" (click)="builderService.setBuilderIndex(currIndex - 1); setTemplateButton();"> <-- BACK</button>
       </div>
     </div>
   </div>
