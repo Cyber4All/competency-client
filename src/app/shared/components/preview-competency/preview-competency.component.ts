@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CompetencyBuilder } from 'src/app/core/builder/competency-builder.class';
 import { Competency } from 'src/entity/competency';
 
 @Component({
@@ -10,8 +11,9 @@ import { Competency } from 'src/entity/competency';
 export class PreviewCompetencyComponent implements OnInit {
 
   updateSubmission = new EventEmitter();
+  @Input() competency!: CompetencyBuilder;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Competency) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

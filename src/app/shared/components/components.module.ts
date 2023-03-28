@@ -94,7 +94,8 @@ import { BuilderNavbarComponent } from './competency-builder/components/builder-
     BannerComponent,
     PrimaryNavComponent,
     SearchBarComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    PreviewCompetencyComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

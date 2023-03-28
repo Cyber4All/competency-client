@@ -50,3 +50,11 @@
     [options]="{ showExitButton: true, padding: true, exitButtonColor: 'black' }"
     (close)="closeBuilder($event)"
 ></cc-competency-builder>
+
+<cc-preview-competency
+    ccBuilder
+    *ngIf="openPreview"
+    [competency]="newCompetency"
+    [options]="{ showExitButton: true, padding: true, exitButtonColor: 'black' }"
+    (close)="closePreview()"
+></cc-preview-competency>

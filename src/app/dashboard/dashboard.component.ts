@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit {
   // Builder vars
   newCompetency!: CompetencyBuilder;
   openBuilder = false;
+  openPreview = false;
 
   constructor(
     private dialog: MatDialog,
@@ -208,17 +209,36 @@ export class DashboardComponent implements OnInit {
   }
 
   async openCompetencyPreview(competency: Competency) {
-    const dialogRef = this.dialog.open(PreviewCompetencyComponent, {
-      autoFocus: false,
-      data: competency,
-      panelClass: 'competency-preview-dialog'
-    });
+    // const dialogRef = this.dialog.open(PreviewCompetencyComponent, {
+    //   autoFocus: false,
+    //   data: competency,
+    //   panelClass: 'competency-preview-dialog'
+    // });
 
-    // Detects if the "Update Submission" button is clicked
-    dialogRef.componentInstance.updateSubmission.subscribe(() => {
-      dialogRef.close();
-      this.openCompetencyBuilder(competency);
-    });
+    // // Detects if the "Update Submission" button is clicked
+    // dialogRef.componentInstance.updateSubmission.subscribe(() => {
+    //   dialogRef.close();
+    //   this.openCompetencyBuilder(competency);
+    // });
+
+    this.newCompetency = new CompetencyBuilder(
+      competency._id,
+      competency.status,
+      competency.authorId,
+      competency.version,
+      competency.actor,
+      competency.behavior,
+      competency.condition,
+      competency.degree,
+      competency.employability,
+      competency.notes
+    );
+    this.openPreview = true;
+
+  }
+
+  closePreview() {
+    this.openPreview = false;
   }
 
   /**
