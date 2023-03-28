@@ -19,7 +19,11 @@ import { fade } from '../builder.animations';
         [style.width]="contentWidth + 'px'"
         (click)="$event.stopPropagation()"
         class="side-panel"
-        [ngClass]="{ 'side-panel--no-padding': options && !options.padding }"
+        [ngClass]="{
+          'center': options.position === 'center',
+          'lower-right': options.position === 'lower-right',
+          'side-panel--no-padding': options && !options.padding
+        }"
       >
         <button
           *ngIf="options.showExitButton"
@@ -45,7 +49,7 @@ export class BuilderViewerComponent implements OnInit, OnDestroy {
 
   isOpen = true;
 
-  // tslint:disable-next-line: no-output-native
+  // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() close = new EventEmitter<any>();
   defaultCloseParam: any;
 

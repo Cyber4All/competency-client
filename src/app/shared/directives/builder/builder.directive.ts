@@ -26,6 +26,7 @@ export interface BuilderOptions {
   padding: boolean;
   showExitButton: boolean;
   exitButtonColor: 'white' | 'black';
+  position: 'lower-right' | 'center';
 }
 @Directive({
   selector: '[ccBuilder]'
@@ -39,7 +40,7 @@ export class BuilderDirective implements OnInit, OnDestroy {
   options!: BuilderOptions;
   @Input() defaultCloseParam: any;
 
-  // tslint:disable-next-line: no-output-native
+  // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() close = new EventEmitter<any>();
 
   animationElement: HTMLElement | undefined;
