@@ -1,0 +1,106 @@
+@import "vars";
+
+$buttonWidth: 135px;
+
+.cc-search {
+  .search-options {
+    z-index: 2;
+    position: relative;
+    height: 45px;
+    padding: 0px;
+    box-sizing: border-box;
+
+    .input {
+      overflow: hidden;
+      height: 44px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 1;
+      margin-right: 0;
+      visibility: visible;
+      transition: all 0.1s ease;
+      border-radius: 6px 0px 0px 6px;
+      cursor: pointer;
+
+      input {
+        border: solid map-get($palette-gray, 5) 1px;
+        border-right: none;
+        border-radius: 6px 0px 0px 6px;
+        height: 100%;
+      }
+
+      span {
+        padding: 10px;
+      }
+
+      .icon {
+        cursor: pointer;
+        color: color-gray(9);
+        border-radius: 0px 6px 6px 0px;
+        border: none;
+        width: 50px;
+        height: 44px;
+        background-color: color-accent("default");
+      }
+    }
+
+      input {
+        width: 100%;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        border: 0;
+        background: transparent;
+        flex-grow: 2;
+        outline: 0;
+        padding: 10px;
+        font-size: 14px;
+      }
+
+    .keyword-search form {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      width: 100%;
+    }
+  }
+}
+
+@keyframes right {
+  0% {
+    transform: scale(1);
+    left: 0;
+  }
+  33% {
+    transform: scale(0.8);
+    left: 0;
+  }
+  66% {
+    transform: scale(0.8);
+    left: $buttonWidth;
+  }
+  100% {
+    transform: scale(1);
+    left: $buttonWidth;
+  }
+}
+
+@keyframes left {
+  0% {
+    transform: scale(1);
+    left: $buttonWidth;
+  }
+  33% {
+    transform: scale(0.8);
+    left: $buttonWidth;
+  }
+  66% {
+    transform: scale(0.8);
+    left: 0;
+  }
+  100% {
+    transform: scale(1);
+    left: 0;
+  }
+}

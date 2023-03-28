@@ -1,4 +1,4 @@
-
+@import "vars";
 .login-wrapper {
     width: 300px;
     text-align: center;
@@ -6,16 +6,16 @@
 
     mat-form-field {
         display: block;
-        color: white
+        color: color-gray(3) !important;;
     }
 
     h1 {
-        color: white;
+        color: color-gray(2);
         margin-bottom: 0px !important;
     }
 
     h5 {
-        color: white;
+        color: color-gray(4);
         margin-top: 0px !important;
         text-align: right;
     }
