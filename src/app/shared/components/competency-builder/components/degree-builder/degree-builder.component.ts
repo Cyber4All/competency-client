@@ -43,7 +43,7 @@ export class DegreeBuilderComponent implements OnInit {
     });
     // Subscribe to complete form control
     this.complete.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((completeChange: string) => {
         // Remove complete error from degreeErrors array
         this.degreeErrors = this.degreeErrors.filter((error: BuilderValidation) => {
@@ -63,7 +63,7 @@ export class DegreeBuilderComponent implements OnInit {
       });
     // Subscribe to correct form control
     this.correct.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((correctChange: string) => {
         // Remove correct error from degreeErrors array
         this.degreeErrors = this.degreeErrors.filter((error: BuilderValidation) => {
@@ -83,7 +83,7 @@ export class DegreeBuilderComponent implements OnInit {
       });
     // Subscribe to time form control
     this.time.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(650))
       .subscribe((timeChange) => {
         // Remove time error from degreeErrors array
         this.degreeErrors = this.degreeErrors.filter((error: BuilderValidation) => {

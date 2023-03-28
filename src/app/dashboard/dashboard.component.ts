@@ -193,27 +193,17 @@ export class DashboardComponent implements OnInit {
   }
 
   async closeBuilder(isDraft: any) {
-    console.log(isDraft, this.isSavable);
     // Enforce loading state
     this.loading = true;
     this.openBuilder = false;
-    if((isDraft === undefined && !this.isSavable) || !isDraft) {
-      console.log('maximus?');
+    if(!isDraft && isDraft !== undefined) {
       // Competency is neither savable nor being saved as draft; delete shell
       await this.deleteCompetency(this.newCompetency._id);
-    } else if (isDraft) {
-      console.log('yeetus?');
+    } else {
       // Update user dashboard with newly created competencies
       this.search.competencies = [];
       this.loadedCompetencies = [];
       await this.initDashboard();
-    } else {
-      // isDraft can be undefined; Throw a toaster error stating something went wrong.
-      this.snackBar.notification$.next({
-        title: 'Something went wrong!',
-        message: 'Your competency may not have been saved. Please try again.',
-        color: SNACKBAR_COLOR.DANGER
-      });
     }
   }
 
