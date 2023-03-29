@@ -7,6 +7,7 @@ import { Competency } from '../../../../entity/competency';
 import { Condition } from '../../../../entity/condition';
 import { Degree } from '../../../../entity/degree';
 import { Employability } from '../../../../entity/employability';
+import { IndexButton } from '../../../../entity/builder';
 import { BuilderService } from '../../../core/builder/builder.service';
 import { CompetencyBuilder } from '../../../core/builder/competency-builder.class';
 import { SnackbarService } from '../../../core/snackbar.service';
@@ -23,10 +24,12 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
   competencyId = '';
   // Index of current open builder component
   currIndex = 0;
+  templateText = '';
+  indexButton = IndexButton;
 
   constructor(
     public builderService: BuilderService,
-    private snackBarService: SnackbarService
+    private snackBarService: SnackbarService,
   ) {}
 
   // Method to prevent user from leaving the page without saving competency data
@@ -43,6 +46,33 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     });
     // Set the current competency ID for inputs in child components
     this.competencyId = this.competency._id;
+    this.setTemplateButton();
+  }
+
+  /**
+   * Method to toggle text of the template button
+   */
+  setTemplateButton() {
+    switch(this.currIndex) {
+      case 0:
+        this.templateText = IndexButton.BEHAVIOR;
+        break;
+      case 1:
+        this.templateText = IndexButton.CONTEXT;
+        break;
+      case 2:
+        this.templateText = IndexButton.DEGREE;
+        break;
+      case 3:
+        this.templateText = IndexButton.EMPLOYABILITY;
+        break;
+      case 4:
+        this.templateText = IndexButton.NOTES;
+        break;
+      default:
+        this.templateText = IndexButton.BEHAVIOR;
+        break;
+    }
   }
 
   /**
@@ -116,16 +146,9 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
           title: 'Competency Not Saved',
           color: SNACKBAR_COLOR.DANGER
         });
-      } else if (error.message) {
-        this.close.emit(undefined);
-        this.snackBarService.notification$.next({
-          message: 'Competency potentially not saved! =>' + error.message,
-          title: 'Something Went Wrong!',
-          color: SNACKBAR_COLOR.DANGER
-        });
       } else {
         this.snackBarService.notification$.next({
-          message: 'There was an error on our end. Sorry for the inconvenience! If this persists, please contact us at info@secured.team',
+          message: 'There was an error on our end. Please contact us at info@secured.team',
           title: 'Something Went Wrong!',
           color: SNACKBAR_COLOR.DANGER
         });
@@ -177,16 +200,9 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
           title: 'Competency Not Submitted!',
           color: SNACKBAR_COLOR.DANGER
         });
-      } else if (err.message) {
-        this.close.emit(undefined);
-        this.snackBarService.notification$.next({
-          message: err.message,
-          title: 'Something Went Wrong!',
-          color: SNACKBAR_COLOR.DANGER
-        });
       } else {
         this.snackBarService.notification$.next({
-          message: 'There was an error on our end. Sorry for the inconvenience! If this persists, please contact us at info@secured.team',
+          message: 'There was an error on our end. Please contact us at info@secured.team',
           title: 'Something Went Wrong!',
           color: SNACKBAR_COLOR.DANGER
         });
@@ -198,6 +214,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
    * Method to destroy host listener on component tear down
    */
   ngOnDestroy(): void {
+    this.builderService.setBuilderIndex(0);
     window.removeEventListener('beforeunload', this.ngOnDestroy.bind(this));
   }
 }

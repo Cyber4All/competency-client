@@ -35,6 +35,10 @@ import { NotesBuilderComponent } from './competency-builder/components/notes-bui
 import { BannerComponent } from './banner/banner.component';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { BuilderNavbarComponent } from './competency-builder/components/builder-navbar/builder-navbar.component';
+import { PrimaryNavComponent } from './primary-nav/primary-nav.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { UserMenuComponent } from './user-menu/user-menu.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -48,7 +52,10 @@ import { BuilderNavbarComponent } from './competency-builder/components/builder-
     NotesBuilderComponent,
     SnackbarComponent,
     BannerComponent,
-    BuilderNavbarComponent
+    BuilderNavbarComponent,
+    PrimaryNavComponent,
+    SearchBarComponent,
+    UserMenuComponent
   ],
   imports: [
     CommonModule,
@@ -76,12 +83,16 @@ import { BuilderNavbarComponent } from './competency-builder/components/builder-
     MatChipsModule,
     SharedDirectivesModule,
     VirtualScrollerModule,
+    RouterModule
   ],
   exports: [
     CompetencyCardComponent,
     CompetencyBuilderComponent,
     FileUploadComponent,
     BannerComponent,
+    PrimaryNavComponent,
+    SearchBarComponent,
+    UserMenuComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

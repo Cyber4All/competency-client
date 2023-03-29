@@ -57,6 +57,7 @@ $palette-gray: (
   6: hsl(216, 12%, 70%),
   7: hsl(216, 12%, 80%),
   8: hsl(217, 12%, 90%),
+  9: hsl(0, 0%, 100%),
 );
 
 $status_draft: linear-gradient(88.15deg, #8E0080 0%, rgba(142, 0, 128, 0.7) 100%);
@@ -64,3 +65,23 @@ $status_published: linear-gradient(88.15deg, #0B861F 0%, rgba(11, 134, 31, 0.7) 
 $status_submitted: linear-gradient(88.15deg, #2168BA 0%, rgba(33, 104, 186, 0.7) 100%);
 $status_rejected: linear-gradient(88.15deg, #B71515 0%, rgba(183, 21, 21, 0.7) 100%);
 $status_deprecated: linear-gradient(88.15deg, #525252 0%, rgba(82, 82, 82, 0.7) 100%);
+
+$dark-overlay: rgba(0, 0, 0, 0.4);
+
+@function color-gray($style: 3) {
+  @return map-get($palette-gray, $style);
+};
+
+$font-size: (
+  1: 12px,
+  2: 14px,
+  3: 16px,
+  4: 18px,
+  5: 20px,
+  6: 24px,
+  7: 30px,
+);
+
+@function font($style: 3) {
+  @return map-get($font-size, $style);
+}

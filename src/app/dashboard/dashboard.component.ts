@@ -237,6 +237,11 @@ export class DashboardComponent implements AfterViewInit {
     this.filterApplied = true;
   }
 
+  performSearch(searchText: any) {
+    //TODO Actually perform the search
+    console.log(searchText);
+  }
+
   /**
    * Method to find competencies by specified filters
    */
