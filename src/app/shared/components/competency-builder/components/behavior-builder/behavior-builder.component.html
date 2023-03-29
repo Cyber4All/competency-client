@@ -3,12 +3,15 @@
   <!--Behavior workrole selection field-->
   <ng-container>
     <label>Work Role</label>
+    <div class="search_bar">
+    <div class="search_icon"><i class="fas fa-search"></i></div>
     <input
       [ngModel]="selectedWorkrole ? selectedWorkrole.work_role : ''"
       (keyup)="workroleKeyup($event)"
       placeholder="Search for a workrole"
       #workroleInput
     >
+    </div>
     <ul
       *ngIf="showWorkrolesDropdown"
       (onBlur)="closeDropdown()"
@@ -22,10 +25,13 @@
   <!--Behavior task selection field-->
   <ng-container>
     <label class="task">Task</label>
+    <div class="search_bar">
+      <div class="search_icon"><i class="fas fa-search"></i></div>
     <input 
       placeholder="Search for a task"
       (keyup)="taskKeyup($event)"
     >
+    </div>
     <ul
       *ngIf="showTasksDropdown"
       (onBlur)="closeDropdown()"

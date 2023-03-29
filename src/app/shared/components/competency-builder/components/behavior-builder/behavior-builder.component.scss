@@ -11,7 +11,7 @@
       width: 550px;
       border: 1px solid;
       border-color: #C6CBD2;
-      border-radius: 6px;
+      border-radius: 0 6px 6px 0;
       margin-top: 10px;
       font-family: Arial;
       font-size: 14px;
@@ -33,6 +33,23 @@
     }
     .task_description{
       margin-top: 30px;
+    }
+
+    .search_bar{
+      display: flex;
+      .search_icon{
+        align-items: center;
+        display: flex;
+        height: 42px;
+        margin-top: 10px;
+        width: 45px;
+        justify-content: center;
+        background-color: #376ED6;
+        border-radius: 6px 0px 0px 6px;
+        .fa-search{
+          color: white;
+        }
+      }
     }
 
     .task_pill_container {

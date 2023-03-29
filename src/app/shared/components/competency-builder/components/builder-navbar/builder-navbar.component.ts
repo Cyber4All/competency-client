@@ -38,6 +38,7 @@ export class BuilderNavbarComponent implements OnInit {
     review: false,
   };
   selection = 'actor';
+  subSelection = 'Description';
 
   constructor(
     public builderService: BuilderService,
@@ -54,7 +55,16 @@ export class BuilderNavbarComponent implements OnInit {
   isActive(selected: string): boolean{
     return this.selection === selected;
   }
+  isSubActive(selected: string): boolean{
+    return this.subSelection === selected;
+  }
   select(selected: string) {
     this.selection=selected;
+    if(selected === 'Context' || 'Degree'){
+      this.subSelection = 'Description';
+    }
+  }
+  subselect(selected: string){
+    this.subSelection=selected;
   }
 }

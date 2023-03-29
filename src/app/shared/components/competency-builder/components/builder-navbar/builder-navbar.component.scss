@@ -10,7 +10,8 @@
     .primary_nav {
         display: block;
         text-align: left;
-        padding: 15px 20px;
+        width: 115px;
+        padding: 15px;
         border-radius: 6px;
         font-size: 18px;
         .subs{
@@ -39,11 +40,23 @@
     // }
 
     .buidler_navbar-submenu{
-        margin-left: 10px;
-        margin-top: 5px;
+        display: flex;
+        margin-top: 7px;
         color: #5E6978;
         &:hover{
             cursor: pointer;
         }
+        .fa-circle{
+            visibility: hidden;
+            margin-right: 5px;
+            align-self: center;
+        }
+    }
+    .active{
+
+        .fa-circle{
+            visibility: visible;
+        }
+
     }
 }
