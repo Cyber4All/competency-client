@@ -1,15 +1,17 @@
 <div class="wrapper">
-    <!-- Dropdown Filters -->
-    <div class="dropdowns">
-        <cc-filtering-dropdowns [title]="dropdownType.Status" (selectedEmitter)="statuses($event)"></cc-filtering-dropdowns>
-        <cc-filtering-dropdowns [title]="dropdownType.Workrole" (selectedEmitter)="workroles($event)"></cc-filtering-dropdowns>
-        <cc-filtering-dropdowns [title]="dropdownType.Task" (selectedEmitter)="tasks($event)"></cc-filtering-dropdowns>
-        <cc-filtering-dropdowns [title]="dropdownType.Actor" (selectedEmitter)="audiences($event)"></cc-filtering-dropdowns>
-    </div>
-
-    <!-- Buttons -->
-    <div class="buttons">
-        <button class="help" (click)="getHelp.emit()">GET HELP</button>
-        <button class="builder" (click)="newCompetency.emit()">NEW COMPETENCY</button>
+    <div class="content">
+        <!-- Dropdown Filters -->
+        <div class="dropdowns">
+            <cc-filtering-dropdowns [title]="dropdownType.Status" (selectedEmitter)="statuses($event)"></cc-filtering-dropdowns>
+            <cc-filtering-dropdowns [title]="dropdownType.Workrole" (selectedEmitter)="workroles($event)"></cc-filtering-dropdowns>
+            <cc-filtering-dropdowns [title]="dropdownType.Task" (selectedEmitter)="tasks($event)"></cc-filtering-dropdowns>
+            <cc-filtering-dropdowns [title]="dropdownType.Actor" (selectedEmitter)="audiences($event)"></cc-filtering-dropdowns>
+        </div>
+    
+        <!-- Buttons -->
+        <div class="buttons">
+            <button class="help" (click)="getHelp.emit()">GET HELP</button>
+            <button class="builder" (click)="newCompetency.emit()">NEW COMPETENCY</button>
+        </div>  
     </div>
 </div>
