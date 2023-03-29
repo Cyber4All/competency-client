@@ -1,25 +1,26 @@
 <div class="competency-builder_navbar-buttons">
-    <div class="primary_nav" [ngClass]="{'choosen': isHighlighted.actor, 'greyout': !isHighlighted.actor && !isOtherChoiceSelected() }"
-        (click)="builderService.setBuilderIndex(0)">Actor</div>
-    <div class="primary_nav" [ngClass]="{'choosen': isHighlighted.behavior, 'greyout': !isHighlighted.behavior && !isOtherChoiceSelected() }"
-        (click)="builderService.setBuilderIndex(1)">Behavior</div>
-    <div class="primary_nav" [ngClass]="{'choosen': isHighlighted.context, 'greyout': !isHighlighted.context && !isOtherChoiceSelected() }"
-        (click)="builderService.setBuilderIndex(2); builderService.setTemplateIndex(0)">Context</div>
-    <div *ngIf="currIndex === 2">
-        <div (click)="builderService.setTemplateIndex(0)" class="buidler_navbar-submenu">Description</div>
-        <div (click)="builderService.setTemplateIndex(1)" class="buidler_navbar-submenu">Technology</div>
-        <div (click)="builderService.setTemplateIndex(2)" class="buidler_navbar-submenu">Documentation</div>
+    <div class="primary_nav" [ngClass]="{'choosen': isActive('actor')}"
+        (click)="builderService.setBuilderIndex(0); select('actor')">Actor</div>
+    <div class="primary_nav" (click)="builderService.setBuilderIndex(1); select('behavior')"
+        [ngClass]="{'choosen': isActive('behavior')}">Behavior</div>
+    <div class="primary_nav" [ngClass]="{'choosen': isActive('context')}">
+        <div (click)="builderService.setBuilderIndex(2); builderService.setTemplateIndex(0); select('context')">Context</div>
+        <div *ngIf="currIndex === 2">
+            <div (click)="builderService.setTemplateIndex(0)" class="buidler_navbar-submenu">Description</div>
+            <div (click)="builderService.setTemplateIndex(1)" class="buidler_navbar-submenu">Technology</div>
+            <div (click)="builderService.setTemplateIndex(2)" class="buidler_navbar-submenu">Documentation</div>
+        </div>
     </div>
-    <div class="primary_nav" [ngClass]="{'choosen': isHighlighted.degree, 'greyout': !isHighlighted.degree && !isOtherChoiceSelected() }"
-        (click)="builderService.setBuilderIndex(3); builderService.setTemplateIndex(0)">Degree</div>
+    <div class="primary_nav" [ngClass]="{'choosen': isActive('degree')}"
+        (click)="builderService.setBuilderIndex(3); builderService.setTemplateIndex(0); select('degree')">Degree</div>
     <div *ngIf="currIndex === 3">
         <div (click)="builderService.setTemplateIndex(0)" class="buidler_navbar-submenu">Description</div>
         <div (click)="builderService.setTemplateIndex(1)" class="buidler_navbar-submenu">Rubric</div>
     </div>
-    <div class="primary_nav" [ngClass]="{'choosen': isHighlighted.employability, 'greyout': !isHighlighted.employability && !isOtherChoiceSelected() }"
-        (click)="builderService.setBuilderIndex(4)">Employability</div>
-    <div class="primary_nav" [ngClass]="{'choosen': isHighlighted.notes, 'greyout': !isHighlighted.notes && !isOtherChoiceSelected() }"
-    (click)="builderService.setBuilderIndex(5)">Notes</div>
-    <div class="primary_nav" [ngClass]="{'choosen': isHighlighted.review, 'greyout': !isHighlighted.review && !isOtherChoiceSelected() }"
-    (click)="builderService.setBuilderIndex(6)">Review</div>
+    <div class="primary_nav" [ngClass]="{'choosen': isActive('employ')}"
+        (click)="builderService.setBuilderIndex(4); select('employ')">Employability</div>
+    <div class="primary_nav" [ngClass]="{'choosen': isActive('notes')}"
+        (click)="builderService.setBuilderIndex(5); select('notes')">Notes</div>
+    <div class="primary_nav" [ngClass]="{'choosen': isActive('review')}"
+        (click)="builderService.setBuilderIndex(6); select('review')">Review</div>
 </div>

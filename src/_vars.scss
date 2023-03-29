@@ -80,7 +80,3 @@ $font-size: (
 @function font($style: 3) {
   @return map-get($font-size, $style);
 }
-
-textarea{
-  font: 400 14px/20px Roboto Helvetica Neue sans-serif;
-}

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BuilderService } from '../../../../../core/builder/builder.service';
 import { trigger, transition, style, animate, state } from '@angular/animations';
+import { each } from 'jquery';
 
 @Component({
   selector: 'cc-builder-navbar',
@@ -36,6 +37,7 @@ export class BuilderNavbarComponent implements OnInit {
     notes: false,
     review: false,
   };
+  selection = 'actor';
 
   constructor(
     public builderService: BuilderService,
@@ -48,5 +50,11 @@ export class BuilderNavbarComponent implements OnInit {
   }
   isOtherChoiceSelected() {
     return Object.values(this.isHighlighted).every((isSelected) => !isSelected);
+  }
+  isActive(selected: string): boolean{
+    return this.selection === selected;
+  }
+  select(selected: string) {
+    this.selection=selected;
   }
 }
