@@ -13,6 +13,9 @@
         padding: 15px 20px;
         border-radius: 6px;
         font-size: 18px;
+        .subs{
+            font-size: 14px;
+        }
         font-weight: 400px;
         margin-left: 20px;
         margin-right: 10px;
@@ -25,7 +28,10 @@
     .choosen {
         background-color: #E9F0FE;
         color: #376ED6;
-        font-weight: 600;
+        .title{
+            font-weight: 600;
+        }
+        
     }
     // .greyout {
     //     color: #5E6978;
@@ -33,7 +39,7 @@
     // }
 
     .buidler_navbar-submenu{
-        margin-left: 50px;
+        margin-left: 10px;
         margin-top: 5px;
         color: #5E6978;
         &:hover{
