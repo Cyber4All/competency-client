@@ -71,6 +71,9 @@
         background-color: transparent;
         border: none;
       }
+      .hidden{
+        visibility: hidden;
+      }
       .back:hover{
         cursor: pointer;
         text-decoration: underline;
