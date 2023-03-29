@@ -120,24 +120,20 @@ export class CompetencyService {
   async getCompetencyCard(competencyId: string): Promise<Competency> {
   this.auth.initHeaders();
   const query = CompetencyCardSearch(competencyId);
-  return await lastValueFrom(this.http
-    .post(
-      COMPETENCY_ROUTES.GRAPH_QUERY(),
-      { query },
-      { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-    ))
-    .then((res: any) => {
-      if (res.data.competency.status) {
-        // Format first letter to uppercase
-        res.data.competency.status = res.data.competency.status.charAt(0).toUpperCase() + res.data.competency.status.slice(1);
-      }
-      return res.data.competency;
-    })
-    .catch((err)=> {
-      err = GraphErrorHandler.handleError(err);
-      if (err) {
-        this.snackBarService.sendNotificationByError(err);
-      }
-    });
-  }
+    return await lastValueFrom(this.http
+      .post(
+        COMPETENCY_ROUTES.GRAPH_QUERY(),
+        { query },
+        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+      ))
+      .then((res: any) => {
+        return res.data.competency;
+      })
+      .catch((err)=> {
+        err = GraphErrorHandler.handleError(err);
+        if (err) {
+          this.snackBarService.sendNotificationByError(err);
+        }
+      });
+    }
 }

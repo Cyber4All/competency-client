@@ -94,6 +94,7 @@
 
 .competency_card_status_text {
     margin-left: 15px;
+    text-transform: capitalize;
 }
 ::ng-deep .competency_card-description, ::ng-deep .competency_card-task {
     overflow: hidden;
@@ -110,22 +111,22 @@
     -webkit-line-clamp: 3;
 }
 
-.Draft {
+.draft {
     background: $status_draft;
 }
 
-.Submitted {
+.submitted {
     background: $status_submitted;
 }
 
-.Deprecated {
+.deprecated {
     background: $status_deprecated;
 }
 
-.Published {
+.published {
     background: $status_published;
 }
 
-.Rejected {
+.rejected {
     background: $status_rejected;
 }

@@ -103,6 +103,10 @@ export class DashboardComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Method to navigate to dashboard with query params
+   *
+   */
   async performSearch() {
     const params = {
       limit: this.search.limit,
@@ -117,6 +121,11 @@ export class DashboardComponent implements AfterViewInit {
     this.currPage = params.page;
   }
 
+  /**
+   * Method to update the query params in the url
+   *
+   * @param params the query params from the url
+   */
   makeQuery(params: Record<string, string>) {
     if (params.page) {
       this.search.page = +params.page;
