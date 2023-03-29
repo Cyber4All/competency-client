@@ -2,7 +2,8 @@
   <div ccDragAndDrop class="drop-zone" (fileOver)="handleFileOver($event)" (fileDropped)="handleFileDropped($event)">
     <div *ngIf="!fileOver else dropFile">
       <input (change)="handleFileThroughInput($event)" type="file" /> 
-      <div>
+      <div class="upload_text">
+        <i class="fas fa-file-upload fa-3x"></i>
         <h3>Drag and Drop a File Here!</h3>
         <p>Or click here to add a file</p>
       </div>

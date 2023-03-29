@@ -27,7 +27,7 @@ import { fade } from '../builder.animations';
           [style.color]="options.exitButtonColor"
           (click)="closePanel()"
         >
-          <i class="fal fa-times">X</i>
+          <i class="fal fa-times"></i>
         </button>
         <ng-content></ng-content>
       </div>

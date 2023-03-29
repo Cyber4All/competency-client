@@ -70,13 +70,20 @@
       .back{
         background-color: transparent;
         border: none;
+        height: fit-content;
+        align-self: center;
+        display: flex;
+
+        .fa-arrow-left{
+          margin-right: 7px;
+        }
       }
       .hidden{
         visibility: hidden;
       }
       .back:hover{
         cursor: pointer;
-        text-decoration: underline;
+        border-bottom: 1px solid black;
       }
     }
   }
