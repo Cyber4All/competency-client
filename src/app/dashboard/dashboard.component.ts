@@ -215,6 +215,7 @@ export class DashboardComponent implements OnInit {
    * @param competency The competency to preview
    */
   async openCompetencyPreview(competency: Competency) {
+    console.log('clicked!');
     this.newCompetency = new CompetencyBuilder(
       competency._id,
       competency.status,
@@ -228,7 +229,7 @@ export class DashboardComponent implements OnInit {
       competency.notes
     );
     this.openPreview = true;
-
+    console.log(this.newCompetency, this.openPreview);
   }
 
   /**

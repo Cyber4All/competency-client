@@ -13,31 +13,31 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { BuilderViewerComponent } from './builder-viewer/builder-viewer.component';
+import { PanelViewerComponent } from './panel-viewer/panel-viewer.component';
 import {
   AnimationBuilder,
   AnimationStyleMetadata,
   AnimationAnimateMetadata,
   AnimationPlayer,
 } from '@angular/animations';
-import { fadeIn, fadeOut, slideIn, slideOut } from './builder.animations';
+import { fadeIn, fadeOut, slideIn, slideOut } from './panel.animations';
 import { Subject } from 'rxjs';
-export interface BuilderOptions {
+export interface PanelOptions {
   padding: boolean;
   showExitButton: boolean;
   exitButtonColor: 'white' | 'black';
   position: 'lower-right' | 'center';
 }
 @Directive({
-  selector: '[ccBuilder]'
+  selector: '[ccPanel]'
 })
-export class BuilderDirective implements OnInit, OnDestroy {
-  viewer!: ComponentRef<BuilderViewerComponent>;
+export class PanelDirective implements OnInit, OnDestroy {
+  viewer!: ComponentRef<PanelViewerComponent>;
 
   @Input()
   contentWidth!: number;
   @Input()
-  options!: BuilderOptions;
+  options!: PanelOptions;
   @Input() defaultCloseParam: any;
 
   // eslint-disable-next-line @angular-eslint/no-output-native
@@ -61,7 +61,7 @@ export class BuilderDirective implements OnInit, OnDestroy {
 
     // initialize the viewer object with a new instance of SidePanelViewerComponent
     this.viewer = this.componentFactoryResolver
-      .resolveComponentFactory(BuilderViewerComponent)
+      .resolveComponentFactory(PanelViewerComponent)
       .create(this.injector, [[this.host.nativeElement]]);
 
     this.viewer.instance.contentWidth = this.contentWidth;
