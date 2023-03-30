@@ -8,7 +8,7 @@ import { CompetencyBuilder } from 'src/app/core/builder/competency-builder.class
 })
 export class PreviewCompetencyComponent implements OnInit {
 
-  updateSubmission = new EventEmitter();
+  @Output() updateSubmission = new EventEmitter();
 
   @Input() competency!: CompetencyBuilder;
   // eslint-disable-next-line @angular-eslint/no-output-native
@@ -20,6 +20,7 @@ export class PreviewCompetencyComponent implements OnInit {
   }
 
   onUpdateSubmission(): void {
+    this.close.emit();
     this.updateSubmission.emit();
   }
 

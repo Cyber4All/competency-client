@@ -56,5 +56,6 @@
     *ngIf="openPreview"
     [competency]="newCompetency"
     [options]="{ showExitButton: false, padding: false, exitButtonColor: 'black', position: 'center' }"
+    (updateSubmission)="openCompetencyBuilder(newCompetency)"
     (close)="closePreview()"
 ></cc-preview-competency>

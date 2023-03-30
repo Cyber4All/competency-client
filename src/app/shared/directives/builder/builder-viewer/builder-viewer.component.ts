@@ -4,6 +4,7 @@ import {
   OnDestroy,
   EventEmitter,
   Output,
+  HostBinding,
 } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -41,6 +42,8 @@ import { fade } from '../builder.animations';
   animations: [fade],
 })
 export class BuilderViewerComponent implements OnInit, OnDestroy {
+  @HostBinding('@fade') fadeAnimation = true;
+
   // tslint:disable-next-line: variable-name
   _controller$!: BehaviorSubject<boolean>;
   contentWidth = 400;
