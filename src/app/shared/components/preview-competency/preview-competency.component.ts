@@ -19,6 +19,10 @@ export class PreviewCompetencyComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * When the user clicks the "Update Submission" button, it will close this component
+   * and open the Competency Builder
+   */
   onUpdateSubmission(): void {
     this.close.emit();
     this.updateSubmission.emit();

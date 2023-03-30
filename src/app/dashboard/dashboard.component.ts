@@ -209,19 +209,12 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  /**
+   * Logic to trigger the Competency Preview component to open
+   *
+   * @param competency The competency to preview
+   */
   async openCompetencyPreview(competency: Competency) {
-    // const dialogRef = this.dialog.open(PreviewCompetencyComponent, {
-    //   autoFocus: false,
-    //   data: competency,
-    //   panelClass: 'competency-preview-dialog'
-    // });
-
-    // // Detects if the "Update Submission" button is clicked
-    // dialogRef.componentInstance.updateSubmission.subscribe(() => {
-    //   dialogRef.close();
-    //   this.openCompetencyBuilder(competency);
-    // });
-
     this.newCompetency = new CompetencyBuilder(
       competency._id,
       competency.status,
@@ -238,6 +231,9 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  /**
+   * Closes the Competency Preview component
+   */
   closePreview() {
     this.openPreview = false;
   }
