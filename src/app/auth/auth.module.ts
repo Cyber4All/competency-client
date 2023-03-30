@@ -23,7 +23,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { ErrorBannerComponent } from './components/error-banner/error-banner.component';
-import { VerifyEmailComponent } from './verify-email/verify-email.component';
 
 
 
@@ -31,8 +30,7 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
   declarations: [
     LoginComponent,
     RegisterComponent,
-    ErrorBannerComponent,
-    VerifyEmailComponent
+    ErrorBannerComponent
   ],
   imports: [
     CommonModule,

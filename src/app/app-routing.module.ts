@@ -9,7 +9,7 @@ import { BetaWelcomeComponent } from './shared/components/beta-welcome/beta-welc
 import { AdminGuard } from './shared/guards/admin.guard';
 import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
 import { BetaGuard } from './shared/guards/beta.guard';
-import { VerifyEmailComponent } from './auth/verify-email/verify-email.component';
+import { VerifyEmailGuard } from './shared/guards/verify-email.guard';
 
 const routes: Routes = [
   {
@@ -32,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: 'verify-email',
-    component: VerifyEmailComponent
+    canActivate: [VerifyEmailGuard],
   },
   {
     path: '',
