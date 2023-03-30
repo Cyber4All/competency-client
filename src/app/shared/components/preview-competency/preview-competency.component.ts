@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CompetencyBuilder } from 'src/app/core/builder/competency-builder.class';
+import { User } from 'src/entity/user';
 
 @Component({
   selector: 'cc-preview-competency',
@@ -18,7 +19,7 @@ export class PreviewCompetencyComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.data.behavior = {
+    this.competency.behavior = {
       tasks: ['T0137: Maintain database management systems software.'],
       work_role: 'Database Administrator',
       details: 'yeetus'

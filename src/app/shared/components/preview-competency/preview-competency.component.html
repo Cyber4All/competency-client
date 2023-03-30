@@ -6,6 +6,15 @@
 </div>
 
 <div class="content">
+  <div *ngIf="isAdmin">
+    <h2>Details</h2>
+    <!-- TODO: Implement once competency history and events are implemented -->
+    <p><b>Date Submitted:</b> Decembruary 32, 1932</p>
+
+    <!-- TODO: Implement once author retrieving routes are implemented -->
+    <p><b>Author Name: </b> Mick E. Maus</p>
+    <p><b>Author Email: </b> mickemaus@aol.com</p>
+  </div>
   <div class="actor bottom-bordered content-section">
     <h2>Actor</h2>
     <p><b>Type:</b> {{ competency.actor.type ? competency.actor.type : "No type specified." }}</p>
@@ -14,7 +23,6 @@
   <div class="behavior bottom-bordered content-section">
     <h2>Behavior</h2>
     <p><b>Workrole:</b> {{ competency.behavior.work_role ? competency.behavior.work_role : "No workrole specified."}}</p>
-    <!-- Ask about tasks -->
     <div>
       <p><b>Tasks:</b></p>
       <ul>
@@ -78,10 +86,10 @@
 </ng-template>
 
 <ng-template #adminHeader>
-  <div class="admin header" [ngClass]="this.data.status.toString()">
+  <div class="admin header" [ngClass]="competency.status.toString()">
     <div class="left-corner">
-      <h2>{{ this.data.behavior.work_role }} - {{ this.data.behavior.tasks[0].split(":")[0] }}</h2>
-      <p><b>Task: </b>{{ this.data.behavior.tasks[0] }}</p>
+      <h2>{{ competency.behavior.work_role }} - {{ competency.behavior.tasks[0].split(":")[0] }}</h2>
+      <p><b>Task: </b>{{ competency.behavior.tasks[0] }}</p>
     </div>
     <div class="right-corner">
       <div class="status">
@@ -89,7 +97,7 @@
         <p><b>Draft</b></p>
       </div>
       
-      <button mat-dialog-close>
+      <button (click)="close.emit()">
         <i class="far fa-times fa-2x"></i>
       </button>
     </div>
