@@ -55,6 +55,6 @@
     ccBuilder
     *ngIf="openPreview"
     [competency]="newCompetency"
-    [options]="{ showExitButton: true, padding: true, exitButtonColor: 'black', position: 'center' }"
+    [options]="{ showExitButton: false, padding: false, exitButtonColor: 'black', position: 'center' }"
     (close)="closePreview()"
 ></cc-preview-competency>

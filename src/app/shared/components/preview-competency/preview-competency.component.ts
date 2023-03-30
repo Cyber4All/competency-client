@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Inject, Input, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CompetencyBuilder } from 'src/app/core/builder/competency-builder.class';
-import { Competency } from 'src/entity/competency';
 
 @Component({
   selector: 'cc-preview-competency',
@@ -11,7 +9,10 @@ import { Competency } from 'src/entity/competency';
 export class PreviewCompetencyComponent implements OnInit {
 
   updateSubmission = new EventEmitter();
+
   @Input() competency!: CompetencyBuilder;
+  // eslint-disable-next-line @angular-eslint/no-output-native
+  @Output() close = new EventEmitter();
 
   constructor() { }
 
