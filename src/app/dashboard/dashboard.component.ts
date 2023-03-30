@@ -10,10 +10,7 @@ import { Search } from '../../entity/search';
 import { sleep } from '../shared/functions/loading';
 import { BuilderService } from '../core/builder/builder.service';
 import { CompetencyBuilder } from '../core/builder/competency-builder.class';
-import { CompetencyBuilderComponent } from '../shared/components/competency-builder/competency-builder.component';
-import { PreviewCompetencyComponent } from '../shared/components/preview-competency/preview-competency.component';
 import { SnackbarService } from '../core/snackbar.service';
-import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -44,6 +41,8 @@ export class DashboardComponent implements OnInit {
   openBuilder = false;
   openPreview = false;
 
+  isAdmin!: boolean;
+
   constructor(
     private dialog: MatDialog,
     private competencyService: CompetencyService,
@@ -55,6 +54,10 @@ export class DashboardComponent implements OnInit {
 
   async ngOnInit() {
     await this.initDashboard();
+    await this.authService.validateAdminAccess();
+    this.authService.isAdmin.subscribe((res) => {
+      this.isAdmin = res;
+    });
   }
 
   /**
@@ -215,7 +218,6 @@ export class DashboardComponent implements OnInit {
    * @param competency The competency to preview
    */
   async openCompetencyPreview(competency: Competency) {
-    console.log('clicked!');
     this.newCompetency = new CompetencyBuilder(
       competency._id,
       competency.status,
