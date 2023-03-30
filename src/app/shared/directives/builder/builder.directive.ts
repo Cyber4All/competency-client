@@ -20,7 +20,7 @@ import {
   AnimationAnimateMetadata,
   AnimationPlayer,
 } from '@angular/animations';
-import { slideIn, slideOut } from './builder.animations';
+import { fadeIn, fadeOut, slideIn, slideOut } from './builder.animations';
 import { Subject } from 'rxjs';
 export interface BuilderOptions {
   padding: boolean;
@@ -94,7 +94,7 @@ export class BuilderDirective implements OnInit, OnDestroy {
     )[0] as HTMLElement;
 
     // animate side panel on
-    const player = this.animate(slideIn);
+    const player = this.animate(this.options.position === 'center' ? fadeIn : slideIn);
     player.onDone(() => {
       player.destroy();
     });
@@ -110,7 +110,7 @@ export class BuilderDirective implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // animate side panel off
-    const player = this.animate(slideOut);
+    const player = this.animate(this.options.position === 'center' ? fadeOut : slideOut);
 
     // give the animation time to complete
     setTimeout(() => {
