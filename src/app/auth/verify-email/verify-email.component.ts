@@ -22,7 +22,7 @@ export class VerifyEmailComponent implements OnInit {
           message: params.message,
           color: SNACKBAR_COLOR.DANGER,
         });
-      } else {
+      } else if (params.status === 'success') {
         // Email verified
         this.snackbar.notification$.next({
           title: 'Email verified',
