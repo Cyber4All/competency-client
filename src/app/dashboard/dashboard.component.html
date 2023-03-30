@@ -44,9 +44,18 @@
 </ng-template>
 
 <cc-competency-builder
-    ccBuilder
+    ccPanel
     *ngIf="openBuilder"
     [competency]="newCompetency"
-    [options]="{ showExitButton: true, padding: true, exitButtonColor: 'black' }"
+    [options]="{ showExitButton: true, padding: true, exitButtonColor: 'black', position: 'lower-right' }"
     (close)="closeBuilder($event)"
 ></cc-competency-builder>
+
+<cc-preview-competency
+    ccPanel
+    *ngIf="openPreview"
+    [competency]="newCompetency"
+    [options]="{ showExitButton: false, padding: false, exitButtonColor: 'black', position: 'center' }"
+    (updateSubmission)="openCompetencyBuilder(newCompetency)"
+    (close)="closePreview()"
+></cc-preview-competency>

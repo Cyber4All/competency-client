@@ -97,11 +97,14 @@ export function CompetencyGraph(id: string) {
           details
         }
         behavior {
+          _id
           tasks
           details
           work_role
         }
         condition {
+          _id
+          scenario
           tech
           limitations
           documentation {
@@ -112,11 +115,13 @@ export function CompetencyGraph(id: string) {
           }
         }
         degree {
+          _id
           complete
           correct
           time
         }
         employability {
+          _id
           details
         },
         notes {

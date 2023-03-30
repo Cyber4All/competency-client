@@ -5,13 +5,12 @@ button {
     border: solid color-gray(5) 1px;
     border-radius: 4px;
     background-color: color-gray(8);
-    height: 40px;
-    padding: 10px;
+    min-height: 40px;
+    padding: 15px;
     color: color-gray(2);
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
-    line-height: 18px;
 }
 
 button:hover {

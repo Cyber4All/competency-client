@@ -11,6 +11,7 @@ export function getCompleteWorkRole(id: string) {
   return `
     query {
       workrole(workroleId:"${id}") {
+        _id
         work_role,
         work_role_id,
         description,
@@ -53,6 +54,7 @@ export function getCompleteTask(id: string) {
   return `
     query {
       task(taskId: "${id}") {
+        _id
         element
         element_id
         description

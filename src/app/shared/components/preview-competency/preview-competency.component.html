@@ -1,6 +1,6 @@
 <div *ngIf="!isAdmin else adminHeader" class="header">
   <h2>Insert Competency Title Here</h2>
-  <button mat-dialog-close>
+  <button (click)="close.emit()">
     <i class="far fa-times fa-2x"></i>
   </button>
 </div>
@@ -8,53 +8,54 @@
 <div class="content">
   <div class="actor bottom-bordered content-section">
     <h2>Actor</h2>
-    <p><b>Type:</b> {{ data.actor.type ? data.actor.type : "No type specified." }}</p>
-    <p><b>Details:</b> {{ data.actor.details ? data.actor.details : "No details specified."}}</p>
+    <p><b>Type:</b> {{ competency.actor.type ? competency.actor.type : "No type specified." }}</p>
+    <p><b>Details:</b> {{ competency.actor.details ? competency.actor.details : "No details specified."}}</p>
   </div>
   <div class="behavior bottom-bordered content-section">
     <h2>Behavior</h2>
-    <p><b>Workrole:</b> {{ data.behavior.work_role ? data.behavior.work_role : "No workrole specified."}}</p>
+    <p><b>Workrole:</b> {{ competency.behavior.work_role ? competency.behavior.work_role : "No workrole specified."}}</p>
+    <!-- Ask about tasks -->
     <div>
       <p><b>Tasks:</b></p>
       <ul>
-        <li *ngFor="let task of data.behavior.tasks">{{ task }}</li>
-        <ng-container *ngIf="!data.behavior.tasks.length" [ngTemplateOutlet]="noTasks"></ng-container>
+        <li *ngFor="let task of competency.behavior.tasks">{{ task }}</li>
+        <ng-container *ngIf="!competency.behavior.tasks.length" [ngTemplateOutlet]="noTasks"></ng-container>
       </ul>
     </div>
-    <p><b>Details:</b> {{ data.behavior.details ? data.behavior.details : "No details specified." }}</p>
+    <p><b>Details:</b> {{ competency.behavior.details ? competency.behavior.details : "No details specified." }}</p>
   </div>
   <div class="condition bottom-bordered content-section">
     <h2>Condition</h2>
-    <p><b>Situation:</b> {{ data.condition.scenario ? data.condition.scenario : "No scenario specified"}}</p>
-    <p><b>Limitations:</b> {{ data.condition.limitations ? data.condition.limitations : "No limitations specified."}}</p>
+    <p><b>Situation:</b> {{ competency.condition.scenario ? competency.condition.scenario : "No scenario specified"}}</p>
+    <p><b>Limitations:</b> {{ competency.condition.limitations ? competency.condition.limitations : "No limitations specified."}}</p>
     <div>
       <p><b>Technology:</b></p>
       <ul>
-        <li *ngFor="let tech of data.condition.tech">{{ tech }}</li>
-        <ng-container *ngIf="!data.condition.tech.length" [ngTemplateOutlet]="noTech"></ng-container>
+        <li *ngFor="let tech of competency.condition.tech">{{ tech }}</li>
+        <ng-container *ngIf="!competency.condition.tech.length" [ngTemplateOutlet]="noTech"></ng-container>
       </ul>
     </div>
     <div>
       <p><b>Documentation:</b></p>
       <ul>
-        <li *ngFor="let doc of data.condition.documentation">{{ doc.uri ? doc.uri : "No URI specified." }}</li>
-        <ng-container *ngIf="!data.condition.documentation.length" [ngTemplateOutlet]="noDocs"></ng-container>
+        <li *ngFor="let doc of competency.condition.documentation">{{ doc.uri ? doc.uri : "No URI specified." }}</li>
+        <ng-container *ngIf="!competency.condition.documentation.length" [ngTemplateOutlet]="noDocs"></ng-container>
       </ul>
     </div>
   </div>
   <div class="degree bottom-bordered content-section">
     <h2>Degree</h2>
-    <p><b>Time:</b> {{ data.degree.time ? data.degree.time : "No time specified."}}</p>
-    <p><b>Completeness:</b> {{ data.degree.complete ? data.degree.complete : "No completeness specified."}}</p>
-    <p><b>Correctness:</b> {{ data.degree.correct ? data.degree.correct : "No correctness specified." }}</p>
+    <p><b>Time:</b> {{ competency.degree.time ? competency.degree.time : "No time specified."}}</p>
+    <p><b>Completeness:</b> {{ competency.degree.complete ? competency.degree.complete : "No completeness specified."}}</p>
+    <p><b>Correctness:</b> {{ competency.degree.correct ? competency.degree.correct : "No correctness specified." }}</p>
   </div>
   <div class="employability bottom-bordered content-section">
     <h2>Employability</h2>
-    <p>{{ data.employability.details ? data.employability.details : "No details specified."}}</p>
+    <p>{{ competency.employability.details ? competency.employability.details : "No details specified."}}</p>
   </div>
   <div class="notes content-section">
     <h2>Notes</h2>
-    <p>{{ data.notes.details ? data.notes.details : "No notes specified."}}</p>
+    <p>{{ competency.notes.details ? competency.notes.details : "No notes specified."}}</p>
   </div>
 </div>
 

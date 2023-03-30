@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Inject, Input, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Competency } from 'src/entity/competency';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CompetencyBuilder } from 'src/app/core/builder/competency-builder.class';
 
 @Component({
   selector: 'cc-preview-competency',
@@ -10,9 +9,13 @@ import { Competency } from 'src/entity/competency';
 export class PreviewCompetencyComponent implements OnInit {
 
   @Input() isAdmin = true;
-  updateSubmission = new EventEmitter();
+  @Output() updateSubmission = new EventEmitter();
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Competency) { }
+  @Input() competency!: CompetencyBuilder;
+  // eslint-disable-next-line @angular-eslint/no-output-native
+  @Output() close = new EventEmitter();
+
+  constructor() { }
 
   ngOnInit(): void {
     this.data.behavior = {
@@ -22,7 +25,12 @@ export class PreviewCompetencyComponent implements OnInit {
     };
   }
 
+  /**
+   * When the user clicks the "Update Submission" button, it will close this component
+   * and open the Competency Builder
+   */
   onUpdateSubmission(): void {
+    this.close.emit();
     this.updateSubmission.emit();
   }
 

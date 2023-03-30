@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -41,6 +42,7 @@ export class DashboardComponent implements OnInit {
   // Builder vars
   newCompetency!: CompetencyBuilder;
   openBuilder = false;
+  openPreview = false;
 
   constructor(
     private dialog: MatDialog,
@@ -193,42 +195,48 @@ export class DashboardComponent implements OnInit {
   }
 
   async closeBuilder(isDraft: any) {
-    console.log(isDraft, this.isSavable);
     // Enforce loading state
     this.loading = true;
     this.openBuilder = false;
-    if((isDraft === undefined && !this.isSavable) || !isDraft) {
-      console.log('maximus?');
+    if(!isDraft && isDraft !== undefined) {
       // Competency is neither savable nor being saved as draft; delete shell
       await this.deleteCompetency(this.newCompetency._id);
-    } else if (isDraft) {
-      console.log('yeetus?');
+    } else {
       // Update user dashboard with newly created competencies
       this.search.competencies = [];
       this.loadedCompetencies = [];
       await this.initDashboard();
-    } else {
-      // isDraft can be undefined; Throw a toaster error stating something went wrong.
-      this.snackBar.notification$.next({
-        title: 'Something went wrong!',
-        message: 'Your competency may not have been saved. Please try again.',
-        color: SNACKBAR_COLOR.DANGER
-      });
     }
   }
 
+  /**
+   * Logic to trigger the Competency Preview component to open
+   *
+   * @param competency The competency to preview
+   */
   async openCompetencyPreview(competency: Competency) {
-    const dialogRef = this.dialog.open(PreviewCompetencyComponent, {
-      autoFocus: false,
-      data: competency,
-      panelClass: 'competency-preview-dialog'
-    });
+    console.log('clicked!');
+    this.newCompetency = new CompetencyBuilder(
+      competency._id,
+      competency.status,
+      competency.authorId,
+      competency.version,
+      competency.actor,
+      competency.behavior,
+      competency.condition,
+      competency.degree,
+      competency.employability,
+      competency.notes
+    );
+    this.openPreview = true;
+    console.log(this.newCompetency, this.openPreview);
+  }
 
-    // Detects if the "Update Submission" button is clicked
-    dialogRef.componentInstance.updateSubmission.subscribe(() => {
-      dialogRef.close();
-      this.openCompetencyBuilder(competency);
-    });
+  /**
+   * Closes the Competency Preview component
+   */
+  closePreview() {
+    this.openPreview = false;
   }
 
   /**
