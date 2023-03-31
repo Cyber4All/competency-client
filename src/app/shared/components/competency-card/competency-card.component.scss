@@ -74,6 +74,9 @@
 
 .competency-constructor_accordion {
     margin: 0 20px 0;
+    span {
+        font-weight: bold;
+    }
 }
 
 .competency_edit-status-container {
@@ -95,6 +98,7 @@
 .competency_card_status_text {
     margin-left: 15px;
     text-transform: capitalize;
+    font-weight: bold;
 }
 ::ng-deep .competency_card-description, ::ng-deep .competency_card-task {
     overflow: hidden;
