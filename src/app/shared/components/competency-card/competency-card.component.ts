@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnInit, Output, EventEmitter } from '@angular
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatAccordionTogglePosition } from '@angular/material/expansion';
 import { Competency } from '../../../../entity/competency';
-import { Lifecycles } from 'src/entity/lifecycles';
+import { Lifecycles } from '../../../../entity/lifecycles';
 
 @Component({
   selector: 'cc-competency-card',
