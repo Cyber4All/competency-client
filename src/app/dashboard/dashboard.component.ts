@@ -81,6 +81,8 @@ export class DashboardComponent implements AfterViewInit {
    * Method to retrieve competencies based on a users permissions
    * Authors: retrieve all DRAFT and REJECTED competencies by default
    * Admins: retrieve SUBMITTED competencies by default and an admins DRAFTS
+   *
+   * @param q the search query object
    */
   async getCompetencies(q?: Search) {
     this.search.competencies = [];
@@ -190,7 +192,7 @@ export class DashboardComponent implements AfterViewInit {
     }
 
   get pages(): number[] {
-    const total = 3;
+    const totalPages = this.search.total / this.search.limit;
     const pageCount = this.search.page;
     const cursor = +this.currPage;
     let count = 1;
@@ -199,7 +201,7 @@ export class DashboardComponent implements AfterViewInit {
     const arr = [cursor];
 
     if (this.loadedCompetencies.length) {
-      while (count < Math.min(total, pageCount)) {
+      while (count < totalPages) {
         if (cursor + upCount <= pageCount) {
           arr.push(cursor + upCount++);
           count++;
