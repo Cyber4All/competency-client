@@ -118,8 +118,8 @@ export class CompetencyService {
    * @returns Promise with competency status, actor.type, behavior.[tasks, work_role, details]
    */
   async getCompetencyCard(competencyId: string): Promise<Competency> {
-  this.auth.initHeaders();
-  const query = CompetencyCardSearch(competencyId);
+    this.auth.initHeaders();
+    const query = CompetencyCardSearch(competencyId);
     return await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
