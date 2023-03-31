@@ -54,14 +54,31 @@
       }
     }
   }
+
   &.draft {
     background-color: #8E0080;
+  }
+
+  &.submitted {
+    background-color: #2168BA;
+  }
+
+  &.published {
+    background-color: #0B861F;
+  }
+
+  &.deprecated {
+    background-color: #525252;
+  }
+
+  &.rejected {
+    background-color: #B71515;
   }
 }
 
 .content {
   padding: 0 40px;
-  height: 80%;
+  height: 75%;
   overflow-y: scroll;
   overflow-wrap: break-word;
   hyphens: auto;
@@ -77,23 +94,28 @@
 
 .footer {
   display: flex;
-  flex-direction: row-reverse;
-  margin: 20px 50px 10px 0;
+  justify-content: flex-end;
+  margin: 20px 25px 10px 0;
 
-  .submit {
+  button {
     padding: 15px 20px;
-    border: 0px;
+    border: 1px solid color-gray(6);
     border-radius: 5px;
-    background-color: color-accent();
-    color: white;
-    box-shadow: 0px 2px 5px color-accent();
+    margin-right: 25px;
 
-    &:hover {
-      cursor: pointer;
-    }
-
-    &:active {
-      background-color: color-accent("lighter");
+    &.submit {
+      border: 0px;
+      background-color: color-accent();
+      color: white;
+      box-shadow: 0px 2px 5px color-accent();
+  
+      &:hover {
+        cursor: pointer;
+      }
+  
+      &:active {
+        background-color: color-accent("lighter");
+      }
     }
   }
 }
