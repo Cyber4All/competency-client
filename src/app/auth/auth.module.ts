@@ -23,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { ErrorBannerComponent } from './components/error-banner/error-banner.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 
@@ -31,6 +32,7 @@ import { ErrorBannerComponent } from './components/error-banner/error-banner.com
     LoginComponent,
     RegisterComponent,
     ErrorBannerComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     CommonModule,
