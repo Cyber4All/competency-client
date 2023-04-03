@@ -33,11 +33,13 @@
 
 <ng-template #competencyTemplate>
     <div class="competency-card">
-        <div *ngFor="let competency of loadedCompetencies" class="competency-card_container">
-            <cc-competency-card
-                     tabindex="0"
-                [competency]="competency"
-            ></cc-competency-card>
+        <div class="competency-card-wrapper">
+            <div *ngFor="let competency of loadedCompetencies" class="competency-card_container">
+                <cc-competency-card
+                         tabindex="0"
+                    [competency]="competency"
+                ></cc-competency-card>
+            </div>
         </div>
     </div>
     <div class="paginationCtrl">

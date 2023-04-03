@@ -72,7 +72,6 @@ cc-primary-nav {
     width: 289px;
     height: auto;
     margin-bottom: 34px;
-    margin-right: 25px;
     float: left;
 }
 
@@ -83,8 +82,21 @@ cc-primary-nav {
 }
 
 .competency-card {
-    overflow: hidden;
+    display: flex;
+    margin : 0 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 20px 0px;
     max-width: 1500px;
+    margin: 0 auto;
+}
+.competency-card-wrapper {
+    width: 1248px;
+    display: flex;
+    align-items: left;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 25px;
 }
 
 mat-card {
@@ -161,3 +173,25 @@ mat-card {
       }
     }
   }
+
+// media queries
+@media (max-width: 1375px) {
+  .competency-card {
+      padding: 0px;
+  }
+}
+@media (max-width: 1335px) {
+  .competency-card-wrapper {
+    width: 930px;
+  }
+}
+@media (max-width: 1017px) {
+  .competency-card-wrapper {
+    width: 613px;
+  }
+}
+@media (max-width: 700px) {
+  .competency-card-wrapper {
+    width: 289px;
+  }
+}
