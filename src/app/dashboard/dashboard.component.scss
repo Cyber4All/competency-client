@@ -156,7 +156,7 @@ mat-card {
         }
   
         &.active {
-          background: rgba(233, 240, 254, 1);
+          background: map-get($palette-gray, 10 );
         }
       }
     }
