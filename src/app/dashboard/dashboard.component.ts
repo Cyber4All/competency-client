@@ -215,6 +215,8 @@ export class DashboardComponent implements OnInit {
    * @param competency The competency to preview
    */
   async openCompetencyPreview(competency: Competency) {
+
+    // CompetencyBuilder used in case the user opens the builder in the competency preview
     this.newCompetency = new CompetencyBuilder(
       competency._id,
       competency.status,
