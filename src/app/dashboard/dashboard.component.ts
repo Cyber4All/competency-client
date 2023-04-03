@@ -109,7 +109,7 @@ export class DashboardComponent implements AfterViewInit {
    * Method to navigate to dashboard with query params
    *
    */
-  async performSearch() {
+  async navigateDashboard() {
     const params = {
       limit: this.search.limit,
       page: this.currPage
@@ -171,7 +171,7 @@ export class DashboardComponent implements AfterViewInit {
       const page = +this.currPage - 1;
       if (page > 0) {
         this.currPage = page;
-        this.performSearch();
+        this.navigateDashboard();
       }
     }
 
@@ -180,14 +180,14 @@ export class DashboardComponent implements AfterViewInit {
       const page = +this.currPage + 1;
       if (page <= this.search.page) {
         this.currPage = page;
-        this.performSearch();
+        this.navigateDashboard();
       }
     }
     // navigate to a numbered page
     goToPage(page: number) {
       if (page > 0 && page <= this.search.page) {
         this.currPage = page;
-        this.performSearch();
+        this.navigateDashboard();
       }
     }
 
