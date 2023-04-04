@@ -93,26 +93,26 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  /**
-   * NOT CURRENTLY IN USE - WORK IN PROGRESS
-   * Method to apply filters for competencies
-   *
-   * @param facet
-   * @param type
-   */
-  addFilter(facet: string, type: number): void {
-    if(type === 1) {
-      if (!this.selected.work_role.includes(facet)){
-        this.selected.work_role.push(facet);
-      }
-    } else if (type === 3) {
-      if (!this.selected.task.includes(facet)){
-        this.selected.task.push(facet);
-      }
-    }
-    this.filter();
-    this.filterApplied = true;
-  }
+  // /**
+  //  * NOT CURRENTLY IN USE - WORK IN PROGRESS
+  //  * Method to apply filters for competencies
+  //  *
+  //  * @param facet
+  //  * @param type
+  //  */
+  // addFilter(facet: string, type: number): void {
+  //   if(type === 1) {
+  //     if (!this.selected.work_role.includes(facet)){
+  //       this.selected.work_role.push(facet);
+  //     }
+  //   } else if (type === 3) {
+  //     if (!this.selected.task.includes(facet)){
+  //       this.selected.task.push(facet);
+  //     }
+  //   }
+  //   this.filter();
+  //   this.filterApplied = true;
+  // }
 
   performSearch(searchText: any) {
     //TODO Actually perform the search
@@ -120,10 +120,12 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
-   * Method to find competencies by specified filters
+   * Perform a search based on the filters selected from the secondary navbar component
+   *
+   * @param filter object containing arrays of selected filters
    */
-  async filter() {
-    console.log('METHOD NOT CURRENTLY IMPLEMENTED');
+  async filter(filter: { status: string[], workrole: string[], task: string[], audience: string[]}) {
+    console.log('FILTER BASED SEARCHING NOT IMPLEMENTED YET.', filter);
   }
 
   /**
@@ -150,6 +152,12 @@ export class DashboardComponent implements OnInit {
     this.search.competencies = [];
     this.loadedCompetencies = [];
     await this.initDashboard();
+  }
+
+  openHelp() {
+    //TODO Open help dialog
+    // Oliver Twist reference
+    console.log('PLEASE SIR, MAY I HAVE SOME MORE SIR?');
   }
 
   /**
