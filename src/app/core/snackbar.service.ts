@@ -35,6 +35,7 @@ export class SnackbarService  {
                 message = apiError.message[0].message[0].charAt(0).toUpperCase() + apiError.message[0].message[0].substr(1);
             } else {
                 message = apiError.message.charAt(0).toUpperCase()+apiError.message.substr(1);
+                console.log(message);
             }
         }
 
@@ -43,11 +44,10 @@ export class SnackbarService  {
                 title = 'Invalid Input';
                 break;
             case 401:
-                title = 'Not logged in';
-                message = 'Please log in to continue';
+                title = 'Not Authorized';
                 break;
             case 403:
-                title = 'Not Authorized';
+                title = 'Forbidden';
                 break;
             case 404:
                 title = 'Not Found';
@@ -60,7 +60,7 @@ export class SnackbarService  {
                 break;
             default:
                 title = 'Internal Service Error';
-                message = 'Something went wrong on our end. Please  try again later.';
+                message = 'Something went wrong on our end. Please try again later.';
         }
         this.notification$.next({
             title: title,

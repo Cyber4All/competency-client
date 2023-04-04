@@ -58,4 +58,5 @@
     [options]="{ showExitButton: false, padding: false, exitButtonColor: 'black', position: 'center' }"
     (updateSubmission)="openCompetencyBuilder(newCompetency)"
     (close)="closePreview()"
+    (statusUpdated)="handleStatusUpdated()"
 ></cc-preview-competency>

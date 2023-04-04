@@ -83,7 +83,8 @@ export class DashboardComponent implements OnInit {
       this.search = await this.competencyService
         .getAllCompetencies({
           author: this.authService.user?._id,
-          status: [`${Lifecycles.DRAFT}`, `${Lifecycles.REJECTED}`]
+          status: [`${Lifecycles.DRAFT}`, `${Lifecycles.SUBMITTED}`, `${Lifecycles.PUBLISHED}`,
+           `${Lifecycles.DEPRECATED}`, `${Lifecycles.REJECTED}`]
         });
     } else {
       this.search = {
@@ -239,6 +240,15 @@ export class DashboardComponent implements OnInit {
    */
   closePreview() {
     this.openPreview = false;
+  }
+
+  /**
+   * When an admin updates the status of a competency in the preview, reset the dashboard
+   */
+  async handleStatusUpdated() {
+    this.search.competencies = [];
+    this.loadedCompetencies = [];
+    await this.initDashboard();
   }
 
   /**

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { CompetencyBuilder } from 'src/app/core/builder/competency-builder.class';
+import { LifecyclesService } from 'src/app/core/lifecycles.service';
 import { Lifecycles } from 'src/entity/lifecycles';
 import { User } from 'src/entity/user';
 
@@ -16,11 +18,11 @@ export class PreviewCompetencyComponent implements OnInit {
   @Input() competency!: CompetencyBuilder;
   // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() close = new EventEmitter();
+  @Output() statusUpdated = new EventEmitter();
 
-  constructor() { }
+  constructor(private lifecycles: LifecyclesService) { }
 
   ngOnInit(): void {
-    this.competency.status = Lifecycles.SUBMITTED;
     this.competency.behavior = {
       tasks: ['T0137: Maintain database management systems software.'],
       work_role: 'Database Administrator',
@@ -36,7 +38,7 @@ export class PreviewCompetencyComponent implements OnInit {
       case Lifecycles.SUBMITTED:
         return 'far fa-file-exclamation fa-2x';
       case Lifecycles.PUBLISHED:
-        return 'far fa-file-checked fa-2x';
+        return 'far fa-file-check fa-2x';
       case Lifecycles.DEPRECATED:
         return 'far fa-file-minus fa-2x';
       case Lifecycles.REJECTED:
@@ -82,18 +84,27 @@ export class PreviewCompetencyComponent implements OnInit {
     this.updateSubmission.emit();
   }
 
-  onPublish(): void {
-    // TODO: Define this one
-    this.competency.status = Lifecycles.PUBLISHED;
+  async onPublish(): Promise<void> {
+    const publishSuccess = await this.lifecycles.publishCompetency(this.competency._id);
+    if (publishSuccess) {
+      this.close.emit();
+      this.statusUpdated.emit();
+    }
   }
 
-  onDeprecate(): void {
-    // TODO: fill this one
-    this.competency.status = Lifecycles.DEPRECATED;
+  async onDeprecate(): Promise<void> {
+    const deprecateSuccess = await this.lifecycles.deprecateCompetency(this.competency._id);
+    if(deprecateSuccess) {
+      this.close.emit();
+      this.statusUpdated.emit();
+    }
   }
 
-  onReject(): void {
-    // TODO: yada yada
-    this.competency.status = Lifecycles.REJECTED;
+  async onReject(): Promise<void> {
+    const rejectSuccess = await this.lifecycles.rejectCompetency(this.competency._id);
+    if (rejectSuccess) {
+      this.close.emit();
+      this.statusUpdated.emit();
+    }
   }
 }
