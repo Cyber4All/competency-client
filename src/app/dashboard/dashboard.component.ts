@@ -232,7 +232,6 @@ export class DashboardComponent implements OnInit {
       competency.notes
     );
     this.openPreview = true;
-    console.log(this.newCompetency, this.openPreview);
   }
 
   /**

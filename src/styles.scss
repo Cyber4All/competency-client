@@ -7,16 +7,3 @@ body { margin: 0; font-family: Source Sans Pro, "Helvetica Neue", sans-serif; ba
 .mat-form-field-wrapper {
     background-color: green !important;
 }
-
-.competency-preview-dialog {
-  color: white;
-  width: 80%;
-  height: 90%;
-
-  mat-dialog-container {
-    background-color: white;
-    color: black;
-    padding: 0;
-    overflow: hidden;
-  }
-}

@@ -35,7 +35,6 @@ export class SnackbarService  {
                 message = apiError.message[0].message[0].charAt(0).toUpperCase() + apiError.message[0].message[0].substr(1);
             } else {
                 message = apiError.message.charAt(0).toUpperCase()+apiError.message.substr(1);
-                console.log(message);
             }
         }
 
