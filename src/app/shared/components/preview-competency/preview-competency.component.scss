@@ -56,23 +56,23 @@
   }
 
   &.draft {
-    background-color: #8E0080;
+    background-color: $draft-light;
   }
 
   &.submitted {
-    background-color: #2168BA;
+    background-color: $submitted-light;
   }
 
   &.published {
-    background-color: #0B861F;
+    background-color: $published-light;
   }
 
   &.deprecated {
-    background-color: #525252;
+    background-color: $deprecated-light;
   }
 
   &.rejected {
-    background-color: #B71515;
+    background-color: $rejected-light;
   }
 }
 
