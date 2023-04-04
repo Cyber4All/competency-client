@@ -10,7 +10,7 @@ import { User } from 'src/entity/user';
 })
 export class PreviewCompetencyComponent implements OnInit {
 
-  @Input() isAdmin = false;
+  @Input() isAdmin = true;
   @Output() updateSubmission = new EventEmitter();
 
   @Input() competency!: CompetencyBuilder;
