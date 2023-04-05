@@ -23,8 +23,17 @@
     </ul>
   </ng-container>
   <!--Behavior task selection field-->
-  <ng-container>
-    <label class="task">Task</label>
+  <div class="task">
+    <label>Task</label>
+    <div class="task-list">
+      <button *ngFor="let niceTask of selectedTask"
+      (click)="selectedTask.splice(selectedTask.indexOf(niceTask), 1); task.patchValue(true);"
+          class="chip"
+          attr.aria-label="Remove {{ niceTask.element_id | titlecase }} as an affiliated task"
+      >
+          {{ niceTask.element_id | titlecase }} <i class="far fa-times"></i>
+      </button>
+  </div>
     <div class="search_bar">
       <div class="search_icon"><i class="fas fa-search"></i></div>
     <input 
@@ -41,20 +50,7 @@
         *ngTemplateOutlet="loading ? loadingTemplate : taskResultsTemplate"
       ></ng-container>
     </ul>
-    <ng-container *ngIf="selectedTask && selectedTask.length > 0" class="task-pill_container">
-      <!--Add hover and focus for tootip of entire task description-->
-      <div class="task-pill_name" *ngFor="let niceTask of selectedTask">
-        {{ niceTask.element_id | titlecase }}
-        <button
-          attr.aria-label="Remove {{ niceTask.element_id | titlecase }} as an affiliated task"
-          class="task-delete"
-          (click)="selectedTask.splice(selectedTask.indexOf(niceTask), 1); task.patchValue(true);"
-        >
-          <i class="far fa-trash-alt"></i>
-        </button>
-      </div>
-    </ng-container>
-  </ng-container>
+  </div>
   <!--Behavior description form field-->
   <ng-container>
     <label class="task_description">Task Description</label>
