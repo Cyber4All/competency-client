@@ -169,6 +169,16 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     });
   }
 
+  async deleteCompetency(): Promise<void> {
+    // Close the dialog and send a success notification
+    this.close.emit(false);
+    this.snackBarService.notification$.next({
+      message: 'Draft Deleted',
+      title: 'Success',
+      color: SNACKBAR_COLOR.SUCCESS
+    });
+  }
+
   /**
    * Method to submit a competency for publishing
    */

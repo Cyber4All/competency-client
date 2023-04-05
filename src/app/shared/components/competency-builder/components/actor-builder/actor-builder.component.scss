@@ -8,11 +8,14 @@ label {
 .actor_input {
     display: flex;
     flex-direction: column;
-    
+
 
     .actor_box {
         height: 40px;
         width: 550px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         border: 1px solid;
         border-color: #C6CBD2;
         border-radius: 6px;
@@ -20,8 +23,43 @@ label {
         font-family: Arial;
         font-size: 14px;
         padding: 0px 15px;
+
+        .fa-angle-down {
+            justify-content: end;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+}
+
+.hidden {
+    display: none;
+}
+
+.actor_dropdown{
+    border: 1px solid #DFDFDF;
+    box-shadow: 0px 12px 20px -10px #dfdfdfdf;
+    border-radius: 0px 0px 6px 6px;
+}
+
+.actor_list {
+    list-style: none;
+    padding-left: 0px;
+    margin: 0;
+
+    li {
+        border-bottom: 1px solid #dfdfdf;
+        padding: 10px 25px;
+
+        &:hover{
+            cursor: pointer;
+        }
     }
 }
+
 
 .description_input {
     display: flex;

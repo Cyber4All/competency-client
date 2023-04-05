@@ -17,6 +17,9 @@ export class ActorBuilderComponent implements OnInit {
   actorErrors: BuilderValidation[] = [];
   type = new FormControl('');
   details = new FormControl('');
+  actorList = ['An Undergraduate Student', 'A Graduate Student', 'A Competition Participant', 'A Professional'];
+  actorDisplay = false;
+  actorSelected='';
 
   constructor(
     private builderService: BuilderService,
@@ -82,6 +85,14 @@ export class ActorBuilderComponent implements OnInit {
     // If value passed, set details form control
     if(this.actor.details) {
       this.details.patchValue(this.actor.details);
+    }
+  }
+
+  displayActors(){
+    if (this.actorDisplay === true){
+      this.actorDisplay = false;
+    } else{
+      this.actorDisplay = true;
     }
   }
 

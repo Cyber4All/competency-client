@@ -46,11 +46,19 @@
           <button class="review" *ngIf="currIndex < 5 " (click)="builderService.setBuilderIndex(6)">{{
             indexButton.REVIEW
             }}</button>
-          <button class="next" *ngIf="currIndex !==6"
+          <button class="next" *ngIf="currIndex !== 6"
             (click)="builderService.setBuilderIndex(currIndex + 1); setTemplateButton();">{{ templateText }}</button>
 
-
         </div>
+        <ng-container *ngIf="currIndex === 6">
+          <div>
+            <button class="delete" (click)="deleteCompetency()">DELETE
+              DRAFT</button>
+            <button class="submit" (click)="submitCompetency()">SUBMIT
+              COMPETENCY</button>
+          </div>
+        </ng-container>
+
       </div>
     </div>
   </div>

@@ -18,6 +18,9 @@ export class DegreeBuilderComponent implements OnInit {
   complete = new FormControl('');
   correct = new FormControl('');
   time = new FormControl('');
+  timeList = ['Minutes', 'Hours', 'Days', 'Weeks', 'Semester'];
+  timeDisplay = false;
+  timeSelected='';
 
   constructor(
     public builderService: BuilderService
@@ -112,6 +115,14 @@ export class DegreeBuilderComponent implements OnInit {
     // If value exists, set workrole form control
     if (this.degree.correct) {
       this.correct.patchValue(this.degree.correct);
+    }
+  }
+
+  displayTime(){
+    if (this.timeDisplay === true){
+      this.timeDisplay = false;
+    } else{
+      this.timeDisplay = true;
     }
   }
 

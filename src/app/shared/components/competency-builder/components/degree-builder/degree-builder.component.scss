@@ -2,24 +2,15 @@
     display: flex;
     flex-direction: column;
 
-    label{
+    label {
         font-size: 18px;
         font-weight: 400;
         color: #1F2228;
     }
 
-    input{
-        height: 40px;
-        width: 550px;
-        border: 1px solid;
-        border-color: #C6CBD2;
-        border-radius: 6px;
-        margin-top: 10px;
-        font-family: Arial;
-        font-size: 14px;
-        padding: 0px 15px;
-    }
-    textarea{
+
+
+    textarea {
         width: 550px;
         height: 130px;
         border: 1px solid;
@@ -30,10 +21,85 @@
         font-size: 14px;
         padding: 15px;
     }
-    .completeness{
-        margin-top: 30px;
+
+
+
+
+}
+    .time_selector {
+
+        display: flex;
+        justify-content: space-between;
+
+        input {
+            height: 40px;
+            width: 200px;
+            border: 1px solid;
+            border-color: #C6CBD2;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: Arial;
+            font-size: 14px;
+            padding: 0px 15px;
+        }
+
+        .dropdown{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .time_box {
+            height: 40px;
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid;
+            border-color: #C6CBD2;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: Arial;
+            font-size: 14px;
+            padding: 0px 15px;
+
+            .fa-angle-down {
+                justify-content: end;
+            }
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
     }
-    .correctness{
-        margin-top: 30px;
+.hidden {
+    display: none;
+}
+
+.time_dropdown {
+    border: 1px solid #DFDFDF;
+    box-shadow: 0px 12px 20px -10px #dfdfdfdf;
+    border-radius: 0px 0px 6px 6px;
+}
+
+.time_list {
+    list-style: none;
+    padding-left: 0px;
+    margin: 0;
+
+    li {
+        border-bottom: 1px solid #dfdfdf;
+        padding: 10px 25px;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
+}
+
+.completeness {
+    margin-top: 30px;
+}
+
+.correctness {
+    margin-top: 30px;
 }

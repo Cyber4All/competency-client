@@ -2,7 +2,12 @@
 <!--Actor type form field-->
 <div class="actor_input">
   <label>Actor</label>
-  <input class="actor_box" [formControl]="type">
+  <div class="actor_box" (click)="displayActors()">{{ actorSelected }}<i class="fas fa-angle-down fa-lg"></i></div>
+  <div [ngClass]="actorDisplay ? 'actor_dropdown': 'hidden'">
+    <ul class="actor_list">
+      <li *ngFor="let actor of actorList" (click)="this.actorSelected=actor; displayActors()">{{ actor }}</li>
+    </ul>
+  </div>
 </div>
 <!--Actor description form field-->
 <div class="description_input">

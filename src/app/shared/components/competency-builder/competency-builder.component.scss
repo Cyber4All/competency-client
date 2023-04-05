@@ -44,17 +44,18 @@
       width: 585px;
       background-color: white;
 
-      .review{
+      .review, .delete{
         padding: 10px 20px;
         color: #454545;
         background-color: #f7f7f7;
         border: 1px solid #DFDFDF;
         border-radius: 4px;
-      }
-      .review:hover{
+        &:hover{
         cursor: pointer;
       }
-      .next{
+      }
+      
+      .next, .submit{
         padding: 10px 20px;
         color: #f7f7f7;
         background-color: #376ED6;
@@ -62,11 +63,13 @@
         border-radius: 4px;
         border: none;
         margin-left: 30px;
-  
-      }
-      .next:hover{
+
+        &:hover{
         cursor: pointer;
       }
+  
+      }
+      
       .back{
         background-color: transparent;
         border: none;

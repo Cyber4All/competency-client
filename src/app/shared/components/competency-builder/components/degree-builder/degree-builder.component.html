@@ -7,18 +7,28 @@
     </div> -->
     <!--Time form filed-->
     <label>Time</label>
-    <input [formControl]="time">
+    <div class="time_selector">
+      <input [formControl]="time" class="time_input">
+      <div class="dropdown">
+        <div class="time_box" (click)="displayTime()">{{ timeSelected }}<i class="fas fa-angle-down fa-lg"></i></div>
+        <div [ngClass]="timeDisplay ? 'time_dropdown': 'hidden'">
+          <ul class="time_list">
+            <li *ngFor="let measure of timeList" (click)="this.timeSelected=measure; displayTime()">{{ measure }}</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
     <!--Completeness form field-->
 
     <label class="completeness">Completeness</label>
-    <textarea placeholder="Enter your definition of the task being completed here."
-      [formControl]="complete"></textarea>
+    <textarea placeholder="Enter your definition of the task being completed here." [formControl]="complete"></textarea>
     <!--Correctness form field-->
     <label class="correctness">Correctness</label>
-    <textarea placeholder="Enter your definition of the task being correct here."
-      [formControl]="correct"></textarea>
+    <textarea placeholder="Enter your definition of the task being correct here." [formControl]="correct"></textarea>
   </ng-container>
   <ng-container *ngIf="templateIndex === 1">
-    <p>yeetus</p>
+    <cc-file-upload></cc-file-upload>
   </ng-container>
 </div>
