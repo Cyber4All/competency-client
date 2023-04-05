@@ -30,6 +30,7 @@
       (click)="selectedTask.splice(selectedTask.indexOf(niceTask), 1); task.patchValue(true);"
           class="chip"
           attr.aria-label="Remove {{ niceTask.element_id | titlecase }} as an affiliated task"
+          [tip]="niceTask.description"
       >
           {{ niceTask.element_id | titlecase }} <i class="far fa-times"></i>
       </button>
