@@ -16,6 +16,12 @@ export class LifecyclesService {
     private snackbar: SnackbarService
   ) { }
 
+  /**
+   * Submits a competency
+   *
+   * @param competencyId The competency to be submitted
+   * @returns The status of the submission request
+   */
   async submitCompetency(competencyId: string): Promise<boolean> {
     this.auth.initHeaders();
     return await lastValueFrom(this.http
@@ -31,6 +37,12 @@ export class LifecyclesService {
       });
   }
 
+  /**
+   * Publishes a competency
+   *
+   * @param competencyId The competency to be published
+   * @returns The status of the publish request
+   */
   async publishCompetency(competencyId: string): Promise<boolean> {
     this.auth.initHeaders();
     return await lastValueFrom(this.http
@@ -46,6 +58,12 @@ export class LifecyclesService {
       });
   }
 
+  /**
+   * Rejects a competency
+   *
+   * @param competencyId The competency to be rejected
+   * @returns The status of the rejection request
+   */
   async rejectCompetency(competencyId: string): Promise<boolean> {
     this.auth.initHeaders();
     return await lastValueFrom(this.http
@@ -61,6 +79,12 @@ export class LifecyclesService {
       });
   }
 
+  /**
+   * Deprecates a competency
+   *
+   * @param competencyId The competency to be deprecated
+   * @returns The status of the deprecation request
+   */
   async deprecateCompetency(competencyId: string): Promise<boolean> {
     this.auth.initHeaders();
     return await lastValueFrom(this.http

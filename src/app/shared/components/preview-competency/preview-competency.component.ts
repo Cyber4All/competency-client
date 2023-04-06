@@ -12,7 +12,7 @@ import { User } from 'src/entity/user';
 })
 export class PreviewCompetencyComponent implements OnInit {
 
-  @Input() isAdmin = true;
+  @Input() isAdmin = false;
   @Output() updateSubmission = new EventEmitter();
 
   @Input() competency!: CompetencyBuilder;
@@ -22,15 +22,14 @@ export class PreviewCompetencyComponent implements OnInit {
 
   constructor(private lifecycles: LifecyclesService) { }
 
-  ngOnInit(): void {
-    this.competency.behavior = {
-      tasks: ['T0137: Maintain database management systems software.'],
-      work_role: 'Database Administrator',
-      details: 'yeetus'
-    };
+  ngOnInit(): void { }
 
-  }
-
+  /**
+   * Returns an icon to display depending on competency status
+   * Only for admin view
+   *
+   * @returns A FontAwesome icon
+   */
   competencyStatusIcon(): string {
     switch(this.competency.status) {
       case Lifecycles.DRAFT:
@@ -46,10 +45,16 @@ export class PreviewCompetencyComponent implements OnInit {
     }
   }
 
+  /**
+   * Returns text to be displayed on the blue main button
+   * Only for admin view
+   *
+   * @returns The button text to be displayed
+   */
   adminButtonText(): string {
     switch (this.competency.status) {
       case Lifecycles.SUBMITTED:
-        return 'PUBLISH';
+        return 'APPROVE';
       case Lifecycles.PUBLISHED:
         return 'DEPRECATE';
       case Lifecycles.DEPRECATED:
@@ -59,6 +64,11 @@ export class PreviewCompetencyComponent implements OnInit {
     }
   }
 
+  /**
+   * Provides the behavior when the blue main button is clicked
+   * Only for admin view
+   *
+   */
   onAdminButtonClicked(): void {
     switch (this.competency.status) {
       case Lifecycles.SUBMITTED:
@@ -84,6 +94,9 @@ export class PreviewCompetencyComponent implements OnInit {
     this.updateSubmission.emit();
   }
 
+  /**
+   * Publishes a competency
+   */
   async onPublish(): Promise<void> {
     const publishSuccess = await this.lifecycles.publishCompetency(this.competency._id);
     if (publishSuccess) {
@@ -92,6 +105,9 @@ export class PreviewCompetencyComponent implements OnInit {
     }
   }
 
+  /**
+   * Deprecates a competency
+   */
   async onDeprecate(): Promise<void> {
     const deprecateSuccess = await this.lifecycles.deprecateCompetency(this.competency._id);
     if(deprecateSuccess) {
@@ -100,6 +116,9 @@ export class PreviewCompetencyComponent implements OnInit {
     }
   }
 
+  /**
+   * Rejects a competency
+   */
   async onReject(): Promise<void> {
     const rejectSuccess = await this.lifecycles.rejectCompetency(this.competency._id);
     if (rejectSuccess) {
