@@ -83,8 +83,7 @@ export class DashboardComponent implements OnInit {
       this.search = await this.competencyService
         .getAllCompetencies({
           author: this.authService.user?._id,
-          status: [`${Lifecycles.DRAFT}`, `${Lifecycles.SUBMITTED}`, `${Lifecycles.PUBLISHED}`,
-           `${Lifecycles.DEPRECATED}`, `${Lifecycles.REJECTED}`]
+          status: [`${Lifecycles.DRAFT}`, `${Lifecycles.REJECTED}`]
         });
     } else {
       this.search = {
