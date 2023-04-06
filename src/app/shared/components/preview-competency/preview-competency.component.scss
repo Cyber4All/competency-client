@@ -116,13 +116,13 @@
       color: white;
       box-shadow: 0px 2px 5px color-accent();
   
-      &:hover {
-        cursor: pointer;
-      }
-  
       &:active {
         background-color: color-accent("lighter");
       }
+    }
+
+    &:hover {
+      cursor: pointer;
     }
   }
 }
