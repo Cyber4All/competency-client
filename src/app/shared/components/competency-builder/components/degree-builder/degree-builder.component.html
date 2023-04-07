@@ -1,6 +1,6 @@
 <!--Degree Builder-->
 <div class="competency_edit-degree-container">
-  <ng-container *ngIf="templateIndex === 0">
+  <ng-container *ngIf="currIndex === 5">
     <!--Degree Description-->
     <!-- <div class="edit-degree_description">
       Identify the time, degree of completetion, and expectations of how much must be correct to gain this competency
@@ -28,7 +28,7 @@
     <label class="correctness">Correctness</label>
     <textarea placeholder="Enter your definition of the task being correct here." [formControl]="correct"></textarea>
   </ng-container>
-  <ng-container *ngIf="templateIndex === 1">
+  <ng-container *ngIf="currIndex === 6">
     <cc-file-upload></cc-file-upload>
   </ng-container>
 </div>

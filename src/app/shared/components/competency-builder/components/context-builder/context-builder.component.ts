@@ -5,6 +5,7 @@ import { debounceTime } from 'rxjs';
 import { Documentation } from '../../../../../../entity/documentation';
 import { BuilderService } from '../../../../../core/builder/builder.service';
 import { BuilderValidation } from '../../../../../../entity/builder-validation';
+import { Builder } from 'protractor';
 @Component({
   selector: 'cc-context-builder',
   templateUrl: './context-builder.component.html',
@@ -16,7 +17,7 @@ export class ContextBuilderComponent implements OnInit {
   @Output() conditionChange = new EventEmitter<{update: string, value: Condition}>();
   // Builder - Behavior validation errors
   contextErrors: BuilderValidation[] = [];
-  templateIndex = 0;
+  currIndex = 2;
   // Form controls
   scenario = new FormControl('');
   tech = new FormControl([]);
@@ -44,10 +45,11 @@ export class ContextBuilderComponent implements OnInit {
         this.displayErrors();
       });
     });
-    // Subscribe to template index
-    this.builderService.templateIndex.subscribe((index: number) => {
-      this.templateIndex = index;
+
+    this.builderService.builderIndex.subscribe((index: number) => {
+      this.currIndex = index;
     });
+
     // Subscribe to scenario form control
     this.scenario.valueChanges
       .pipe(debounceTime(650))

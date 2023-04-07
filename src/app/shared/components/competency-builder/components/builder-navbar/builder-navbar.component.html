@@ -1,30 +1,30 @@
 <div class="competency-builder_navbar-buttons">
-    <div class="primary_nav" [ngClass]="{'choosen': isActive('actor')}"
-        (click)="builderService.setBuilderIndex(0); select('actor')">Actor</div>
-    <div class="primary_nav" (click)="builderService.setBuilderIndex(1); select('behavior')"
-        [ngClass]="{'choosen': isActive('behavior')}">Behavior</div>
-    <div class="primary_nav" [ngClass]="{'choosen': isActive('context')}">
+    <div class="primary_nav" [ngClass]="{'choosen': currIndex===0}" 
+        (click)="builderService.setBuilderIndex(0)">Actor</div>
+    <div class="primary_nav" (click)="builderService.setBuilderIndex(1)"
+        [ngClass]="{'choosen': currIndex===1}">Behavior</div>
+    <div class="primary_nav" [ngClass]="{'choosen': currIndex===2 || currIndex===3 || currIndex===4}">
         <div class="title"
-            (click)="builderService.setBuilderIndex(2); builderService.setTemplateIndex(0); select('context')">Context
+            (click)="builderService.setBuilderIndex(2); builderService.setTemplateIndex(0)">Context
         </div>
-        <div class="subs" *ngIf="currIndex === 2">
-            <div (click)="builderService.setTemplateIndex(0); subselect('Description')" class="buidler_navbar-submenu" [ngClass]="{'active': isSubActive('Description')}"><i class="fas fa-circle fa-xs"></i>Description</div>
-            <div (click)="builderService.setTemplateIndex(1); subselect('Technology')" class="buidler_navbar-submenu" [ngClass]="{'active': isSubActive('Technology')}"><i class="fas fa-circle fa-xs"></i>Technology</div>
-            <div (click)="builderService.setTemplateIndex(2); subselect('Documentation')" class="buidler_navbar-submenu" [ngClass]="{'active': isSubActive('Documentation')}"><i class="fas fa-circle fa-xs"></i>Documentation</div>
-        </div>
-    </div>
-    <div class="primary_nav" [ngClass]="{'choosen': isActive('degree')}">
-        <div (click)="builderService.setBuilderIndex(3); builderService.setTemplateIndex(0); select('degree')">Degree
-        </div>
-        <div class="subs" *ngIf="currIndex === 3">
-            <div (click)="builderService.setTemplateIndex(0); subselect('Description')" class="buidler_navbar-submenu" [ngClass]="{'active': isSubActive('Description')}"><i class="fas fa-circle fa-xs"></i>Description</div>
-            <div (click)="builderService.setTemplateIndex(1); subselect('Rubric')" class="buidler_navbar-submenu" [ngClass]="{'active': isSubActive('Rubric')}"><i class="fas fa-circle fa-xs"></i>Rubric</div>
+        <div class="subs" *ngIf="currIndex === 2 || currIndex === 3 || currIndex === 4">
+            <div (click)="builderService.setBuilderIndex(2); subselect('Description')" class="buidler_navbar-submenu" [ngClass]="{'active': currIndex===2}"><i class="fas fa-circle fa-xs"></i>Description</div>
+            <div (click)="builderService.setBuilderIndex(3); subselect('Technology')" class="buidler_navbar-submenu" [ngClass]="{'active': currIndex===3}"><i class="fas fa-circle fa-xs"></i>Technology</div>
+            <div (click)="builderService.setBuilderIndex(4); subselect('Documentation')" class="buidler_navbar-submenu" [ngClass]="{'active': currIndex===4}"><i class="fas fa-circle fa-xs"></i>Documentation</div>
         </div>
     </div>
-    <div class="primary_nav" [ngClass]="{'choosen': isActive('employ')}"
-        (click)="builderService.setBuilderIndex(4); select('employ')">Employability</div>
-    <div class="primary_nav" [ngClass]="{'choosen': isActive('notes')}"
-        (click)="builderService.setBuilderIndex(5); select('notes')">Notes</div>
-    <div class="primary_nav" [ngClass]="{'choosen': isActive('review')}"
-        (click)="builderService.setBuilderIndex(6); select('review')">Review</div>
+    <div class="primary_nav" [ngClass]="{'choosen': currIndex===5 || currIndex ===6}">
+        <div (click)="builderService.setBuilderIndex(5); builderService.setTemplateIndex(0);">Degree
+        </div>
+        <div class="subs" *ngIf="currIndex === 5 || currIndex === 6">
+            <div (click)="builderService.setBuilderIndex(5); subselect('Description')" class="buidler_navbar-submenu" [ngClass]="{'active': currIndex===5}"><i class="fas fa-circle fa-xs"></i>Description</div>
+            <div (click)="builderService.setBuilderIndex(6); subselect('Rubric')" class="buidler_navbar-submenu" [ngClass]="{'active': currIndex===6}"><i class="fas fa-circle fa-xs"></i>Rubric</div>
+        </div>
+    </div>
+    <div class="primary_nav" [ngClass]="{'choosen': currIndex===7}"
+        (click)="builderService.setBuilderIndex(7)">Employability</div>
+    <div class="primary_nav" [ngClass]="{'choosen': currIndex===8}"
+        (click)="builderService.setBuilderIndex(8)">Notes</div>
+    <div class="primary_nav" [ngClass]="{'choosen': currIndex===9}"
+        (click)="builderService.setBuilderIndex(9)">Review</div>
 </div>

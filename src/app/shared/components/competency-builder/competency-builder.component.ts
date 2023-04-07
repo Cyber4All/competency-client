@@ -61,13 +61,25 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
         this.templateText = IndexButton.CONTEXT;
         break;
       case 2:
-        this.templateText = IndexButton.DEGREE;
+        this.templateText = IndexButton.TECHNOLOGY;
         break;
       case 3:
-        this.templateText = IndexButton.EMPLOYABILITY;
+        this.templateText = IndexButton.DOCUMENTATION;
         break;
       case 4:
+        this.templateText = IndexButton.DEGREE;
+        break;
+      case 5:
+        this.templateText = IndexButton.RUBRIC;
+        break;
+      case 6:
+        this.templateText = IndexButton.EMPLOYABILITY;
+        break;
+      case 7:
         this.templateText = IndexButton.NOTES;
+        break;
+      case 8:
+        this.templateText = IndexButton.REVIEW;
         break;
       default:
         this.templateText = IndexButton.BEHAVIOR;

@@ -14,7 +14,7 @@ export class DegreeBuilderComponent implements OnInit {
   @Input() degree!: Degree;
   @Output() degreeChange = new EventEmitter<{update: string, value: Degree}>();
   degreeErrors: BuilderValidation[] = [];
-  templateIndex = 0;
+  currIndex = 5;
   complete = new FormControl('');
   correct = new FormControl('');
   time = new FormControl('');
@@ -41,8 +41,8 @@ export class DegreeBuilderComponent implements OnInit {
       });
     });
     // Subscribe to degree template index
-    this.builderService.templateIndex.subscribe((index: number) => {
-      this.templateIndex = index;
+    this.builderService.builderIndex.subscribe((index: number) => {
+      this.currIndex = index;
     });
     // Subscribe to complete form control
     this.complete.valueChanges

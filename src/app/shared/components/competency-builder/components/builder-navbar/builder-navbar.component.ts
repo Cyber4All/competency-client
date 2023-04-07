@@ -28,16 +28,6 @@ import { each } from 'jquery';
 })
 export class BuilderNavbarComponent implements OnInit {
   currIndex!: number;
-  isHighlighted = {
-    actor: true, // LearningObjects starts highlighted
-    behavior: false,
-    context: false,
-    degree: false,
-    employability: false,
-    notes: false,
-    review: false,
-  };
-  selection = 'actor';
   subSelection = 'Description';
 
   constructor(
@@ -49,20 +39,8 @@ export class BuilderNavbarComponent implements OnInit {
       this.currIndex = index;
     });
   }
-  isOtherChoiceSelected() {
-    return Object.values(this.isHighlighted).every((isSelected) => !isSelected);
-  }
-  isActive(selected: string): boolean{
-    return this.selection === selected;
-  }
   isSubActive(selected: string): boolean{
     return this.subSelection === selected;
-  }
-  select(selected: string) {
-    this.selection=selected;
-    if(selected === 'Context' || 'Degree'){
-      this.subSelection = 'Description';
-    }
   }
   subselect(selected: string){
     this.subSelection=selected;
