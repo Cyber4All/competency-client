@@ -11,6 +11,7 @@ export function getCompleteWorkRole(id: string) {
   return `
     query {
       workrole(workroleId:"${id}") {
+        _id
         work_role,
         work_role_id,
         description,
@@ -53,6 +54,35 @@ export function getCompleteTask(id: string) {
   return `
     query {
       task(taskId: "${id}") {
+        _id
+        element
+        element_id
+        description
+      }
+    }
+  `;
+}
+
+export function queryWorkroles(search: string) {
+  return `
+    query {
+      searchWorkroles(query: "${search}") {
+        _id
+        work_role,
+        work_role_id,
+        description,
+        ksats,
+        special_area
+      }
+    }
+  `;
+}
+
+export function queryTasks(search: string) {
+  return `
+    query {
+      searchTasks(query: "${search}") {
+        _id
         element
         element_id
         description

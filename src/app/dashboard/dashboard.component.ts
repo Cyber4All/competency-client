@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
-import { sleep, CompetencyService } from '../core/competency.service';
-import { CompetencyCardComponent } from '../shared/components/competency-card/competency-card.component';
+import { CompetencyService } from '../core/competency.service';
 import { Competency } from '../../entity/competency';
 import { Lifecycles } from '../../entity/lifecycles';
 import { Search } from '../../entity/search';
+import { sleep } from '../shared/functions/loading';
+import { BuilderService } from '../core/builder.service';
+import { CompetencyBuilder } from '../../entity/builder.class';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -32,10 +33,13 @@ export class DashboardComponent implements OnInit {
   };
   // Boolean toggle for 'clear filters' button
   filterApplied = false;
+  // Builder vars
+  newCompetency!: CompetencyBuilder;
+  openBuilder = false;
 
   constructor(
-    private dialog: MatDialog,
     private competencyService: CompetencyService,
+    private builderService: BuilderService,
     private authService: AuthService,
     private router: Router,
   ) { }
@@ -166,44 +170,42 @@ export class DashboardComponent implements OnInit {
    * @param existingCompetency - Opens the builder with a pre-selected competency
    */
   async openCompetencyBuilder(existingCompetency?: Competency) {
-    let competency!: Competency;
     // If !existingCompetency; we are creating a new competency object
     if(!existingCompetency) {
       // Create competency shell
-      const competencyShellId: any = await this.competencyService.createCompetency();
+      const competencyShellId: any = await this.builderService.createCompetency();
       // Retrieve full competency object
-      const competencyQuery: any = await this.competencyService.getCompetencyById(competencyShellId.id);
-      // Deconstruct GraphQL response
-      competency = competencyQuery;
-    } else {
-      // Competency existed; we are opening builder from dashboard
-      competency = existingCompetency;
+      existingCompetency = await this.competencyService.getCompetencyById(competencyShellId.id);
     }
-    // Open dialog ref for builder
-    const dialogRef = this.dialog.open(CompetencyCardComponent, {
-      height: '700px',
-      width: '900px',
-      data: competency
-    });
-    // After close of builder; handle drafts/unsavable and dashboard list
-    dialogRef.afterClosed().subscribe(async (isDraft: boolean) => {
-      // Enforce loading state
-      this.loading = true;
-      if((isDraft === undefined && !this.isSavable) || !isDraft) {
-        // Competency is neither savable nor being saved as draft; delete shell
-        await this.deleteCompetency(competency._id);
-        this.search.competencies = [];
-        this.loadedCompetencies = [];
-        await this.initDashboard();
-      } else if (isDraft) {
-        // Update user dashboard with newly created competencies
-        this.search.competencies = [];
-        this.loadedCompetencies = [];
-        await this.initDashboard();
-      } else {
-        // isDraft can be undefined; Throw a toaster error stating something went wrong.
-      }
-    });
+    // Create new instance of competency builder
+    this.newCompetency = new CompetencyBuilder(
+      existingCompetency._id,
+      existingCompetency.status,
+      existingCompetency.authorId,
+      existingCompetency.version,
+      existingCompetency.actor,
+      existingCompetency.behavior,
+      existingCompetency.condition,
+      existingCompetency.degree,
+      existingCompetency.employability,
+      existingCompetency.notes
+    );
+    this.openBuilder = true;
+  }
+
+  async closeBuilder(isDraft: any) {
+    // Enforce loading state
+    this.loading = true;
+    this.openBuilder = false;
+    if(!isDraft && isDraft !== undefined) {
+      // Competency is neither savable nor being saved as draft; delete shell
+      await this.deleteCompetency(this.newCompetency._id);
+    } else {
+      // Update user dashboard with newly created competencies
+      this.search.competencies = [];
+      this.loadedCompetencies = [];
+      await this.initDashboard();
+    }
   }
 
   /**

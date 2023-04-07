@@ -17,10 +17,16 @@
         <div *ngFor="let competency of loadedCompetencies" class="competency-card_container">
             <cc-competency-card
                 [competency]="competency"
-                [isEdit]="false"
-                (isSavable)="isSavable"
             ></cc-competency-card>
             <button (click)="deleteCompetency(competency._id)">DELETE</button>
         </div>
     </div>
 </ng-template>
+
+<cc-competency-builder
+    ccBuilder
+    *ngIf="openBuilder"
+    [competency]="newCompetency"
+    [options]="{ showExitButton: true, padding: true, exitButtonColor: 'black' }"
+    (close)="closeBuilder($event)"
+></cc-competency-builder>
