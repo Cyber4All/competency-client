@@ -8,10 +8,9 @@ import { Competency } from '../../entity/competency';
 import { Lifecycles } from '../../entity/lifecycles';
 import { Search } from '../../entity/search';
 import { sleep } from '../shared/functions/loading';
-import { BuilderService } from '../core/builder/builder.service';
-import { CompetencyBuilder } from '../core/builder/competency-builder.class';
-import { CompetencyBuilderComponent } from '../shared/components/competency-builder/competency-builder.component';
 import { PreviewCompetencyComponent } from '../shared/components/preview-competency/preview-competency.component';
+import { BuilderService } from '../core/builder.service';
+import { CompetencyBuilder } from '../../entity/builder.class';
 import { SnackbarService } from '../core/snackbar.service';
 import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
 @Component({
