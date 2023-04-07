@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CompetencyBuilder } from 'src/app/core/builder/competency-builder.class';
+import { CompetencyBuilder } from 'src/entity/builder.class';
 
 @Component({
   selector: 'cc-preview-competency',
