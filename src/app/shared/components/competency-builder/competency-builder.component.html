@@ -43,9 +43,7 @@
           (click)="builderService.setBuilderIndex(currIndex - 1); setTemplateButton();"><i
             class="fas fa-arrow-left"></i> BACK</button>
         <div>
-          <button class="review" *ngIf="currIndex < 9 " (click)="builderService.setBuilderIndex(9)">{{
-            indexButton.REVIEW
-            }}</button>
+          <button class="review" *ngIf="currIndex < 9 " (click)="builderService.setBuilderIndex(9)">REVIEW COMPETENCY</button>
           <button class="next" *ngIf="currIndex !== 9"
             (click)="builderService.setBuilderIndex(currIndex + 1); setTemplateButton();">{{ templateText }}</button>
 

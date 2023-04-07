@@ -24,7 +24,6 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
   // Index of current open builder component
   currIndex = 0;
   templateText = '';
-  indexButton = IndexButton;
 
   constructor(
     public builderService: BuilderService,
@@ -54,34 +53,34 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
   setTemplateButton() {
     switch(this.currIndex) {
       case 0:
-        this.templateText = IndexButton.BEHAVIOR;
+        this.templateText = 'CONTINUE TO BEHAVIOR';
         break;
       case 1:
-        this.templateText = IndexButton.CONTEXT;
+        this.templateText = 'CONTINUE TO CONTEXT';
         break;
       case 2:
-        this.templateText = IndexButton.TECHNOLOGY;
+        this.templateText = 'CONTINUE TO TECHNOLOGY';
         break;
       case 3:
-        this.templateText = IndexButton.DOCUMENTATION;
+        this.templateText = 'CONTINUE TO DOCUMENTATION';
         break;
       case 4:
-        this.templateText = IndexButton.DEGREE;
+        this.templateText = 'CONTINUE TO DEGREE';
         break;
       case 5:
-        this.templateText = IndexButton.RUBRIC;
+        this.templateText = 'CONTINUE TO RUBRIC';
         break;
       case 6:
-        this.templateText = IndexButton.EMPLOYABILITY;
+        this.templateText = 'CONTINUE TO EMPLOYABILITY';
         break;
       case 7:
-        this.templateText = IndexButton.NOTES;
+        this.templateText = 'CONTINUE TO NOTES';
         break;
       case 8:
-        this.templateText = IndexButton.REVIEW;
+        this.templateText = 'CONTINUE TO REVIEW';
         break;
       default:
-        this.templateText = IndexButton.BEHAVIOR;
+        this.templateText = 'CONTINUE TO BEHAVIOR';
         break;
     }
   }
