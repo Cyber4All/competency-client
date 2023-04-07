@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
@@ -11,8 +10,6 @@ import { sleep } from '../shared/functions/loading';
 import { PreviewCompetencyComponent } from '../shared/components/preview-competency/preview-competency.component';
 import { BuilderService } from '../core/builder.service';
 import { CompetencyBuilder } from '../../entity/builder.class';
-import { SnackbarService } from '../core/snackbar.service';
-import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -44,12 +41,10 @@ export class DashboardComponent implements OnInit {
   openPreview = false;
 
   constructor(
-    private dialog: MatDialog,
     private competencyService: CompetencyService,
     private builderService: BuilderService,
     private authService: AuthService,
     private router: Router,
-    private snackBar: SnackbarService
   ) { }
 
   async ngOnInit() {
@@ -105,26 +100,26 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  /**
-   * NOT CURRENTLY IN USE - WORK IN PROGRESS
-   * Method to apply filters for competencies
-   *
-   * @param facet
-   * @param type
-   */
-  addFilter(facet: string, type: number): void {
-    if(type === 1) {
-      if (!this.selected.work_role.includes(facet)){
-        this.selected.work_role.push(facet);
-      }
-    } else if (type === 3) {
-      if (!this.selected.task.includes(facet)){
-        this.selected.task.push(facet);
-      }
-    }
-    this.filter();
-    this.filterApplied = true;
-  }
+  // /**
+  //  * NOT CURRENTLY IN USE - WORK IN PROGRESS
+  //  * Method to apply filters for competencies
+  //  *
+  //  * @param facet
+  //  * @param type
+  //  */
+  // addFilter(facet: string, type: number): void {
+  //   if(type === 1) {
+  //     if (!this.selected.work_role.includes(facet)){
+  //       this.selected.work_role.push(facet);
+  //     }
+  //   } else if (type === 3) {
+  //     if (!this.selected.task.includes(facet)){
+  //       this.selected.task.push(facet);
+  //     }
+  //   }
+  //   this.filter();
+  //   this.filterApplied = true;
+  // }
 
   performSearch(searchText: any) {
     //TODO Actually perform the search
@@ -132,10 +127,12 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
-   * Method to find competencies by specified filters
+   * Perform a search based on the filters selected from the secondary navbar component
+   *
+   * @param filter object containing arrays of selected filters
    */
-  async filter() {
-    console.log('METHOD NOT CURRENTLY IMPLEMENTED');
+  async filter(filter: { status: string[], workrole: string[], task: string[], audience: string[]}) {
+    console.log('FILTER BASED SEARCHING NOT IMPLEMENTED YET.', filter);
   }
 
   /**
@@ -162,6 +159,12 @@ export class DashboardComponent implements OnInit {
     this.search.competencies = [];
     this.loadedCompetencies = [];
     await this.initDashboard();
+  }
+
+  openHelp() {
+    //TODO Open help dialog
+    // Oliver Twist reference
+    console.log('PLEASE SIR, MAY I HAVE SOME MORE SIR?');
   }
 
   /**
