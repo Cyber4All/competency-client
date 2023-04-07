@@ -114,6 +114,6 @@
       *ngIf="competency.status.toString() === 'submitted' || competency.status.toString() === 'published'" 
       (click)="onUpdateSubmission()"
       >EDIT</button>
-    <button *ngIf="!(competency.status.toString() === 'rejected')" (click)="onAdminButtonClicked()" class="submit">{{ adminButtonText() }}</button>
+    <button *ngIf="!(competency.status.toString() === 'rejected' || competency.status.toString() === 'deprecated')" (click)="onAdminButtonClicked()" class="submit">{{ adminButtonText() }}</button>
   </div>
 </ng-template>
