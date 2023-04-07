@@ -1,13 +1,25 @@
-import { Actor } from '../../../entity/actor';
-import { Behavior } from '../../../entity/behavior';
-import { Competency } from '../../../entity/competency';
-import { Condition } from '../../../entity/condition';
-import { Degree } from '../../../entity/degree';
-import { Documentation } from '../../../entity/documentation';
-import { Employability } from '../../../entity/employability';
-import { Lifecycles } from '../../../entity/lifecycles';
-import { Notes } from '../../../entity/notes';
-import { BuilderError, BuilderValidation } from '../../../entity/builder-validation';
+import { Actor } from './actor';
+import { Behavior } from './behavior';
+import { Competency } from './competency';
+import { Condition } from './condition';
+import { Degree } from './degree';
+import { Documentation } from './documentation';
+import { Employability } from './employability';
+import { Lifecycles } from './lifecycles';
+import { Notes } from './notes';
+import { BuilderError, BuilderValidation } from './builder-validation';
+
+export enum IndexButton {
+    BEHAVIOR = 'CONTINUE TO BEHAVIOR',
+    CONTEXT = 'CONTINUE TO CONTEXT',
+    DEGREE = 'CONTINUE TO DEGREE',
+    EMPLOYABILITY = 'CONTINUE TO EMPLOYABILITY',
+    NOTES = 'CONTINUE TO NOTES',
+    REVIEW = 'REVIEW COMPETENCY',
+    SUBMIT = 'SUBMIT COMPETENCY'
+}
+
+
 export class CompetencyBuilder extends Competency {
     _id!: string;
     status!: Lifecycles;

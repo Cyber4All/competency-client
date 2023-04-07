@@ -27,15 +27,14 @@ export class SnackbarService  {
         let message = 'Something went wrong on our end. Please try again later!';
         if (err.status !== 429){
             const apiError =   typeof err.error ===  'string' ? JSON.parse(err.error) : err.error;
-            if (apiError.message instanceof Array && apiError.message.length > 1) {
-                message = apiError.message[0].message[0].charAt(0).toUpperCase() +
-                    apiError.message[0].message[0].substr(1) + ' and ' +
-                    (apiError.message.length - 1) + ' more';
-            } else if (apiError.message instanceof Array) {
+            if (apiError.message instanceof Array) {
                 message = apiError.message[0].message[0].charAt(0).toUpperCase() + apiError.message[0].message[0].substr(1);
-            } else {
-                message = apiError.message.charAt(0).toUpperCase()+apiError.message.substr(1);
-            }
+                if (apiError.message.length > 1) {
+                     message += ' and ' + (apiError.message.length - 1) + ' more';
+                }
+           } else {
+                message = apiError.message.charAt(0).toUpperCase() + apiError.message.substr(1);
+           }
         }
 
         switch (err.status){

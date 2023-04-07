@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { CompetencyBuilder } from 'src/app/core/builder/competency-builder.class';
 import { LifecyclesService } from 'src/app/core/lifecycles.service';
 import { Lifecycles } from 'src/entity/lifecycles';
 import { User } from 'src/entity/user';
+import { CompetencyBuilder } from 'src/entity/builder.class';
 
 @Component({
   selector: 'cc-preview-competency',

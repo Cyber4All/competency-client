@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { BuilderValidation } from '../../../../../../entity/builder-validation';
 import { Employability } from '../../../../../../entity/employability';
-import { BuilderService } from '../../../../../core/builder/builder.service';
+import { BuilderService } from '../../../../../core/builder.service';
 @Component({
   selector: 'cc-employability-builder',
   templateUrl: './employability-builder.component.html',
