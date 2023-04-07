@@ -4,13 +4,14 @@ import {
   OnDestroy,
   EventEmitter,
   Output,
+  HostBinding,
 } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { BuilderOptions } from '../builder.directive';
-import { fade } from '../builder.animations';
+import { PanelOptions } from '../panel.directive';
+import { fade } from '../panel.animations';
 @Component({
-  selector: 'cc-builder-viewer',
+  selector: 'cc-panel-viewer',
   template: `
     <ng-container>
       <div *ngIf="isOpen" (click)="closePanel()" [@fade] class="overlay"></div>
@@ -19,7 +20,11 @@ import { fade } from '../builder.animations';
         [style.width]="contentWidth + 'px'"
         (click)="$event.stopPropagation()"
         class="side-panel"
-        [ngClass]="{ 'side-panel--no-padding': options && !options.padding }"
+        [ngClass]="{
+          'center': options.position === 'center',
+          'lower-right': options.position === 'lower-right',
+          'side-panel--no-padding': options && !options.padding
+        }"
       >
         <button
           *ngIf="options.showExitButton"
@@ -33,19 +38,21 @@ import { fade } from '../builder.animations';
       </div>
     </ng-container>
   `,
-  styleUrls: ['./builder-viewer.component.scss'],
+  styleUrls: ['./panel-viewer.component.scss'],
   animations: [fade],
 })
-export class BuilderViewerComponent implements OnInit, OnDestroy {
+export class PanelViewerComponent implements OnInit, OnDestroy {
+  @HostBinding('@fade') fadeAnimation = true;
+
   // tslint:disable-next-line: variable-name
   _controller$!: BehaviorSubject<boolean>;
   contentWidth = 400;
 
-  options!: BuilderOptions;
+  options!: PanelOptions;
 
   isOpen = true;
 
-  // tslint:disable-next-line: no-output-native
+  // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() close = new EventEmitter<any>();
   defaultCloseParam: any;
 

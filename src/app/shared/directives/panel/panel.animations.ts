@@ -56,3 +56,39 @@ import {
     style({ transform: 'translateX(0px)', opacity: 1 }),
     animate('250ms ease', style({ transform: 'translateX(450px)', opacity: 0 })),
   ];
+
+  export const fadeIn = [
+    style({
+      transform: 'translate(-50%, -50%) scale(0.7, 0.7)',
+      opacity: 0,
+      top: '50%',
+      left: '50%',
+    }),
+    animate(
+      '350ms 150ms ease',
+      style({
+        transform: 'translate(-50%, -50%) scale(1, 1)',
+        opacity: 1,
+        top: '50%',
+        left: '50%'
+      })
+    )
+  ];
+
+  export const fadeOut = [
+    style({
+      transform: 'translate(-50%, -50%) scale(1, 1)',
+      opacity: 1,
+      top: '50%',
+      left: '50%',
+    }),
+    animate(
+      '250ms ease',
+      style({
+        transform: 'translate(-50%, -50%) scale(0.7, 0.7)',
+        opacity: 0,
+        top: '50%',
+        left: '50%'
+      })
+    )
+  ];

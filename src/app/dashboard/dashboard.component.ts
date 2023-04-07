@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
@@ -6,6 +7,7 @@ import { Competency } from '../../entity/competency';
 import { Lifecycles } from '../../entity/lifecycles';
 import { Search } from '../../entity/search';
 import { sleep } from '../shared/functions/loading';
+import { PreviewCompetencyComponent } from '../shared/components/preview-competency/preview-competency.component';
 import { BuilderService } from '../core/builder.service';
 import { CompetencyBuilder } from '../../entity/builder.class';
 @Component({
@@ -36,6 +38,7 @@ export class DashboardComponent implements OnInit {
   // Builder vars
   newCompetency!: CompetencyBuilder;
   openBuilder = false;
+  openPreview = false;
 
   constructor(
     private competencyService: CompetencyService,
@@ -206,6 +209,36 @@ export class DashboardComponent implements OnInit {
       this.loadedCompetencies = [];
       await this.initDashboard();
     }
+  }
+
+  /**
+   * Logic to trigger the Competency Preview component to open
+   *
+   * @param competency The competency to preview
+   */
+  async openCompetencyPreview(competency: Competency) {
+
+    // CompetencyBuilder used in case the user opens the builder in the competency preview
+    this.newCompetency = new CompetencyBuilder(
+      competency._id,
+      competency.status,
+      competency.authorId,
+      competency.version,
+      competency.actor,
+      competency.behavior,
+      competency.condition,
+      competency.degree,
+      competency.employability,
+      competency.notes
+    );
+    this.openPreview = true;
+  }
+
+  /**
+   * Closes the Competency Preview component
+   */
+  closePreview() {
+    this.openPreview = false;
   }
 
   /**
