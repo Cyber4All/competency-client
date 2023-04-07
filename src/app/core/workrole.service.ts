@@ -117,7 +117,8 @@ export class WorkroleService {
    * @param taskId element object id
    * @returns complete element object
    */
-  async getCompelteTask(taskId: string) {
+  async getCompleteTask(taskId: string) {
+    this.auth.initHeaders();
     const query = getCompleteTask(taskId);
     return await lastValueFrom(this.http
       .post(
@@ -139,6 +140,7 @@ export class WorkroleService {
    * @param search text query
    */
   async searchWorkroles(search: string): Promise<void> {
+    this.auth.initHeaders();
     const query = queryWorkroles(search);
     await lastValueFrom(this.http
       .post(
@@ -179,6 +181,7 @@ export class WorkroleService {
    * @param search text query
    */
   async searchTasks(search: string): Promise<void> {
+    this.auth.initHeaders();
     const query = queryTasks(search);
     await lastValueFrom(this.http
       .post(
@@ -219,6 +222,7 @@ export class WorkroleService {
    * @returns list of NICE knowledge and skills
    */
   async getActorPrereqs() {
+    this.auth.initHeaders();
     const query = getPreReqs();
     return await lastValueFrom(this.http
       .post(

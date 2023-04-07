@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
@@ -9,8 +8,6 @@ import { Search } from '../../entity/search';
 import { sleep } from '../shared/functions/loading';
 import { BuilderService } from '../core/builder.service';
 import { CompetencyBuilder } from '../../entity/builder.class';
-import { SnackbarService } from '../core/snackbar.service';
-import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -41,12 +38,10 @@ export class DashboardComponent implements OnInit {
   openBuilder = false;
 
   constructor(
-    private dialog: MatDialog,
     private competencyService: CompetencyService,
     private builderService: BuilderService,
     private authService: AuthService,
     private router: Router,
-    private snackBar: SnackbarService
   ) { }
 
   async ngOnInit() {
