@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from './auth.service';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
-import { COMPETENCY_ROUTES } from '../../../environments/routes';
-import { Actor } from '../../../entity/actor';
-import { Degree } from '../../../entity/degree';
-import { Condition } from '../../../entity/condition';
-import { Behavior } from '../../../entity/behavior';
-import { Employability } from '../../../entity/employability';
-import { Notes } from '../../../entity/notes';
-import { BuilderError, BuilderValidation } from '../../../entity/builder-validation';
-import { SnackbarService } from '../snackbar.service';
+import { COMPETENCY_ROUTES } from '../../environments/routes';
+import { Actor } from '../../entity/actor';
+import { Degree } from '../../entity/degree';
+import { Condition } from '../../entity/condition';
+import { Behavior } from '../../entity/behavior';
+import { Employability } from '../../entity/employability';
+import { Notes } from '../../entity/notes';
+import { BuilderError, BuilderValidation } from '../../entity/builder-validation';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
     providedIn: 'root'
