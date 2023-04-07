@@ -1,26 +1,7 @@
 <cc-primary-nav (search)="performSearch($event)"></cc-primary-nav>
+<cc-secondary-nav (filterCompetencies)="filter($event)" (newCompetency)="openCompetencyBuilder()" (getHelp)="openHelp()"></cc-secondary-nav>
+
 <div class="wrapper">
-    <div class="header">
-        <h1>Competencies</h1>
-        <button mat-mini-fab color="primary" class="add-button" aria-label="Open builder" matTooltip="Add Competency" (click)="openCompetencyBuilder()">
-            <mat-icon>add</mat-icon>
-        </button>
-        <div class="filter-container">
-            <button mat-raised-button color="warn" class="filter-button" *ngIf="filterApplied" aria-label="Clear Filters" matTooltip="Clear Filters" (click)="clearFilters()">CLEAR FILTERS</button>
-            <button mat-raised-button class="filter-button" aria-label="Filter Workroles" matTooltip="Filter Workroles" [matMenuTriggerFor]="workrole">Workrole  &nbsp; <mat-icon>filter_list</mat-icon></button>
-            <mat-menu #workrole="matMenu">
-                <!-- <button mat-menu-item  *ngFor="let obj of niceFramework" (click)="addFilter(obj.workrole, 1)">{{obj.workrole | titlecase }}</button> -->
-            </mat-menu>
-            <button mat-raised-button class="filter-button" aria-label="Filter Tasks" matTooltip="Filter Tasks" [matMenuTriggerFor]="tasks">Tasks &nbsp; <mat-icon>filter_list</mat-icon></button>
-            <mat-menu #tasks="matMenu">
-                <!-- <button mat-menu-item *ngFor="let obj of competencies" (click)="addFilter(obj.taskId, 3)">{{obj.taskId}}</button> -->
-            </mat-menu>
-            <button mat-raised-button class="filter-button" aria-label="Filter actor" matTooltip="Filter Actor" [matMenuTriggerFor]="aud">Actor &nbsp; <mat-icon>filter_list</mat-icon></button>
-            <mat-menu #aud="matMenu">
-                <!-- <button mat-menu-item *ngFor="let obj of actor" (click)="addFilter(obj, 2)">The {{obj | titlecase }}</button> -->
-            </mat-menu>
-        </div>
-    </div>
     <ng-container *ngIf="!loading; then competencyTemplate; else loadingTemplate"></ng-container>
 </div>
 
