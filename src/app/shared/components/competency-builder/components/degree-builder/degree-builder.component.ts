@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { BuilderValidation } from '../../../../../../entity/builder-validation';
 import { Degree } from '../../../../../../entity/degree';
-import { BuilderService } from '../../../../../core/builder/builder.service';
+import { BuilderService } from '../../../../../core/builder.service';
 @Component({
   selector: 'cc-degree-builder',
   templateUrl: './degree-builder.component.html',

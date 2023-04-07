@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Condition } from '../../../../../../entity/condition';
 import { debounceTime } from 'rxjs';
 import { Documentation } from '../../../../../../entity/documentation';
-import { BuilderService } from '../../../../../core/builder/builder.service';
+import { BuilderService } from '../../../../../core/builder.service';
 import { BuilderValidation } from '../../../../../../entity/builder-validation';
 import { Builder } from 'protractor';
 @Component({

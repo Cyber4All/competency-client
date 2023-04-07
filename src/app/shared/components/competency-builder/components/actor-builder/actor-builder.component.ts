@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { Actor } from '../../../../../../entity/actor';
 import { BuilderValidation } from '../../../../../../entity/builder-validation';
-import { BuilderService } from '../../../../../core/builder/builder.service';
+import { BuilderService } from '../../../../../core/builder.service';
 
 @Component({
   selector: 'cc-actor-builder',

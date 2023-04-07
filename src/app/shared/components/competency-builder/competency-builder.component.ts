@@ -7,9 +7,8 @@ import { Competency } from '../../../../entity/competency';
 import { Condition } from '../../../../entity/condition';
 import { Degree } from '../../../../entity/degree';
 import { Employability } from '../../../../entity/employability';
-import { IndexButton } from '../../../../entity/builder';
-import { BuilderService } from '../../../core/builder/builder.service';
-import { CompetencyBuilder } from '../../../core/builder/competency-builder.class';
+import { BuilderService } from '../../../core/builder.service';
+import { CompetencyBuilder, IndexButton } from '../../../../entity/builder.class';
 import { SnackbarService } from '../../../core/snackbar.service';
 import { SNACKBAR_COLOR } from '../snackbar/snackbar.component';
 @Component({
