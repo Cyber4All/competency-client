@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BuilderModule } from './builder/builder.module';
+import { PanelModule } from './panel/panel.module';
 import { DragAndDropDirective } from './drag-and-drop.directive';
 import { TipDirective } from './tip.directive';
 
@@ -11,12 +11,12 @@ import { TipDirective } from './tip.directive';
     TipDirective,
   ],
   imports: [
-    BuilderModule,
+    PanelModule,
   ],
   exports: [
     DragAndDropDirective,
-    BuilderModule,
     TipDirective,
+    PanelModule,
   ]
 })
 export class SharedDirectivesModule { }

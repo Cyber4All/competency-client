@@ -178,7 +178,7 @@ export class BehaviorBuilderComponent implements OnInit {
       this.selectedTask = [];
       // The tasks ObjectIds are stored on a competency
       this.behavior.tasks.map(async (task: string) => {
-        await this.workroleService.getCompelteTask(task)
+        await this.workroleService.getCompleteTask(task)
         .then((taskQuery: any) => {
           this.tasks.push(taskQuery.data.task);
           this.selectedTask.push(taskQuery.data.task);
