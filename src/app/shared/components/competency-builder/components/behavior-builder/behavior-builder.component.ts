@@ -5,7 +5,7 @@ import { WorkroleService } from '../../../../../core/workrole.service';
 import { Behavior } from '../../../../../../entity/behavior';
 import { Workrole } from '../../../../../../entity/workrole';
 import { Elements } from '../../../../../../entity/elements';
-import { BuilderService } from '../../../../../core/builder/builder.service';
+import { BuilderService } from '../../../../../core/builder.service';
 import { BuilderValidation } from '../../../../../../entity/builder-validation';
 @Component({
   selector: 'cc-behavior-builder',

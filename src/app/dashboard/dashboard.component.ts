@@ -45,9 +45,9 @@ export class DashboardComponent implements AfterViewInit {
   // Builder vars
   newCompetency!: CompetencyBuilder;
   openBuilder = false;
+  openPreview = false;
 
   constructor(
-    private dialog: MatDialog,
     private competencyService: CompetencyService,
     private builderService: BuilderService,
     private authService: AuthService,
@@ -218,26 +218,26 @@ export class DashboardComponent implements AfterViewInit {
     return arr;
   }
 
-  /**
-   * NOT CURRENTLY IN USE - WORK IN PROGRESS
-   * Method to apply filters for competencies
-   *
-   * @param facet
-   * @param type
-   */
-  addFilter(facet: string, type: number): void {
-    if(type === 1) {
-      if (!this.selected.work_role.includes(facet)){
-        this.selected.work_role.push(facet);
-      }
-    } else if (type === 3) {
-      if (!this.selected.task.includes(facet)){
-        this.selected.task.push(facet);
-      }
-    }
-    this.filter();
-    this.filterApplied = true;
-  }
+  // /**
+  //  * NOT CURRENTLY IN USE - WORK IN PROGRESS
+  //  * Method to apply filters for competencies
+  //  *
+  //  * @param facet
+  //  * @param type
+  //  */
+  // addFilter(facet: string, type: number): void {
+  //   if(type === 1) {
+  //     if (!this.selected.work_role.includes(facet)){
+  //       this.selected.work_role.push(facet);
+  //     }
+  //   } else if (type === 3) {
+  //     if (!this.selected.task.includes(facet)){
+  //       this.selected.task.push(facet);
+  //     }
+  //   }
+  //   this.filter();
+  //   this.filterApplied = true;
+  // }
 
   performSearch(searchText: any) {
     //TODO Actually perform the search
@@ -245,10 +245,12 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   /**
-   * Method to find competencies by specified filters
+   * Perform a search based on the filters selected from the secondary navbar component
+   *
+   * @param filter object containing arrays of selected filters
    */
-  async filter() {
-    console.log('METHOD NOT CURRENTLY IMPLEMENTED');
+  async filter(filter: { status: string[], workrole: string[], task: string[], audience: string[]}) {
+    console.log('FILTER BASED SEARCHING NOT IMPLEMENTED YET.', filter);
   }
 
   /**
@@ -275,6 +277,12 @@ export class DashboardComponent implements AfterViewInit {
     this.search.competencies = [];
     this.loadedCompetencies = [];
     await this.initDashboard();
+  }
+
+  openHelp() {
+    //TODO Open help dialog
+    // Oliver Twist reference
+    console.log('PLEASE SIR, MAY I HAVE SOME MORE SIR?');
   }
 
   /**
@@ -319,6 +327,36 @@ export class DashboardComponent implements AfterViewInit {
       this.loadedCompetencies = [];
       await this.initDashboard();
     }
+  }
+
+  /**
+   * Logic to trigger the Competency Preview component to open
+   *
+   * @param competency The competency to preview
+   */
+  async openCompetencyPreview(competency: Competency) {
+
+    // CompetencyBuilder used in case the user opens the builder in the competency preview
+    this.newCompetency = new CompetencyBuilder(
+      competency._id,
+      competency.status,
+      competency.authorId,
+      competency.version,
+      competency.actor,
+      competency.behavior,
+      competency.condition,
+      competency.degree,
+      competency.employability,
+      competency.notes
+    );
+    this.openPreview = true;
+  }
+
+  /**
+   * Closes the Competency Preview component
+   */
+  closePreview() {
+    this.openPreview = false;
   }
 
   /**

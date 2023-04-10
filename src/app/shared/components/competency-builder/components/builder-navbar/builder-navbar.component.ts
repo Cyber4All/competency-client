@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BuilderService } from '../../../../../core/builder/builder.service';
+import { BuilderService } from '../../../../../core/builder.service';
 
 @Component({
   selector: 'cc-builder-navbar',

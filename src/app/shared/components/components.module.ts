@@ -34,11 +34,14 @@ import { EmployabilityBuilderComponent } from './competency-builder/components/e
 import { NotesBuilderComponent } from './competency-builder/components/notes-builder/notes-builder.component';
 import { BannerComponent } from './banner/banner.component';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
-import { BuilderNavbarComponent } from './competency-builder/components/builder-navbar/builder-navbar.component';
+import { PreviewCompetencyComponent } from './preview-competency/preview-competency.component';
 import { PrimaryNavComponent } from './primary-nav/primary-nav.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
 import { RouterModule } from '@angular/router';
+import { BuilderNavbarComponent } from './competency-builder/components/builder-navbar/builder-navbar.component';
+import { FilteringDropdownsComponent } from './filtering-dropdowns/filtering-dropdowns.component';
+import { SecondaryNavComponent } from './secondary-nav/secondary-nav.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -52,10 +55,13 @@ import { RouterModule } from '@angular/router';
     NotesBuilderComponent,
     SnackbarComponent,
     BannerComponent,
-    BuilderNavbarComponent,
+    PreviewCompetencyComponent,
     PrimaryNavComponent,
     SearchBarComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    BuilderNavbarComponent,
+    FilteringDropdownsComponent,
+    SecondaryNavComponent
   ],
   imports: [
     CommonModule,
@@ -91,8 +97,10 @@ import { RouterModule } from '@angular/router';
     FileUploadComponent,
     BannerComponent,
     PrimaryNavComponent,
+    SecondaryNavComponent,
     SearchBarComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    PreviewCompetencyComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
