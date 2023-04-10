@@ -27,7 +27,6 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit(): void {
     //red error banner at the top of the screen
     this.authvalidationService.getErrorState().subscribe(err => this.showError = err);
-    //TODO: read route query parameters otaCode and _value
     this.activatedRoute.queryParams.subscribe(params => {
       console.log(params);
       this.otaCode = params.otaCode;
@@ -36,7 +35,12 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
-    //TODO: add reset password implementation
-    this.authService;
+    this.authService.resetPassword(this.passwords.get('password')?.value, this.otaCode)
+    .subscribe(val => {
+      this.done = true;
+    }, error => {
+      this.errorMessage = 'Something went wrong! We\'re looking into the issue. Please check back later.';
+      this.authvalidationService.showError();
+    });
   }
 }

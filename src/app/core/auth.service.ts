@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, lastValueFrom, Observable, retry } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
@@ -196,6 +196,18 @@ export class AuthService {
       this.clearAuthHeader();
       return Promise.resolve();
     }
+  }
+
+  resetPassword(payload: string, otaCode: string): Observable<any> {
+    return this.http.patch(
+      environment.apiURL + '/auth/reset/password?ota=' + otaCode,
+      { payload },
+      { withCredentials: true, responseType: 'text' }
+    )
+    .pipe(
+      retry(3),
+      //catchError(this.formatError)
+    );
   }
 
   /**
