@@ -44,6 +44,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     // Subscribe to the current index of the builder form component
     this.builderService.builderIndex.subscribe((index: number) => {
       this.currIndex = index;
+      this.setTemplateButton();
     });
     // Set the current competency ID for inputs in child components
     this.competencyId = this.competency._id;
