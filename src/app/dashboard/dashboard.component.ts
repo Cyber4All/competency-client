@@ -7,7 +7,6 @@ import { Competency } from '../../entity/competency';
 import { Lifecycles } from '../../entity/lifecycles';
 import { Search } from '../../entity/search';
 import { sleep } from '../shared/functions/loading';
-import { PreviewCompetencyComponent } from '../shared/components/preview-competency/preview-competency.component';
 import { BuilderService } from '../core/builder.service';
 import { CompetencyBuilder } from '../../entity/builder.class';
 @Component({

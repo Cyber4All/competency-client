@@ -10,10 +10,10 @@
     <div class="time_selector">
       <input [formControl]="time" class="time_input">
       <div class="dropdown">
-        <div class="time_box" (click)="displayTime()">{{ timeSelected }}<i class="fas fa-angle-down fa-lg"></i></div>
+        <div class="time_box" (click)="displayTime()">{{ timeSelected.value !== "" ? timeSelected.value : "Select a measure of time..." }}<i class="fas fa-angle-down fa-lg"></i></div>
         <div [ngClass]="timeDisplay ? 'time_dropdown': 'hidden'">
           <ul class="time_list">
-            <li *ngFor="let measure of timeList" (click)="this.timeSelected=measure; displayTime()">{{ measure }}</li>
+            <li *ngFor="let measure of timeList" (click)="this.timeSelected=measure; displayTime()">{{ measure.value }}</li>
           </ul>
         </div>
       </div>

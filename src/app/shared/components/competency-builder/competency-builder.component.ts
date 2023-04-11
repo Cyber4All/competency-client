@@ -11,6 +11,8 @@ import { BuilderService } from '../../../core/builder.service';
 import { CompetencyBuilder, IndexButton } from '../../../../entity/builder.class';
 import { SnackbarService } from '../../../core/snackbar.service';
 import { SNACKBAR_COLOR } from '../snackbar/snackbar.component';
+import { DropdownService } from '../../../core/dropdown.service';
+import { DropdownType } from '../../../../entity/dropdown';
 @Component({
   selector: 'cc-competency-builder',
   templateUrl: './competency-builder.component.html',
@@ -28,7 +30,8 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
   constructor(
     public builderService: BuilderService,
     private snackBarService: SnackbarService,
-  ) {}
+    private dropdownService: DropdownService
+    ) {}
 
   // Method to prevent user from leaving the page without saving competency data
   @HostListener('window:beforeunload', ['$event']) public OnBeforeUnload(event: any) {
@@ -37,7 +40,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     return confirmationMessage;              // Gecko, WebKit, Chrome <34
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     // Subscribe to the current index of the builder form component
     this.builderService.builderIndex.subscribe((index: number) => {
       this.currIndex = index;
@@ -45,6 +48,10 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     // Set the current competency ID for inputs in child components
     this.competencyId = this.competency._id;
     this.setTemplateButton();
+    // Set Actor Dropdowns
+    await this.dropdownService.getDropdownItems(DropdownType.ACTOR);
+    // Set Degree Dropdowns
+    await this.dropdownService.getDropdownItems(DropdownType.TIME);
   }
 
   /**
@@ -53,34 +60,34 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
   setTemplateButton() {
     switch(this.currIndex) {
       case 0:
-        this.templateText = 'CONTINUE TO BEHAVIOR';
+        this.templateText = IndexButton.BEHAVIOR;
         break;
       case 1:
-        this.templateText = 'CONTINUE TO CONTEXT';
+        this.templateText = IndexButton.CONTEXT;
         break;
       case 2:
-        this.templateText = 'CONTINUE TO TECHNOLOGY';
+        this.templateText = IndexButton.TECH;
         break;
       case 3:
-        this.templateText = 'CONTINUE TO DOCUMENTATION';
+        this.templateText = IndexButton.DOCUMENTATION;
         break;
       case 4:
-        this.templateText = 'CONTINUE TO DEGREE';
+        this.templateText = IndexButton.DEGREE;
         break;
       case 5:
-        this.templateText = 'CONTINUE TO RUBRIC';
+        this.templateText = IndexButton.RUBRIC;
         break;
       case 6:
-        this.templateText = 'CONTINUE TO EMPLOYABILITY';
+        this.templateText = IndexButton.EMPLOYABILITY;
         break;
       case 7:
-        this.templateText = 'CONTINUE TO NOTES';
+        this.templateText = IndexButton.NOTES;
         break;
       case 8:
-        this.templateText = 'CONTINUE TO REVIEW';
+        this.templateText = IndexButton.REVIEW;
         break;
       default:
-        this.templateText = 'CONTINUE TO BEHAVIOR';
+        this.templateText = IndexButton.BEHAVIOR;
         break;
     }
   }
