@@ -22,12 +22,7 @@ export class DegreeBuilderComponent implements OnInit {
   time = new FormControl('');
   timeList: DropdownItem[] = [];
   timeDisplay = false;
-  timeSelected: DropdownItem = {
-    _id: '',
-    value: '',
-    type: DropdownType.TIME
-  };
-
+  timeSelected!: DropdownItem;
   constructor(
     public builderService: BuilderService,
     private dropdownService: DropdownService
