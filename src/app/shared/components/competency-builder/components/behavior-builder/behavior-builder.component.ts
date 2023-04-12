@@ -161,30 +161,48 @@ export class BehaviorBuilderComponent implements OnInit {
     /**
      * 5. Set form values if they exist
      */
-    // If work_role exists, set workrole form value
-    if (this.behavior.work_role) {
-      this.workroles = [];
-      // The work_role ObjectId is stored on a competnecy
-      await this.workroleService.getCompleteWorkrole(this.behavior.work_role)
-      .then((workroleQuery: any) => {
-        this.workroles.push(workroleQuery.data.workrole);
-        this.selectedWorkrole = workroleQuery.data.workrole;
-        this.workrole.patchValue(workroleQuery.data.workrole._id);
-      });
-    }
-    // If tasks exists, set type form value
-    if(this.behavior.tasks.length > 0) {
-      this.tasks = [];
-      this.selectedTask = [];
-      // The tasks ObjectIds are stored on a competency
-      this.behavior.tasks.map(async (task: string) => {
-        await this.workroleService.getCompleteTask(task)
-        .then((taskQuery: any) => {
-          this.tasks.push(taskQuery.data.task);
-          this.selectedTask.push(taskQuery.data.task);
-          this.task.setValue([...this.task.value, taskQuery.data.task.description]);
+    // If work_role or tasks exist, set workrole and task form value
+    if (this.behavior.work_role || this.behavior.tasks.length > 0) {
+      if (this.behavior.work_role) {
+        // Check if workrole is ObjectId or workrole name
+        this.workroles.filter((workrole: Workrole) => {
+          if (this.behavior.work_role === workrole.work_role) {
+            // Workrole name is stored on a competency; retrieve workrole ObjectId
+            this.workroles = [workrole];
+            this.selectedWorkrole = workrole;
+          } else if (this.behavior.work_role === workrole._id){
+            // Workole ObjectId is stored on a competency; set workrole object
+            this.workroles = [workrole];
+            this.selectedWorkrole = workrole;
+          }
         });
-      });
+        if (this.selectedWorkrole) {
+          this.behavior.work_role = this.selectedWorkrole._id!;
+        }
+      }
+      if(this.behavior.tasks.length > 0) {
+        // Check if task is ObjectId or task name
+        this.behavior.tasks.map((task: string) => {
+          this.tasks.filter((taskElement: Elements) => {
+            if (task === taskElement.description) {
+              // Task name is stored on a competency; retrieve task ObjectId
+              this.tasks.push(taskElement);
+              this.selectedTask.push(taskElement);
+            } else if (task === taskElement._id){
+              // Task ObjectId is stored on a competency; set task object
+              this.tasks.push(taskElement);
+              this.selectedTask.push(taskElement);
+            }
+          });
+        });
+        if (this.selectedTask.length > 0) {
+          this.behavior.tasks = this.selectedTask.map((task: Elements) => {
+            return task._id!;
+          });
+        }
+      }
+      this.workrole.patchValue(true);
+      this.task.patchValue(true);
     }
     // If details exists, set details form value
     if (this.behavior.details) {
@@ -200,7 +218,6 @@ export class BehaviorBuilderComponent implements OnInit {
         await this.workroleService.searchWorkroles(value.trim());
         this.loading = false;
       });
-
     // Subscribe to task search input
     this.taskInput$.pipe(debounceTime(650))
       .subscribe( async (value: string) => {
@@ -215,7 +232,6 @@ export class BehaviorBuilderComponent implements OnInit {
         this.showWorkrolesDropdown = false;
       }
     });
-
     this.taskInput$.subscribe((value: string) => {
       if (value && value !== '') {
         this.showTasksDropdown = true;

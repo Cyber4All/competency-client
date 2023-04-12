@@ -13,6 +13,7 @@ import { SnackbarService } from '../../../core/snackbar.service';
 import { SNACKBAR_COLOR } from '../snackbar/snackbar.component';
 import { DropdownService } from '../../../core/dropdown.service';
 import { DropdownType } from '../../../../entity/dropdown';
+import { sleep } from '../../../core/competency.service';
 @Component({
   selector: 'cc-competency-builder',
   templateUrl: './competency-builder.component.html',
@@ -26,11 +27,13 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
   // Index of current open builder component
   currIndex = 0;
   templateText = '';
+  // Loading boolean
+  loading = false;
 
   constructor(
     public builderService: BuilderService,
     private snackBarService: SnackbarService,
-    private dropdownService: DropdownService
+    private dropdownService: DropdownService,
     ) {}
 
   // Method to prevent user from leaving the page without saving competency data
@@ -41,6 +44,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
+    this.loading = true;
     // Subscribe to the current index of the builder form component
     this.builderService.builderIndex.subscribe((index: number) => {
       this.currIndex = index;
@@ -53,6 +57,8 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     await this.dropdownService.getDropdownItems(DropdownType.ACTOR);
     // Set Degree Dropdowns
     await this.dropdownService.getDropdownItems(DropdownType.TIME);
+    await sleep(1000);
+    this.loading = false;
   }
 
   /**

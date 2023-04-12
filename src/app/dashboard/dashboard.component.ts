@@ -8,7 +8,6 @@ import { Search } from '../../entity/search';
 import { sleep } from '../shared/functions/loading';
 import { BuilderService } from '../core/builder.service';
 import { CompetencyBuilder } from '../../entity/builder.class';
-import { WorkroleService } from '../core/workrole.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 @Component({
@@ -48,7 +47,6 @@ export class DashboardComponent implements AfterViewInit {
     private competencyService: CompetencyService,
     private builderService: BuilderService,
     private authService: AuthService,
-    private workRoleService: WorkroleService,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
@@ -151,26 +149,12 @@ export class DashboardComponent implements AfterViewInit {
       this.search.competencies.map(async (comp: Competency) => {
         await this.competencyService.getCompetencyById(comp._id)
           .then(async (comp: Competency) => {
-            // load workrole
-            if (comp.behavior.work_role) {
-              comp.behavior.work_role = await this.workRoleService.getCompleteWorkrole(comp.behavior.work_role)
-              .then((workroleQuery: any) => {
-                return workroleQuery.data.workrole.work_role;
-              });
-            }
-            // load tasks
-            if (comp.behavior.tasks.length > 0) {
-              const tasks = comp.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
-              .then((taskQuery: any) => {
-                return taskQuery.data.task.description;
-                }));
-              comp.behavior.tasks = await Promise.all(tasks);
-              this.loadedCompetencies.push(comp);
-            }
+            this.loadedCompetencies.push(comp);
           });
       });
     }
   }
+
   /**
    * Navigate to previous page
    */
