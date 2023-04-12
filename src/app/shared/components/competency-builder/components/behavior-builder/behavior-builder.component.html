@@ -8,7 +8,8 @@
     <input
       [ngModel]="selectedWorkrole ? selectedWorkrole.work_role : ''"
       (keyup)="workroleKeyup($event)"
-      placeholder="Search for a workrole"
+      placeholder="Search workroles..."
+      (click)="showWorkrolesDropdown = !showWorkrolesDropdown"
       #workroleInput
     >
     </div>
@@ -27,10 +28,10 @@
     <label>Task</label>
     <div class="task-list">
       <button *ngFor="let niceTask of selectedTask"
-      (click)="selectedTask.splice(selectedTask.indexOf(niceTask), 1); task.patchValue(true);"
-          class="chip"
-          attr.aria-label="Remove {{ niceTask.element_id | titlecase }} as an affiliated task"
-          [tip]="niceTask.description"
+        (click)="removeSelectedTask(niceTask)"
+        class="chip"
+        attr.aria-label="Remove {{ niceTask.element_id | titlecase }} as an affiliated task"
+        [tip]="niceTask.description"
       >
           {{ niceTask.element_id | titlecase }} <i class="far fa-times"></i>
       </button>
@@ -38,8 +39,10 @@
     <div class="search_bar">
       <div class="search_icon"><i class="fas fa-search"></i></div>
     <input 
-      placeholder="Search for a task"
+      placeholder="Search for tasks..."
+      [(ngModel)] = "taskDropdownPlaceholder"
       (keyup)="taskKeyup($event)"
+      (click)="showTasksDropdown = !showTasksDropdown"
     >
     </div>
     <ul
@@ -70,14 +73,21 @@
       [bufferAmount]="7"
       [enableUnequalChildrenSizes]="true"
       [items]="workroles"
+      (mouseleave)="closeDropdown()"
       >
-          <li
-              class="org-dropdown_list-item"
-              *ngFor="let role of scroll.viewPortItems"
-              (click)="selectedWorkrole = role; closeDropdown(); workrole.patchValue(true);"
-          >
-              {{ role.work_role }}
-          </li>
+        <li
+          class="org-dropdown_list-item"
+          *ngFor="let role of scroll.viewPortItems"
+          (click)="
+            selectedWorkrole = role;
+            workroles = [role];
+            tasks = role.tasks;
+            closeDropdown();
+            workrole.patchValue(true);
+          "
+        >
+          {{ role.work_role }}
+        </li>
       </virtual-scroller>
   </ng-container>
 </ng-template>
@@ -93,14 +103,20 @@
       [bufferAmount]="7"
       [enableUnequalChildrenSizes]="true"
       [items]="tasks"
+      (mouseleave)="closeDropdown()"
       >
-          <li
-              class="org-dropdown_list-item"
-              *ngFor="let niceTask of scroll.viewPortItems"
-              (click)="selectedTask.push(niceTask); closeDropdown(); task.patchValue(true);"
-          >
-              {{ niceTask.element_id | titlecase }} - {{ niceTask.description }}
-          </li>
+        <li
+          class="org-dropdown_list-item"
+          *ngFor="let niceTask of scroll.viewPortItems"
+          (click)="
+            selectedTask.push(niceTask);
+            workroles = niceTask.work_roles;
+            closeDropdown();
+            task.patchValue(true);
+          "
+        >
+          {{ niceTask.element_id | titlecase }} - {{ niceTask.description }}
+        </li>
       </virtual-scroller>
   </ng-container>
 </ng-template>
@@ -117,7 +133,7 @@
 <!--No Results Template-->
 <ng-template #noResultsTemplate>
   <div class="other-box">
-    <li class="other-option">
+    <li class="other-option"(mouseleave)="closeDropdown()">
       No Results Found
     </li>
   </div>
