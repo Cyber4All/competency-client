@@ -3,7 +3,9 @@ import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { BuilderValidation } from '../../../../../../entity/builder-validation';
 import { Degree } from '../../../../../../entity/degree';
+import { DropdownItem, DropdownType } from '../../../../../../entity/dropdown';
 import { BuilderService } from '../../../../../core/builder.service';
+import { DropdownService } from '../../../../../core/dropdown.service';
 @Component({
   selector: 'cc-degree-builder',
   templateUrl: './degree-builder.component.html',
@@ -18,12 +20,12 @@ export class DegreeBuilderComponent implements OnInit {
   complete = new FormControl('');
   correct = new FormControl('');
   time = new FormControl('');
-  timeList = ['Minutes', 'Hours', 'Days', 'Weeks', 'Semester'];
+  timeList: DropdownItem[] = [];
   timeDisplay = false;
-  timeSelected='';
-
+  timeSelected!: DropdownItem;
   constructor(
-    public builderService: BuilderService
+    public builderService: BuilderService,
+    private dropdownService: DropdownService
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +45,10 @@ export class DegreeBuilderComponent implements OnInit {
     // Subscribe to degree template index
     this.builderService.builderIndex.subscribe((index: number) => {
       this.currIndex = index;
+    });
+    // Subscribe to time dropwdown list
+    this.dropdownService.timeList.subscribe((timeList: DropdownItem[]) => {
+      this.timeList = timeList;
     });
     // Subscribe to complete form control
     this.complete.valueChanges

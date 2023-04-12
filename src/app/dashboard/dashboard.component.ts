@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, Input} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
@@ -8,13 +7,9 @@ import { Lifecycles } from '../../entity/lifecycles';
 import { Search } from '../../entity/search';
 import { sleep } from '../shared/functions/loading';
 import { BuilderService } from '../core/builder.service';
-import { CompetencyBuilder } from 'src/entity/builder.class';
-import { CompetencyBuilderComponent } from '../shared/components/competency-builder/competency-builder.component';
-import { WorkroleService } from '../core/workrole.service';
+import { CompetencyBuilder } from '../../entity/builder.class';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { SnackbarService } from '../core/snackbar.service';
-import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -33,6 +28,7 @@ export class DashboardComponent implements AfterViewInit {
     page: 0,
     total: 0
   };
+  // Pagination default val
   currPage = 1;
   // Applied filters
   selected: { work_role: string[]; task: string[] } = {
@@ -51,10 +47,8 @@ export class DashboardComponent implements AfterViewInit {
     private competencyService: CompetencyService,
     private builderService: BuilderService,
     private authService: AuthService,
-    private workRoleService: WorkroleService,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: SnackbarService
   ) { }
 
   async ngAfterViewInit() {
@@ -77,15 +71,14 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   /**
-   * WORK-IN-PROGRESS
-   * Method to retrieve competencies based on a users permissions
-   * Authors: retrieve all DRAFT and REJECTED competencies by default
-   * Admins: retrieve SUBMITTED competencies by default and an admins DRAFTS
+   * Method to query user competencies
    *
    * @param q the search query object
    */
   async getCompetencies(q?: Search) {
+    // Explicitly clear competencies array
     this.search.competencies = [];
+    // Check if user is logged in
     if(this.authService.user?._id !== undefined) {
       // Retrieve author competencies
       this.search = await this.competencyService
@@ -93,9 +86,15 @@ export class DashboardComponent implements AfterViewInit {
           limit: q?.limit,
           page: q?.page,
           author: this.authService.user?._id,
-          status: [`${Lifecycles.DRAFT}`, `${Lifecycles.REJECTED}`]
+          status: [
+            `${Lifecycles.DRAFT}`,
+            `${Lifecycles.REJECTED}`,
+            `${Lifecycles.SUBMITTED}`,
+            `${Lifecycles.PUBLISHED}`
+          ]
         });
     } else {
+      // User is not logged in, clear search object, display no results
       this.search = {
         competencies: [],
         limit: 0,
@@ -148,48 +147,46 @@ export class DashboardComponent implements AfterViewInit {
   async loadCompetencies() {
     if(this.search.competencies.length > 0) {
       this.search.competencies.map(async (comp: Competency) => {
-        await this.competencyService.getCompetencyCard(comp._id)
+        await this.competencyService.getCompetencyById(comp._id)
           .then(async (comp: Competency) => {
-            // load workrole
-            comp.behavior.work_role = await this.workRoleService.getCompleteWorkrole(comp.behavior.work_role)
-            .then((workroleQuery: any) => {
-              return workroleQuery.data.workrole.work_role;
-            });
-            // load tasks
-            const tasks = comp.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
-            .then((taskQuery: any) => {
-              return taskQuery.data.task.description;
-              }));
-            comp.behavior.tasks = await Promise.all(tasks);
             this.loadedCompetencies.push(comp);
           });
       });
     }
   }
-    // navigate to previous page
-    prevPage() {
-      const page = +this.currPage - 1;
-      if (page > 0) {
-        this.currPage = page;
-        this.navigateDashboard();
-      }
-    }
 
-    // navigate to next page
-    nextPage() {
-      const page = +this.currPage + 1;
-      if (page <= this.search.page) {
-        this.currPage = page;
-        this.navigateDashboard();
-      }
+  /**
+   * Navigate to previous page
+   */
+  prevPage() {
+    const page = +this.currPage - 1;
+    if (page > 0) {
+      this.currPage = page;
+      this.navigateDashboard();
     }
-    // navigate to a numbered page
-    goToPage(page: number) {
-      if (page > 0 && page <= this.search.page) {
-        this.currPage = page;
-        this.navigateDashboard();
-      }
+  }
+
+  /**
+   * Navigate to next page
+   */
+  nextPage() {
+    const page = +this.currPage + 1;
+    if (page <= this.search.page) {
+      this.currPage = page;
+      this.navigateDashboard();
     }
+  }
+  /**
+   * Navigate to a numbered page
+   *
+   * @param page target page
+   */
+  goToPage(page: number) {
+    if (page > 0 && page <= this.search.page) {
+      this.currPage = page;
+      this.navigateDashboard();
+    }
+  }
 
   get pages(): number[] {
     const totalPages = this.search.total / this.search.limit;
@@ -214,7 +211,6 @@ export class DashboardComponent implements AfterViewInit {
     } else {
       return [];
     }
-
     return arr;
   }
 
@@ -357,13 +353,5 @@ export class DashboardComponent implements AfterViewInit {
    */
   closePreview() {
     this.openPreview = false;
-  }
-
-  /**
-   * Method to log a user out and refresh the page view
-   */
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
   }
 }

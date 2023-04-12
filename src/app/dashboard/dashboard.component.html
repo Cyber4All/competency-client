@@ -17,9 +17,11 @@
         <div class="competency-card-wrapper">
             <div *ngFor="let competency of loadedCompetencies" class="competency-card_container">
                 <cc-competency-card
-                         tabindex="0"
+                    tabindex="0"
                     [competency]="competency"
+                    (click)="openCompetencyPreview(competency)"
                 ></cc-competency-card>
+                <button (click)="deleteCompetency(competency._id)">DELETE</button>
             </div>
         </div>
     </div>

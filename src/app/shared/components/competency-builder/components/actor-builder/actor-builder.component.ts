@@ -3,7 +3,9 @@ import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { Actor } from '../../../../../../entity/actor';
 import { BuilderValidation } from '../../../../../../entity/builder-validation';
+import { DropdownItem, DropdownType } from '../../../../../../entity/dropdown';
 import { BuilderService } from '../../../../../core/builder.service';
+import { DropdownService } from '../../../../../core/dropdown.service';
 
 @Component({
   selector: 'cc-actor-builder',
@@ -17,12 +19,13 @@ export class ActorBuilderComponent implements OnInit {
   actorErrors: BuilderValidation[] = [];
   type = new FormControl('');
   details = new FormControl('');
-  actorList = ['An Undergraduate Student', 'A Graduate Student', 'A Competition Participant', 'A Professional'];
+  actorList!: DropdownItem[];
   actorDisplay = false;
-  actorSelected='';
+  actorSelected!: DropdownItem;
 
   constructor(
     private builderService: BuilderService,
+    private dropdownService: DropdownService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -40,10 +43,14 @@ export class ActorBuilderComponent implements OnInit {
         this.displayErrors();
       });
     });
+    // Subscribe to actor dropdown list
+    this.dropdownService.actorList.subscribe((actorList: DropdownItem[]) => {
+      this.actorList = actorList;
+    });
     // Subscribe to type form control
     this.type.valueChanges
       .pipe(debounceTime(650))
-      .subscribe((typeUpdate: string) => {
+      .subscribe(() => {
         // Remove type error from actorErrors array
         this.actorErrors = this.actorErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'type';
@@ -54,7 +61,7 @@ export class ActorBuilderComponent implements OnInit {
           update: 'actor',
           value: {
             _id: this.actor._id,
-            type: typeUpdate,
+            type: this.actorSelected._id,
             details: this.actor.details
           }
         });
@@ -73,14 +80,24 @@ export class ActorBuilderComponent implements OnInit {
           update: 'actor',
           value: {
             _id: this.actor._id,
-            type: this.actor.type,
+            type: this.actorSelected._id,
             details: detailsUpdate
           }
         });
       });
     // If value passed, set type form control
     if(this.actor.type) {
-      this.type.patchValue(this.actor.type);
+      // Filter actor list to find selected actor
+      this.actorSelected = this.actorList.filter((actor: DropdownItem) => {
+        if (actor._id === this.actor.type) {
+          // If building new competency, dropdown item _id is type
+          return actor;
+        } else {
+          // If editing competency, dropdown item value is type
+          return actor.value === this.actor.type;
+        }
+      })[0];
+      this.type.patchValue(true);
     }
     // If value passed, set details form control
     if(this.actor.details) {
