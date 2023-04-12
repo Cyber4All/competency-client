@@ -17,6 +17,9 @@ export class UserMenuComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Method to log a user out and refresh the page view
+   */
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);

@@ -57,9 +57,32 @@ $palette-gray: (
   6: hsl(216, 12%, 70%),
   7: hsl(216, 12%, 80%),
   8: hsl(217, 12%, 90%),
-  9: hsl(212, 0%, 90%),  
-  10: hsl(0, 0%, 100%),
+  9: hsl(0, 0%, 100%),
+  10: hsl(220, 91%, 95%),
+  11: hsl(0, 0%, 87%),
 );
+
+$draft-light: #8E0080;
+$draft-dark: rgba(142, 0, 128, 0.7);
+
+$published-light: #0B861F;
+$published-dark: rgba(11, 134, 31, 0.7);
+
+$submitted-light: #2168BA;
+$submitted-dark: rgba(33, 104, 186, 0.7);
+
+$rejected-light: #B71515;
+$rejected-dark: rgba(183, 21, 21, 0.7);
+
+$deprecated-light: #525252;
+$deprecated-dark: rgba(82, 82, 82, 0.7);
+
+
+$status_draft: linear-gradient(88.15deg, $draft-light 0%, $draft-dark 100%);
+$status_published: linear-gradient(88.15deg, $published-light 0%, $published-dark 100%);
+$status_submitted: linear-gradient(88.15deg, $submitted-light 0%, $submitted-dark 100%);
+$status_rejected: linear-gradient(88.15deg, $rejected-light 0%, $rejected-dark 100%);
+$status_deprecated: linear-gradient(88.15deg, $deprecated-light 0%, $deprecated-dark 100%);
 
 $dark-overlay: rgba(0, 0, 0, 0.4);
 

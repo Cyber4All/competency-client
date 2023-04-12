@@ -1,7 +1,6 @@
-import { Component, Inject, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatAccordionTogglePosition } from '@angular/material/expansion';
+import { Component, Input, OnInit } from '@angular/core';
 import { Competency } from '../../../../entity/competency';
+import { Lifecycles } from '../../../../entity/lifecycles';
 
 @Component({
   selector: 'cc-competency-card',
@@ -10,15 +9,9 @@ import { Competency } from '../../../../entity/competency';
 })
 export class CompetencyCardComponent implements OnInit {
   @Input() competency!: Competency;
+  lifecycle = Lifecycles;
 
-  constructor(
-    public dialogRef: MatDialogRef<CompetencyCardComponent>,
-    @Inject(MAT_DIALOG_DATA) public COMPETENCY: Competency,
-  ) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    if(!this.competency) {
-      this.competency = this.COMPETENCY;
-    }
-  }
+  ngOnInit(): void {}
 }

@@ -28,7 +28,13 @@ export class FilteringDropdownsComponent implements OnInit {
   // Determines whether or not the shared search bar should be displayed
   searchbar = false;
 
-  constructor(private workroleService: WorkroleService) { }
+  /**
+   * TODO:// Add loading spinner for drops
+   */
+
+  constructor(
+    private workroleService: WorkroleService
+  ) { }
 
   async ngOnInit(): Promise<void> {
     // if title is Workrole or Task, then shared search bar should be used
@@ -44,16 +50,20 @@ export class FilteringDropdownsComponent implements OnInit {
         break;
       case DropdownType.WORKROLE:
         // Set items to the workroles returned from the API
-        await this.workroleService.getAllWorkroles().then((workrolesQuery: any) => {
-          workrolesQuery.data.workroles.forEach((workrole: Workrole) => {
-          this.items.push({ id: workrole._id, name: workrole.work_role });
+        await this.workroleService.getAllWorkroles();
+        // Subscribe to the workroles observables
+        this.workroleService.workroles.subscribe((workroles: Workrole[]) => {
+          workroles.forEach((workrole: Workrole) => {
+            this.items.push({ id: workrole._id, name: workrole.work_role });
           });
         });
         break;
       case DropdownType.TASK:
         // Set items to the tasks returned from the API
-        await this.workroleService.getAllTasks().then((tasksQuery: any) => {
-          tasksQuery.data.tasks.forEach((task: Elements) => {
+        await this.workroleService.getAllTasks();
+        // Subscribe to task observable
+        this.workroleService.tasks.subscribe((tasks: Elements[]) => {
+          tasks.forEach((task: Elements) => {
             this.items.push({ id: task._id, name: `${task.element_id} - ${task.description}` });
           });
         });
