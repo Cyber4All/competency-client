@@ -1,59 +1,36 @@
-<ng-container class="competency-card_container" onclick="onNoClick()">
-  <form>
-    <mat-accordion class="competency-constructor_accordion" [multi]="true"[togglePosition]="position">
-      <!--Actor-->
-      <cc-actor-card
-        [competencyId] = "competencyId"
-        [isEdit]="isEdit"
-        [actor] = "competency.actor"
-        (actorUpdated) = "actorUpdated"
-        (actorChange) = "updateCompetency($event)"
-      ></cc-actor-card>
-      <!--Behavior-->
-      <cc-behavior-card
-        [competencyId] = "competencyId"
-        [isEdit]="isEdit"
-        [behavior] = "competency.behavior"
-        (behaviorUpdated) = "behaviorUpdated"
-        (behaviorChange) = "updateCompetency($event)"
-      ></cc-behavior-card>
-      <!--Condition-->
-      <cc-condition-card
-        [competencyId] = "competencyId"
-        [isEdit]="isEdit"
-        [condition] = "competency.condition"
-        (conditionUpdated) = "conditionUpdated"
-        (conditionChange) = "updateCompetency($event)"
-      ></cc-condition-card>
-      <!--Degree-->
-      <cc-degree-card
-        [competencyId] = "competencyId"
-        [isEdit]="isEdit"
-        [degree] = "competency.degree"
-        (degreeUpdated) = "degreeUpdated"
-        (degreeChange) = "updateCompetency($event)"
-      ></cc-degree-card>
-      <!--Employability-->
-      <cc-employability-card
-        [competencyId] = "competencyId"
-        [isEdit]="isEdit"
-        [employability] = "competency.employability"
-        (employabilityUpdated) = "employabilityUpdated"
-        (employabilityChange) = "updateCompetency($event)"
-      ></cc-employability-card>
-      <!--Notes-->
-      <cc-notes-card
-        [competencyId]="competencyId"
-        [isEdit]="isEdit"
-        [notes]="competency.notes"
-        (notesChange)="updateCompetency($event)"
-      ></cc-notes-card>
-    </mat-accordion>
-    <span *ngIf="isEdit">
-      <mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="false">DELETE</button>
-        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>SUBMIT</button>
-      </mat-dialog-actions> 
-    </span>   
-  </form>
-</ng-container>
+<div class="competency-card_container">
+  <!--Status Preview -->
+  <div class="competency_edit-status-container {{ competency.status }}">
+  
+    <p class="competency_card-status" >
+      <span *ngIf="competency.status === lifecycle.DRAFT" >
+        <i class="fas fa-file-edit fa-2x"></i>
+      </span>
+      <span *ngIf="competency.status === lifecycle.SUBMITTED">
+        <i class="fas fa-file-exclamation fa-2x"></i>
+      </span>
+      <span *ngIf="competency.status === lifecycle.DEPRECATED">
+        <i class="fas fa-file-minus fa-2x"></i>
+      </span>
+      <span *ngIf="competency.status === lifecycle.REJECTED">
+        <i class="fas fa-file-times fa-2x"></i>
+      </span>        
+      <span *ngIf="competency.status === lifecycle.PUBLISHED">
+        <i class="fas fa-file-check fa-2x"></i>
+      </span>
+      <span class="competency_card_status_text">{{ competency.status }}</span>
+    </p>
+  </div>
+  <div class="competency-constructor_accordion">
+    <!--Actor Card Preview-->
+    <div class="competency_edit-actor-container">
+      <p class="competency_card-actor"><span>Actor</span>: {{ competency.actor.type }}</p>
+    </div>
+    <!--Behavior Card Preview-->
+    <div class="competency_edit-behavior-container">
+      <p class="competency_card-workrole"><span>Work Role</span>: {{ competency.behavior.work_role }}</p>
+      <p class="competency_card-task"><span>Task</span>: {{ competency.behavior.tasks }}</p>
+      <p class="competency_card-description"><span>Description</span>: {{ competency.behavior.details }}</p>
+    </div>
+  </div>
+</div>

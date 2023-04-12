@@ -1,0 +1,61 @@
+@import "vars";
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #08203FCC;
+  z-index: 4;
+}
+
+.side-panel {
+  background: white;
+  position: fixed;
+  padding: 20px;
+  z-index: 5;
+  box-shadow: -2px 0 6px 2px rgba(0, 0, 0, 0.1);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
+  overflow-y: auto;
+
+  &.lower-right {
+    bottom: 0;
+    right: 10px;
+    height: 530px;
+    width: 800px;
+  }
+
+  &.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 70%;
+    width: 70%;
+    border-radius: 10px;
+
+    @media(max-width: 1024px) {
+      height: 75%;
+    }
+
+    @media(min-height: 1200px) {
+      height: fit-content;
+    }
+  }
+}
+
+.side-panel__exit-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.side-panel--no-padding {
+  padding: 0;
+}

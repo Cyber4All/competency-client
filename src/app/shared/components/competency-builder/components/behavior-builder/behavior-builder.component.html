@@ -1,0 +1,119 @@
+<!--Behavior Builder-->
+<ng-container class="competency_edit-behavior-container">
+  <!--Behavior workrole selection field-->
+  <ng-container>
+    <input
+      [ngModel]="selectedWorkrole ? selectedWorkrole.work_role : ''"
+      (keyup)="workroleKeyup($event)"
+      placeholder="Search for a workrole"
+      #workroleInput
+    >
+    <ul
+      *ngIf="showWorkrolesDropdown"
+      (onBlur)="closeDropdown()"
+      class="org-dropdown_list"
+    >
+      <ng-container
+        *ngTemplateOutlet="loading ? loadingTemplate : workroleResultsTemplate"
+      ></ng-container>
+    </ul>
+  </ng-container>
+  <!--Behavior task selection field-->
+  <ng-container>
+    <input 
+      placeholder="Search for a task"
+      (keyup)="taskKeyup($event)"
+    >
+    <ul
+      *ngIf="showTasksDropdown"
+      (onBlur)="closeDropdown()"
+      class="org-dropdown_list"
+    >
+      <ng-container
+        *ngTemplateOutlet="loading ? loadingTemplate : taskResultsTemplate"
+      ></ng-container>
+    </ul>
+    <ng-container *ngIf="selectedTask && selectedTask.length > 0" class="task-pill_container">
+      <!--Add hover and focus for tootip of entire task description-->
+      <div class="task-pill_name" *ngFor="let niceTask of selectedTask">
+        {{ niceTask.element_id | titlecase }}
+        <button
+          attr.aria-label="Remove {{ niceTask.element_id | titlecase }} as an affiliated task"
+          class="task-delete"
+          (click)="selectedTask.splice(selectedTask.indexOf(niceTask), 1); task.patchValue(true);"
+        >
+          <i class="far fa-trash-alt"></i>
+        </button>
+      </div>
+    </ng-container>
+  </ng-container>
+  <!--Behavior description form field-->
+  <ng-container>
+    <label>Task Description</label>
+    <textarea placeholder="Provide a description for your task" [formControl]="details"></textarea>
+  </ng-container>
+</ng-container>
+
+<!-- workrole dropdown template -->
+<ng-template #workroleResultsTemplate>
+  <ng-container
+    *ngIf="workroles && workroles.length; else noResultsTemplate"
+  >
+    <virtual-scroller
+      #scroll
+      [style.height]="scrollerHeight"
+      [bufferAmount]="7"
+      [enableUnequalChildrenSizes]="true"
+      [items]="workroles"
+      >
+          <li
+              class="org-dropdown_list-item"
+              *ngFor="let role of scroll.viewPortItems"
+              (click)="selectedWorkrole = role; closeDropdown(); workrole.patchValue(true);"
+          >
+              {{ role.work_role }}
+          </li>
+      </virtual-scroller>
+  </ng-container>
+</ng-template>
+
+<!--Task dropdown template-->
+<ng-template #taskResultsTemplate>
+  <ng-container
+    *ngIf="tasks && tasks.length; else noResultsTemplate"
+  >
+    <virtual-scroller
+      #scroll
+      [style.height]="scrollerHeight"
+      [bufferAmount]="7"
+      [enableUnequalChildrenSizes]="true"
+      [items]="tasks"
+      >
+          <li
+              class="org-dropdown_list-item"
+              *ngFor="let niceTask of scroll.viewPortItems"
+              (click)="selectedTask.push(niceTask); closeDropdown(); task.patchValue(true);"
+          >
+              {{ niceTask.element_id | titlecase }} - {{ niceTask.description }}
+          </li>
+      </virtual-scroller>
+  </ng-container>
+</ng-template>
+
+<!--Loading template-->
+<ng-template #loadingTemplate>
+  <span class="org-dropdown__message">
+    <i class="far fa-spinner-third fa-spin">
+      Loading
+    </i>
+  </span>
+</ng-template> 
+
+<!--No Results Template-->
+<ng-template #noResultsTemplate>
+  <div class="other-box">
+    <li class="other-option">
+      No Results Found
+    </li>
+  </div>
+</ng-template>

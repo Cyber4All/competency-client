@@ -18,9 +18,6 @@ type Optional<T> = T | undefined;
 })
 export class AuthService {
   private _user?: User; // Do not explicityly set a user, use the setter method
-  private _status$: BehaviorSubject<Optional<User>> = new BehaviorSubject<
-    Optional<User>
-  >(undefined);
   private _isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private _isBetaUser: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public headers = new HttpHeaders();
@@ -33,7 +30,6 @@ export class AuthService {
 
   set user(value: Optional<User>) {
     this._user = value;
-    this._status$.next(value);
   }
 
   get isAdmin(): Observable<boolean>{
@@ -46,10 +42,6 @@ export class AuthService {
 
   get user() {
     return this._user;
-  }
-
-  get status$() {
-    return this._status$.asObservable();
   }
 
   /**
