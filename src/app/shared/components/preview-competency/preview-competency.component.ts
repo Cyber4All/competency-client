@@ -5,6 +5,8 @@ import { Workrole } from '../../../../entity/workrole';
 import { DropdownService } from '../../../core/dropdown.service';
 import { WorkroleService } from '../../../core/workrole.service';
 import { sleep } from '../../functions/loading';
+import { Elements } from '../../../../entity/elements';
+import { AuthService } from '../../../core/auth.service';
 @Component({
   selector: 'cc-preview-competency',
   templateUrl: './preview-competency.component.html',
@@ -21,10 +23,12 @@ export class PreviewCompetencyComponent implements OnInit {
   loading = false;
   actor!: string;
   workrole!: Workrole;
-  tasks: string[] = [];
+  tasks: Elements[] = [];
+  isAdmin = false;
   constructor(
     private workRoleService: WorkroleService,
-    private dropdownService: DropdownService
+    private dropdownService: DropdownService,
+    private authService: AuthService,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -52,11 +56,14 @@ export class PreviewCompetencyComponent implements OnInit {
     if (this.competency.behavior.tasks.length > 0) {
       const tasks = this.competency.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
       .then((taskQuery: any) => {
-        return taskQuery.data.task.description;
+        return taskQuery.data.task;
       }));
       this.tasks = await Promise.all(tasks);
     }
     await sleep(1000);
+    this.authService.isAdmin.subscribe((isAdmin: boolean) => {
+      this.isAdmin = isAdmin;
+    });
     this.loading = false;
   }
 
