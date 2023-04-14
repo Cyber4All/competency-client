@@ -1,17 +1,17 @@
 <div class="content">
   <div class="actor bottom-bordered content-section">
     <h2>Actor</h2>
-    <p><b>Type:</b> {{ competency.actor.type ? competency.actor.type : "No type specified." }}</p>
+    <p><b>Type:</b> {{ actor ? actor : "No type specified." }}</p>
     <p><b>Details:</b> {{ competency.actor.details ? competency.actor.details : "No details specified."}}</p>
   </div>
   <div class="behavior bottom-bordered content-section">
     <h2>Behavior</h2>
-    <p><b>Workrole:</b> {{ competency.behavior.work_role ? competency.behavior.work_role : "No workrole specified."}}</p>
+    <p><b>Workrole:</b> {{ workrole ? workrole : "No workrole specified."}}</p>
     <div>
       <p><b>Tasks:</b></p>
       <ul>
-        <li *ngFor="let task of competency.behavior.tasks">{{ task }}</li>
-        <ng-container *ngIf="!competency.behavior.tasks.length" [ngTemplateOutlet]="noTasks"></ng-container>
+        <li *ngFor="let task of tasks">{{ task }}</li>
+        <ng-container *ngIf="!tasks.length" [ngTemplateOutlet]="noTasks"></ng-container>
       </ul>
     </div>
     <p><b>Details:</b> {{ competency.behavior.details ? competency.behavior.details : "No details specified." }}</p>

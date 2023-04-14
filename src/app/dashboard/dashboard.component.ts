@@ -10,6 +10,8 @@ import { BuilderService } from '../core/builder.service';
 import { CompetencyBuilder } from '../../entity/builder.class';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { SnackbarService } from '../core/snackbar.service';
+import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -50,6 +52,7 @@ export class DashboardComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
+    private snackbarService: SnackbarService
   ) { }
 
   async ngOnInit() {
@@ -310,6 +313,11 @@ export class DashboardComponent implements OnInit {
     ) {
       // Competency is neither savable nor being saved as draft; delete shell
       await this.deleteCompetency(this.builderCompetency._id);
+      this.snackbarService.notification$.next({
+        message: 'Competency was missing required fields to be saved as a draft.',
+        title: 'Draft Deleted',
+        color: SNACKBAR_COLOR.WARNING
+      });
     } else {
       // Update user dashboard with newly created competencies
       await this.initDashboard();
