@@ -1,10 +1,3 @@
-<div class="header">
-  <h2>Insert Competency Title Here</h2>
-  <button (click)="close.emit()">
-    <i class="far fa-times fa-2x"></i>
-  </button>
-</div>
-
 <div class="content">
   <div class="actor bottom-bordered content-section">
     <h2>Actor</h2>
@@ -58,7 +51,7 @@
   </div>
 </div>
 
-<div class="footer">
+<div class="footer" *ngIf="!builderMode">
   <!-- TODO: Add submitted date once event logs are implemented -->
   <!-- <p>Submitted December 32, 2133</p> -->
   <button (click)="onUpdateSubmission()" class="submit">UPDATE SUBMISSION</button>

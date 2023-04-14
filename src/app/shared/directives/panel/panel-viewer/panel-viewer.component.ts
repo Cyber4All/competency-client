@@ -26,14 +26,26 @@ import { fade } from '../panel.animations';
           'side-panel--no-padding': options && !options.padding
         }"
       >
-        <button
-          *ngIf="options.showExitButton"
-          class="side-panel__exit-button"
-          [style.color]="options.exitButtonColor"
-          (click)="closePanel()"
-        >
-          <i class="fal fa-times"></i>
-        </button>
+        <div class="side-panel__header">
+          <h3 class="side-panel__title">{{ options.title }}</h3>
+          <div class="side-panel__buttons">
+            <div
+              *ngIf="options.showDeleteButton"
+              class="side-panel__delete-button"
+              (click)="deleteCompetency()"
+            >
+              <i class="fal fa-trash-alt"></i>
+            </div>
+            <div
+              *ngIf="options.showExitButton"
+              class="side-panel__exit-button"
+              [style.color]="options.exitButtonColor"
+              (click)="closePanel()"
+            >
+              <i class="fal fa-times"></i>
+            </div>
+          </div>
+        </div>
         <ng-content></ng-content>
       </div>
     </ng-container>
@@ -54,6 +66,7 @@ export class PanelViewerComponent implements OnInit, OnDestroy {
 
   // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() close = new EventEmitter<any>();
+  @Output() delete = new EventEmitter<any>();
   defaultCloseParam: any;
 
   private defaultWidth = 350;
@@ -88,6 +101,10 @@ export class PanelViewerComponent implements OnInit, OnDestroy {
     } else {
       this.close.emit();
     }
+  }
+
+  deleteCompetency(): void {
+    this.delete.emit();
   }
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CompetencyBuilder } from 'src/entity/builder.class';
+import { Competency } from '../../../../entity/competency';
 
 @Component({
   selector: 'cc-preview-competency',
@@ -10,7 +10,8 @@ export class PreviewCompetencyComponent implements OnInit {
 
   @Output() updateSubmission = new EventEmitter();
 
-  @Input() competency!: CompetencyBuilder;
+  @Input() competency!: Competency;
+  @Input() builderMode = false;
   // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() close = new EventEmitter();
 

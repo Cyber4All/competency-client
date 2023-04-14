@@ -8,7 +8,7 @@
 <ng-template #loadingTemplate>
     <div class="competency-loading">
         <i class="far fa-spinner-third fa-spin"></i>
-        Loading Competencies...
+        Loading...
     </div>
 </ng-template>
 
@@ -21,7 +21,6 @@
                     [competency]="competency"
                     (click)="openCompetencyPreview(competency)"
                 ></cc-competency-card>
-                <button (click)="deleteCompetency(competency._id)">DELETE</button>
             </div>
         </div>
     </div>
@@ -37,16 +36,32 @@
 <cc-competency-builder
     ccPanel
     *ngIf="openBuilder"
-    [competency]="newCompetency"
-    [options]="{ showExitButton: true, padding: true, exitButtonColor: 'black', position: 'lower-right' }"
-    (close)="closeBuilder($event)"
+    [competency]="builderCompetency"
+    [options]="{
+        showDeleteButton: true,
+        showExitButton: true,
+        title: 'Competency Builder',
+        padding: true,
+        exitButtonColor: 'black',
+        position: 'lower-right'
+    }"
+    (close)="closeBuilder()"
+    (delete)="deleteCompetency(builderCompetency._id)"
 ></cc-competency-builder>
 
 <cc-preview-competency
     ccPanel
     *ngIf="openPreview"
-    [competency]="newCompetency"
-    [options]="{ showExitButton: false, padding: false, exitButtonColor: 'black', position: 'center' }"
-    (updateSubmission)="openCompetencyBuilder(newCompetency)"
+    [competency]="previewCompetency"
+    [options]="{ 
+        showDeleteButton: true,
+        showExitButton: true,
+        title: 'Competency Preview',
+        padding: true,
+        exitButtonColor: 'black',
+        position: 'center'
+    }"
+    (updateSubmission)="openCompetencyBuilder(previewCompetency)"
     (close)="closePreview()"
+    (delete)="deleteCompetency(previewCompetency._id)"
 ></cc-preview-competency>
