@@ -2,9 +2,6 @@
 
 <ng-template #builderTemplate>
   <div class="competency-builder_container">
-    <div class="competency-builder_control">
-      <div class="header">New Competency</div>
-    </div>
     <div class="competency-builder_builder">
       <cc-builder-navbar class="column left"></cc-builder-navbar>
       <div class="competency-builder_form column right">
@@ -37,14 +34,19 @@
           <ng-container *ngIf="currIndex === 8">
             <cc-notes-builder [notes]="competency.notes" (notesChange)="updateCompetency($event)"></cc-notes-builder>
           </ng-container>
-          <!--TODO: Implement Preview-->
-          <ng-container *ngIf="currIndex === 9">Preview coming soon</ng-container>
+          <!--Preview-->
+          <ng-container *ngIf="currIndex === 9">
+            <cc-preview-competency
+              [competency]="competency"
+              [builderMode]="true"
+            ></cc-preview-competency>
+          </ng-container>
           <!--Action Buttons-->
         </div>
         <div class="competency-builder_form-buttons">
           <button class="back" [ngClass]="{'hidden': currIndex===0}"
             (click)="builderService.setBuilderIndex(currIndex - 1); setTemplateButton();"><i
-              class="fas fa-arrow-left"></i> BACK</button>
+            class="fas fa-arrow-left"></i> BACK</button>
           <div>
             <button class="review" *ngIf="currIndex < 9 " (click)="builderService.setBuilderIndex(9)">REVIEW COMPETENCY</button>
             <button class="next" *ngIf="currIndex !== 9"

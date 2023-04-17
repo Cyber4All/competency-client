@@ -230,4 +230,22 @@ export class BuilderService {
             this.snackBarService.sendNotificationByError(e);
         });
     }
+
+    /**
+     * Method to submit a competency for review
+     *
+     * @param competencyId ID of the competency to be submitted
+     */
+    async submitCompetency(competencyId: string) {
+        this.auth.initHeaders();
+        return await lastValueFrom(this.http
+        .patch(
+            COMPETENCY_ROUTES.SUBMIT(competencyId),
+            {},
+            { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+        ))
+        .catch((e)=> {
+            this.snackBarService.sendNotificationByError(e);
+        });
+    }
 }

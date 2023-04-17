@@ -5,6 +5,24 @@
     span {
         font-weight: bold;
     }
+
+    .competency-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      
+        $color: #535d69;
+        font-size: 15pt;
+        padding: 20px;
+      
+        .svg-inline--fa {
+          color: #1c70dd;
+          font-size: 19.5pt;
+          margin-bottom: 20px;
+        }
+    }
 }
 
 .competency_edit-status-container {

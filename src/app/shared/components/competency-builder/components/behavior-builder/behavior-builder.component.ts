@@ -36,6 +36,7 @@ export class BehaviorBuilderComponent implements OnInit {
   // Selected workrole and task from virtual scroller
   selectedWorkrole!: Workrole;
   selectedTask: Elements[] = [];
+  taskDropdownPlaceholder = '';
   // Filtered workroles and tasks
   filteredWorkroles: Observable<string[]> = new Observable();
   filteredTasks: Observable<string[]> = new Observable();
@@ -215,13 +216,57 @@ export class BehaviorBuilderComponent implements OnInit {
     // Subscribe to workrole search input
     this.workroleInput$.pipe(debounceTime(650))
       .subscribe( async (value: string) => {
-        await this.workroleService.searchWorkroles(value.trim());
+        if (value && value !== '') {
+          await this.workroleService.searchWorkroles(value.trim());
+        } else {
+          this.selectedWorkrole = {} as Workrole;
+          // Text input is empty; check if a selected task(s) exist
+          if (this.selectedTask.length > 0) {
+            // Selected task(s) exist; set workroles that contain selected task(s)
+            // Clear workroles array
+            this.workroles = [];
+            // Check each selected task
+            this.selectedTask.map((task: Elements) => {
+              // Check workrole array on task
+              task.work_roles?.map((workrole: Workrole) => {
+                // If the workrole does not already exist in this.workroles then add it
+                if (this.workroles.findIndex(( w: Workrole) => w._id === workrole._id) === -1) {
+                  this.workroles.push(workrole);
+                }
+              });
+            });
+          } else {
+            // No selected tasks; reset workroles and tasks arrays
+            await this.workroleService.getAllWorkroles();
+            await this.workroleService.getAllTasks();
+          }
+        }
         this.loading = false;
       });
     // Subscribe to task search input
     this.taskInput$.pipe(debounceTime(650))
       .subscribe( async (value: string) => {
-        await this.workroleService.searchTasks(value.trim());
+        if (value && value !== '') {
+          await this.workroleService.searchTasks(value.trim());
+        } else {
+          // Text input is empty; check if a selected workrole exists
+          if (this.selectedWorkrole._id) {
+            // Selected workrole exists; set tasks that contain selected workrole
+            // Clear tasks array
+            this.tasks = [];
+            // Check each selected task
+            this.selectedWorkrole.tasks?.map((task: Elements) => {
+              // If the task does not already exist in this.tasks then add it
+              if (this.tasks.findIndex(( t: Elements) => t._id === task._id) === -1) {
+                this.tasks.push(task);
+              }
+            });
+          } else {
+            // No selected workrole; reset tasks and workroles arrays
+            await this.workroleService.getAllTasks();
+            await this.workroleService.getAllWorkroles();
+          }
+        }
         this.loading = false;
       });
     this.workroleInput$.subscribe((value: string) => {
@@ -269,6 +314,18 @@ export class BehaviorBuilderComponent implements OnInit {
     }
     if (this.showTasksDropdown) {
       this.showTasksDropdown = false;
+      this.taskDropdownPlaceholder = '';
+    }
+  }
+
+  async removeSelectedTask(task: Elements) {
+    this.selectedTask.splice(this.selectedTask.indexOf(task), 1);
+    this.task.patchValue(true);
+    if (this.selectedTask.length === 0) {
+      await this.workroleService.getAllTasks();
+      if (!this.selectedWorkrole._id) {
+        await this.workroleService.getAllWorkroles();
+      }
     }
   }
 

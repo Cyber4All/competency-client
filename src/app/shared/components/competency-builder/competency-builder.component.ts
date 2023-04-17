@@ -217,6 +217,8 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
       await this.builderService.updateDegree(competency._id, competency.degree);
       await this.builderService.updateEmployability(competency._id, competency.employability);
       await this.builderService.updateNotes(competency._id, competency.notes);
+      // Update the status of a competnecy
+      await this.builderService.submitCompetency(competency._id);
       // Close the dialog and send a success notification
       this.close.emit(true);
       this.snackBarService.notification$.next({
