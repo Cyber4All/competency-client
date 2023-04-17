@@ -41,7 +41,7 @@ export class BehaviorBuilderComponent implements OnInit {
   filteredWorkroles: Observable<string[]> = new Observable();
   filteredTasks: Observable<string[]> = new Observable();
   constructor(
-    public workroleService: WorkroleService,
+    private workroleService: WorkroleService,
     private builderService: BuilderService
   ) {}
 
