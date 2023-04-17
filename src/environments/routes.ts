@@ -1,5 +1,4 @@
 import { environment } from './environment';
-import * as querystring from 'query-string';
 
 export const USER_ROUTES = {
     LOGIN() {
@@ -82,8 +81,11 @@ export const COMPETENCY_ROUTES = {
         return `${environment.fileUploadURL}/files?competencyId=${encodeURIComponent(competencyId)}`;
     },
     DELETE_FILE_LAMBDA(competencyId: string, filenames: string) {
-        // eslint-disable-next-line max-len
-        return `${environment.fileUploadURL}/files?competencyId=${encodeURIComponent(competencyId)}&filename=${encodeURIComponent(filenames)}`;
+        return `${environment.fileUploadURL}/files?competencyId=${
+            encodeURIComponent(competencyId)
+        }&filename=${
+            encodeURIComponent(filenames)
+        }`;
     },
     SUBMIT(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/submit`;
