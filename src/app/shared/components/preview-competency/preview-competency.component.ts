@@ -7,6 +7,7 @@ import { WorkroleService } from '../../../core/workrole.service';
 import { sleep } from '../../functions/loading';
 import { Elements } from '../../../../entity/elements';
 import { AuthService } from '../../../core/auth.service';
+import { BuilderService } from 'src/app/core/builder.service';
 @Component({
   selector: 'cc-preview-competency',
   templateUrl: './preview-competency.component.html',
@@ -29,6 +30,7 @@ export class PreviewCompetencyComponent implements OnInit {
     private workRoleService: WorkroleService,
     private dropdownService: DropdownService,
     private authService: AuthService,
+    public builderService: BuilderService,
   ) { }
 
   async ngOnInit(): Promise<void> {

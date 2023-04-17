@@ -5,7 +5,7 @@
         [ngClass]="{'choosen': currIndex===1}">Behavior</div>
     <div class="primary_nav" [ngClass]="{'choosen': currIndex===2 || currIndex===3 || currIndex===4}">
         <div class="title"
-            (click)="builderService.setBuilderIndex(2); builderService.setTemplateIndex(0)">Context
+            (click)="builderService.setBuilderIndex(2); builderService.setTemplateIndex(0)">Condition
         </div>
         <div class="subs" *ngIf="currIndex === 2 || currIndex === 3 || currIndex === 4">
             <div (click)="builderService.setBuilderIndex(2); subselect('Description')" class="buidler_navbar-submenu" [ngClass]="{'active': currIndex===2}"><i class="fas fa-circle fa-xs"></i>Description</div>
