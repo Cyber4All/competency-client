@@ -19,7 +19,7 @@ export class BehaviorBuilderComponent implements OnInit {
   // Builder - Behavior validation errors
   behaviorErrors: BuilderValidation[] = [];
   // Virtual Scroller and dropdowns
-  scrollerHeight = '200px';
+  scrollerHeight = '180px';
   showWorkrolesDropdown = false;
   showTasksDropdown = false;
   loading = false;

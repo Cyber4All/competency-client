@@ -48,7 +48,7 @@
     <ul
       *ngIf="showTasksDropdown"
       (onBlur)="closeDropdown()"
-      class="org-dropdown_list"
+      class="org-dropdown_list task_dropdown"
     >
       <ng-container
         *ngTemplateOutlet="loading ? loadingTemplate : taskResultsTemplate"
@@ -104,6 +104,7 @@
       [enableUnequalChildrenSizes]="true"
       [items]="tasks"
       (mouseleave)="closeDropdown()"
+      
       >
         <li
           class="org-dropdown_list-item"

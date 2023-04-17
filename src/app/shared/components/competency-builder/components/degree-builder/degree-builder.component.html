@@ -8,7 +8,7 @@
       <div class="dropdown">
         <div class="time_box" (click)="displayTime()">{{ timeSelected ? timeSelected.value : "Select a measure of time..." }}<i class="fas fa-angle-down fa-lg"></i></div>
         <div [ngClass]="timeDisplay ? 'time_dropdown': 'hidden'">
-          <ul class="time_list">
+          <ul class="time_list" (mouseleave)="displayTime()">
             <li *ngFor="let measure of timeList" (click)="this.timeSelected=measure; displayTime(); time.patchValue(time.value + ' - ' + measure.value)">{{ measure.value }}</li>
           </ul>
         </div>
