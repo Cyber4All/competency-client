@@ -1,24 +1,28 @@
 <form>
   <div ccDragAndDrop class="drop-zone" (fileOver)="handleFileOver($event)" (fileDropped)="handleFileDropped($event)">
     <div *ngIf="!fileOver else dropFile">
-      <input (change)="handleFileThroughInput($event)" type="file" /> 
+      <input (change)="handleFileThroughInput($event)" type="file" />
       <div class="upload_text">
         <i class="fas fa-file-upload fa-3x"></i>
         <h3>Drag and Drop a File Here!</h3>
         <p>Or click here to add a file</p>
       </div>
-      
+
     </div>
-    
+
   </div>
   <div class="file-list" *ngFor="let file of files; let i = index">
-    <p>File {{ i + 1 }}: {{ file.name }} </p>
-    <form>
-      <label>(Optional) Enter a description of the file: </label>
-      <input type="text" #description/>
-      <button (click)="handleFileUpload(file, description.value)">Submit</button>
-      <button (click)="removeFile(file)">Remove</button>
-    </form>
+    <div class="file">
+      <div class="file-left">
+        <i class="fas fa-file fa-2x"></i>
+        <p>File {{ i + 1 }}: {{ file.name }} </p>
+      </div>
+      <div class="file-right" (click)="removeFile(file)">
+        <i class="fas fa-times fa-2x" ></i>
+      </div>
+      
+    </div>
+
   </div>
 </form>
 
