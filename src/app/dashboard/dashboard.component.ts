@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
@@ -30,6 +30,7 @@ export class DashboardComponent implements OnInit {
     page: 1,
     total: 0
   };
+  urlParams: Record<string, string> = {};
   // Pagination default val
   currPage = 1;
   // Applied filters
@@ -57,10 +58,10 @@ export class DashboardComponent implements OnInit {
 
   async ngOnInit() {
     this.route.queryParams.pipe(takeUntil(this.unsubscribe)).subscribe(async params => {
-      this.currPage = params.page ? +params.page : 1;
+      this.urlParams = params;
       this.makeQuery(params);
-      await this.initDashboard();
     });
+    await this.initDashboard();
   }
 
   /**
@@ -68,6 +69,15 @@ export class DashboardComponent implements OnInit {
    */
   async initDashboard() {
     this.loading = true;
+    this.search = {
+      competencies: [],
+      limit: 12,
+      page: 1,
+      total: 0
+    };
+    if (this.urlParams) {
+      this.makeQuery(this.urlParams);
+    }
     await sleep(1000);
     await this.getCompetencies(this.search);
     await this.loadCompetencies();
@@ -139,9 +149,7 @@ export class DashboardComponent implements OnInit {
     } else {
       this.search.limit = 12;
     }
-    if (params.currPage) {
-      this.currPage = +params.currPage;
-    }
+    this.currPage = params.page ? +params.page : 1;
   }
 
   /**
@@ -240,7 +248,7 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
-   * Method to delete an entire competency and reset loaded competncy arrays
+   * Method to delete a competency and reset the dashboard
    *
    * @param competencyId
    */
@@ -314,7 +322,7 @@ export class DashboardComponent implements OnInit {
       // Competency is neither savable nor being saved as draft; delete shell
       await this.deleteCompetency(this.builderCompetency._id);
       this.snackbarService.notification$.next({
-        message: 'Competency was missing required fields to be saved as a draft.',
+        message: 'Competency was missing minimum fields to be saved as a draft.',
         title: 'Draft Deleted',
         color: SNACKBAR_COLOR.WARNING
       });
