@@ -17,7 +17,7 @@ export class ContextBuilderComponent implements OnInit {
   @Output() conditionChange = new EventEmitter<{update: string, value: Condition}>();
   // Builder - Behavior validation errors
   contextErrors: BuilderValidation[] = [];
-  currIndex = 2;
+  currIndex!: number;
   // Form controls
   scenario = new FormControl('');
   tech = new FormControl([]);

@@ -16,7 +16,7 @@ export class DegreeBuilderComponent implements OnInit {
   @Input() degree!: Degree;
   @Output() degreeChange = new EventEmitter<{update: string, value: Degree}>();
   degreeErrors: BuilderValidation[] = [];
-  currIndex = 5;
+  currIndex!: number;
   complete = new FormControl('');
   correct = new FormControl('');
   time = new FormControl('');
