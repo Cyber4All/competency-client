@@ -26,6 +26,7 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     //red error banner at the top of the screen
+    console.log('TESTING');
     this.authvalidationService.getErrorState().subscribe(err => this.showError = err);
     this.activatedRoute.queryParams.subscribe(params => {
       console.log(params);
