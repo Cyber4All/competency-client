@@ -42,6 +42,7 @@ import { RouterModule } from '@angular/router';
 import { BuilderNavbarComponent } from './competency-builder/components/builder-navbar/builder-navbar.component';
 import { FilteringDropdownsComponent } from './filtering-dropdowns/filtering-dropdowns.component';
 import { SecondaryNavComponent } from './secondary-nav/secondary-nav.component';
+import { FooterComponent } from './footer/footer.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -61,7 +62,8 @@ import { SecondaryNavComponent } from './secondary-nav/secondary-nav.component';
     UserMenuComponent,
     BuilderNavbarComponent,
     FilteringDropdownsComponent,
-    SecondaryNavComponent
+    SecondaryNavComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -100,7 +102,8 @@ import { SecondaryNavComponent } from './secondary-nav/secondary-nav.component';
     SecondaryNavComponent,
     SearchBarComponent,
     UserMenuComponent,
-    PreviewCompetencyComponent
+    PreviewCompetencyComponent,
+    FooterComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
