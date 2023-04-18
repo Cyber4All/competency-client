@@ -14,7 +14,6 @@ import { WorkroleService } from '../core/workrole.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { SnackbarService } from '../core/snackbar.service';
-import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
@@ -47,6 +46,8 @@ export class DashboardComponent implements AfterViewInit {
   openBuilder = false;
   openPreview = false;
 
+  isAdmin!: boolean;
+
   constructor(
     private competencyService: CompetencyService,
     private builderService: BuilderService,
@@ -58,6 +59,10 @@ export class DashboardComponent implements AfterViewInit {
   ) { }
 
   async ngAfterViewInit() {
+    await this.authService.validateAdminAccess();
+    this.authService.isAdmin.subscribe((res) => {
+      this.isAdmin = res;
+    });
     this.route.queryParams.pipe(takeUntil(this.unsubscribe)).subscribe(async params => {
       this.currPage = params.page ? +params.page : 1;
       this.makeQuery(params);
@@ -335,7 +340,6 @@ export class DashboardComponent implements AfterViewInit {
    * @param competency The competency to preview
    */
   async openCompetencyPreview(competency: Competency) {
-
     // CompetencyBuilder used in case the user opens the builder in the competency preview
     this.newCompetency = new CompetencyBuilder(
       competency._id,
@@ -357,6 +361,15 @@ export class DashboardComponent implements AfterViewInit {
    */
   closePreview() {
     this.openPreview = false;
+  }
+
+  /**
+   * When an admin updates the status of a competency in the preview, reset the dashboard
+   */
+  async handleStatusUpdated() {
+    this.search.competencies = [];
+    this.loadedCompetencies = [];
+    await this.initDashboard();
   }
 
   /**
