@@ -1,0 +1,151 @@
+@import 'vars.scss';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+footer {
+  width: 100%;
+  color: whitesmoke;
+  background: #376ED6;
+  padding: 20px;
+  text-align: center;
+  box-sizing: border-box;
+
+  p {
+    font-size: $small;
+    margin-top: 20px;
+  }
+
+  .footer-info {
+    display: flex;
+    flex-flow: row;
+    align-items: flex-start;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .links {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    div {
+      margin-right: 60px;
+      text-align: left;
+
+      h3 {
+        font-size: $normal;
+      }
+
+      a {
+        display: block;
+        margin-bottom: 5px;
+        font-size: $small;
+        color: whitesmoke;
+      }
+    }
+  }
+
+  .grants {
+
+    .images {
+      display: flex;
+      flex-direction: row;
+      justify-content: right;
+      align-items: center;
+      padding-bottom: 10px;
+
+      &.bottom {
+        justify-content: center;
+        align-items: center;
+      }
+
+
+      img {
+        width: 100px;
+        margin: 0 10px;
+      }
+
+      .ncyte {
+        width: 150px;
+      }
+
+      .csusb {
+        width: 150px;
+      }
+     
+      .project_502 {
+        width: 150px;
+      }
+    }
+  }
+
+  .share-icons {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+  
+    & > a {
+      background: $submitted-light;
+      color: white !important;
+      transform: scale(1);
+      cursor: pointer;
+      margin-left: 10px;
+  
+      &:active:hover {
+        transform: scale(0.95);
+      }
+  
+      &.twitter {
+        background: #1da1f2;
+      }
+  
+      &.linkedin {
+        background: #0077b5;
+      }
+    }
+  }
+}
+
+@media(max-width: 1575px) {
+  .grants {
+    .images {
+      flex-wrap: wrap;
+
+      img {
+        margin: 10px !important;
+      }
+    }
+  }
+}
+
+
+@media(max-width: 800px) {
+  .footer-info {
+    flex-flow: column !important;
+    align-items: center !important;
+
+    .links {
+      display: inline-block;
+      text-align: left;
+
+      div {
+        margin: 0 0 30px;
+      }
+    }
+
+    .grants {
+      margin-top: 40px;
+      margin-bottom: 40px;
+      .images {
+        flex-direction: column;
+
+        img {
+          margin-top: 20px;
+        }
+        .csusb {
+          margin-right: 0 !important;
+        }
+      }
+    }
+  }
+}
