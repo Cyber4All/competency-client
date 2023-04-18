@@ -1,23 +1,25 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
 import { Competency } from '../../entity/competency';
 import { Lifecycles } from '../../entity/lifecycles';
 import { Search } from '../../entity/search';
 import { sleep } from '../shared/functions/loading';
-import { PreviewCompetencyComponent } from '../shared/components/preview-competency/preview-competency.component';
-import { BuilderService } from '../core/builder.service';
-import { CompetencyBuilder } from '../../entity/builder.class';
+import { BuilderService } from '../core/builder/builder.service';
+import { CompetencyBuilder } from '../core/builder/competency-builder.class';
+import { CompetencyBuilderComponent } from '../shared/components/competency-builder/competency-builder.component';
+import { WorkroleService } from '../core/workrole.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { SnackbarService } from '../core/snackbar.service';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements AfterViewInit {
   @Input() isSavable!: boolean;
   // Loading visual for competency list
   loading = true;
@@ -30,6 +32,7 @@ export class DashboardComponent implements OnInit {
     page: 0,
     total: 0
   };
+  currPage = 1;
   // Applied filters
   selected: { work_role: string[]; task: string[] } = {
     work_role: [],
@@ -37,6 +40,7 @@ export class DashboardComponent implements OnInit {
   };
   // Boolean toggle for 'clear filters' button
   filterApplied = false;
+  unsubscribe: Subject<void> = new Subject();
   // Builder vars
   newCompetency!: CompetencyBuilder;
   openBuilder = false;
@@ -45,19 +49,24 @@ export class DashboardComponent implements OnInit {
   isAdmin!: boolean;
 
   constructor(
-    private dialog: MatDialog,
     private competencyService: CompetencyService,
     private builderService: BuilderService,
     private authService: AuthService,
+    private workRoleService: WorkroleService,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: SnackbarService
   ) { }
 
-  async ngOnInit() {
-    await this.initDashboard();
+  async ngAfterViewInit() {
     await this.authService.validateAdminAccess();
     this.authService.isAdmin.subscribe((res) => {
       this.isAdmin = res;
+    });
+    this.route.queryParams.pipe(takeUntil(this.unsubscribe)).subscribe(async params => {
+      this.currPage = params.page ? +params.page : 1;
+      this.makeQuery(params);
+      await this.initDashboard();
     });
   }
 
@@ -67,7 +76,7 @@ export class DashboardComponent implements OnInit {
   async initDashboard() {
     this.loading = true;
     await sleep(1800);
-    await this.getCompetencies();
+    await this.getCompetencies(this.search);
     await this.loadCompetencies();
     this.loading = false;
   }
@@ -77,12 +86,17 @@ export class DashboardComponent implements OnInit {
    * Method to retrieve competencies based on a users permissions
    * Authors: retrieve all DRAFT and REJECTED competencies by default
    * Admins: retrieve SUBMITTED competencies by default and an admins DRAFTS
+   *
+   * @param q the search query object
    */
-  async getCompetencies() {
+  async getCompetencies(q?: Search) {
+    this.search.competencies = [];
     if(this.authService.user?._id !== undefined) {
       // Retrieve author competencies
       this.search = await this.competencyService
         .getAllCompetencies({
+          limit: q?.limit,
+          page: q?.page,
           author: this.authService.user?._id,
           status: [`${Lifecycles.DRAFT}`, `${Lifecycles.REJECTED}`]
         });
@@ -97,39 +111,138 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
-   * Method to retrieve all fields for each found competency
+   * Method to navigate to dashboard with query params
+   *
+   */
+  async navigateDashboard() {
+    const params = {
+      limit: this.search.limit,
+      page: this.currPage
+    };
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.navigate(['dashboard'], {
+      queryParams: params
+    });
+    window.scrollTo(0, 0);
+    await sleep(1800);
+    this.currPage = params.page;
+  }
+
+  /**
+   * Method to update the query params in the url
+   *
+   * @param params the query params from the url
+   */
+  makeQuery(params: Record<string, string>) {
+    if (params.page) {
+      this.search.page = +params.page;
+    }
+    if (params.limit) {
+      this.search.limit = +params.limit;
+    } else {
+      this.search.limit = 12;
+    }
+    if (params.currPage) {
+      this.currPage = +params.currPage;
+    }
+  }
+
+  /**
+   * Method to retrieve some fields for each found competency
    */
   async loadCompetencies() {
     if(this.search.competencies.length > 0) {
       this.search.competencies.map(async (comp: Competency) => {
-        await this.competencyService.getCompetencyById(comp._id)
-          .then((comp: Competency) => {
+        await this.competencyService.getCompetencyCard(comp._id)
+          .then(async (comp: Competency) => {
+            // load workrole
+            comp.behavior.work_role = await this.workRoleService.getCompleteWorkrole(comp.behavior.work_role)
+            .then((workroleQuery: any) => {
+              return workroleQuery.data.workrole.work_role;
+            });
+            // load tasks
+            const tasks = comp.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
+            .then((taskQuery: any) => {
+              return taskQuery.data.task.description;
+              }));
+            comp.behavior.tasks = await Promise.all(tasks);
             this.loadedCompetencies.push(comp);
           });
       });
     }
   }
-
-  /**
-   * NOT CURRENTLY IN USE - WORK IN PROGRESS
-   * Method to apply filters for competencies
-   *
-   * @param facet
-   * @param type
-   */
-  addFilter(facet: string, type: number): void {
-    if(type === 1) {
-      if (!this.selected.work_role.includes(facet)){
-        this.selected.work_role.push(facet);
-      }
-    } else if (type === 3) {
-      if (!this.selected.task.includes(facet)){
-        this.selected.task.push(facet);
+    // navigate to previous page
+    prevPage() {
+      const page = +this.currPage - 1;
+      if (page > 0) {
+        this.currPage = page;
+        this.navigateDashboard();
       }
     }
-    this.filter();
-    this.filterApplied = true;
+
+    // navigate to next page
+    nextPage() {
+      const page = +this.currPage + 1;
+      if (page <= this.search.page) {
+        this.currPage = page;
+        this.navigateDashboard();
+      }
+    }
+    // navigate to a numbered page
+    goToPage(page: number) {
+      if (page > 0 && page <= this.search.page) {
+        this.currPage = page;
+        this.navigateDashboard();
+      }
+    }
+
+  get pages(): number[] {
+    const totalPages = this.search.total / this.search.limit;
+    const pageCount = this.search.page;
+    const cursor = +this.currPage;
+    let count = 1;
+    let upCount = 1;
+    let downCount = 1;
+    const arr = [cursor];
+
+    if (this.loadedCompetencies.length) {
+      while (count < totalPages) {
+        if (cursor + upCount <= pageCount) {
+          arr.push(cursor + upCount++);
+          count++;
+        }
+        if (cursor - downCount > 0) {
+          arr.unshift(cursor - downCount++);
+          count++;
+        }
+      }
+    } else {
+      return [];
+    }
+
+    return arr;
   }
+
+  // /**
+  //  * NOT CURRENTLY IN USE - WORK IN PROGRESS
+  //  * Method to apply filters for competencies
+  //  *
+  //  * @param facet
+  //  * @param type
+  //  */
+  // addFilter(facet: string, type: number): void {
+  //   if(type === 1) {
+  //     if (!this.selected.work_role.includes(facet)){
+  //       this.selected.work_role.push(facet);
+  //     }
+  //   } else if (type === 3) {
+  //     if (!this.selected.task.includes(facet)){
+  //       this.selected.task.push(facet);
+  //     }
+  //   }
+  //   this.filter();
+  //   this.filterApplied = true;
+  // }
 
   performSearch(searchText: any) {
     //TODO Actually perform the search
@@ -137,10 +250,12 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
-   * Method to find competencies by specified filters
+   * Perform a search based on the filters selected from the secondary navbar component
+   *
+   * @param filter object containing arrays of selected filters
    */
-  async filter() {
-    console.log('METHOD NOT CURRENTLY IMPLEMENTED');
+  async filter(filter: { status: string[], workrole: string[], task: string[], audience: string[]}) {
+    console.log('FILTER BASED SEARCHING NOT IMPLEMENTED YET.', filter);
   }
 
   /**
@@ -167,6 +282,12 @@ export class DashboardComponent implements OnInit {
     this.search.competencies = [];
     this.loadedCompetencies = [];
     await this.initDashboard();
+  }
+
+  openHelp() {
+    //TODO Open help dialog
+    // Oliver Twist reference
+    console.log('PLEASE SIR, MAY I HAVE SOME MORE SIR?');
   }
 
   /**
