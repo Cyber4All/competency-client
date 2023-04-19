@@ -4,7 +4,9 @@
   <ng-container>
     <label>Work Role</label>
     <div class="search_bar">
-      <div class="search_icon"><i class="fas fa-search"></i></div>
+      <div class="search_icon">
+        <i class="fas fa-search"></i>
+      </div>
       <input [ngModel]="selectedWorkrole ? selectedWorkrole.work_role : ''" (keyup)="workroleKeyup($event)"
         placeholder="Search workroles..." (click)="showWorkrolesDropdown = !showWorkrolesDropdown" #workroleInput>
     </div>
