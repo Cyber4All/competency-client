@@ -7,13 +7,9 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 0 auto;
 
     .logo {
-        max-width: 25%;
-        flex-grow: 1;
-        float: left;
-        padding: 12px;
+        padding: 30px;
 
         h2 {
             padding-top: 10px;
@@ -23,20 +19,10 @@
     .search {
         max-width: 50%;
         flex-grow: 1;
-        float: left;
-
-        .search-wrapper {
-            max-width: 70%;
-            flex-grow: 1;
-            margin: 0 auto;
-        }
     }
 
     .profile {
-        max-width: 25%;
-        flex-grow: 1;
-        float: left;
-        margin: 25px;
+        margin: 30px;
     }
 }
 
