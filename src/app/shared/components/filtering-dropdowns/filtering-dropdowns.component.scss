@@ -20,8 +20,7 @@
 
 // ng-deep is used to override the default styles of the dropdown component
 ::ng-deep .dropdown-wrapper {
-    min-width: 150px; // TODO: this may be able to be removed if the text is wide enough
-    max-width: 200px;
+    width: 275px;
 
     margin-top: 5px; // space between dropdown and parent element
 
@@ -36,11 +35,12 @@
 
     .dropdown {
         min-height: 200px; // we should change this to be a calculated value based on the number of items
-        overflow: scroll;
+        overflow-y: scroll;
+        overflow-x: hidden;
 
         .item {    
             border-top: 1px solid #DFDFDF;
-    
+            text-transform: capitalize;
             cursor: pointer;
             &:hover {
                 color: #376ED6;

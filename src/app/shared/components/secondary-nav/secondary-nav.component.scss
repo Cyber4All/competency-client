@@ -24,12 +24,9 @@
             align-items: center;
     
             .help {
-                border: 1px solid color-gray(6);
+                border: 1px solid #DFDFDF;
                 padding: 15px 20px;
                 margin-right: 20px;
-                &:hover {
-
-                }
             }
     
             .builder {
@@ -39,7 +36,8 @@
                 box-shadow: 0px 6px 12px -6px color-accent();
                 padding: 15px 20px;
                 &:hover {
-
+                    transform: scale(1.025);
+                    transition: all .15s ease-out;
                 }
             }
         }
