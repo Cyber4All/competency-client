@@ -11,15 +11,13 @@
 
     .logo {
         max-width: 200px;
-        min-width: 150px;
-        flex-grow: 1;
-        float: left;
         padding: 12px;
         margin: 0 auto;
 
-        h2 {
-            padding-top: 10px;
-        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }        
     }
 
     .search {
