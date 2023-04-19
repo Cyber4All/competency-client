@@ -61,8 +61,13 @@ $palette-gray: (
   10: hsl(220, 91%, 95%),
   11: hsl(0, 0%, 87%),
 //check this value
-  12: hsl(212, 0%, 90%),  
+  12: hsl(212, 0%, 90%),
+  13: hsl(0, 0%, 100%),
 );
+
+@function color-gray($style: 3) {
+  @return map-get($palette-gray, $style);
+};
 
 // font sizes
 $largest: 27pt;     // 36px
@@ -96,9 +101,6 @@ $status_deprecated: linear-gradient(88.15deg, $deprecated-light 0%, $deprecated-
 
 $dark-overlay: rgba(0, 0, 0, 0.4);
 
-@function color-gray($style: 3) {
-  @return map-get($palette-gray, $style);
-};
 
 $font-size: (
   1: 12px,
@@ -112,4 +114,41 @@ $font-size: (
 
 @function font($style: 3) {
   @return map-get($font-size, $style);
+}
+
+// $font-size1: (
+//   calc(1rem / (#{$font-size-ratio} * 2)),
+//   calc(1rem / (#{$font-size-ratio} * 1)),
+//   1rem,
+//   calc(1rem * (#{$font-size-ratio} * 1)),
+//   calc(1rem * (#{$font-size-ratio} * 2)),
+//   calc(1rem * (#{$font-size-ratio} * 3)),
+//   calc(1rem * (#{$font-size-ratio} * 4)),
+//   calc(1rem * (#{$font-size-ratio} * 5)),
+//   calc(1rem * (#{$font-size-ratio} * 6))
+// );
+
+@function font-size($size: 1) {
+  @return list.nth($font-size1, $size + 2);
+}
+
+// mixins
+@mixin text--default() {
+  color: color-gray(1);
+}
+
+@mixin text--medium() {
+  color: color-gray(3);
+}
+
+@mixin text--light() {
+  color: color-gray(4);
+}
+
+@mixin text--accent() {
+  color: color-accent();
+}
+
+@mixin input-with-margin() {
+  margin-bottom: 20px;
 }

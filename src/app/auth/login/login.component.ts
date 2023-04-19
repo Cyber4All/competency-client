@@ -21,22 +21,23 @@ export class LoginComponent{
     public authValidation: AuthValidationService
   ) {}
 
-  loginInfo = {
-    email: '',
-    password: ''
-  };
-
   errMessage = '';
+  submissionError = false;
 
   login() {
+    this.submissionError = false;
     if(this.loginFormGroup.valid){
-      this.auth.login(this.loginInfo.email, this.loginInfo.password)
+      this.auth.login(
+        this.loginFormGroup.get('email')?.value,
+        this.loginFormGroup.get('password')?.value
+      )
       .then(() => {
         if (this.auth.user) {
           this.router.navigate(['/dashboard']);
         }
       }, error => {
         this.errMessage = error.message;
+        this.submissionError = true;
         this.authValidation.showError();
       });
     }
@@ -44,5 +45,13 @@ export class LoginComponent{
 
   register() {
     this.router.navigate(['/register']);
+  }
+
+  updateEmail(email: string) {
+    this.loginFormGroup.get('email')?.setValue(email);
+  }
+
+  updatePassword(password: string) {
+    this.loginFormGroup.get('password')?.setValue(password);
   }
 }

@@ -43,6 +43,7 @@ import { BuilderNavbarComponent } from './competency-builder/components/builder-
 import { FilteringDropdownsComponent } from './filtering-dropdowns/filtering-dropdowns.component';
 import { SecondaryNavComponent } from './secondary-nav/secondary-nav.component';
 import { FooterComponent } from './footer/footer.component';
+import { TextFieldComponent } from './text-field/text-field.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -63,7 +64,8 @@ import { FooterComponent } from './footer/footer.component';
     BuilderNavbarComponent,
     FilteringDropdownsComponent,
     SecondaryNavComponent,
-    FooterComponent
+    FooterComponent,
+    TextFieldComponent
   ],
   imports: [
     CommonModule,
@@ -103,7 +105,8 @@ import { FooterComponent } from './footer/footer.component';
     SearchBarComponent,
     UserMenuComponent,
     PreviewCompetencyComponent,
-    FooterComponent
+    FooterComponent,
+    TextFieldComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
