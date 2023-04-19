@@ -81,8 +81,6 @@
 
 .content {
   padding: 0 40px;
-  height: 75%;
-  overflow-y: scroll;
   overflow-wrap: break-word;
   hyphens: auto;
 
@@ -106,10 +104,9 @@
 .footer {
   display: flex;
   justify-content: flex-end;
-  margin: 20px 25px 10px 0;
-
   position: sticky;
   bottom: 0;
+  background-color: white;
 
   button {
     padding: 15px 20px;
@@ -121,11 +118,14 @@
     &.submit {
       border: 0px;
       background-color: color-accent();
+      margin: 10px 50px 25px 0;
       color: white;
-      box-shadow: 0px 2px 5px color-accent();
+      box-shadow: 0px 6px 12px -6px color-accent();
   
-      &:active {
-        background-color: color-accent("lighter");
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.025);
+        transition: all .15s ease-out;
       }
     }
 
