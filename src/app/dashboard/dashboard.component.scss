@@ -68,9 +68,9 @@ cc-primary-nav {
 }
 
 .competency-card_container {
-    border: 1px solid #DFDFDF;
-    width: 289px;
-    height: 300px;
+    border: 1px solid #C6CBD2;
+    width: 290px;
+    height: 340px;
     margin-bottom: 34px;
     float: left;
 }
@@ -79,6 +79,7 @@ cc-primary-nav {
     box-shadow: 0 10px 20px -10px #00000040;
     transform: scale(1.01);
     transition: all .15s ease-out;
+    cursor: pointer;
 }
 
 .competency-card {
