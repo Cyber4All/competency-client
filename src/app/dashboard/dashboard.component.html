@@ -53,15 +53,9 @@
     ccPanel
     *ngIf="openPreview"
     [competency]="previewCompetency"
-    [options]="{ 
-        showDeleteButton: true,
-        showExitButton: true,
-        title: 'Competency Preview',
-        padding: true,
-        exitButtonColor: 'black',
-        position: 'center'
-    }"
+    [options]="{ showDeleteButton: true, title: 'yeet', showExitButton: false, padding: false, exitButtonColor: 'black', position: 'center' }"
+    [isAdmin]="isAdmin"
     (updateSubmission)="openCompetencyBuilder(previewCompetency)"
     (close)="closePreview()"
-    (delete)="deleteCompetency(previewCompetency._id)"
+    (statusUpdated)="handleStatusUpdated()"
 ></cc-preview-competency>

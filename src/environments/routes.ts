@@ -98,3 +98,18 @@ export const COMPETENCY_ROUTES = {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/reject`;
     }
 };
+
+export const LIFECYCLE_ROUTES = {
+    DEPRECATE_COMPETENCY(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/deprecate`;
+    },
+    PUBLISH_COMPETENCY(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/publish`;
+    },
+    REJECT_COMPETENCY(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/reject`;
+    },
+    SUBMIT_COMPETENCY(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/submit`;
+    },
+};
