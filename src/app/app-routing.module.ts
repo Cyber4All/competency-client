@@ -10,6 +10,7 @@ import { AdminGuard } from './shared/guards/admin.guard';
 import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
 import { BetaGuard } from './shared/guards/beta.guard';
 import { TermsOfServiceComponent } from './shared/pages/terms-of-service/terms-of-service.component';
+import { HelpPageComponent } from './shared/pages/help-page/help-page.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full'
+  },
+  {
+    path: 'help',
+    component: HelpPageComponent
   },
   {
     path: 'downtime',
