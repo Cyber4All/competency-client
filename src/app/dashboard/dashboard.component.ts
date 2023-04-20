@@ -47,6 +47,8 @@ export class DashboardComponent implements OnInit {
   openBuilder = false;
   openPreview = false;
 
+  isAdmin!: boolean;
+
   constructor(
     private competencyService: CompetencyService,
     private builderService: BuilderService,
@@ -57,6 +59,10 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    await this.authService.validateAdminAccess();
+    this.authService.isAdmin.subscribe((res) => {
+      this.isAdmin = res;
+    });
     this.route.queryParams.pipe(takeUntil(this.unsubscribe)).subscribe(async params => {
       this.urlParams = params;
       this.makeQuery(params);
@@ -347,5 +353,22 @@ export class DashboardComponent implements OnInit {
    */
   closePreview() {
     this.openPreview = false;
+  }
+
+  /**
+   * When an admin updates the status of a competency in the preview, reset the dashboard
+   */
+  async handleStatusUpdated() {
+    this.search.competencies = [];
+    this.loadedCompetencies = [];
+    await this.initDashboard();
+  }
+
+  /**
+   * Method to log a user out and refresh the page view
+   */
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

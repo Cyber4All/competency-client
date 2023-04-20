@@ -87,16 +87,19 @@ export const COMPETENCY_ROUTES = {
             encodeURIComponent(filenames)
         }`;
     },
-    SUBMIT(competencyId: string) {
-        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/submit`;
-    },
-    PUBLISH(competencyId: string) {
-        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/publish`;
-    },
-    DEPRECATE(competencyId: string) {
+};
+
+export const LIFECYCLE_ROUTES = {
+    DEPRECATE_COMPETENCY(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/deprecate`;
     },
-    REJECT(competencyId: string) {
+    PUBLISH_COMPETENCY(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/publish`;
+    },
+    REJECT_COMPETENCY(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/reject`;
-    }
+    },
+    SUBMIT_COMPETENCY(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/submit`;
+    },
 };

@@ -14,6 +14,7 @@ import { SNACKBAR_COLOR } from '../snackbar/snackbar.component';
 import { DropdownService } from '../../../core/dropdown.service';
 import { DropdownType } from '../../../../entity/dropdown';
 import { sleep } from '../../../core/competency.service';
+import { LifecyclesService } from '../../../core/lifecycles.service';
 @Component({
   selector: 'cc-competency-builder',
   templateUrl: './competency-builder.component.html',
@@ -34,6 +35,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     public builderService: BuilderService,
     private snackBarService: SnackbarService,
     private dropdownService: DropdownService,
+    private lifecycleService: LifecyclesService,
     ) {}
 
   // Method to prevent user from leaving the page without saving competency data
@@ -218,7 +220,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
       await this.builderService.updateEmployability(competency._id, competency.employability);
       await this.builderService.updateNotes(competency._id, competency.notes);
       // Update the status of a competnecy
-      await this.builderService.submitCompetency(competency._id);
+      await this.lifecycleService.submitCompetency(competency._id);
       // Close the dialog and send a success notification
       this.close.emit(true);
       this.snackBarService.notification$.next({
