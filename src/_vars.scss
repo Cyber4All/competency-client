@@ -116,22 +116,6 @@ $font-size: (
   @return map-get($font-size, $style);
 }
 
-// $font-size1: (
-//   calc(1rem / (#{$font-size-ratio} * 2)),
-//   calc(1rem / (#{$font-size-ratio} * 1)),
-//   1rem,
-//   calc(1rem * (#{$font-size-ratio} * 1)),
-//   calc(1rem * (#{$font-size-ratio} * 2)),
-//   calc(1rem * (#{$font-size-ratio} * 3)),
-//   calc(1rem * (#{$font-size-ratio} * 4)),
-//   calc(1rem * (#{$font-size-ratio} * 5)),
-//   calc(1rem * (#{$font-size-ratio} * 6))
-// );
-
-@function font-size($size: 1) {
-  @return list.nth($font-size1, $size + 2);
-}
-
 // mixins
 @mixin text--default() {
   color: color-gray(1);
@@ -150,5 +134,5 @@ $font-size: (
 }
 
 @mixin input-with-margin() {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }

@@ -128,6 +128,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -148,6 +149,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -168,6 +170,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -188,6 +191,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -208,6 +212,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -228,6 +233,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 }

@@ -1,50 +1,89 @@
+@import "vars";
+
 .register-wrapper {
-    width: 300px;
-    text-align: center;
-    margin: 50px auto;
+  width: 350px;
+  text-align: center;
+  margin: 20px auto;
 
-    mat-form-field {
-        display: block;
-        margin-top: 10px;
-        color: white
+  .logo {
+    margin: 20px auto;
+    position: relative;
+    
+    img {
+        position: relative;
+        left: -25%;
+        margin: 0 auto;
+        max-width: 150%;
+        height: auto;
     }
+  }
 
-    h1 {
-        color: white;
-        margin-bottom: 0px !important;
-    }
+  cc-text-field {
+    @include input-with-margin();
+  }
 
-    h5 {
-        color: white;
-        margin-top: 0px !important;
-        text-align: right;
-    }
+  form {
+    margin: 10px auto;
 
-    button {
+    .form-button {
+      display: inline-flex;
+      justify-content: space-between;
+      margin: 10px auto;
+      background-color: white;
+      z-index: 3;
+    
+      .button-margin {
         margin: 0 5px;
-    }
-
-    .org-dropdown_list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        background-color: #494949;
-        position: absolute;
-        width: 300px;
-        color: white;
-        box-shadow: 0 2px 6px 2px rgba(0, 0, 0, 0.2);
-        z-index: 3;
-      
-        virtual-scroller {
-          margin: 0px;
-          min-height: 20px;
-          li {
-            cursor: pointer;
-            padding: 5px;
-          }
-          li:hover {
-            background-color: grey;
-          }
+      }
+    
+      .cancel {
+        padding: 10px 20px;
+        color: #454545;
+        background-color: #f7f7f7;
+        border: 1px solid #DFDFDF;
+        border-radius: 4px;
+        &:hover{
+          cursor: pointer;
         }
       }
+      
+      .submit {
+        padding: 10px 20px;
+        color: #f7f7f7;
+        background-color: color-accent();
+        box-shadow: 0px 6px 12px -6px color-accent();
+        border-radius: 4px;
+        border: none;
+        margin-left: 30px;
+    
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .org-dropdown_list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background-color: color-accent();
+      position: absolute;
+      width: 350px;
+      color: white;
+      box-shadow: 0 2px 6px 2px rgba(0, 0, 0, 0.2);
+      z-index: 3;
+    
+      virtual-scroller {
+        margin: 0px;
+        min-height: 20px;
+        li {
+          cursor: pointer;
+          padding: 5px;
+        }
+        li:hover {
+          background-color: grey;
+        }
+      }
+    }
 }

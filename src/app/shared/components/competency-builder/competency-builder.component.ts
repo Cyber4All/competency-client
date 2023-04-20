@@ -195,14 +195,9 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     });
   }
 
-  async deleteCompetency(): Promise<void> {
-    // Close the dialog and send a success notification
+  deleteCompetency(): void {
+    // Close the dialog
     this.close.emit(false);
-    this.snackBarService.notification$.next({
-      message: 'Draft Deleted',
-      title: 'Success',
-      color: SNACKBAR_COLOR.SUCCESS
-    });
   }
 
   /**
@@ -224,8 +219,8 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
       // Close the dialog and send a success notification
       this.close.emit(true);
       this.snackBarService.notification$.next({
-        message: 'Competency Saved',
-        title: 'Success',
+        message: 'The competence in me honors the competence in you.',
+        title: 'Namaste!',
         color: SNACKBAR_COLOR.SUCCESS
       });
     } catch (err: any) {

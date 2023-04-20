@@ -71,7 +71,7 @@ export class AuthValidationService {
     } else if(control.hasError('mismatch')) {
       return !match ? 'Fields do not match' : `${match}s do not match`;
     }
-    return;
+    return 'This field is required.';
   }
 
   /**

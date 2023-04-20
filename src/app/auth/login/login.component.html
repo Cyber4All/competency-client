@@ -3,7 +3,7 @@
     <div class="logo">
         <img src="../../../assets/CompetencyConstructor_Logo_Transparent.png" alt="Competency Constructor Logo">
     </div>
-    <form [formGroup]="loginFormGroup">
+    <form>
         <cc-text-field
             animate
             [value]="loginFormGroup.get('email')?.value"
@@ -22,7 +22,9 @@
             type="password"
             [block]="true"
         ></cc-text-field>
-        <button mat-raised-button color="primary" type="submit" (click)="login()">LOGIN</button>
-        <button mat-raised-button (click)="register()">REGISTER</button>
+        <div class="form-button">
+            <button class="button-margin submit" (click)="login()">LOGIN</button>
+            <button class="button-margin register" (click)="register()">REGISTER</button>
+        </div>
     </form>
 </div>
