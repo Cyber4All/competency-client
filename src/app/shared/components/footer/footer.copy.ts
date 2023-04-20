@@ -1,7 +1,7 @@
 export const COPY = {
-    SUPPORTEDBY: 'The CLARK System is partially supported by the National Security Agency ' +
-    ' under NSA under Grant H9830-17-1-0405, H98230-21-1-0175, NCyTE Center, ' +
-    ' California State University San Bernardino, and Towson University.',
+    SUPPORTEDBY: 'The Competency Constructor Ecosystem is partially supported by the National Security Agency ' +
+    ' under NSA under Grant H98230-22-1-0329, Norwich Univeristy under contract 22596-RS023 and ' +
+    'Califonia State University San Bernardino.',
     TEAM: 'Meet the Team',
     USAGE: 'Usage Statistics',
     HELP: 'Ask for Help',
