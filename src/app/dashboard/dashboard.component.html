@@ -13,6 +13,10 @@
 </ng-template>
 
 <ng-template #competencyTemplate>
+    <ng-container *ngIf="loadedCompetencies && loadedCompetencies.length > 0; then resultsTemplate; else noCompetenciesTemplate"></ng-container>
+</ng-template>
+
+<ng-template #resultsTemplate>
     <div class="competency-card">
         <div class="competency-card-wrapper">
             <div *ngFor="let competency of loadedCompetencies" class="competency-card_container">
@@ -30,6 +34,21 @@
             <li *ngFor="let p of pages" [ngClass]="{'active': currPage === p}" (click)="goToPage(p)"  attr.aria-label="Page {{ p }} of results" tabindex="0">{{ p }}</li>
             <li (click)="nextPage()" [ngClass]="{'gone': currPage >= search.page}"> Next <i class="fas fa-chevron-right" aria-label="Next page of results" tabindex="0"></i></li>
         </ul>
+    </div>
+</ng-template>
+
+<ng-template #noCompetenciesTemplate>
+    <div class="competency-no-results">
+        <h2>You don't have any comeptencies yet!</h2>
+        <p>Click the button below to create a new competency.</p>
+        <button class="btn btn-primary" (click)="openCompetencyBuilder()">Create New Competency</button>
+    </div>
+</ng-template>
+
+<ng-template #noResultsTemplate>
+    <div class="competency-no-results">
+        <h2>No Results</h2>
+        <p>There are no competencies that match your search.</p>
     </div>
 </ng-template>
 
