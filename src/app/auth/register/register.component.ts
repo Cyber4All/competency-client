@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { debounce, debounceTime, interval, Subject, takeUntil } from 'rxjs';
+import { debounceTime, Subject, } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
 import { Organization } from '../../../entity/organization';
 import { AuthValidationService } from '../../core/auth-validation.service';
@@ -14,7 +14,6 @@ import { OrganizationService } from '../../core/organization.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  private ngUnsubscribe = new Subject<void>();
 
   regInfo = {
     username: '',
