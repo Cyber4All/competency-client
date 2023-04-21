@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, catchError, lastValueFrom, Observable, retry, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
@@ -242,41 +242,5 @@ export class AuthService {
    */
   private clearAuthHeader() {
     this.headers = new HttpHeaders().delete('Authorization');
-  }
-
-  /**
-   * Determines whether or not the specified email is currently in use
-   *
-   * @param {string} username
-   * @returns
-   * @memberof AuthService
-   */
-  async emailInUse(email: string) {
-    const val = await this.http
-      .get(
-        environment.apiURL + '/users/identifiers/active?email=' + email,
-        {
-          
-          withCredentials: true
-        }
-      )
-      .pipe(
-        retry(3),
-        catchError(this.handleError)
-      )
-      .toPromise();
-    
-  }
-  private handleError(error: HttpErrorResponse) {
-    if (
-      error.error instanceof ErrorEvent ||
-      (error.error && error.error.message)
-    ) {
-      // Client-side or network returned error
-      return throwError(error.error);
-    } else {
-      // API returned error
-      return throwError(error.error);
-    }
   }
 }
