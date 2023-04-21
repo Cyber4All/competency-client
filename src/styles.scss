@@ -1,4 +1,68 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@include mat.core();
+
+$primary-palette: (
+  50: #e4f1fe,
+  100: #bddcfe,
+  200: #93c7fd,
+  300: #6ab1fc,
+  400: #4ea0fb,
+  500: #3b90f9,
+  600: #3b82ea,
+  700: #386fd6,
+  800: #355ec3,
+  900: #2f3fa3,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+$accent-palette: (
+    50: #fafbe8,
+    100: #f4f4c6,
+    200: #edeca2,
+    300: #e7e57f,
+    400: #e4e167,
+    500: #e0dc52,
+    600: #deca4b,
+    700: #dab442,
+    800: #d69f38,
+    900: #ce7b28,
+    contrast: (
+        50: rgba(black, 0.87),
+        100: rgba(black, 0.87),
+        200: rgba(black, 0.87),
+        300: rgba(black, 0.87),
+        400: rgba(black, 0.87),
+        500: rgba(black, 0.87),
+        600: rgba(black, 0.87),
+        700: rgba(black, 0.87),
+        800: rgba(black, 0.87),
+        900: white,
+    )
+);
+
+$cc-primary: mat.define-palette($primary-palette, 700, 300, 900);
+$cc-accent: mat.define-palette($accent-palette, 800, 300, 900);
+
+$cc-theme: mat.define-light-theme((
+    color: (
+        primary: $cc-primary,
+        accent: $cc-accent,
+    )
+));
+
+@include mat.all-component-themes($cc-theme);
+
 html, body { height: 100%; }
 
 body { margin: 0; font-family: Source Sans Pro, "Helvetica Neue", sans-serif; background-color: white;}

@@ -4,7 +4,7 @@ h1 {
     text-align: center;
     padding-top: 50px;
     padding-bottom: 25px;
-    color: color-accent();
+    color: color-gray(3);
     position: relative;
     font-size: $largest;
     text-transform: uppercase;
@@ -23,8 +23,6 @@ div {
     background: color-gray(13);
 }
 
-
-
 .accordion {
     position: relative;
     align-items: center;
@@ -32,10 +30,6 @@ div {
     z-index: 2;
     border: none;
     padding: 25px 5px;
-}
-
-.mat-tab-label .mat-tab-label-content {
-    color: color-accent();
 }
 
 .mat-expansion-panel {
@@ -62,9 +56,4 @@ div {
 
 ::ng-deep .mat-tab-label, .mat-tab-link {
     font-size: $large;
-    color: color-accent();
-}
-
-::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
-    background-color: color-accent() !important;
 }
