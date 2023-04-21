@@ -27,18 +27,6 @@ export class PreviewCompetencyComponent implements OnInit {
     ) { }
 
   async ngOnInit(): Promise<void> {
-    this.isAdmin = true;
-    this.competency.behavior = {
-      tasks: ['lol'],
-      details: 'something',
-      work_role: 'work_role'
-    };
-    this.competency.condition = {
-      tech: ['some tech'],
-      scenario: 'some scenario',
-      limitations: 'limitations',
-      documentation: []
-    };
     this.competencyAuthor = await this.auth.getUser(this.competency.authorId);
   }
 
