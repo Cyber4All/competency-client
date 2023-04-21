@@ -190,16 +190,22 @@ export class AuthService {
     }
   }
 
-  resetPassword(payload: string, otaCode: string): Observable<any> {
-    return this.http.patch(
-      environment.apiURL + '/auth/reset/password?ota=' + otaCode,
-      { payload },
-      { withCredentials: true, responseType: 'text' }
-    )
-    .pipe(
-      retry(3),
-      //catchError(this.formatError)
-    );
+  public async resetPassword(payload: string, otaCode: string): Promise<void> {
+    this.initHeaders();
+    await lastValueFrom(this.http
+      .patch(USER_ROUTES.RESET_PASSWORD(otaCode), { payload }))
+      .then((res: any)=> {
+        console.log(res);
+      });
+  }
+
+  public async sendResetPassword(email: string): Promise<void>{
+    this.initHeaders();
+    await lastValueFrom(this.http
+      .post(USER_ROUTES.SEND_RESET_PASSWORD(), { email }))
+      .then((res: any)=> {
+        console.log(res);
+      });
   }
 
   /**

@@ -13,7 +13,6 @@ export class ResetPasswordComponent implements OnInit {
   errorMessage!: String;
   showError!: Boolean;
   otaCode!: string;
-  _value!: string;
   done = false;
 
   passwords: FormGroup = new FormGroup({
@@ -26,22 +25,13 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     //red error banner at the top of the screen
-    console.log('TESTING');
     this.authvalidationService.getErrorState().subscribe(err => this.showError = err);
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params);
-      this.otaCode = params.otaCode;
-      this._value = params._value;
+      this.otaCode = params.ota;
     });
   }
 
   onSubmit(): void {
-    this.authService.resetPassword(this.passwords.get('password')?.value, this.otaCode)
-    .subscribe(val => {
-      this.done = true;
-    }, error => {
-      this.errorMessage = 'Something went wrong! We\'re looking into the issue. Please check back later.';
-      this.authvalidationService.showError();
-    });
+    this.authService.resetPassword(this.passwords.get('password')?.value, this.otaCode);
   }
 }

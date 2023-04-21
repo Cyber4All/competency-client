@@ -11,6 +11,12 @@ export const USER_ROUTES = {
     TOKEN() {
         return `${environment.apiURL}/auth/token`;
     },
+    RESET_PASSWORD(otaCode: string){
+        return `${environment.apiURL}/auth/reset/password?ota=${encodeURIComponent(otaCode)}`;
+    },
+    SEND_RESET_PASSWORD(){
+        return `${environment.apiURL}/auth/reset/password`;
+    },
     UPDATE_ACL_ACTIONS(userId: string) {
         return `${environment.apiURL}/users/${encodeURIComponent(userId)}/acl`;
     },
