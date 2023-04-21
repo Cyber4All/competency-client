@@ -46,12 +46,4 @@ export class LoginComponent{
   register() {
     this.router.navigate(['/register']);
   }
-
-  updateEmail(email: string) {
-    this.loginFormGroup.get('email')?.setValue(email);
-  }
-
-  updatePassword(password: string) {
-    this.loginFormGroup.get('password')?.setValue(password);
-  }
 }
