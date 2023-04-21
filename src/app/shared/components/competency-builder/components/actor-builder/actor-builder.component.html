@@ -2,9 +2,10 @@
 <!--Actor type form field-->
 <div class="actor_input">
   <label>Actor</label>
-  <div class="actor_box" (click)="displayActors()">{{ 
-    actorSelected ? actorSelected.value : 'Select an actor'  
-  }}<i class="fas fa-angle-down fa-lg"></i></div>
+  <div class="actor_box" (click)="displayActors()">
+    {{ actorSelected ? actorSelected.value : 'Select an actor' }}
+    <i class="fas fa-angle-down fa-lg"></i>
+  </div>
   <div [ngClass]="actorDisplay ? 'actor_dropdown': 'hidden'">
     <ul class="actor_list" (mouseleave)="displayActors()">
       <li *ngFor="let actor of actorList" (click)="this.actorSelected=actor; displayActors(); type.patchValue(true)">{{ actor.value }}</li>

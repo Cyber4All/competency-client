@@ -5,6 +5,9 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
 import { DowntimeComponent } from './downtime/downtime.component';
 import { BetaWelcomeComponent } from './beta-welcome/beta-welcome.component';
 import { ComponentsModule } from '../components/components.module';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -15,7 +18,10 @@ import { ComponentsModule } from '../components/components.module';
   ],
   imports: [
     CommonModule,
-    ComponentsModule
+    ComponentsModule,
+    MatTabsModule,
+    MatExpansionModule,
+    MatListModule
   ],
   exports: [
     HelpPageComponent,

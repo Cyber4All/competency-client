@@ -36,7 +36,7 @@ export class PreviewCompetencyComponent implements OnInit {
     private dropdownService: DropdownService,
     private authService: AuthService,
     public builderService: BuilderService,
-    public lifecycles: LifecyclesService
+    private lifecycles: LifecyclesService,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -73,8 +73,8 @@ export class PreviewCompetencyComponent implements OnInit {
       this.isAdmin = isAdmin;
     });
     this.loading = false;
-  }
 
+  }
   /**
    * Returns an icon to display depending on competency status
    * Only for admin view

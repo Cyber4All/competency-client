@@ -4,55 +4,34 @@
   <ng-container>
     <label>Work Role</label>
     <div class="search_bar">
-    <div class="search_icon"><i class="fas fa-search"></i></div>
-    <input
-      [ngModel]="selectedWorkrole ? selectedWorkrole.work_role : ''"
-      (keyup)="workroleKeyup($event)"
-      placeholder="Search workroles..."
-      (click)="showWorkrolesDropdown = !showWorkrolesDropdown"
-      #workroleInput
-    >
+      <div class="search_icon">
+        <i class="fas fa-search"></i>
+      </div>
+      <input [ngModel]="selectedWorkrole ? selectedWorkrole.work_role : ''" (keyup)="workroleKeyup($event)"
+        placeholder="Search workroles..." (click)="showWorkrolesDropdown = !showWorkrolesDropdown" #workroleInput>
     </div>
-    <ul
-      *ngIf="showWorkrolesDropdown"
-      (onBlur)="closeDropdown()"
-      class="org-dropdown_list"
-    >
-      <ng-container
-        *ngTemplateOutlet="loading ? loadingTemplate : workroleResultsTemplate"
-      ></ng-container>
+    <ul *ngIf="showWorkrolesDropdown" (onBlur)="closeDropdown()" class="org-dropdown_list">
+      <ng-container *ngTemplateOutlet="loading ? loadingTemplate : workroleResultsTemplate"></ng-container>
     </ul>
   </ng-container>
   <!--Behavior task selection field-->
   <div class="task">
     <label>Task</label>
     <div class="task-list">
-      <button *ngFor="let niceTask of selectedTask"
-        (click)="removeSelectedTask(niceTask)"
-        class="chip"
+      <button *ngFor="let niceTask of selectedTask" (click)="removeSelectedTask(niceTask)" class="chip"
         attr.aria-label="Remove {{ niceTask.element_id | titlecase }} as an affiliated task"
-        [tip]="niceTask.description"
-      >
-          {{ niceTask.element_id | titlecase }} <i class="far fa-times"></i>
+        [tip]="niceTask.description">
+        {{ niceTask.element_id | titlecase }} 
+        <i class="far fa-times"></i>
       </button>
-  </div>
+    </div>
     <div class="search_bar">
       <div class="search_icon"><i class="fas fa-search"></i></div>
-    <input 
-      placeholder="Search for tasks..."
-      [(ngModel)] = "taskDropdownPlaceholder"
-      (keyup)="taskKeyup($event)"
-      (click)="showTasksDropdown = !showTasksDropdown"
-    >
+      <input placeholder="Search for tasks..." [(ngModel)]="taskDropdownPlaceholder" (keyup)="taskKeyup($event)"
+        (click)="showTasksDropdown = !showTasksDropdown">
     </div>
-    <ul
-      *ngIf="showTasksDropdown"
-      (onBlur)="closeDropdown()"
-      class="org-dropdown_list task_dropdown"
-    >
-      <ng-container
-        *ngTemplateOutlet="loading ? loadingTemplate : taskResultsTemplate"
-      ></ng-container>
+    <ul *ngIf="showTasksDropdown" (onBlur)="closeDropdown()" class="org-dropdown_list task_dropdown">
+      <ng-container *ngTemplateOutlet="loading ? loadingTemplate : taskResultsTemplate"></ng-container>
     </ul>
   </div>
   <!--Behavior description form field-->
@@ -64,77 +43,51 @@
 
 <!-- workrole dropdown template -->
 <ng-template #workroleResultsTemplate>
-  <ng-container
-    *ngIf="workroles && workroles.length; else noResultsTemplate"
-  >
-    <virtual-scroller
-      #scroll
-      [style.height]="scrollerHeight"
-      [bufferAmount]="7"
-      [enableUnequalChildrenSizes]="true"
-      [items]="workroles"
-      (mouseleave)="closeDropdown()"
-      >
-        <li
-          class="org-dropdown_list-item"
-          *ngFor="let role of scroll.viewPortItems"
-          (click)="
+  <ng-container *ngIf="workroles && workroles.length; else noResultsTemplate">
+    <virtual-scroller #scroll [style.height]="scrollerHeight" [bufferAmount]="7" [enableUnequalChildrenSizes]="true"
+      [items]="workroles" (mouseleave)="closeDropdown()">
+      <li class="org-dropdown_list-item" *ngFor="let role of scroll.viewPortItems" (click)="
             selectedWorkrole = role;
             workroles = [role];
             tasks = role.tasks;
             closeDropdown();
             workrole.patchValue(true);
-          "
-        >
-          {{ role.work_role }}
-        </li>
-      </virtual-scroller>
+          ">
+        {{ role.work_role }}
+      </li>
+    </virtual-scroller>
   </ng-container>
 </ng-template>
 
 <!--Task dropdown template-->
 <ng-template #taskResultsTemplate>
-  <ng-container
-    *ngIf="tasks && tasks.length; else noResultsTemplate"
-  >
-    <virtual-scroller
-      #scroll
-      [style.height]="scrollerHeight"
-      [bufferAmount]="7"
-      [enableUnequalChildrenSizes]="true"
-      [items]="tasks"
-      (mouseleave)="closeDropdown()"
-      
-      >
-        <li
-          class="org-dropdown_list-item"
-          *ngFor="let niceTask of scroll.viewPortItems"
-          (click)="
+  <ng-container *ngIf="tasks && tasks.length; else noResultsTemplate">
+    <virtual-scroller #scroll [style.height]="scrollerHeight" [bufferAmount]="7" [enableUnequalChildrenSizes]="true"
+      [items]="tasks" (mouseleave)="closeDropdown()">
+      <li class="org-dropdown_list-item" *ngFor="let niceTask of scroll.viewPortItems" (click)="
             selectedTask.push(niceTask);
             workroles = niceTask.work_roles;
             closeDropdown();
             task.patchValue(true);
-          "
-        >
-          {{ niceTask.element_id | titlecase }} - {{ niceTask.description }}
-        </li>
-      </virtual-scroller>
+          ">
+        {{ niceTask.element_id | titlecase }} - {{ niceTask.description }}
+      </li>
+    </virtual-scroller>
   </ng-container>
 </ng-template>
 
 <!--Loading template-->
 <ng-template #loadingTemplate>
-  <span class="org-dropdown__message">
-    <i class="far fa-spinner-third fa-spin">
-      Loading
-    </i>
-  </span>
-</ng-template> 
+  <div class="org-dropdown__message">
+    <i class="far fa-spinner-third fa-spin"></i>
+    Loading
+  </div>
+</ng-template>
 
 <!--No Results Template-->
 <ng-template #noResultsTemplate>
   <div class="other-box">
-    <li class="other-option"(mouseleave)="closeDropdown()">
+    <li class="other-option" (mouseleave)="closeDropdown()">
       No Results Found
     </li>
   </div>

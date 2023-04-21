@@ -10,7 +10,7 @@
     
         <!-- Buttons -->
         <div class="buttons">
-            <button class="help" (click)="getHelp.emit()">GET HELP</button>
+            <button class="help" [routerLink]="['/help']">GET HELP</button>
             <button class="builder" (click)="newCompetency.emit()">NEW COMPETENCY</button>
         </div>  
     </div>

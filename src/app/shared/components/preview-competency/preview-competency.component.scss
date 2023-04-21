@@ -107,10 +107,23 @@
     padding: 15px 20px;
     border: 1px solid color-gray(6);
     border-radius: 5px;
-    background-color: color-accent();
-    margin: 10px 50px 25px 0;
+    // background-color: color-accent();
+    // margin: 10px 50px 25px 0;
     color: white;
     box-shadow: 0px 6px 12px -6px color-accent();
+    margin-right: 25px;
+    background-color: #F8F8F8;
+
+    &.submit {
+      border: 0px;
+      background-color: color-accent();
+      color: white;
+      box-shadow: 0px 2px 5px color-accent();
+  
+      &:active {
+        background-color: color-accent("lighter");
+      }
+    }
 
     &:hover {
       cursor: pointer;
