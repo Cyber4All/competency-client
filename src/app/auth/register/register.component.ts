@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { debounceTime, Subject, } from 'rxjs';
+import { debounceTime, Subject } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
 import { Organization } from '../../../entity/organization';
 import { AuthValidationService } from '../../core/auth-validation.service';
 import { OrganizationService } from '../../core/organization.service';
-
 
 @Component({
   selector: 'cc-register',
@@ -35,8 +34,6 @@ export class RegisterComponent implements OnInit {
 
   organizationInput$: Subject<string> = new Subject<string>();
   showDropdown = false;
-  emailInUse = false;
-  usernameInUse = false;
   loading = false;
   closeDropdown = () => {
 this.showDropdown = false;
