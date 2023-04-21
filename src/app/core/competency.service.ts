@@ -119,7 +119,7 @@ export class CompetencyService {
    */
   async getCompetencyCard(competencyId: string): Promise<Competency> {
     this.auth.initHeaders();
-    const query = CompetencyCardSearch(competencyId);
+    const query = CompetencyGraph(competencyId);
     return await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),

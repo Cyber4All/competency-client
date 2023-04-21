@@ -3,6 +3,7 @@ import { LifecyclesService } from 'src/app/core/lifecycles.service';
 import { Lifecycles } from 'src/entity/lifecycles';
 import { User } from 'src/entity/user';
 import { CompetencyBuilder } from 'src/entity/builder.class';
+import { AuthService } from 'src/app/core/auth.service';
 
 @Component({
   selector: 'cc-preview-competency',
@@ -18,10 +19,28 @@ export class PreviewCompetencyComponent implements OnInit {
   // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() close = new EventEmitter();
   @Output() statusUpdated = new EventEmitter();
+  competencyAuthor!: any;
 
-  constructor(private lifecycles: LifecyclesService) { }
+  constructor(
+    private lifecycles: LifecyclesService,
+    private auth: AuthService
+    ) { }
 
-  ngOnInit(): void { }
+  async ngOnInit(): Promise<void> {
+    this.isAdmin = true;
+    this.competency.behavior = {
+      tasks: ['lol'],
+      details: 'something',
+      work_role: 'work_role'
+    };
+    this.competency.condition = {
+      tech: ['some tech'],
+      scenario: 'some scenario',
+      limitations: 'limitations',
+      documentation: []
+    };
+    this.competencyAuthor = await this.auth.getUser(this.competency.authorId);
+  }
 
   /**
    * Returns an icon to display depending on competency status

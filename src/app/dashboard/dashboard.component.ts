@@ -154,17 +154,18 @@ export class DashboardComponent implements AfterViewInit {
       this.search.competencies.map(async (comp: Competency) => {
         await this.competencyService.getCompetencyCard(comp._id)
           .then(async (comp: Competency) => {
-            // load workrole
-            comp.behavior.work_role = await this.workRoleService.getCompleteWorkrole(comp.behavior.work_role)
-            .then((workroleQuery: any) => {
-              return workroleQuery.data.workrole.work_role;
-            });
-            // load tasks
-            const tasks = comp.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
-            .then((taskQuery: any) => {
-              return taskQuery.data.task.description;
-              }));
-            comp.behavior.tasks = await Promise.all(tasks);
+            // // load workrole
+            // comp.behavior.work_role = await this.workRoleService.getCompleteWorkrole(comp.behavior.work_role)
+            // .then((workroleQuery: any) => {
+            //   return workroleQuery.data.workrole.work_role;
+            // });
+            // // load tasks
+            // const tasks = comp.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
+            // .then((taskQuery: any) => {
+            //   return taskQuery.data.task.description;
+            //   }));
+            // comp.behavior.tasks = await Promise.all(tasks);
+            console.log(comp);
             this.loadedCompetencies.push(comp);
           });
       });
@@ -339,6 +340,7 @@ export class DashboardComponent implements AfterViewInit {
    * @param competency The competency to preview
    */
   async openCompetencyPreview(competency: Competency) {
+    console.log(competency);
     // CompetencyBuilder used in case the user opens the builder in the competency preview
     this.newCompetency = new CompetencyBuilder(
       competency._id,

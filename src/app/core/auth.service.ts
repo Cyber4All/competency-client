@@ -119,9 +119,10 @@ export class AuthService {
         { headers: this.headers, withCredentials: true, responseType: 'json' }
         ))
       .then((res: any) => {
-        return res;
+        return res.data.user;
       })
       .catch((err) => {
+        console.log(err);
         err = GraphErrorHandler.handleError(err);
         if (err) {
           this.snackbarService.sendNotificationByError(err);
