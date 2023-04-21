@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AuthService } from '../../../core/auth.service';
 
 @Component({
   selector: 'cc-primary-nav',
@@ -8,10 +9,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class PrimaryNavComponent implements OnInit {
 
   @Output() search = new EventEmitter<string>();
-  constructor() { }
+  constructor( ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   sendSearch(value: any) {
     this.search.emit(value);

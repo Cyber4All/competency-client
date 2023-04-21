@@ -10,7 +10,8 @@
         <div>
           <h3>Help</h3>
           <!--TODO: add eHanbook for competencies-->
-          <a aria-label="Clickable Ask for Help link" href="mailto:info@secured.team?subject=Competency Constructor Help">{{ copy.HELP }}</a>
+          <a aria-label="Clickable Ask for Help link" href="mailto:info@secured.team?subject=Competency Constructor Help">{{ copy.HELP_EMAIL }}</a>
+          <a [routerLink]="['/help']" aria-label="Clickable Help page link" rel="noopener noreferrer">{{ copy.HELP_PAGE }}</a>
         </div>
         <div>
           <h3>General Information</h3>
