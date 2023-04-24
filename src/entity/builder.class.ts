@@ -1,6 +1,6 @@
 import { Actor } from './actor';
 import { Behavior } from './behavior';
-import { Competency } from './competency';
+import { Competency } from './Competency';
 import { Condition } from './condition';
 import { Degree } from './degree';
 import { Documentation } from './documentation';

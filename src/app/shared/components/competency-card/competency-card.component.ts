@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Competency } from '../../../../entity/competency';
+import { Competency } from '../../../../entity/Competency';
 import { Lifecycles } from '../../../../entity/lifecycles';
 import { Workrole } from '../../../../entity/workrole';
 import { WorkroleService } from '../../../core/workrole.service';
