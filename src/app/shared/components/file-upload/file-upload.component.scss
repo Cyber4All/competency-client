@@ -1,3 +1,5 @@
+@import "vars";
+
 .drop-zone {
   position: relative;
   width: 550px;
@@ -56,30 +58,49 @@
     border: 1px solid #C6CBD2;
     border-radius: 6px;
 
-    .file-left{
+    .file-left {
       display: flex;
       flex-direction: row;
+      align-items: center;
       padding-left: 25px;
 
-      .fa-file{
+      .fa-file {
         color: #376ED6;
       }
-    }
 
-    .file-right{
-      padding-right: 25px;
-      &:hover{
-        cursor: pointer;
+      .file-name {
+        line-height: 0;
       }
     }
+
+    .file-right {
+      padding-right: 25px;
+      display: flex;
+      align-items: center;
+
+      .fa-trash-alt {
+        font-size: 18px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: color-danger($style: "default");
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    p {
+      margin-left: 45px;
+      margin-bottom: 0;
+    }
+
+
   }
 
-  p {
-    margin-left: 45px;
-    margin-bottom: 0;
+  .submit {
+    z-index: 2;
   }
-}
 
-.submit {
-  z-index: 2;
 }

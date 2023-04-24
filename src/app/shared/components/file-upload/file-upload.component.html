@@ -15,10 +15,10 @@
     <div class="file">
       <div class="file-left">
         <i class="fas fa-file fa-2x"></i>
-        <p>File {{ i + 1 }}: {{ file.name }} </p>
+        <p class="file-name">File {{ i + 1 }}: {{ file.name }} </p>
       </div>
       <div class="file-right" (click)="removeFile(file)">
-        <i class="fas fa-times fa-2x" ></i>
+        <i class="fal fa-trash-alt"></i>
       </div>
       
     </div>
