@@ -30,4 +30,4 @@ workflows:
           context: [AWS]
           requires: [cyber4all/release]
           name: deploy-production
-          bucket: cyber-competencies
+          bucket: "cyber-competencies"
