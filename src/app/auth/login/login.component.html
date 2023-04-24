@@ -1,14 +1,36 @@
+<cc-error-banner [message]="errMessage"></cc-error-banner>
 <div class="login-wrapper">
     <h1>Competency Constructor ( )</h1>
     <h5>A SecurEd Inc. Project</h5>
-    <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="email@example.com" [formControl]="email" required>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" [formControl]="password">
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="login()">LOGIN</button>
-    <button mat-raised-button (click)="register()">REGISTER</button>
+    <form #f (ngSubmit)="login()" [formGroup]="loginFormGroup">
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input 
+            matInput 
+            [(ngModel)]="loginInfo.email"
+            placeholder="email@example.com" 
+            formControlName="email"
+            required>
+            <mat-error 
+            *ngIf="loginFormGroup.get('email')?.invalid">
+            {{authValidation.getInputErrorMessage(loginFormGroup.get('email')!)}}
+            </mat-error>
+
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input 
+            matInput
+            [(ngModel)]="loginInfo.password"
+            type="password" 
+            formControlName="password">
+            <mat-error 
+            *ngIf="loginFormGroup.get('email')?.invalid">
+            {{authValidation.getInputErrorMessage(loginFormGroup.get('email')!)}}
+            </mat-error>
+
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">LOGIN</button>
+        <button mat-raised-button (click)="register()">REGISTER</button>
+    </form>
 </div>

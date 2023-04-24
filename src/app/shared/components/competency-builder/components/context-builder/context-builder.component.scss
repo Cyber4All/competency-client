@@ -1,0 +1,75 @@
+.competency_edit-condition-container {
+    display: flex;
+    flex-direction: column;
+
+    label {
+        font-size: 18px;
+        font-weight: 400;
+        color: #1F2228;
+    }
+
+    input {
+        height: 40px;
+        width: 550px;
+        border: 1px solid;
+        border-color: #C6CBD2;
+        border-radius: 6px;
+        margin-top: 10px;
+        font-family: Arial;
+        font-size: 14px;
+        padding: 0px 15px;
+    }
+
+    .textarea {
+        width: 550px;
+        height: 130px;
+        border: 1px solid;
+        border-color: #C6CBD2;
+        border-radius: 6px;
+        margin-top: 10px;
+        font-family: Arial;
+        font-size: 14px;
+        padding: 15px;
+    }
+
+    .limitations {
+        margin-top: 30px;
+    }
+
+    .condition_technology-container {
+        margin: 20px 10px;
+        display: flex;
+    }
+
+    .tech-list{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .chip {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 5px 15px;
+        width: fit-content;
+        border-radius: 6px;
+        text-transform: uppercase;
+        margin-top: 10px;
+        background: #F7F7F7;
+        border: 1px solid #C6CBD2;
+        border-radius: 4px;
+        margin-right: 10px;
+
+        :hover{
+            cursor: pointer;
+        }
+        
+        :last-child {
+            padding-left: 10px;
+        }
+        p{
+            margin-bottom: 0px;
+        }
+    }
+}

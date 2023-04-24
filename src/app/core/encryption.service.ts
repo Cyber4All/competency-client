@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
 import { retry } from 'rxjs/operators';
 import { USER_ROUTES } from '../../environments/routes';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -42,19 +44,17 @@ export class EncryptionService {
    */
   private async importPublicKey() {
     // Get key from backend
-    // const publicKey = (
-    //   await this.http
-    //     .get<{ publicKey: string }>(USER_ROUTES.GET_KEY_PAIR())
-    //     .pipe(retry(3))
-    //     .toPromise()
-    // ).publicKey;
-    const publicKey = 'tempkey';
+    const publicKey = (await lastValueFrom(
+      this.http
+        .get<{ publicKey: string }>(USER_ROUTES.GENERATE_KEYS())
+        .pipe(retry(3))
+    )).publicKey;
 
     // Parse out the key using RSA-OAEP and a SHA256 hash
     return {
       key: await crypto.subtle.importKey(
         'spki',
-        this.getSpkiDer(publicKey),
+        this.getSpkiDer(publicKey!),
         {
           name: 'RSA-OAEP',
           hash: 'SHA-256',

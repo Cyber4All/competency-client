@@ -1,4 +1,4 @@
 export interface Employability {
-  _id: string
+  _id?: string
   details: string
 }

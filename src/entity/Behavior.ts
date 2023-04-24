@@ -1,5 +1,6 @@
 export interface Behavior {
-  _id: string,
-  task: string,
-  details: string
+  _id?: string,
+  tasks: string[],
+  details: string,
+  work_role: string
 }

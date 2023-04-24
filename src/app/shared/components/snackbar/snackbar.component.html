@@ -1,0 +1,22 @@
+<div
+  [ngClass]="{
+    success: color === 'success',
+    danger: color === 'danger',
+    warning: color === 'warning',
+    accent: color === 'accent',
+    gray: color === 'gray'
+  }"
+>
+  <h5>{{ title }}</h5>
+  <p>{{ message }}</p>
+  <div *ngIf="callbacks.length > 0" class="buttons">
+    <!-- <cards-button
+      buttonSize="small"
+      buttonStyle="{{ style }}"
+      *ngFor="let callback of callbacks"
+      (click)="performAction(callback.action)"
+      >{{ callback.display }}</cards-button
+    > -->
+    <button *ngFor="let callback of callbacks">{{ callback.display }}</button>
+  </div>
+</div>
