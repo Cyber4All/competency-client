@@ -1,4 +1,4 @@
-import { Documentation } from './documentation';
+import { Documentation } from './Documentation';
 export interface Condition {
   _id?: string,
   scenario: string,
