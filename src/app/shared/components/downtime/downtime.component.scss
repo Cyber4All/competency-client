@@ -1,0 +1,25 @@
+.downtime-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	color: white;
+
+  img {
+    margin-bottom: 50px;
+    width: 200px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  p {
+    margin: 5px;
+    text-align: center;
+  }
+}

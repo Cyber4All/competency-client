@@ -6,7 +6,9 @@ export const environment = {
   production: false,
   experimental: false,
   apiURL: 'http://localhost:3000',
+  fileUploadURL: '',
   host: 'localhost',
+  cardOrganizationUrl: 'https://api-gateway.caeresource.directory/organizations?type=&verified=verified&mine=&sort='
 };
 
 /*

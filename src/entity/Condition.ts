@@ -1,9 +1,8 @@
-import { Documentation } from './Documentation';
-
+import { Documentation } from './documentation';
 export interface Condition {
-  _id: string,
-  workRole: string,
+  _id?: string,
+  scenario: string,
   tech: string[],
   limitations: string,
-  documentation: Documentation[]
+  documentation: Documentation[],
 }

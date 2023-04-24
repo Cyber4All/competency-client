@@ -1,5 +1,5 @@
 export interface Degree {
-  _id: string
+  _id?: string
   complete: string,
   correct: string,
   time: string

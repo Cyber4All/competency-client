@@ -1,4 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
-
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #2a2a2a;}
+
+body { margin: 0; font-family: Source Sans Pro, "Helvetica Neue", sans-serif; background-color: white;}
+
+/*THIS IS ONLY TEMPORARY UNTIL WE REDO THE COLORS IN AUTH. I COULD NOT SEE IT TO MAKE IT OUT.*/
+
+.mat-form-field-wrapper {
+    background-color: green !important;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 15px;
+
+    background: #F8F8F8;
+    border: 1px solid #DFDFDF;
+    border-radius: 4px;
+
+    color: #454545;
+    white-space: nowrap;
+    text-align: center;  
+
+    font-size: 14px;
+    cursor: pointer;
+}

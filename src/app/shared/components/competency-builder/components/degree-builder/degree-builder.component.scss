@@ -1,0 +1,105 @@
+.competency_edit-degree-container {
+    display: flex;
+    flex-direction: column;
+
+    label {
+        font-size: 18px;
+        font-weight: 400;
+        color: #1F2228;
+    }
+    textarea {
+        width: 550px;
+        height: 130px;
+        border: 1px solid;
+        border-color: #C6CBD2;
+        border-radius: 6px;
+        margin: 10px 0 30px 0;
+        font-family: Arial;
+        font-size: 14px;
+        padding: 15px;
+    }
+}
+    .time_selector {
+
+        display: flex;
+        justify-content: space-between;
+
+        input {
+            height: 40px;
+            width: 200px;
+            border: 1px solid;
+            border-color: #C6CBD2;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: Arial;
+            font-size: 14px;
+            padding: 0px 15px;
+        }
+
+        .dropdown{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .time_box {
+            height: 40px;
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid;
+            border-color: #C6CBD2;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: Arial;
+            font-size: 14px;
+            padding: 0px 15px;
+
+            .fa-angle-down {
+                justify-content: end;
+            }
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+.hidden {
+    display: none;
+}
+
+.time_dropdown {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 50px;
+    display: inline;
+    z-index: 2;
+    position: absolute;
+    width: 330px;
+    background: white;
+    border: 1px solid #C6CBD2;
+    box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 0px 6px 6px;
+    height: 180px;
+    overflow-y: scroll;
+}
+
+.time_list {
+    list-style: none;
+    padding-left: 0px;
+    margin: 0;
+
+    li {
+        border-bottom: 1px solid #dfdfdf;
+        padding: 10px 25px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.completely_correct{
+    z-index: 1;
+    padding-top: 30px;
+}

@@ -8,6 +8,9 @@ export const USER_ROUTES = {
     REGISTER() {
         return `${environment.apiURL}/auth/register`;
     },
+    TOKEN() {
+        return `${environment.apiURL}/auth/token`;
+    },
     UPDATE_ACL_ACTIONS(userId: string) {
         return `${environment.apiURL}/users/${encodeURIComponent(userId)}/acl`;
     },
@@ -31,12 +34,18 @@ export const USER_ROUTES = {
     },
 };
 
+export const ORGANIZATION_ROUTES = {
+    SEARCH_ORGANIZATIONS(queryString: string) {
+        return `${environment.cardOrganizationUrl}&text=${queryString}`;
+    }
+};
+
 export const COMPETENCY_ROUTES = {
     CREATE_COMPETENCY() {
         return `${environment.apiURL}/competencies`;
     },
-    UPDATE_AUDIENCE(competencyId: string) {
-        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/audience`;
+    UPDATE_ACTOR(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/actor`;
     },
     UPDATE_BEHAVIOR(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/behavior`;
@@ -49,6 +58,9 @@ export const COMPETENCY_ROUTES = {
     },
     UPDATE_EMPLOYABILITY(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/employability`;
+    },
+    UPDATE_NOTES(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/notes`;
     },
     DELETE_COMPETENCY(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}`;
@@ -63,7 +75,41 @@ export const COMPETENCY_ROUTES = {
     DELETE_DOCUMENTATION(competencyId: string) {
         return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/documentation`;
     },
-    RETRIEVE_COMPETENCY() {
+    GRAPH_QUERY() {
         return `${environment.apiURL}/graphql`;
+    },
+    UPLOAD_FILE_LAMBDA(competencyId: string) {
+        return `${environment.fileUploadURL}/files?competencyId=${encodeURIComponent(competencyId)}`;
+    },
+    DELETE_FILE_LAMBDA(competencyId: string, filenames: string) {
+        // eslint-disable-next-line max-len
+        return `${environment.fileUploadURL}/files?competencyId=${encodeURIComponent(competencyId)}&filename=${encodeURIComponent(filenames)}`;
+    },
+    SUBMIT(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/submit`;
+    },
+    PUBLISH(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/publish`;
+    },
+    DEPRECATE(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/deprecate`;
+    },
+    REJECT(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/reject`;
     }
+};
+
+export const LIFECYCLE_ROUTES = {
+    DEPRECATE_COMPETENCY(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/deprecate`;
+    },
+    PUBLISH_COMPETENCY(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/publish`;
+    },
+    REJECT_COMPETENCY(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/reject`;
+    },
+    SUBMIT_COMPETENCY(competencyId: string) {
+        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/submit`;
+    },
 };

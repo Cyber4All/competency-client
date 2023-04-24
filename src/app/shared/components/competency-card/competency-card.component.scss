@@ -1,0 +1,82 @@
+@import 'vars.scss';
+
+.competency-constructor_accordion {
+    margin: 0 20px 0;
+    span {
+        font-weight: bold;
+    }
+
+    .competency-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      
+        $color: #535d69;
+        font-size: 15pt;
+        padding: 20px;
+      
+        .svg-inline--fa {
+          color: #1c70dd;
+          font-size: 19.5pt;
+          margin-bottom: 20px;
+        }
+    }
+}
+
+.competency_edit-status-container {
+    padding-top: 12px;
+    padding-left: 20px;
+    margin-bottom: 26px;
+    border-bottom: 1px solid map-get($palette-gray, 11);
+    color: #FFFFFF;
+}
+
+.competency_card-status {
+    // make sure every child element is in middle of parent
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.competency_card_status_text {
+    margin-left: 15px;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+.competency_card-description, .competency_card-task {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    white-space: pre-wrap;
+}
+
+.competency_card-description {
+    -webkit-line-clamp: 5;
+}
+
+.competency_card-task {
+    -webkit-line-clamp: 3;
+}
+
+.draft {
+    background: $status_draft;
+}
+
+.submitted {
+    background: $status_submitted;
+}
+
+.deprecated {
+    background: $status_deprecated;
+}
+
+.published {
+    background: $status_published;
+}
+
+.rejected {
+    background: $status_rejected;
+}

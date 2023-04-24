@@ -1,10 +1,63 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './core/auth.service';
+import { SnackbarService } from './core/snackbar.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent, SNACKBAR_COLOR } from '../app/shared/components/snackbar/snackbar.component';
+import { BannerService } from './core/banner.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'cc-app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'competency-client';
+  isDowntime = false;
+
+  constructor(
+    private auth: AuthService,
+    private snackbarService: SnackbarService,
+    private _snackBar: MatSnackBar,
+    public bannerService: BannerService
+  ) { }
+
+  async ngOnInit() {
+    // Check user status
+    await this.auth.checkStatus();
+
+    this.checkDowntime();
+
+    this.snackbarService.notification$
+      .subscribe((notif) => {
+        if (notif) {
+          this._snackBar.openFromComponent(SnackbarComponent, {
+            data: {
+              title: notif.title,
+              message: notif.message,
+              color: notif.color,
+              callbacks: notif.callbacks,
+            },
+            duration:
+              notif.callbacks && notif.callbacks.length > 0 ? undefined :4000 ,
+            direction: 'ltr',
+            panelClass: 'mat-snackbar',
+          });
+        }
+      });
+  }
+
+  /**
+   * Checks if the system is down to dispaly downtime message
+   *
+   */
+  async checkDowntime() {
+    const downtime = await this.bannerService.getDowntime();
+    this.isDowntime = downtime.isDown;
+    if (this.isDowntime) {
+      this.bannerService.redirectToDowntime();
+    } else if (downtime.message) {
+      this.bannerService.setBannerMessage(downtime.message);
+      this.bannerService.displayBanner();
+    }
+  }
 }

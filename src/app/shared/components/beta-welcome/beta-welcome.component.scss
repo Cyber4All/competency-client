@@ -1,0 +1,22 @@
+.beta-welcome-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	color: #ffffff;
+
+  .feedback {
+    color: #ffffff;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  p {
+    margin: 5px;
+    text-align: center;
+  }
+}

@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -22,6 +21,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
+import { VirtualScrollerModule } from 'ngx-virtual-scroller';
+import { ErrorBannerComponent } from './components/error-banner/error-banner.component';
 
 
 
@@ -29,6 +30,7 @@ import { AppRoutingModule } from '../app-routing.module';
   declarations: [
     LoginComponent,
     RegisterComponent,
+    ErrorBannerComponent
   ],
   imports: [
     CommonModule,
@@ -50,9 +52,10 @@ import { AppRoutingModule } from '../app-routing.module';
     MatSlideToggleModule,
     MatOptionModule,
     MatProgressSpinnerModule,
-    HttpClientModule,
     ReactiveFormsModule,
     MatTooltipModule,
-  ]
+    VirtualScrollerModule,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class AuthModule { }
