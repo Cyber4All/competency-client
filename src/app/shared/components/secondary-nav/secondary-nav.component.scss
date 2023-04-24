@@ -13,28 +13,31 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
-        
+        padding: 0 40px 0 40px;
+        flex-wrap: wrap;
+
         .dropdowns {
             display: flex;
             align-items: center;
         }
-    
+
         .buttons {
             display: flex;
             align-items: center;
-    
+
             .help {
                 border: 1px solid #DFDFDF;
                 padding: 15px 20px;
                 margin-right: 20px;
             }
-    
+
             .builder {
                 background-color: color-accent();
                 color: white;
                 border: 0;
                 box-shadow: 0px 6px 12px -6px color-accent();
                 padding: 15px 20px;
+
                 &:hover {
                     transform: scale(1.025);
                     transition: all .15s ease-out;
@@ -42,4 +45,14 @@
             }
         }
     }
+}
+
+@media screen and (max-width: 950px) {
+    .wrapper {
+        .content {
+            justify-content: center;
+            padding-bottom: 15px;
+        }
+    }
+
 }
