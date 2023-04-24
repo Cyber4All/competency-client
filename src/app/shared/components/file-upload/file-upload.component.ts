@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FileService } from 'src/app/core/file.service';
-import { MimeTypes } from 'src/entity/mimeTypes';
+import { FileService } from '../../../core/file.service';
+import { MimeTypes } from '../../../../entity/mimeTypes';
 
 @Component({
   selector: 'cc-file-upload',

@@ -1,6 +1,6 @@
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { SnackbarService } from 'src/app/core/snackbar.service';
+import { SnackbarService } from '../../core/snackbar.service';
 import { SNACKBAR_COLOR } from '../components/snackbar/snackbar.component';
 
 @Injectable({

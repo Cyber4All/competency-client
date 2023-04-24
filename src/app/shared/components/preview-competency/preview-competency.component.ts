@@ -7,11 +7,11 @@ import { WorkroleService } from '../../../core/workrole.service';
 import { sleep } from '../../functions/loading';
 import { Elements } from '../../../../entity/elements';
 import { AuthService } from '../../../core/auth.service';
-import { BuilderService } from 'src/app/core/builder.service';
-import { LifecyclesService } from 'src/app/core/lifecycles.service';
-import { Lifecycles } from 'src/entity/lifecycles';
-import { User } from 'src/entity/user';
-import { CompetencyBuilder } from 'src/entity/builder.class';
+import { BuilderService } from '../../../core/builder.service';
+import { LifecyclesService } from '../../../core/lifecycles.service';
+import { Lifecycles } from '../../../../entity/lifecycles';
+import { User } from '../../../../entity/user';
+import { CompetencyBuilder } from '../../../../entity/builder.class';
 
 @Component({
   selector: 'cc-preview-competency',

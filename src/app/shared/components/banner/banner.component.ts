@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BannerService } from 'src/app/core/banner.service';
+import { BannerService } from '../../../core/banner.service';
 
 @Component({
   selector: 'cc-banner',

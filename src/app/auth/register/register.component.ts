@@ -6,7 +6,7 @@ import { AuthService } from '../../core/auth.service';
 import { Organization } from '../../../entity/organization';
 import { AuthValidationService } from '../../core/auth-validation.service';
 import { OrganizationService } from '../../core/organization.service';
-import { SnackbarService } from 'src/app/core/snackbar.service';
+import { SnackbarService } from '../../core/snackbar.service';
 
 @Component({
   selector: 'cc-register',
