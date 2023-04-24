@@ -17,6 +17,7 @@ export class UserMenuComponent implements OnInit {
   loggedIn = false;
 
   ngOnInit(): void {
+    this.authService.validateBetaAccess();
     this.authService.isBetaUser.subscribe((isBetaUser: boolean) => {
       this.loggedIn = isBetaUser;
     });
