@@ -1,68 +1,86 @@
 export const sections = {
-    elements: {
-        title: 'Competency Constructor',
+    builder: {
+        title: 'Building a Competency',
         topics: [
             {
-                title: 'Building a Competency',
+                title: 'The Competency Builder',
                 questions: [
                     {
                         question: 'Getting Started',
-                        answer: '<p> Anyone can search for a learning object on CLARK through the search bar or filter ' +
-                            'function. However, you must register for an account and be logged in to preview and download any learning ' +
-                            'object material. We have a great tutorial that can guide you step by step on searching and downloading ' +
-                            'here, <a href= "https://youtu.be/ymerRpfbnQQ">https://youtu.be/ymerRpfbnQQ</a>.'
+                        answer: `<p>To create a competency, click the ` +
+                            `<button
+                                style="
+                                    background-color: #386fd6;
+                                    color: white;border: 0;
+                                    box-shadow: 0px 6px 12px -6px #386fd6;
+                                    border: 1px solid #DFDFDF;
+                                    border-radius: 4px;
+                                "
+                            >NEW COMPETENCY</button> ` +
+                            `button in the top-right corner of your dashboard. This opens the Competency Builder. The builder has ` +
+                            `unique data entry fields the conform to the ABCDE model outlined in the Competency eHandbook. You navigate `+
+                            `the builder based on which attribute of a competnecy you wish to enter data for.</p>` +
+                            `<img 
+                                src="../../../assets/competency-builder.png"
+                                style="width: 100%; max-width: 500px;"
+                            ></img>`
                     },
                     {
-                        question: 'Actor',
-                        answer: '<p> Anyone can search for a learning object on CLARK through the search bar or filter ' +
-                            'function. However, you must register for an account and be logged in to preview and download any learning ' +
-                            'object material. We have a great tutorial that can guide you step by step on searching and downloading ' +
-                            'here, <a href= "https://youtu.be/ymerRpfbnQQ">https://youtu.be/ymerRpfbnQQ</a>.'
+                        question: 'Building Actor',
+                        answer: '<p>The competency builder Actor form has entry fields <b>Actor</b> and <b>Description</b>. ' +
+                            `Select an <b>Actor</b> from the provided list that best fits the individual that would be attempting ` +
+                            `to achieve this competency. The <b>Description</b> field allows you to enter additional information that ` +
+                            `may be previlent to defining your actor (i.e. prerequiste classes, competition details, etc...).</p>`
                     },
                     {
-                        question: 'Behavior',
-                        answer: '<p> Anyone can search for a learning object on CLARK through the search bar or filter ' +
-                            'function. However, you must register for an account and be logged in to preview and download any learning ' +
-                            'object material. We have a great tutorial that can guide you step by step on searching and downloading ' +
-                            'here, <a href= "https://youtu.be/ymerRpfbnQQ">https://youtu.be/ymerRpfbnQQ</a>.'
+                        question: 'Building Behavior',
+                        answer: `<p>The competency builder Behavior form has entry fields <b>Workrole</b>, <b>Task</b>, ` +
+                            `and <b>Task Description</b>. You can search and select a <b>Workrole</b> which is a NICE work role*. ` +
+                            `<b>Task</b>'s can also be searched and added as a relating task of this competency. These are also ` +
+                            `NICE tasks*. Multiple tasks can be added here. <b>Task Description</b> is the unique task(s) an actor ` +
+                            `will be attempting to earn this competency (The specific task(s) relating to a classroom lesson, a ` +
+                            `competition, etc.).</p>` +
+                            `<p>*The work roles and task lists will be expanded upon as more frameworks like ` +
+                            `<a href="https://public.cyber.mil/wid/dcwf/" target="_blank">DCWF</a> are adopted for the builder.</p>`
                     },
                     {
-                        question: 'Context & Conditions',
-                        answer: '<p> Anyone can search for a learning object on CLARK through the search bar or filter ' +
-                            'function. However, you must register for an account and be logged in to preview and download any learning ' +
-                            'object material. We have a great tutorial that can guide you step by step on searching and downloading ' +
-                            'here, <a href= "https://youtu.be/ymerRpfbnQQ">https://youtu.be/ymerRpfbnQQ</a>.'
+                        question: 'Building Context & Condition',
+                        answer: '<p>The competency builder Context ' +
+                            `` +
+                            `</p>`
                     },
                     {
-                        question: 'Degree',
-                        answer: '<p> Anyone can search for a learning object on CLARK through the search bar or filter ' +
-                            'function. However, you must register for an account and be logged in to preview and download any learning ' +
-                            'object material. We have a great tutorial that can guide you step by step on searching and downloading ' +
-                            'here, <a href= "https://youtu.be/ymerRpfbnQQ">https://youtu.be/ymerRpfbnQQ</a>.'
+                        question: 'Building Degree',
+                        answer: '<p>The competency builder Degree ' +
+                            `` +
+                            `</p>`
                     },
                     {
-                        question: 'Employability',
-                        answer: '<p> Anyone can search for a learning object on CLARK through the search bar or filter ' +
-                            'function. However, you must register for an account and be logged in to preview and download any learning ' +
-                            'object material. We have a great tutorial that can guide you step by step on searching and downloading ' +
-                            'here, <a href= "https://youtu.be/ymerRpfbnQQ">https://youtu.be/ymerRpfbnQQ</a>.'
+                        question: 'Building Employability',
+                        answer: '<p>The competency builder Employability ' +
+                            `` +
+                            `</p>`
                     },
                     {
-                        question: 'Notes',
-                        answer: '<p> Anyone can search for a learning object on CLARK through the search bar or filter ' +
-                            'function. However, you must register for an account and be logged in to preview and download any learning ' +
-                            'object material. We have a great tutorial that can guide you step by step on searching and downloading ' +
-                            'here, <a href= "https://youtu.be/ymerRpfbnQQ">https://youtu.be/ymerRpfbnQQ</a>.'
+                        question: 'Building Notes',
+                        answer: '<p>The competency builder Notes ' +
+                            `` +
+                            `</p>`
                     },
                     {
                         question: 'Submitting a Competency',
-                        answer: '<p> Anyone can search for a learning object on CLARK through the search bar or filter ' +
-                            'function. However, you must register for an account and be logged in to preview and download any learning ' +
-                            'object material. We have a great tutorial that can guide you step by step on searching and downloading ' +
-                            'here, <a href= "https://youtu.be/ymerRpfbnQQ">https://youtu.be/ymerRpfbnQQ</a>.'
+                        answer: '<p>To submit a competency ' +
+                            `` +
+                            `</p>`
                     },
                 ]
             },
+        ]
+    },
+    elements: {
+        title: 'Competency Ecosystem',
+        topics: [
+
             {
                 title: 'Author Dashboard',
                 questions: [
@@ -86,31 +104,7 @@ export const sections = {
                 title: `A Competnency's Lifecycle`,
                 questions: [
                     {
-                        question: 'A Draft Competency',
-                        answer: 'A <em>learning object</em> is a free piece of curriculum that is used to teach cyber and cyber-related ' +
-                            'material in varying types of classrooms. Every learning object is created by a registered CLARK author. ' +
-                            'Learning objects represent the main content found on CLARK.'
-                    },
-                    {
-                        question: 'A Submitted Competency',
-                        answer: 'A <em>learning object</em> is a free piece of curriculum that is used to teach cyber and cyber-related ' +
-                            'material in varying types of classrooms. Every learning object is created by a registered CLARK author. ' +
-                            'Learning objects represent the main content found on CLARK.'
-                    },
-                    {
-                        question: 'A Published Competency',
-                        answer: 'A <em>learning object</em> is a free piece of curriculum that is used to teach cyber and cyber-related ' +
-                            'material in varying types of classrooms. Every learning object is created by a registered CLARK author. ' +
-                            'Learning objects represent the main content found on CLARK.'
-                    },
-                    {
-                        question: 'A Deprecated Competency',
-                        answer: 'A <em>learning object</em> is a free piece of curriculum that is used to teach cyber and cyber-related ' +
-                            'material in varying types of classrooms. Every learning object is created by a registered CLARK author. ' +
-                            'Learning objects represent the main content found on CLARK.'
-                    },
-                    {
-                        question: 'A Rejected Competency',
+                        question: `What is the competency lifecycle?`,
                         answer: 'A <em>learning object</em> is a free piece of curriculum that is used to teach cyber and cyber-related ' +
                             'material in varying types of classrooms. Every learning object is created by a registered CLARK author. ' +
                             'Learning objects represent the main content found on CLARK.'
@@ -127,10 +121,20 @@ export const sections = {
                 questions: [
                     {
                         question: 'What is Competency Constructor?',
-                        answer: 'CLARK, the Cybersecurity Labs and Resource Knowledge-base, is a platform for building and sharing free ' +
-                            'cybersecurity curricula. It includes a model for building curriculum, the digital library system, and ' +
-                            'distinct curriculum collections.'
+                        answer: '<p>Competency Constructor is a platform to create, publish, and maintain competencies.</p>'
                     },
+                    {
+                        question: `Can I use Competency Constructor?`,
+                        answer: `<p><b>As of Spring 2023, Competency Constructor is in a closed beta.</b><br><br>` +
+                            `Competency Constructor is currently available to academics in higher education institutions that are a ` +
+                            `part of the ` +
+                            `<a aria-label="Clickable link to CAE community site" href="https://www.caecommunity.org/" ` +
+                            `target="_blank">CAE Community</a>. ` +
+                            `Anyone may register; however, once registered, new users must email ` +
+                            `<a aria-label="Clickable Registration help link" ` +
+                            `href="mailto:info@secured.team?subject=Competency Constructor Registration">info@secured.team</a> ` +
+                            `for access to the platform.</p>`
+                    }
                 ]
             }
 

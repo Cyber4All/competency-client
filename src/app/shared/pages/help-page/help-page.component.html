@@ -6,9 +6,17 @@
       </h1>
     </div>
     <div class="accordion">
-      <mat-tab-group class="tabs" mat-align-tabs="center" mat-stretch-tabs
-        class="example-stretched-tabs mat-elevation-z3" color="primary">
-        <mat-tab *ngFor="let tab of tabs" [label]="tab.title">
+      <ng-container *ngIf="!loggedIn; then standardHelp; else helpTemplate"></ng-container>
+    </div>
+</div>
+
+<!--Template to display generic about section for unauthenticated users-->
+<ng-template #standardHelp>
+  <mat-tab-group class="tabs" mat-align-tabs="center" mat-stretch-tabs
+    class="example-stretched-tabs mat-elevation-z3" color="primary">
+    <ng-container *ngFor="let tab of tabs">
+      <ng-container *ngIf="tab.title === 'About'">
+        <mat-tab  [label]="tab.title">
           <mat-accordion *ngFor="let sec of tab.topics">
             <h3>{{sec.title}}</h3>
             <mat-expansion-panel *ngFor="let questions of sec.questions">
@@ -18,11 +26,34 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div class="content">
-                <div [innerHTML]="questions.answer"></div>
+                <div [innerHTML]="questions.answer | safeHtml"></div>
               </div>
             </mat-expansion-panel>
           </mat-accordion>
         </mat-tab>
-      </mat-tab-group>
-    </div>
-</div>
+      </ng-container>
+    </ng-container>
+  </mat-tab-group>
+</ng-template>
+
+<!--Template to display all help guides for authenticated users-->
+<ng-template #helpTemplate>
+  <mat-tab-group class="tabs" mat-align-tabs="center" mat-stretch-tabs
+    class="example-stretched-tabs mat-elevation-z3" color="primary">
+    <mat-tab *ngFor="let tab of tabs" [label]="tab.title">
+      <mat-accordion *ngFor="let sec of tab.topics">
+        <h3>{{sec.title}}</h3>
+        <mat-expansion-panel *ngFor="let questions of sec.questions">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{questions.question}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="content">
+            <div [innerHTML]="questions.answer | safeHtml"></div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-tab>
+  </mat-tab-group>
+</ng-template>
