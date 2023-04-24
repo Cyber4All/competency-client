@@ -3,7 +3,7 @@ import { Behavior } from './Behavior';
 import { Competency } from './Competency';
 import { Condition } from './Condition';
 import { Degree } from './Degree';
-import { Documentation } from './documentation';
+import { Documentation } from './Documentation';
 import { Employability } from './Employability';
 import { Lifecycles } from './Lifecycles';
 import { Notes } from './notes';
