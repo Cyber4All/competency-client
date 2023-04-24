@@ -30,7 +30,7 @@ import { ErrorBannerComponent } from './components/error-banner/error-banner.com
   declarations: [
     LoginComponent,
     RegisterComponent,
-    ErrorBannerComponent,
+    ErrorBannerComponent
   ],
   imports: [
     CommonModule,
