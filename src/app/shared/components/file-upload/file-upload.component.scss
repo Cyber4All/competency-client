@@ -7,6 +7,7 @@
   text-align: center;
   border: 1px dashed #636772;
   border-radius: 6px;
+  transition: all .1s ease-in-out;
 
   input {
     opacity: 0;
@@ -43,11 +44,13 @@
 
   &:hover {
     background-color: rgba($color: #376ED6, $alpha: 0.1);
+    transition: all .1s ease-in-out;
   }
 }
 
 .drop_file{
   background-color: rgba($color: #376ED6, $alpha: 0.1);
+  transition: all .1s ease-in-out;
 }
 
 .file-list {
