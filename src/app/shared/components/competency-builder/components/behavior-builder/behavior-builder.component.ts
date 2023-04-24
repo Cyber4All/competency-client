@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, Observable, Subject } from 'rxjs';
 import { WorkroleService } from '../../../../../core/workrole.service';
-import { Behavior } from '../../../../../../entity/behavior';
+import { Behavior } from '../../../../../../entity/Behavior';
 import { Workrole } from '../../../../../../entity/workrole';
 import { Elements } from '../../../../../../entity/elements';
 import { BuilderService } from '../../../../../core/builder.service';
