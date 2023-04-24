@@ -1,12 +1,12 @@
 import { Component, Input, OnInit, OnDestroy, HostListener, EventEmitter, Output } from '@angular/core';
 import { Notes } from '../../../../entity/notes';
 import { Actor } from '../../../../entity/actor';
-import { Behavior } from '../../../../entity/behavior';
+import { Behavior } from '../../../../entity/Behavior';
 import { BuilderError, BuilderValidation } from '../../../../entity/builder-validation';
-import { Competency } from '../../../../entity/competency';
-import { Condition } from '../../../../entity/condition';
-import { Degree } from '../../../../entity/degree';
-import { Employability } from '../../../../entity/employability';
+import { Competency } from '../../../../entity/Competency';
+import { Condition } from '../../../../entity/Condition';
+import { Degree } from '../../../../entity/Degree';
+import { Employability } from '../../../../entity/Employability';
 import { BuilderService } from '../../../core/builder.service';
 import { CompetencyBuilder, IndexButton } from '../../../../entity/builder.class';
 import { SnackbarService } from '../../../core/snackbar.service';

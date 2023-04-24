@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angu
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { BuilderValidation } from '../../../../../../entity/builder-validation';
-import { Degree } from '../../../../../../entity/degree';
+import { Degree } from '../../../../../../entity/Degree';
 import { DropdownItem, DropdownType } from '../../../../../../entity/dropdown';
 import { BuilderService } from '../../../../../core/builder.service';
 import { DropdownService } from '../../../../../core/dropdown.service';

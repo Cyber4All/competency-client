@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Competency } from '../../../../entity/Competency';
-import { Lifecycles } from '../../../../entity/lifecycles';
+import { Lifecycles } from '../../../../entity/Lifecycles';
 import { Workrole } from '../../../../entity/workrole';
 import { WorkroleService } from '../../../core/workrole.service';
 import { sleep } from '../../functions/loading';
