@@ -15,7 +15,7 @@ workflows:
       - cyber4all/s3:
           context: [AWS]
           name: deploy-staging
-          bucket: competency-client-staging
+          bucket: "competency-client-staging"
           role-arn: S3_STAGING_OIDC_ROLE
 
   continuous-deployment:
