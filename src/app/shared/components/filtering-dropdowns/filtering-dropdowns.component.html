@@ -15,7 +15,11 @@
 
             <!-- Filter items -->
             <div mat-menu-item class="dropdown">
-                <div *ngFor="let item of items" class="item" [ngStyle]="calculateStyles(item)" (click)="toggleFilterItem(item)">{{item.name}}</div>
+                <div *ngFor="let item of items" class="item" [ngStyle]="calculateStyles(item)" (click)="toggleFilterItem(item)">
+                    <div class="item_text">
+                        {{item.name}}
+                    </div>
+                </div>
             </div>
     </mat-menu>
 </div>

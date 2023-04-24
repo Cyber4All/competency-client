@@ -41,9 +41,18 @@
         .item {    
             border-top: 1px solid #DFDFDF;
             text-transform: capitalize;
-            cursor: pointer;
-            &:hover {
-                color: #376ED6;
+            &:first-child{
+                border-top: none;
+            }
+            .item_text{
+                width: 235px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                padding: 0 4px;
+                &:hover{
+                    background-color: rgba($color: #376ED6, $alpha: 0.1);
+                    cursor: pointer;
+                }
             }
         }
     }
