@@ -44,8 +44,20 @@ export const sections = {
                             `<a href="https://public.cyber.mil/wid/dcwf/" target="_blank">DCWF</a> are adopted for the builder.</p>`
                     },
                     {
-                        question: 'Building Context & Condition',
-                        answer: '<p>The competency builder Context ' +
+                        question: 'Building Condition & Context',
+                        answer: '<p>The competency builder Condition form has entry fields for  <b>Scenario</b>, <b>Limitations</b>, ' +
+                            `<b>Technology</b>, and <b>Documenation</b>.<br>` +
+                            `
+                                <ul>
+                                    <li><b>Scenario</b>: the situation in which the actor is attempting to earn this competency.</li>
+                                    <li><b>Limitations</b>: any restrictions that are placed on the actor while attempting this `+
+                                    `competency.</li>
+                                    <li><b>Technology</b>: the technology an actor may use for this competency.</li>
+                                    <p>yeetus maximus</p>
+                                    <li><b>Documentation</b>: reference files, weblinks, and other resources that an actor has access ` +
+                                    `to while attempting to earn this competency.</li>
+                                </ul>
+                            ` +
                             `` +
                             `</p>`
                     },
