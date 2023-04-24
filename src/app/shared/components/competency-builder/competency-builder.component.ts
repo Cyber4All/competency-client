@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy, HostListener, EventEmitter, Output } from '@angular/core';
-import { Notes } from 'src/entity/notes';
+import { Notes } from '../../../../entity/notes';
 import { Actor } from '../../../../entity/actor';
 import { Behavior } from '../../../../entity/behavior';
 import { BuilderError, BuilderValidation } from '../../../../entity/builder-validation';
