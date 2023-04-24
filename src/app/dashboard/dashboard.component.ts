@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, Input} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
@@ -7,19 +6,18 @@ import { Competency } from '../../entity/competency';
 import { Lifecycles } from '../../entity/lifecycles';
 import { Search } from '../../entity/search';
 import { sleep } from '../shared/functions/loading';
-import { BuilderService } from '../core/builder/builder.service';
-import { CompetencyBuilder } from '../core/builder/competency-builder.class';
-import { CompetencyBuilderComponent } from '../shared/components/competency-builder/competency-builder.component';
-import { WorkroleService } from '../core/workrole.service';
+import { BuilderService } from '../core/builder.service';
+import { CompetencyBuilder } from '../../entity/builder.class';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { SnackbarService } from '../core/snackbar.service';
+import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
 @Component({
   selector: 'cc-competencies-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements AfterViewInit {
+export class DashboardComponent implements OnInit {
   @Input() isSavable!: boolean;
   // Loading visual for competency list
   loading = true;
@@ -28,10 +26,11 @@ export class DashboardComponent implements AfterViewInit {
   // Object for search results
   search: Search = {
     competencies: [],
-    limit: 0,
-    page: 0,
+    limit: 12,
+    page: 1,
     total: 0
   };
+  // Pagination default val
   currPage = 1;
   // Applied filters
   selected: { work_role: string[]; task: string[] } = {
@@ -42,7 +41,8 @@ export class DashboardComponent implements AfterViewInit {
   filterApplied = false;
   unsubscribe: Subject<void> = new Subject();
   // Builder vars
-  newCompetency!: CompetencyBuilder;
+  builderCompetency!: CompetencyBuilder;
+  previewCompetency!: Competency;
   openBuilder = false;
   openPreview = false;
 
@@ -52,13 +52,12 @@ export class DashboardComponent implements AfterViewInit {
     private competencyService: CompetencyService,
     private builderService: BuilderService,
     private authService: AuthService,
-    private workRoleService: WorkroleService,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: SnackbarService
+    private snackbarService: SnackbarService
   ) { }
 
-  async ngAfterViewInit() {
+  async ngOnInit() {
     await this.authService.validateAdminAccess();
     this.authService.isAdmin.subscribe((res) => {
       this.isAdmin = res;
@@ -75,36 +74,41 @@ export class DashboardComponent implements AfterViewInit {
    */
   async initDashboard() {
     this.loading = true;
-    await sleep(1800);
+    await sleep(1000);
     await this.getCompetencies(this.search);
     await this.loadCompetencies();
     this.loading = false;
   }
 
   /**
-   * WORK-IN-PROGRESS
-   * Method to retrieve competencies based on a users permissions
-   * Authors: retrieve all DRAFT and REJECTED competencies by default
-   * Admins: retrieve SUBMITTED competencies by default and an admins DRAFTS
+   * Method to query user competencies
    *
    * @param q the search query object
    */
   async getCompetencies(q?: Search) {
+    // Explicitly clear competencies array
     this.search.competencies = [];
+    // Check if user is logged in
     if(this.authService.user?._id !== undefined) {
       // Retrieve author competencies
       this.search = await this.competencyService
         .getAllCompetencies({
-          limit: q?.limit,
-          page: q?.page,
+          limit: q ? q.limit : this.search.limit,
+          page:  q ? q.page : this.search.page,
           author: this.authService.user?._id,
-          status: [`${Lifecycles.DRAFT}`, `${Lifecycles.REJECTED}`]
+          status: [
+            `${Lifecycles.DRAFT}`,
+            `${Lifecycles.REJECTED}`,
+            `${Lifecycles.SUBMITTED}`,
+            `${Lifecycles.PUBLISHED}`
+          ]
         });
     } else {
+      // User is not logged in, clear search object, display no results
       this.search = {
         competencies: [],
-        limit: 0,
-        page: 0,
+        limit: 12,
+        page: 1,
         total: 0
       };
     }
@@ -112,7 +116,6 @@ export class DashboardComponent implements AfterViewInit {
 
   /**
    * Method to navigate to dashboard with query params
-   *
    */
   async navigateDashboard() {
     const params = {
@@ -124,7 +127,7 @@ export class DashboardComponent implements AfterViewInit {
       queryParams: params
     });
     window.scrollTo(0, 0);
-    await sleep(1800);
+    await sleep(1000);
     this.currPage = params.page;
   }
 
@@ -148,101 +151,73 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   /**
-   * Method to retrieve some fields for each found competency
+   * Method to retrieve all fields for each found competency
    */
   async loadCompetencies() {
+    this.loadedCompetencies = [];
     if(this.search.competencies.length > 0) {
       this.search.competencies.map(async (comp: Competency) => {
-        await this.competencyService.getCompetencyCard(comp._id)
+        await this.competencyService.getCompetencyById(comp._id)
           .then(async (comp: Competency) => {
-            // load workrole
-            comp.behavior.work_role = await this.workRoleService.getCompleteWorkrole(comp.behavior.work_role)
-            .then((workroleQuery: any) => {
-              return workroleQuery.data.workrole.work_role;
-            });
-            // load tasks
-            const tasks = comp.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
-            .then((taskQuery: any) => {
-              return taskQuery.data.task.description;
-              }));
-            comp.behavior.tasks = await Promise.all(tasks);
             this.loadedCompetencies.push(comp);
           });
       });
     }
   }
-    // navigate to previous page
-    prevPage() {
-      const page = +this.currPage - 1;
-      if (page > 0) {
-        this.currPage = page;
-        this.navigateDashboard();
-      }
-    }
 
-    // navigate to next page
-    nextPage() {
-      const page = +this.currPage + 1;
-      if (page <= this.search.page) {
-        this.currPage = page;
-        this.navigateDashboard();
-      }
+  /**
+   * Navigate to previous page
+   */
+  prevPage() {
+    const page = +this.currPage - 1;
+    if (page > 0) {
+      this.currPage = page;
+      this.navigateDashboard();
     }
-    // navigate to a numbered page
-    goToPage(page: number) {
-      if (page > 0 && page <= this.search.page) {
-        this.currPage = page;
-        this.navigateDashboard();
-      }
+  }
+
+  /**
+   * Navigate to next page
+   */
+  nextPage() {
+    const page = +this.currPage + 1;
+    if (page <= this.search.page) {
+      this.currPage = page;
+      this.navigateDashboard();
     }
+  }
+  /**
+   * Navigate to a numbered page
+   *
+   * @param page target page
+   */
+  goToPage(page: number) {
+    if (page > 0 && page <= this.search.page) {
+      this.currPage = page;
+      this.navigateDashboard();
+    }
+  }
 
   get pages(): number[] {
     const totalPages = this.search.total / this.search.limit;
     const pageCount = this.search.page;
-    const cursor = +this.currPage;
     let count = 1;
     let upCount = 1;
     let downCount = 1;
-    const arr = [cursor];
+    const arr = [this.currPage];
 
-    if (this.loadedCompetencies.length) {
-      while (count < totalPages) {
-        if (cursor + upCount <= pageCount) {
-          arr.push(cursor + upCount++);
-          count++;
-        }
-        if (cursor - downCount > 0) {
-          arr.unshift(cursor - downCount++);
-          count++;
-        }
+    while (count < totalPages) {
+      if (this.currPage + upCount <= pageCount) {
+        arr.push(this.currPage + upCount++);
+        count++;
       }
-    } else {
-      return [];
+      if (this.currPage - downCount > 0) {
+        arr.unshift(this.currPage - downCount++);
+        count++;
+      }
     }
-
     return arr;
   }
-
-  // /**
-  //  * NOT CURRENTLY IN USE - WORK IN PROGRESS
-  //  * Method to apply filters for competencies
-  //  *
-  //  * @param facet
-  //  * @param type
-  //  */
-  // addFilter(facet: string, type: number): void {
-  //   if(type === 1) {
-  //     if (!this.selected.work_role.includes(facet)){
-  //       this.selected.work_role.push(facet);
-  //     }
-  //   } else if (type === 3) {
-  //     if (!this.selected.task.includes(facet)){
-  //       this.selected.task.push(facet);
-  //     }
-  //   }
-  //   this.filter();
-  //   this.filterApplied = true;
-  // }
 
   performSearch(searchText: any) {
     //TODO Actually perform the search
@@ -278,9 +253,16 @@ export class DashboardComponent implements AfterViewInit {
   async deleteCompetency(competencyId: string) {
     // Enforce loading state
     this.loading = true;
+    // If competency preview is open, close it
+    if(this.openPreview) {
+      this.openPreview = false;
+    }
+    // If competency builder is open, close it
+    if(this.openBuilder) {
+      this.openBuilder = false;
+    }
+    // Delete competency
     await this.competencyService.deleteCompetency(competencyId);
-    this.search.competencies = [];
-    this.loadedCompetencies = [];
     await this.initDashboard();
   }
 
@@ -304,7 +286,7 @@ export class DashboardComponent implements AfterViewInit {
       existingCompetency = await this.competencyService.getCompetencyById(competencyShellId.id);
     }
     // Create new instance of competency builder
-    this.newCompetency = new CompetencyBuilder(
+    this.builderCompetency = new CompetencyBuilder(
       existingCompetency._id,
       existingCompetency.status,
       existingCompetency.authorId,
@@ -319,17 +301,31 @@ export class DashboardComponent implements AfterViewInit {
     this.openBuilder = true;
   }
 
-  async closeBuilder(isDraft: any) {
+  async closeBuilder() {
     // Enforce loading state
     this.loading = true;
     this.openBuilder = false;
-    if(!isDraft && isDraft !== undefined) {
+    if(
+      !this.builderCompetency.actor.type &&
+      !this.builderCompetency.behavior.work_role &&
+      this.builderCompetency.behavior.tasks.length === 0 &&
+      !this.builderCompetency.condition.scenario &&
+      !this.builderCompetency.condition.limitations &&
+      this.builderCompetency.condition.tech.length === 0 &&
+      !this.builderCompetency.degree.complete &&
+      !this.builderCompetency.degree.correct &&
+      !this.builderCompetency.degree.time &&
+      !this.builderCompetency.employability.details
+    ) {
       // Competency is neither savable nor being saved as draft; delete shell
-      await this.deleteCompetency(this.newCompetency._id);
+      await this.deleteCompetency(this.builderCompetency._id);
+      this.snackbarService.notification$.next({
+        message: 'Competency was missing required fields to be saved as a draft.',
+        title: 'Draft Deleted',
+        color: SNACKBAR_COLOR.WARNING
+      });
     } else {
       // Update user dashboard with newly created competencies
-      this.search.competencies = [];
-      this.loadedCompetencies = [];
       await this.initDashboard();
     }
   }
@@ -340,19 +336,7 @@ export class DashboardComponent implements AfterViewInit {
    * @param competency The competency to preview
    */
   async openCompetencyPreview(competency: Competency) {
-    // CompetencyBuilder used in case the user opens the builder in the competency preview
-    this.newCompetency = new CompetencyBuilder(
-      competency._id,
-      competency.status,
-      competency.authorId,
-      competency.version,
-      competency.actor,
-      competency.behavior,
-      competency.condition,
-      competency.degree,
-      competency.employability,
-      competency.notes
-    );
+    this.previewCompetency = competency;
     this.openPreview = true;
   }
 

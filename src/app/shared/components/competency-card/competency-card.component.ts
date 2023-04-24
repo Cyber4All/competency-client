@@ -1,8 +1,9 @@
-import { Component, Inject, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatAccordionTogglePosition } from '@angular/material/expansion';
+import { Component, Input, OnInit } from '@angular/core';
 import { Competency } from '../../../../entity/competency';
 import { Lifecycles } from '../../../../entity/lifecycles';
+import { Workrole } from '../../../../entity/workrole';
+import { WorkroleService } from '../../../core/workrole.service';
+import { sleep } from '../../functions/loading';
 
 @Component({
   selector: 'cc-competency-card',
@@ -12,15 +13,31 @@ import { Lifecycles } from '../../../../entity/lifecycles';
 export class CompetencyCardComponent implements OnInit {
   @Input() competency!: Competency;
   lifecycle = Lifecycles;
-
+  loading = false;
+  workrole!: Workrole;
+  tasks: string[] = [];
   constructor(
-    public dialogRef: MatDialogRef<CompetencyCardComponent>,
-    @Inject(MAT_DIALOG_DATA) public COMPETENCY: Competency,
+    private workRoleService: WorkroleService
   ) {}
 
-  ngOnInit(): void {
-    if(!this.competency) {
-      this.competency = this.COMPETENCY;
+  async ngOnInit(): Promise<void> {
+    this.loading = true;
+    // load workrole
+    if (this.competency.behavior.work_role) {
+      this.workrole = await this.workRoleService.getCompleteWorkrole(this.competency.behavior.work_role)
+      .then((workroleQuery: any) => {
+        return workroleQuery.data.workrole.work_role;
+      });
     }
+    // load tasks
+    if (this.competency.behavior.tasks.length > 0) {
+      const tasks = this.competency.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
+      .then((taskQuery: any) => {
+        return taskQuery.data.task.description;
+      }));
+      this.tasks = await Promise.all(tasks);
+    }
+    await sleep(1000);
+    this.loading = false;
   }
 }

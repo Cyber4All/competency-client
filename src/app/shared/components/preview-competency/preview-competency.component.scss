@@ -95,6 +95,14 @@
   }
 }
 
+.builder-content{
+  overflow-wrap: break-word;
+  hyphens: auto;
+  margin: 0;
+  width: 580px;
+}
+
+
 .footer {
   display: flex;
   justify-content: flex-end;
@@ -124,5 +132,22 @@
     &:hover {
       cursor: pointer;
     }
+  }
+}
+
+.content-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .fa-edit{
+    margin-bottom: 16px;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+
+  .hidden{
+    display: none;
   }
 }

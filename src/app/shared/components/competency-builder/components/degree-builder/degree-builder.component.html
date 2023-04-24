@@ -1,21 +1,30 @@
 <!--Degree Builder-->
-<ng-container class="competency_edit-degree-container">
-  <ng-container *ngIf="templateIndex === 0">
-    <!--Degree Description-->
-    <div class="edit-degree_description">
-      Identify the time, degree of completetion, and expectations of how much must be correct to gain this competency
-    </div>
+<div class="competency_edit-degree-container">
+  <ng-container *ngIf="currIndex === 5">
     <!--Time form filed-->
     <label>Time</label>
-    <input [formControl]="time">
+    <div class="time_selector">
+      <input [formControl]="time" class="time_input">
+      <div class="dropdown">
+        <div class="time_box" (click)="displayTime()">{{ timeSelected ? timeSelected.value : "Select a measure of time..." }}<i class="fas fa-angle-down fa-lg"></i></div>
+        <div [ngClass]="timeDisplay ? 'time_dropdown': 'hidden'">
+          <ul class="time_list" (mouseleave)="displayTime()">
+            <li *ngFor="let measure of timeList" (click)="this.timeSelected=measure; displayTime(); time.patchValue(time.value + ' - ' + measure.value)">{{ measure.value }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <!--Completeness form field-->
-    <label>Completeness</label>
-    <input [formControl]="complete">
+    <div class="completely_correct">
+    <label class="completeness">Completeness</label>
+    <textarea placeholder="Enter your definition of the task being completed here." [formControl]="complete"></textarea>
+    
     <!--Correctness form field-->
-    <label>Correctness</label>
-    <input [formControl]="correct">
+    <label class="correctness">Correctness</label>
+    <textarea placeholder="Enter your definition of the task being correct here." [formControl]="correct"></textarea>
+    </div>
   </ng-container>
-  <ng-container *ngIf="templateIndex === 1">
-    <p>yeetus</p>
+  <ng-container *ngIf="currIndex === 6">
+    <cc-file-upload></cc-file-upload>
   </ng-container>
-</ng-container>
+</div>
