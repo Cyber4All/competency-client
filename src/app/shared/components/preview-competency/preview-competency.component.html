@@ -2,6 +2,11 @@
 <div *ngIf="!isAdmin else adminHeader" class="content" [ngClass]="{'builder-content': builderMode === true}">
 
 <div class="content">
+<div [ngClass]="{
+  'builder_content': builderMode,
+  'preview_content': !builderMode
+}">
+
   <!-- TODO: Implement once user routes and submission dates are implemented -->
   <!-- <div *ngIf="isAdmin" class="details bottom-bordered content-section">
     <h2>Details</h2>
@@ -90,6 +95,7 @@
        </div>
    </div>
     <p>{{ competency.notes.details ? competency.notes.details : "No notes specified."}}</p>
+  </div>
   </div>
 </div>
 
