@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
-import { Documentation } from '../../entity/documentation';
+import { Documentation } from '../../entity/Documentation';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 
