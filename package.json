@@ -1,6 +1,6 @@
 {
   "name": "competency-client",
-  "version": "0.2.0-rivot",
+  "version": "1.0.0-beta",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
