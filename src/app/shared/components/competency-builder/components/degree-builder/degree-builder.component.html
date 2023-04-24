@@ -6,7 +6,14 @@
     <div class="time_selector">
       <input [formControl]="time" class="time_input">
       <div class="dropdown">
-        <div class="time_box" (click)="displayTime()">{{ timeSelected ? timeSelected.value : "Select a measure of time..." }}<i class="fas fa-angle-down fa-lg"></i></div>
+        <div class="time_box" (click)="displayTime()">{{ timeSelected ? timeSelected.value : "Select a measure of time..." }}
+          <div [ngClass]="timeDisplay ? 'hidden': 'arrow_down'">
+            <i class="fas fa-angle-down fa-lg"></i>
+          </div>
+          <div [ngClass]="timeDisplay ? 'arrow_up': 'hidden'">
+            <i class="fas fa-angle-up fa-lg"></i>
+          </div>
+        </div>
         <div [ngClass]="timeDisplay ? 'time_dropdown': 'hidden'">
           <ul class="time_list" (mouseleave)="displayTime()">
             <li *ngFor="let measure of timeList" (click)="this.timeSelected=measure; displayTime(); time.patchValue(time.value + ' - ' + measure.value)">{{ measure.value }}</li>
