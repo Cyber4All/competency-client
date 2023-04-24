@@ -11,6 +11,7 @@ import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
 import { BetaGuard } from './shared/guards/beta.guard';
 import { TermsOfServiceComponent } from './shared/pages/terms-of-service/terms-of-service.component';
 import { HelpPageComponent } from './shared/pages/help-page/help-page.component';
+import { VerifyEmailGuard } from './shared/guards/verify-email.guard';
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'verify-email',
+    canActivate: [VerifyEmailGuard],
   },
   {
     path: '',

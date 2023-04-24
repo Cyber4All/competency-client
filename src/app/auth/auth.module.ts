@@ -31,7 +31,7 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     LoginComponent,
     RegisterComponent,
-    ErrorBannerComponent,
+    ErrorBannerComponent
   ],
   imports: [
     CommonModule,
