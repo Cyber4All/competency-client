@@ -73,12 +73,13 @@ cc-primary-nav {
     height: 340px;
     margin-bottom: 34px;
     float: left;
+    transition: all .15s ease-in-out;
 }
 
 .competency-card_container:hover {
     box-shadow: 0 10px 20px -10px #00000040;
     transform: scale(1.01);
-    transition: all .15s ease-out;
+    transition: all .15s ease-in-out;
     cursor: pointer;
 }
 

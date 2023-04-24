@@ -68,11 +68,12 @@
           border-radius: 4px;
           border: none;
           margin-left: 30px;
+          transition: all .15s ease-in-out;
 
           &:hover {
             cursor: pointer;
             transform: scale(1.025);
-            transition: all .15s ease-out;
+            transition: all .15s ease-in-out;
           }
 
         }
