@@ -112,6 +112,9 @@
           "configurations": {
             "production": {
               "browserTarget": "competency-client:build:production"
+            },
+            "staging": {
+              "browserTarget": "competency-client:build:staging"
             }
           }
         },
