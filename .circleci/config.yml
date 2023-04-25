@@ -1,30 +1,33 @@
 version: 2.1
 
 orbs:
-  cyber4all: cyber4all/orb@1.2
-  gh: circleci/github-cli@2.1.1
+  cyber4all: cyber4all/orb@2.0.11
 
 workflows:
-  continuous-integration:
+  ci:
     jobs:
-      - cyber4all/lint-app:
-          isNode: true
+      - cyber4all/lint
     
-  release-prod:
+  continuous-delivery:
+    when: 
+      equal: [ staging, << pipeline.git.branch >> ]
+    jobs:
+      - cyber4all/s3:
+          context: [AWS]
+          name: deploy-staging
+          bucket: "competency-client-staging"
+          role-arn: S3_STAGING_OIDC_ROLE
+
+  continuous-deployment:
     when:
       equal: [ releases, << pipeline.git.branch >> ]
     jobs:
-      - gh/release:
+      - cyber4all/release:
           context: [Github]
-          tag: "v$(jq -r '.version' package.json)"
-          token: GH_PAT
-  
-  continuous-deployment:
-    when:
-      equal: [ '/^v[0-9]+\.[0-9]+\.[0-9]+-?[a-zA-Z]*$/', << pipeline.git.tag >> ]
-    jobs:
-      - cyber4all/sbom:
-          context: [Shortcut]
-          language: node
-
-      # deploy to S3 when ready for prod-environment
+          tag: "$(jq -r '.version' package.json)"
+        
+      - cyber4all/s3:
+          context: [AWS]
+          requires: [cyber4all/release]
+          name: deploy-production
+          bucket: "cyber-competencies"

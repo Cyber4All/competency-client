@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Competency } from '../../../../entity/competency';
+import { Competency } from '../../../../entity/Competency';
 import { DropdownItem } from '../../../../entity/dropdown';
 import { Workrole } from '../../../../entity/workrole';
 import { DropdownService } from '../../../core/dropdown.service';
@@ -9,7 +9,7 @@ import { Elements } from '../../../../entity/elements';
 import { AuthService } from '../../../core/auth.service';
 import { BuilderService } from '../../../core/builder.service';
 import { LifecyclesService } from '../../../core/lifecycles.service';
-import { Lifecycles } from '../../../../entity/lifecycles';
+import { Lifecycles } from '../../../../entity/Lifecycles';
 import { User } from '../../../../entity/user';
 import { CompetencyBuilder } from '../../../../entity/builder.class';
 

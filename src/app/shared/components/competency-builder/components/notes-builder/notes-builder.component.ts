@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { Notes } from 'src/entity/notes';
+import { FormControl } from '@angular/forms';
+import { Notes } from '../../../../../../entity/notes';
 import { debounceTime } from 'rxjs';
 @Component({
   selector: 'cc-notes-builder',

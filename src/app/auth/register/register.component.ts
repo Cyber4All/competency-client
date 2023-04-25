@@ -6,9 +6,8 @@ import { AuthService } from '../../core/auth.service';
 import { Organization } from '../../../entity/organization';
 import { AuthValidationService } from '../../core/auth-validation.service';
 import { OrganizationService } from '../../core/organization.service';
-import { SnackbarService } from 'src/app/core/snackbar.service';
+import { SnackbarService } from '../../core/snackbar.service';
 import { SNACKBAR_COLOR } from '../../shared/components/snackbar/snackbar.component';
-
 @Component({
   selector: 'cc-register',
   templateUrl: './register.component.html',
