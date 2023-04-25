@@ -146,7 +146,7 @@ export class AuthValidationService {
   /**
    * Checks an email to ensure it is valid
    *
-   * @param email The email to check
+   * @param controlName The name of the form validation control to validate with
    */
   public isEmailRegexValid(controlName: string): ValidatorFn {
     return (control: AbstractControl) => {
