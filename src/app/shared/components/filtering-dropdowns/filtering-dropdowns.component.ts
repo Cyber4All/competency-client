@@ -28,6 +28,9 @@ export class FilteringDropdownsComponent implements OnInit {
   // Determines whether or not the shared search bar should be displayed
   searchbar = false;
 
+  // The direction of the icon arrow, changes on click (true is down, false is up)
+  iconArrowDown = true;
+
   /**
    * TODO:// Add loading spinner for drops
    */
