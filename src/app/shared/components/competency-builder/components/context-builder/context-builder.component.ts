@@ -14,6 +14,7 @@ import { Builder } from 'protractor';
 export class ContextBuilderComponent implements OnInit {
 
   @Input() condition!: Condition;
+  @Input() competencyId!: string;
   @Output() conditionChange = new EventEmitter<{update: string, value: Condition}>();
   // Builder - Behavior validation errors
   contextErrors: BuilderValidation[] = [];
@@ -117,6 +118,7 @@ export class ContextBuilderComponent implements OnInit {
     this.documentation.valueChanges
       .pipe(debounceTime(650))
       .subscribe((documentationUpdate: Documentation[]) => {
+        console.log('Subscription hit', documentationUpdate);
         // Remove documentation error from contextErrors array
         this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'documentation';
