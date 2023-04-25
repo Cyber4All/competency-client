@@ -110,6 +110,13 @@ export class AuthService {
     this.clearAuthHeader();
   }
 
+  /**
+   * Retrieves a user by id
+   *
+   * @param id The id of the user to retrieve
+   * @returns A user of type AuthUser
+   */
+  // TODO: Add the AuthUser return type
   async getUser(id: string): Promise<any> {
     const query = getUserGraphQuery(id);
     return await lastValueFrom(this.http
@@ -122,7 +129,6 @@ export class AuthService {
         return res.data.user;
       })
       .catch((err) => {
-        console.log(err);
         err = GraphErrorHandler.handleError(err);
         if (err) {
           this.snackbarService.sendNotificationByError(err);
