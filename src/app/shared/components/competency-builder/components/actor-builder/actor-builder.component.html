@@ -1,13 +1,20 @@
 <!--Actor Builder-->
-<ng-container class="competency_edit-actor-container">
-  <!--Actor type form field-->
-  <div>
-    <label>Actor</label>
-    <input [formControl]="type">
+<!--Actor type form field-->
+<div class="actor_input">
+  <label>Actor</label>
+  <div class="actor_box" (click)="displayActors()">
+    {{ actorSelected ? actorSelected.value : 'Select an actor' }}
+    <i class="fas fa-angle-down fa-lg"></i>
   </div>
-  <!--Actor description form field-->
-  <div>
-    <label>Description</label>
-    <textarea placeholder="Provide a description for your actor" [formControl]="details"></textarea>
+  <div [ngClass]="actorDisplay ? 'actor_dropdown': 'hidden'">
+    <ul class="actor_list" (mouseleave)="displayActors()">
+      <li *ngFor="let actor of actorList" (click)="this.actorSelected=actor; displayActors(); type.patchValue(true)">{{ actor.value }}</li>
+    </ul>
   </div>
-</ng-container>
+</div>
+<!--Actor description form field-->
+<div class="description_input">
+  <label>Description</label>
+  <textarea class="description_box" placeholder="Provide a description for your actor"
+    [formControl]="details"></textarea>
+</div>

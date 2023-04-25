@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
-import { Documentation } from 'src/entity/documentation';
-import { COMPETENCY_ROUTES } from 'src/environments/routes';
+import { Documentation } from '../../entity/Documentation';
+import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 
 // the typing of the Lambda response when uploading a file

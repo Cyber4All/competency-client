@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
-import { LIFECYCLE_ROUTES } from 'src/environments/routes';
+import { LIFECYCLE_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { SnackbarService } from './snackbar.service';
 

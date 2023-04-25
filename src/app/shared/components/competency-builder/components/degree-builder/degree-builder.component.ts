@@ -2,8 +2,10 @@ import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angu
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { BuilderValidation } from '../../../../../../entity/builder-validation';
-import { Degree } from '../../../../../../entity/degree';
+import { Degree } from '../../../../../../entity/Degree';
+import { DropdownItem, DropdownType } from '../../../../../../entity/dropdown';
 import { BuilderService } from '../../../../../core/builder.service';
+import { DropdownService } from '../../../../../core/dropdown.service';
 @Component({
   selector: 'cc-degree-builder',
   templateUrl: './degree-builder.component.html',
@@ -14,13 +16,16 @@ export class DegreeBuilderComponent implements OnInit {
   @Input() degree!: Degree;
   @Output() degreeChange = new EventEmitter<{update: string, value: Degree}>();
   degreeErrors: BuilderValidation[] = [];
-  templateIndex = 0;
+  currIndex!: number;
   complete = new FormControl('');
   correct = new FormControl('');
   time = new FormControl('');
-
+  timeList: DropdownItem[] = [];
+  timeDisplay = false;
+  timeSelected!: DropdownItem;
   constructor(
-    public builderService: BuilderService
+    public builderService: BuilderService,
+    private dropdownService: DropdownService
   ) {}
 
   ngOnInit(): void {
@@ -38,8 +43,12 @@ export class DegreeBuilderComponent implements OnInit {
       });
     });
     // Subscribe to degree template index
-    this.builderService.templateIndex.subscribe((index: number) => {
-      this.templateIndex = index;
+    this.builderService.builderIndex.subscribe((index: number) => {
+      this.currIndex = index;
+    });
+    // Subscribe to time dropwdown list
+    this.dropdownService.timeList.subscribe((timeList: DropdownItem[]) => {
+      this.timeList = timeList;
     });
     // Subscribe to complete form control
     this.complete.valueChanges
@@ -112,6 +121,14 @@ export class DegreeBuilderComponent implements OnInit {
     // If value exists, set workrole form control
     if (this.degree.correct) {
       this.correct.patchValue(this.degree.correct);
+    }
+  }
+
+  displayTime(){
+    if (this.timeDisplay === true){
+      this.timeDisplay = false;
+    } else{
+      this.timeDisplay = true;
     }
   }
 

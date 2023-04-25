@@ -1,14 +1,53 @@
-.competency-builder_navbar-buttons {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+@import "vars";
 
-    button {
+.competency-builder_navbar-buttons {
+
+    .primary_nav {
         display: block;
-        padding: 15px;
-        margin: 15px 0 0 15px;
         text-align: left;
+        width: 115px;
+        padding: 15px;
+        border-radius: 6px;
+        font-size: 18px;
+        .subs{
+            font-size: 14px;
+        }
+        font-weight: 400px;
+        margin-left: 20px;
+        margin-right: 10px;
+        color: #5E6978;
+        transition: background-color 500ms, color 500ms;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+    .choosen {
+        background-color: #E9F0FE;
+        color: #376ED6;
+        .title{
+            font-weight: 600;
+        }
+        
+    }
+
+    .buidler_navbar-submenu{
+        display: flex;
+        margin-top: 7px;
+        color: #5E6978;
+        &:hover{
+            cursor: pointer;
+        }
+        .fa-circle{
+            visibility: hidden;
+            margin-right: 5px;
+            align-self: center;
+        }
+    }
+    .active{
+
+        .fa-circle{
+            visibility: visible;
+        }
+
     }
 }

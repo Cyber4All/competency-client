@@ -9,7 +9,6 @@ import {
   OnDestroy,
   OnInit,
   EmbeddedViewRef,
-  HostListener,
   Output,
   EventEmitter,
 } from '@angular/core';
@@ -25,6 +24,8 @@ import { Subject } from 'rxjs';
 export interface PanelOptions {
   padding: boolean;
   showExitButton: boolean;
+  showDeleteButton: boolean;
+  title: string;
   exitButtonColor: 'white' | 'black';
   position: 'lower-right' | 'center';
 }
@@ -42,6 +43,7 @@ export class PanelDirective implements OnInit, OnDestroy {
 
   // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() close = new EventEmitter<any>();
+  @Output() delete = new EventEmitter<any>();
 
   animationElement: HTMLElement | undefined;
 
@@ -69,6 +71,8 @@ export class PanelDirective implements OnInit, OnDestroy {
 
     this.viewer.instance.close = this.close;
     this.viewer.instance.defaultCloseParam = this.defaultCloseParam;
+
+    this.viewer.instance.delete = this.delete;
 
     // Attach to the angular component tree, this doesn't add it to the DOM
     this.appRef.attachView(this.viewer.hostView);
@@ -106,6 +110,10 @@ export class PanelDirective implements OnInit, OnDestroy {
     } else {
       this.close.emit();
     }
+  }
+
+  deleteCompetency(): void {
+    this.delete.emit();
   }
 
   ngOnDestroy(): void {

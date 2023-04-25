@@ -1,3 +1,4 @@
+import { Elements } from './elements';
 export interface Workrole {
   _id: string
   work_role: string
@@ -5,6 +6,7 @@ export interface Workrole {
   description: string
   ksats: []
   special_area: string
+  tasks?: Elements[]
 }
 
 export function getCompleteWorkRole(id: string) {
@@ -31,7 +33,13 @@ export function getAllWorkRoles() {
         work_role_id,
         description,
         ksats,
-        special_area
+        special_area,
+        tasks {
+          _id
+          element
+          element_id
+          description
+        }
       }
     }
   `;
@@ -45,6 +53,13 @@ export function getAllTasks() {
         element
         element_id
         description
+        work_roles {
+          _id
+          work_role
+          work_role_id
+          description
+          special_area
+        }
       }
     }
   `;
@@ -72,7 +87,13 @@ export function queryWorkroles(search: string) {
         work_role_id,
         description,
         ksats,
-        special_area
+        special_area,
+        tasks {
+          _id
+          element
+          element_id
+          description
+        }
       }
     }
   `;
@@ -85,7 +106,14 @@ export function queryTasks(search: string) {
         _id
         element
         element_id
-        description
+        description,
+        work_roles {
+          _id
+          work_role
+          work_role_id
+          description
+          special_area
+        }
       }
     }
   `;

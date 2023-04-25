@@ -1,21 +1,24 @@
 import { Actor } from './actor';
-import { Behavior } from './behavior';
-import { Competency } from './competency';
-import { Condition } from './condition';
-import { Degree } from './degree';
-import { Documentation } from './documentation';
-import { Employability } from './employability';
-import { Lifecycles } from './lifecycles';
+import { Behavior } from './Behavior';
+import { Competency } from './Competency';
+import { Condition } from './Condition';
+import { Degree } from './Degree';
+import { Documentation } from './Documentation';
+import { Employability } from './Employability';
+import { Lifecycles } from './Lifecycles';
 import { Notes } from './notes';
 import { BuilderError, BuilderValidation } from './builder-validation';
 
 export enum IndexButton {
     BEHAVIOR = 'CONTINUE TO BEHAVIOR',
     CONTEXT = 'CONTINUE TO CONTEXT',
+    TECH = 'CONTINUE TO TECHNOLOGY',
+    DOCUMENTATION = 'CONTINUE TO DOCUMENTATION',
     DEGREE = 'CONTINUE TO DEGREE',
+    RUBRIC = 'CONTINUE TO RUBRIC',
     EMPLOYABILITY = 'CONTINUE TO EMPLOYABILITY',
     NOTES = 'CONTINUE TO NOTES',
-    REVIEW = 'REVIEW COMPETENCY',
+    REVIEW = 'CONTINUE TO REVIEW',
     SUBMIT = 'SUBMIT COMPETENCY'
 }
 

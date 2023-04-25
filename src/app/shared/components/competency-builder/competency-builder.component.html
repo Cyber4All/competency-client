@@ -1,64 +1,75 @@
-<div class="competency-builder_container">
-  <div class="competency-builder_control">
-    <p>New Competency</p>
-  </div>
-  <div class="competency-builder_builder">
-    <div class="competency-builder_navbar column left">
-      <cc-builder-navbar></cc-builder-navbar>
-    </div>
-    <div class="competency-builder_form column right">
-      <!--Actor-->
-      <ng-container *ngIf="currIndex === 0">
-        <cc-actor-builder
-          [actor] = "competency.actor"
-          (actorChange) = "updateCompetency($event)"
-        ></cc-actor-builder>
-      </ng-container>
-      <!--Behavior-->
-      <ng-container *ngIf="currIndex === 1">
-        <cc-behavior-builder
-          [behavior] = "competency.behavior"
-          (behaviorChange) = "updateCompetency($event)"
-        ></cc-behavior-builder>
-      </ng-container>
-      <!--Condition-->
-      <ng-container *ngIf="currIndex === 2">
-        <cc-context-builder
-          [condition] = "competency.condition"
-          [competencyId] = "competencyId"
-          (conditionChange) = "updateCompetency($event)"
-        ></cc-context-builder>
-      </ng-container>
-      <!--Degree-->
-      <ng-container *ngIf="currIndex === 3">
-        <cc-degree-builder
-          [degree] = "competency.degree"
-          [competencyId] = "competencyId"
-          (degreeChange) = "updateCompetency($event)"
-        ></cc-degree-builder>
-      </ng-container>
-      <!--Employability-->
-      <ng-container *ngIf="currIndex === 4">
-        <cc-employability-builder
-          [employability] = "competency.employability"
-          (employabilityChange) = "updateCompetency($event)"
-        ></cc-employability-builder>
-      </ng-container>
-      <!--Notes-->
-      <ng-container *ngIf="currIndex === 5">
-        <cc-notes-builder
-          [notes]="competency.notes"
-          (notesChange)="updateCompetency($event)"
-        ></cc-notes-builder>
-      </ng-container>
-      <!--TODO: Implement Preview-->
-      <ng-container *ngIf="currIndex === 6">Preview coming soon</ng-container>
-      <!--Action Buttons-->
-      <div class="competency-builder_form-buttons">
-        <button *ngIf="currIndex < 5" (click)="builderService.setBuilderIndex(currIndex + 1); setTemplateButton();">{{ templateText }}</button>
-        <button *ngIf="currIndex !== 6" (click)="builderService.setBuilderIndex(6)">{{ indexButton.REVIEW }}</button>
-        <button *ngIf="currIndex !== 0" (click)="builderService.setBuilderIndex(currIndex - 1); setTemplateButton();"> <-- BACK</button>
+<ng-container *ngIf="loading then loadingTemplate; else builderTemplate"></ng-container>
+
+<ng-template #builderTemplate>
+  <div class="competency-builder_container">
+    <div class="competency-builder_builder">
+      <cc-builder-navbar class="column left"></cc-builder-navbar>
+      <div class="competency-builder_form column right">
+        <div class="content">
+          <!--Actor-->
+          <ng-container *ngIf="currIndex === 0">
+            <cc-actor-builder [actor]="competency.actor" (actorChange)="updateCompetency($event)"></cc-actor-builder>
+          </ng-container>
+          <!--Behavior-->
+          <ng-container *ngIf="currIndex === 1">
+            <cc-behavior-builder [behavior]="competency.behavior"
+              (behaviorChange)="updateCompetency($event)"></cc-behavior-builder>
+          </ng-container>
+          <!--Condition-->
+          <ng-container *ngIf="currIndex === 2 || currIndex === 3 || currIndex === 4">
+            <cc-context-builder [condition]="competency.condition" [competencyId]="competencyId"
+              (conditionChange)="updateCompetency($event)"></cc-context-builder>
+          </ng-container>
+          <!--Degree-->
+          <ng-container *ngIf="currIndex === 5 || currIndex === 6">
+            <cc-degree-builder [degree]="competency.degree" [competencyId]="competencyId"
+              (degreeChange)="updateCompetency($event)"></cc-degree-builder>
+          </ng-container>
+          <!--Employability-->
+          <ng-container *ngIf="currIndex === 7">
+            <cc-employability-builder [employability]="competency.employability"
+              (employabilityChange)="updateCompetency($event)"></cc-employability-builder>
+          </ng-container>
+          <!--Notes-->
+          <ng-container *ngIf="currIndex === 8">
+            <cc-notes-builder [notes]="competency.notes" (notesChange)="updateCompetency($event)"></cc-notes-builder>
+          </ng-container>
+          <!--Preview-->
+          <ng-container *ngIf="currIndex === 9">
+            <cc-preview-competency
+              [competency]="competency"
+              [builderMode]="true"
+            ></cc-preview-competency>
+          </ng-container>
+          <!--Action Buttons-->
+        </div>
+        <div class="competency-builder_form-buttons">
+          <button class="back" [ngClass]="{'hidden': currIndex===0}"
+            (click)="builderService.setBuilderIndex(currIndex - 1); setTemplateButton();"><i
+            class="fas fa-arrow-left"></i> BACK</button>
+          <div>
+            <button class="review" *ngIf="currIndex < 9 " (click)="builderService.setBuilderIndex(9)">REVIEW COMPETENCY</button>
+            <button class="next" *ngIf="currIndex !== 9"
+              (click)="builderService.setBuilderIndex(currIndex + 1); setTemplateButton();">{{ templateText }}</button>
+  
+          </div>
+          <ng-container *ngIf="currIndex === 9">
+            <div>
+              <button class="delete" (click)="deleteCompetency()">DELETE
+                DRAFT</button>
+              <button class="submit" (click)="submitCompetency()">SUBMIT
+                COMPETENCY</button>
+            </div>
+          </ng-container>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-template>
+
+<ng-template #loadingTemplate>
+  <div class="competency-loading">
+      <i class="far fa-spinner-third fa-spin"></i>
+      Loading Builder...
+  </div>
+</ng-template>
