@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  cyber4all: cyber4all/orb@2.0.11
+  cyber4all: cyber4all/orb@2.0.12
 
 workflows:
   ci:
