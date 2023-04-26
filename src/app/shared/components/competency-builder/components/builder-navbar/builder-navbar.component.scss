@@ -15,15 +15,15 @@
         font-weight: 400px;
         margin-left: 20px;
         margin-right: 10px;
-        color: #5E6978;
+        color: color-gray(3);
         transition: background-color 500ms, color 500ms;
         &:hover{
             cursor: pointer;
         }
     }
     .choosen {
-        background-color: #E9F0FE;
-        color: #376ED6;
+        background-color: color-accent("hover");
+        color: color-accent();
         .title{
             font-weight: 600;
         }
@@ -33,7 +33,7 @@
     .buidler_navbar-submenu{
         display: flex;
         margin-top: 7px;
-        color: #5E6978;
+        color: color-gray(3);
         &:hover{
             cursor: pointer;
         }

@@ -1,10 +1,15 @@
 <!--Actor Builder-->
 <!--Actor type form field-->
 <div class="actor_input">
-  <label>Actor</label>
+  <label>Actor *</label>
   <div class="actor_box" (click)="displayActors()">
     {{ actorSelected ? actorSelected.value : 'Select an actor' }}
-    <i class="fas fa-angle-down fa-lg"></i>
+    <div [ngClass]="actorDisplay ? 'hidden': 'arrow_down'">
+      <i class="fas fa-angle-down fa-lg"></i>
+    </div>
+    <div [ngClass]="actorDisplay ? 'arrow_up': 'hidden'">
+      <i class="fas fa-angle-up fa-lg"></i>
+    </div>
   </div>
   <div [ngClass]="actorDisplay ? 'actor_dropdown': 'hidden'">
     <ul class="actor_list" (mouseleave)="displayActors()">
@@ -14,7 +19,7 @@
 </div>
 <!--Actor description form field-->
 <div class="description_input">
-  <label>Description</label>
+  <label>Description *</label>
   <textarea class="description_box" placeholder="Provide a description for your actor"
     [formControl]="details"></textarea>
 </div>

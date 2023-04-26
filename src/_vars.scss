@@ -1,11 +1,13 @@
 @use 'sass:list';
 
 $palette-accent: (
+  "hover": hsl(219, 91%, 95%),
   "lightest": hsl(219, 43%, 74%),
   "lighter": hsl(219, 43%, 54%),
   "default": hsl(219, 66%, 53%),
   "darker": hsl(219, 43%, 34%),
   "darkest": hsl(219, 43%, 24%),
+  "overlay": hsla(219, 77%, 14%, 0.8)
 );
 
 @function color-accent($style: "default") {
@@ -60,9 +62,9 @@ $palette-gray: (
   9: hsl(0, 0%, 100%),
   10: hsl(220, 91%, 95%),
   11: hsl(0, 0%, 87%),
-//check this value
-  12: hsl(212, 0%, 90%),
-  13: hsl(0, 0%, 100%),
+  12: hsl(212, 0%, 94%),  
+  13: hsl(0, 0%, 97%),
+  14: hsla(0, 0%, 0%, 0.25),
 );
 
 @function color-gray($style: 3) {

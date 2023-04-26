@@ -13,9 +13,10 @@
         justify-content: center;
         text-align: center;
       
-        $color: #535d69;
+        $color: color-gray(3);
         font-size: 15pt;
         padding: 20px;
+        margin-top: 20px;
       
         .svg-inline--fa {
           color: color-accent();
@@ -29,8 +30,8 @@
     padding-top: 12px;
     padding-left: 20px;
     margin-bottom: 26px;
-    border-bottom: 1px solid map-get($palette-gray, 11);
-    color: #FFFFFF;
+    border-bottom: 1px solid color-gray(11);
+    color: white;
 }
 
 .competency_card-status {
