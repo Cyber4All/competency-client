@@ -28,7 +28,8 @@ export class DashboardComponent implements OnInit {
     competencies: [],
     limit: 12,
     page: 1,
-    total: 0
+    total: 0,
+    statuses: []
   };
   urlParams: Record<string, string> = {};
   // Pagination default val
@@ -80,7 +81,8 @@ export class DashboardComponent implements OnInit {
       competencies: [],
       limit: 12,
       page: 1,
-      total: 0
+      total: 0,
+      statuses: []
     };
     if (this.urlParams) {
       this.makeQuery(this.urlParams);
@@ -107,7 +109,7 @@ export class DashboardComponent implements OnInit {
           limit: q ? q.limit : this.search.limit,
           page:  q ? q.page : this.search.page,
           author: this.authService.user?._id,
-          status: [
+          status: (q && q.statuses.length > 0) ? q.statuses : [
             `${Lifecycles.DRAFT}`,
             `${Lifecycles.REJECTED}`,
             `${Lifecycles.SUBMITTED}`,
@@ -120,7 +122,8 @@ export class DashboardComponent implements OnInit {
         competencies: [],
         limit: 12,
         page: 1,
-        total: 0
+        total: 0,
+        statuses: []
       };
     }
   }
@@ -239,7 +242,15 @@ export class DashboardComponent implements OnInit {
    * @param filter object containing arrays of selected filters
    */
   async filter(filter: { status: string[], workrole: string[], task: string[], audience: string[]}) {
-    console.log('FILTER BASED SEARCHING NOT IMPLEMENTED YET.', filter);
+    this.loading = true;
+    
+    // filter competencies by status
+    this.search.statuses = filter.status;
+    await this.getCompetencies(this.search);
+    await this.loadCompetencies();
+    this.filterApplied = true;
+
+    this.loading = false;
   }
 
   /**
