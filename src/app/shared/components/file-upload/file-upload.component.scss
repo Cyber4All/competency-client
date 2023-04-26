@@ -5,7 +5,7 @@
   width: 550px;
   height: 150px;
   text-align: center;
-  border: 1px dashed #636772;
+  border: 1px dashed color-gray(3);
   border-radius: 6px;
   transition: all .1s ease-in-out;
 
@@ -29,7 +29,7 @@
 
 
     .fa-file-upload {
-      color: #376ed6;
+      color: color-accent();
       margin-bottom: 10px;
     }
 
@@ -43,13 +43,13 @@
   }
 
   &:hover {
-    background-color: rgba($color: #376ED6, $alpha: 0.1);
+    background-color: rgba($color: color-accent(), $alpha: 0.1);
     transition: all .1s ease-in-out;
   }
 }
 
 .drop_file{
-  background-color: rgba($color: #376ED6, $alpha: 0.1);
+  background-color: rgba($color: color-accent(), $alpha: 0.1);
   transition: all .1s ease-in-out;
 }
 
@@ -63,8 +63,8 @@
     width: 550px;
     padding: 25px 0;
     margin-top: 10px;
-    background: #FFFFFF;
-    border: 1px solid #C6CBD2;
+    background: white;
+    border: 1px solid color-gray(7);
     border-radius: 6px;
 
     .file-left {
@@ -74,7 +74,7 @@
       padding-left: 25px;
 
       .fa-file {
-        color: #376ED6;
+        color: color-accent();
       }
 
       .file-name {

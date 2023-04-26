@@ -1,7 +1,9 @@
+@import "vars";
+
 label {
     font-size: 18px;
     font-weight: 400;
-    color: #1F2228;
+    color: color-gray(1);
 
 }
 
@@ -17,7 +19,7 @@ label {
         justify-content: space-between;
         align-items: center;
         border: 1px solid;
-        border-color: #C6CBD2;
+        border-color: color-gray(7);
         border-radius: 6px;
         margin-top: 10px;
         font-family: Arial;
@@ -48,8 +50,8 @@ label {
     position: absolute;
     width: 580px;
     background: white;
-    border: 1px solid #C6CBD2;
-    box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.25);
+    border: 1px solid color-gray(7);
+    box-shadow: 0px 10px 20px -10px color-gray(14);
     border-radius: 0px 0px 6px 6px;
     height: 180px;
     overflow-y: scroll;
@@ -61,12 +63,12 @@ label {
     margin: 0;
 
     li {
-        border-bottom: 1px solid #dfdfdf;
+        border-bottom: 1px solid color-gray(12);
         padding: 10px 25px;
 
         &:hover{
             cursor: pointer;
-            background-color: #E9F0FE;
+            background-color: color-accent("hover");
         }
     }
 }
@@ -81,7 +83,7 @@ label {
         width: 550px;
         height: 130px;
         border: 1px solid;
-        border-color: #C6CBD2;
+        border-color: color-gray(7);
         border-radius: 6px;
         margin-top: 10px;
         font-family: Arial;

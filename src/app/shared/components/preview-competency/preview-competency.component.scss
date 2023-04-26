@@ -82,7 +82,7 @@
 .content {
   overflow-wrap: break-word;
   hyphens: auto;
-  color: #1F2228;
+  color: color-gray(1);
 
   .content-section {
     padding: 20px 0;
@@ -118,7 +118,7 @@
     border: 1px solid color-gray(6);
     border-radius: 5px;
     margin-right: 25px;
-    background-color: #F8F8F8;
+    background-color: color-gray(13);
 
     &.submit {
       border: 0px;

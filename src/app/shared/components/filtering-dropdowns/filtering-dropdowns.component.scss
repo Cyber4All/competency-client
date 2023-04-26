@@ -25,8 +25,8 @@
     margin-top: 5px; // space between dropdown and parent element
 
     // styles the container of the dropdown
-    background: #FFFFFF;
-    border: 1px solid #DFDFDF;
+    background: white;
+    border: 1px solid color-gray(12);
     border-radius: 4px;
 
     .searchbar {
@@ -39,7 +39,7 @@
         overflow-x: hidden;
 
         .item {    
-            border-top: 1px solid #DFDFDF;
+            border-top: 1px solid color-gray(12);
             text-transform: capitalize;
             &:first-child{
                 border-top: none;
@@ -50,7 +50,7 @@
                 overflow: hidden;
                 padding: 0 4px;
                 &:hover{
-                    background-color: rgba($color: #376ED6, $alpha: 0.1);
+                    background-color: rgba($color: color-accent(), $alpha: 0.1);
                     cursor: pointer;
                 }
             }
