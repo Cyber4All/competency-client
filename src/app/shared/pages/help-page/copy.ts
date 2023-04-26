@@ -30,7 +30,7 @@ export const sections = {
                         answer: '<p>The competency builder Actor form has entry fields <b>Actor</b> and <b>Description</b>. ' +
                             `Select an <b>Actor</b> from the provided list that best fits the individual that would be attempting ` +
                             `to achieve this competency. The <b>Description</b> field allows you to enter additional information that ` +
-                            `may be previlent to defining your actor (i.e. prerequiste classes, competition details, etc...).</p>`
+                            `may be prevalent to defining your actor (i.e. pre-requisite classes, competition details, etc...).</p>`
                     },
                     {
                         question: 'Building Behavior',
