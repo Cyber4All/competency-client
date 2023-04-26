@@ -1,8 +1,8 @@
 <div class="wrapper">
     <!-- Dropdown button -->
-    <button class="button-wrapper" [matMenuTriggerFor]="dropdown">
+    <button class="button-wrapper" [matMenuTriggerFor]="dropdown" (menuClosed)="iconArrowDown = true" (menuOpened)="iconArrowDown = false">
         <div class="title">{{title}}</div>
-        <i class="fa fa-chevron-down"></i>
+        <ng-container *ngIf="iconArrowDown else iconUp" [ngTemplateOutlet]="iconDown"></ng-container>
     </button>
 
     <!-- Dropdown Menu triggered toggled by the dropdown button -->
@@ -23,3 +23,15 @@
             </div>
     </mat-menu>
 </div>
+
+<ng-template #iconDown>
+    <div>
+        <i *ngIf="iconArrowDown" class="fa fa-chevron-down"></i>
+    </div>
+</ng-template>
+
+<ng-template #iconUp>
+    <div>
+        <i *ngIf="!iconArrowDown" class="fa fa-chevron-up"></i>
+    </div>
+</ng-template>
