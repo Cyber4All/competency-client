@@ -10,10 +10,8 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
-  errorMessage!: String;
-  showError!: Boolean;
+  showError!: boolean;
   otaCode!: string;
-  done = false;
 
   passwords: FormGroup = new FormGroup({
     'password': this.authvalidationService.getInputFormControl('password'),
@@ -24,7 +22,6 @@ export class ResetPasswordComponent implements OnInit {
     private activatedRoute: ActivatedRoute,  ) { }
 
   ngOnInit(): void {
-    //red error banner at the top of the screen
     this.authvalidationService.getErrorState().subscribe(err => this.showError = err);
     this.activatedRoute.queryParams.subscribe(params => {
       this.otaCode = params.ota;

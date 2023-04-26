@@ -8,9 +8,7 @@ import { Lifecycles } from '../../entity/lifecycles';
 import { Search } from '../../entity/search';
 import { sleep } from '../shared/functions/loading';
 import { BuilderService } from '../core/builder.service';
-//'../core/builder/builder.service'
-import { CompetencyBuilder } from 'src/entity/builder.class';
-//../core/builder/competency-builder.class
+import { CompetencyBuilder } from '../../entity/builder.class';
 import { CompetencyBuilderComponent } from '../shared/components/competency-builder/competency-builder.component';
 import { WorkroleService } from '../core/workrole.service';
 import { takeUntil } from 'rxjs/operators';

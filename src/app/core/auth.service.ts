@@ -195,7 +195,7 @@ export class AuthService {
     await lastValueFrom(this.http
       .patch(USER_ROUTES.RESET_PASSWORD(otaCode), { payload }))
       .then((res: any)=> {
-        console.log(res);
+        this.snackbarService.sendNotificationByError(res);
       });
   }
 
@@ -204,7 +204,7 @@ export class AuthService {
     await lastValueFrom(this.http
       .post(USER_ROUTES.SEND_RESET_PASSWORD(), { email }))
       .then((res: any)=> {
-        console.log(res);
+        this.snackbarService.sendNotificationByError(res);
       });
   }
 
