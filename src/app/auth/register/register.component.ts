@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
     organization: this.authValidation.getInputFormControl('required'),
     password: this.authValidation.getInputFormControl('password'),
     confirmPassword: this.authValidation.getInputFormControl('required'),
-  }, this.authValidation.passwordMatchValidator('password', 'confirmPassword'));
+  }, [this.authValidation.isEmailRegexValid('email'), this.authValidation.passwordMatchValidator('password', 'confirmPassword')]);
 
   organizationInput$: Subject<string> = new Subject<string>();
   showDropdown = false;
