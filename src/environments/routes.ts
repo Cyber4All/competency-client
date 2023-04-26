@@ -91,15 +91,15 @@ export const COMPETENCY_ROUTES = {
 
 export const LIFECYCLE_ROUTES = {
     DEPRECATE_COMPETENCY(competencyId: string) {
-        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/deprecate`;
+        return `${environment.apiURL}/lifecycle/${encodeURIComponent(competencyId)}/deprecate`;
     },
     PUBLISH_COMPETENCY(competencyId: string) {
-        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/publish`;
+        return `${environment.apiURL}/lifecycle/${encodeURIComponent(competencyId)}/publish`;
     },
     REJECT_COMPETENCY(competencyId: string) {
-        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/reject`;
+        return `${environment.apiURL}/lifecycle/${encodeURIComponent(competencyId)}/reject`;
     },
     SUBMIT_COMPETENCY(competencyId: string) {
-        return `${environment.apiURL}/competencies/${encodeURIComponent(competencyId)}/submit`;
+        return `${environment.apiURL}/lifecycle/${encodeURIComponent(competencyId)}/submit`;
     },
 };
