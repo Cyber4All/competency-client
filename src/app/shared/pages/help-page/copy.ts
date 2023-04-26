@@ -30,14 +30,15 @@ export const sections = {
                         answer: '<p>The competency builder Actor form has entry fields <b>Actor</b> and <b>Description</b>. ' +
                             `Select an <b>Actor</b> from the provided list that best fits the individual that would be attempting ` +
                             `to achieve this competency. The <b>Description</b> field allows you to enter additional information that ` +
-                            `may be previlent to defining your actor (i.e. prerequiste classes, competition details, etc...).</p>`
+                            `may be prevalent to defining your actor (i.e. pre-requisite classes, competition details, etc...).</p>`
                     },
                     {
                         question: 'Building Behavior',
                         answer: `<p>The competency builder Behavior form has entry fields <b>Workrole</b>, <b>Task</b>, ` +
-                            `and <b>Task Description</b>. You can search and select a <b>Workrole</b> which is a NICE work role*. ` +
-                            `<b>Task</b>'s can also be searched and added as a relating task of this competency. These are also ` +
-                            `NICE tasks*. Multiple tasks can be added here. <b>Task Description</b> is the unique task(s) an actor ` +
+                            `and <b>Task Description</b>. You can search and select a <b>Workrole</b> which is currently taken from the `+
+                            `NICE Framework*. <b>Task</b>'s can also be searched and added to the competency here. These are also ` +
+                            `taken from the NICE Framework*. Multiple tasks can be added here. <b>Task Description</b> is the unique `+
+                            `task(s) an actor ` +
                             `will be attempting to earn this competency (The specific task(s) relating to a classroom lesson, a ` +
                             `competition, etc.).</p>` +
                             `<p>*The work roles and task lists will be expanded upon as more frameworks like ` +
