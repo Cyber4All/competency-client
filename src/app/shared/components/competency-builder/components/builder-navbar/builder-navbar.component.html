@@ -16,10 +16,11 @@
     <div class="primary_nav" [ngClass]="{'choosen': currIndex===5 || currIndex ===6}">
         <div (click)="builderService.setBuilderIndex(5); builderService.setTemplateIndex(0);">Degree
         </div>
-        <div class="subs" *ngIf="currIndex === 5 || currIndex === 6">
+        <!-- *** KEEP HERE -- DISABLED FOR BETA *** -->
+        <!-- <div class="subs" *ngIf="currIndex === 5 || currIndex === 6">
             <div (click)="builderService.setBuilderIndex(5); subselect('Description')" class="buidler_navbar-submenu" [ngClass]="{'active': currIndex===5}"><i class="fas fa-circle fa-xs"></i>Description</div>
             <div (click)="builderService.setBuilderIndex(6); subselect('Rubric')" class="buidler_navbar-submenu" [ngClass]="{'active': currIndex===6}"><i class="fas fa-circle fa-xs"></i>Rubric</div>
-        </div>
+        </div> -->
     </div>
     <div class="primary_nav" [ngClass]="{'choosen': currIndex===7}"
         (click)="builderService.setBuilderIndex(7)">Employability</div>
