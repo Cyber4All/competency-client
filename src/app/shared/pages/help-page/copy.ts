@@ -35,7 +35,7 @@ export const sections = {
                     {
                         question: 'Building Behavior',
                         answer: `<p>The competency builder Behavior form has entry fields <b>Workrole</b>, <b>Task</b>, ` +
-                            `and <b>Task Description</b>. You can search and select a <b>Workrole</b> which is a NICE work role*. ` +
+                            `and <b>Task Description</b>. You can search and select a <b>Workrole</b> which is currently taken from the NICE Framework*. ` +
                             `<b>Task</b>'s can also be searched and added to the competency here. These are also ` +
                             `taken from the NICE Framework*. Multiple tasks can be added here. <b>Task Description</b> is the unique task(s) an actor ` +
                             `will be attempting to earn this competency (The specific task(s) relating to a classroom lesson, a ` +
