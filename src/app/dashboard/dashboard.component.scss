@@ -1,34 +1,5 @@
 @import "vars";
 
-.navigation {
-    margin-left: 40px;
-    margin-right: 40px;
-    margin-top: 20px;
-    min-height: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .title {
-        color: #fff;
-        margin-bottom: 20px;
-        padding-right: 20px;
-        
-        h2 {
-            padding-top: 5px;
-            margin-bottom: 0px;
-        }
-        .feedback {
-            color: #fff;
-        }
-    }
-    .logout {
-        float: right;
-        color: #fff;
-        max-height: 50px;
-        padding: 5px;
-        border: 2px solid #fff;
-    }
-}
 cc-primary-nav {
     margin: 0 auto;
 }
@@ -47,7 +18,7 @@ cc-primary-nav {
         h1 {
             float: left;
             font-size: 36px;
-            color: #424242;
+            color: color-gray(1);
             font-weight: 600;
         }
         .add-button {
@@ -68,17 +39,19 @@ cc-primary-nav {
 }
 
 .competency-card_container {
-    border: 1px solid #DFDFDF;
-    width: 289px;
-    height: 300px;
+    border: 1px solid color-gray(7);
+    width: 290px;
+    height: 340px;
     margin-bottom: 34px;
     float: left;
+    transition: all .15s ease-in-out;
 }
 
 .competency-card_container:hover {
     box-shadow: 0 10px 20px -10px #00000040;
     transform: scale(1.01);
-    transition: all .15s ease-out;
+    transition: all .15s ease-in-out;
+    cursor: pointer;
 }
 
 .competency-card {
@@ -100,7 +73,7 @@ cc-primary-nav {
 }
 
 mat-card {
-    color: #424242;
+    color: color-gray(1);
     background: transparent;
     border-radius: 3px;
     overflow: hidden;
@@ -119,12 +92,12 @@ mat-card {
     top: 0;
     bottom: 0;
   
-    $color: #535d69;
+    $color: color-gray(3);
     font-size: 15pt;
     padding: 20px;
   
     .svg-inline--fa {
-      color: #1c70dd;
+      color: color-accent();
       font-size: 19.5pt;
       margin-bottom: 20px;
     }
@@ -142,7 +115,7 @@ mat-card {
       align-items: center;
   
       li {
-        color: color-accent("default");
+        color: color-accent();
         border: none;
         font-size: 15px;
         background: transparent;
@@ -159,7 +132,7 @@ mat-card {
         &.gone {
           opacity: 0.4 !important;
           cursor: default !important;
-          color: map-get($palette-gray, 2 );
+          color: color-gray(2);
         }
   
         &:not(.active):not(:disabled):hover {
@@ -168,7 +141,7 @@ mat-card {
         }
   
         &.active {
-          background: map-get($palette-gray, 10 );
+          background: color-gray(10);
         }
       }
     }

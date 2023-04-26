@@ -1,3 +1,4 @@
+@import "vars";
 /* You can add global styles to this file, and also import other style files */
 html, body { height: 100%; }
 
@@ -13,11 +14,11 @@ button {
     display: inline-block;
     padding: 10px 15px;
 
-    background: #F8F8F8;
-    border: 1px solid #DFDFDF;
+    background: color-gray(13);
+    border: 1px solid color-gray(7);
     border-radius: 4px;
 
-    color: #454545;
+    color: color-gray(1);
     white-space: nowrap;
     text-align: center;  
 
