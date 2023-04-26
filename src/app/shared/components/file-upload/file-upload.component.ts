@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FileService } from '../../../core/file.service';
 import { MimeTypes } from '../../../../entity/mimeTypes';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'cc-file-upload',
@@ -10,8 +11,9 @@ import { MimeTypes } from '../../../../entity/mimeTypes';
 export class FileUploadComponent implements OnInit {
 
   @Input() competencyId = '';
+  @Input() documentation!: FormControl;
   fileOver = false;
-  files: File[] = [];
+  files: (File & { documentationId?: string })[] = [];
 
   constructor(
     private fileService: FileService,
@@ -39,10 +41,16 @@ export class FileUploadComponent implements OnInit {
    */
   handleFileDropped(event: FileList) {
     let extension: string;
-    Array.from(event).forEach(file => {
+    Array.from(event).forEach(async file => {
       extension = file.name.split('.')[1];
       if((Object.values(MimeTypes) as string[]).includes(extension)) {
-        this.files.push(file);
+        const updatedFile: (File & {documentationId?: string}) = file;
+        const docId = await this.fileService.uploadFile(this.competencyId, file, '');
+        this.documentation.patchValue([docId]);
+        updatedFile.documentationId = docId;
+
+        this.files.push(updatedFile);
+        console.log(updatedFile);
       } else {
         console.log(extension, 'does not work'); // TODO: Replace with toaster message
       }
@@ -60,6 +68,17 @@ export class FileUploadComponent implements OnInit {
   }
 
   /**
+   * Removes a file that was about to be submitted
+   *
+   * @param file The file to be removed
+   */
+  async removeFile(file: File) {
+   const index = this.files.indexOf(file);
+   this.files.splice(index, 1);
+  //  await this.fileService.deleteFile(this.competencyId, )
+  }
+
+  /**
    * Begins the process of submitting a file to S3 and the API
    *
    * @param file The file to submit
@@ -67,16 +86,5 @@ export class FileUploadComponent implements OnInit {
    */
   async handleFileUpload(file: File, description: string) {
     await this.fileService.uploadFile(this.competencyId, file, description);
-  }
-
-  /**
-   * Removes a file that was about to be submitted
-   *
-   * @param file The file to be removed
-   */
-  removeFile(file: File) {
-    const index = this.files.indexOf(file);
-
-    this.files.splice(index, 1);
   }
 }

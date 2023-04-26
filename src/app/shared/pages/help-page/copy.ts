@@ -18,7 +18,7 @@ export const sections = {
                                 "
                             >NEW COMPETENCY</button> ` +
                             `button in the top-right corner of your dashboard. This opens the Competency Builder. The builder has ` +
-                            `unique data entry fields the conform to the ABCDE model outlined in the Competency eHandbook. You navigate `+
+                            `unique data entry fields that conform to the ABCDE model outlined in the Competency eHandbook. You navigate `+
                             `the builder based on which attribute of a competnecy you wish to enter data for.</p>` +
                             `<img 
                                 src="../../../assets/competency-builder.png"

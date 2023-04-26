@@ -36,26 +36,26 @@ export class FileService {
    * @param file the file to be uploaded
    * @param description the description to add to the documentation
    */
-  async uploadFile(competencyId: string, file: File, description: string) {
+  async uploadFile(competencyId: string, file: File, description: string): Promise<string> {
     this.authService.initHeaders();
-    const lambdaResponse: Lambda = await this.uploadLambdaService(competencyId, file);
+    // const lambdaResponse: Lambda = await this.uploadLambdaService(competencyId, file);
 
-    // format the lambda response
-    const formData = new FormData();
-    for (const [name, value] of Object.entries(lambdaResponse.fields)) {
-      formData.append(name, value);
-    }
-    formData.append('file', file);
+    // // format the lambda response
+    // const formData = new FormData();
+    // for (const [name, value] of Object.entries(lambdaResponse.fields)) {
+    //   formData.append(name, value);
+    // }
+    // formData.append('file', file);
 
-    // Adds the file to S3
-    await lastValueFrom(this.http.post(lambdaResponse.url, formData)).catch(e => {
-      console.log(e); // TODO: Swap for toaster component
-    });
+    // // Adds the file to S3
+    // await lastValueFrom(this.http.post(lambdaResponse.url, formData)).catch(e => {
+    //   console.log(e); // TODO: Swap for toaster component
+    // });
 
     // formats the uri to be stored in mongo, will be used for file retrieval and deleting a file
     const fileURL = `https://cc-file-upload-bucket.s3.amazonaws.com/${this.authService.user?._id}/${competencyId}/${file.name}`;
 
-    await lastValueFrom(
+    return await lastValueFrom(
       this.http.post(
         COMPETENCY_ROUTES.CREATE_DOCUMENTATION(competencyId),
         {
@@ -65,10 +65,12 @@ export class FileService {
         },
         { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
       )
-    ).then(res => {
+    ).then((res: { id: string }) => {
       console.log('Documentation created!', res); // TODO: Swap for toaster component
+      return res.id;
     }).catch(e => {
       console.log(e); // TODO: Swap for toaster component
+      throw e;
     });
   }
 
