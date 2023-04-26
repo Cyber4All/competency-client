@@ -9,6 +9,7 @@ import { BetaWelcomeComponent } from './shared/components/beta-welcome/beta-welc
 import { AdminGuard } from './shared/guards/admin.guard';
 import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
 import { BetaGuard } from './shared/guards/beta.guard';
+import { VerifyEmailGuard } from './shared/guards/verify-email.guard';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 const routes: Routes = [
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'verify-email',
+    canActivate: [VerifyEmailGuard],
   },
   {
     path: 'auth/reset/password',

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/core/auth.service';
+import { AuthService } from '../../../core/auth.service';
 
 @Component({
   selector: 'cc-user-menu',
@@ -17,6 +17,9 @@ export class UserMenuComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Method to log a user out and refresh the page view
+   */
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);

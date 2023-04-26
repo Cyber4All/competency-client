@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { BuilderValidation } from '../../../../../../entity/builder-validation';
-import { Employability } from '../../../../../../entity/employability';
+import { Employability } from '../../../../../../entity/Employability';
 import { BuilderService } from '../../../../../core/builder.service';
 @Component({
   selector: 'cc-employability-builder',

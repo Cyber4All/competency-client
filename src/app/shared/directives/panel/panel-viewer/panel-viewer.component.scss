@@ -13,7 +13,11 @@
 .side-panel {
   background: white;
   position: fixed;
-  padding: 20px;
+  bottom: 0;
+  right: 10px;
+  height: 550px;
+  width: 800px;
+  border-radius: 6px 6px 0px 0px;
   z-index: 5;
   box-shadow: -2px 0 6px 2px rgba(0, 0, 0, 0.1);
   transform: translateZ(0);
@@ -32,7 +36,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 70%;
+    height: 80%;
     width: 70%;
     border-radius: 10px;
 
@@ -44,18 +48,72 @@
       height: fit-content;
     }
   }
+
+  .side-panel__header {
+    background-color: color-gray(8);
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .side-panel__title {
+      margin: 10px 20px;
+      font-size: 18px;
+      font-weight: 600;
+      color: color-gray(1);
+      text-align: left;
+    }
+
+    .side-panel__buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .side-panel__exit-button {
+        margin: 0 25px 0 0;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+
+        &:hover {
+          cursor: pointer;
+        }
+  
+        &:active {
+          background-color: color-gray(6);
+          border-radius: 1000px;
+        }
+      }
+  
+      .side-panel__delete-button {
+        margin: 0 20px 0 0;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: color-danger($style: "default");
+
+        &:hover {
+          cursor: pointer;
+        }
+  
+        &:active {
+          background-color: color-gray(6);
+          border-radius: 1000px;
+        }
+      }
+    }
+  }
 }
 
-.side-panel__exit-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 18px;
-  border: none;
-  outline: none;
-  background-color: transparent;
-}
+
 
 .side-panel--no-padding {
   padding: 0;
+}
+
+.fa-times:hover{
+  cursor: pointer;
 }

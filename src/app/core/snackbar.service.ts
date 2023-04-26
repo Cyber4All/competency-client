@@ -42,11 +42,10 @@ export class SnackbarService  {
                 title = 'Invalid Input';
                 break;
             case 401:
-                title = 'Not logged in';
-                message = 'Please log in to continue';
+                title = 'Not Authorized';
                 break;
             case 403:
-                title = 'Not Authorized';
+                title = 'Forbidden';
                 break;
             case 404:
                 title = 'Not Found';
@@ -59,7 +58,7 @@ export class SnackbarService  {
                 break;
             default:
                 title = 'Internal Service Error';
-                message = 'Something went wrong on our end. Please  try again later.';
+                message = 'Something went wrong on our end. Please try again later.';
         }
         this.notification$.next({
             title: title,

@@ -10,12 +10,16 @@
   border-top-left-radius: 4px;
   padding: 10px 20px;
 
+  position: sticky;
+  top: 0;
+
   h2 {
     margin: 0;
   }
 
   button {
-    background-color: color-gray(8);
+    background-color: inherit;
+    color: inherit;
     border: 0px;
     margin-right: 5px;
     padding: 5px 10px;
@@ -25,15 +29,59 @@
     }
 
     &:active {
-      background-color: color-gray(6);
+      opacity: 0.5;
       border-radius: 1000px;
     }
+  }
+
+  &.admin {
+    color: white;
+
+    p {
+      margin: 0
+    }
+
+    .right-corner {
+      display: flex;
+
+      .status {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-right: 50px;
+  
+        p {
+          font-size: font();
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+
+  &.draft {
+    background-color: $draft-light;
+  }
+
+  &.submitted {
+    background-color: $submitted-light;
+  }
+
+  &.published {
+    background-color: $published-light;
+  }
+
+  &.deprecated {
+    background-color: $deprecated-light;
+  }
+
+  &.rejected {
+    background-color: $rejected-light;
   }
 }
 
 .content {
   padding: 0 40px;
-  height: 80%;
+  height: 75%;
   overflow-y: scroll;
   overflow-wrap: break-word;
   hyphens: auto;
@@ -47,25 +95,59 @@
   }
 }
 
+.builder-content{
+  overflow-wrap: break-word;
+  hyphens: auto;
+  margin: 0;
+  width: 580px;
+}
+
+
 .footer {
   display: flex;
-  flex-direction: row-reverse;
-  margin: 20px 50px 10px 0;
+  justify-content: flex-end;
+  margin: 20px 25px 10px 0;
 
-  .submit {
+  position: sticky;
+  bottom: 0;
+
+  button {
     padding: 15px 20px;
-    border: 0px;
+    border: 1px solid color-gray(6);
     border-radius: 5px;
-    background-color: color-accent();
-    color: white;
-    box-shadow: 0px 2px 5px color-accent();
+    margin-right: 25px;
+    background-color: #F8F8F8;
+
+    &.submit {
+      border: 0px;
+      background-color: color-accent();
+      color: white;
+      box-shadow: 0px 2px 5px color-accent();
+  
+      &:active {
+        background-color: color-accent("lighter");
+      }
+    }
 
     &:hover {
       cursor: pointer;
     }
+  }
+}
 
-    &:active {
-      background-color: color-accent("lighter");
+.content-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .fa-edit{
+    margin-bottom: 16px;
+    &:hover{
+      cursor: pointer;
     }
+  }
+
+  .hidden{
+    display: none;
   }
 }

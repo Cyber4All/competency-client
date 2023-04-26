@@ -1,30 +1,50 @@
-<div class="header">
-  <h2>Insert Competency Title Here</h2>
-  <button (click)="close.emit()">
-    <i class="far fa-times fa-2x"></i>
-  </button>
-</div>
+<div>
+<div *ngIf="!isAdmin else adminHeader" class="content" [ngClass]="{'builder-content': builderMode === true}">
 
 <div class="content">
+  <!-- TODO: Implement once user routes and submission dates are implemented -->
+  <!-- <div *ngIf="isAdmin" class="details bottom-bordered content-section">
+    <h2>Details</h2>
+    <p><b>Date Submitted:</b> Decembruary 32, 1932</p>
+    <p><b>Author Name: </b> Mick E. Maus</p>
+    <p><b>Author Email: </b> mickemaus@aol.com</p>
+  </div> -->
   <div class="actor bottom-bordered content-section">
-    <h2>Actor</h2>
-    <p><b>Type:</b> {{ competency.actor.type ? competency.actor.type : "No type specified." }}</p>
+    <div class="content-header">
+       <h2>Actor</h2>
+       <div (click)="builderService.setBuilderIndex(0)">
+        <i class="fas fa-edit fa-lg" [ngClass]="{'hidden': builderMode===false}" ></i>
+       </div>
+       
+    </div>
+   
+    <p><b>Type:</b> {{ actor ? actor : "No type specified." }}</p>
     <p><b>Details:</b> {{ competency.actor.details ? competency.actor.details : "No details specified."}}</p>
   </div>
   <div class="behavior bottom-bordered content-section">
-    <h2>Behavior</h2>
-    <p><b>Workrole:</b> {{ competency.behavior.work_role ? competency.behavior.work_role : "No workrole specified."}}</p>
+    <div class="content-header">
+      <h2>Behavior</h2>
+      <div (click)="builderService.setBuilderIndex(1)">
+        <i class="fas fa-edit fa-lg" [ngClass]="{'hidden': builderMode===false}" ></i>
+       </div>
+   </div>
+    <p><b>Workrole:</b> {{ workrole ? workrole : "No workrole specified."}}</p>
     <div>
       <p><b>Tasks:</b></p>
       <ul>
-        <li *ngFor="let task of competency.behavior.tasks">{{ task }}</li>
-        <ng-container *ngIf="!competency.behavior.tasks.length" [ngTemplateOutlet]="noTasks"></ng-container>
+        <li *ngFor="let task of tasks">{{task.element_id | titlecase}} - {{ task.description }}</li>
+        <ng-container *ngIf="!tasks.length" [ngTemplateOutlet]="noTasks"></ng-container>
       </ul>
     </div>
     <p><b>Details:</b> {{ competency.behavior.details ? competency.behavior.details : "No details specified." }}</p>
   </div>
   <div class="condition bottom-bordered content-section">
-    <h2>Condition</h2>
+    <div class="content-header">
+      <h2>Condition</h2>
+      <div (click)="builderService.setBuilderIndex(2)">
+        <i class="fas fa-edit fa-lg" [ngClass]="{'hidden': builderMode===false}" ></i>
+       </div>
+   </div>
     <p><b>Scenario:</b> {{ competency.condition.scenario ? competency.condition.scenario : "No scenario specified"}}</p>
     <p><b>Limitations:</b> {{ competency.condition.limitations ? competency.condition.limitations : "No limitations specified."}}</p>
     <div>
@@ -43,27 +63,51 @@
     </div>
   </div>
   <div class="degree bottom-bordered content-section">
-    <h2>Degree</h2>
+    <div class="content-header">
+      <h2>Degree</h2>
+      <div (click)="builderService.setBuilderIndex(5)">
+        <i class="fas fa-edit fa-lg" [ngClass]="{'hidden': builderMode===false}" ></i>
+       </div>
+   </div>
     <p><b>Time:</b> {{ competency.degree.time ? competency.degree.time : "No time specified."}}</p>
     <p><b>Completeness:</b> {{ competency.degree.complete ? competency.degree.complete : "No completeness specified."}}</p>
     <p><b>Correctness:</b> {{ competency.degree.correct ? competency.degree.correct : "No correctness specified." }}</p>
   </div>
   <div class="employability bottom-bordered content-section">
-    <h2>Employability</h2>
+    <div class="content-header">
+      <h2>Employability</h2>
+      <div (click)="builderService.setBuilderIndex(7)">
+        <i class="fas fa-edit fa-lg" [ngClass]="{'hidden': builderMode===false}" ></i>
+       </div>
+   </div>
     <p>{{ competency.employability.details ? competency.employability.details : "No details specified."}}</p>
   </div>
   <div class="notes content-section">
-    <h2>Notes</h2>
+    <div class="content-header">
+      <h2>Notes</h2>
+      <div (click)="builderService.setBuilderIndex(8)">
+        <i class="fas fa-edit fa-lg" [ngClass]="{'hidden': builderMode===false}" ></i>
+       </div>
+   </div>
     <p>{{ competency.notes.details ? competency.notes.details : "No notes specified."}}</p>
   </div>
 </div>
 
-<div class="footer">
+<div *ngIf="!isAdmin else adminFooter" class="footer">
   <!-- TODO: Add submitted date once event logs are implemented -->
   <!-- <p>Submitted December 32, 2133</p> -->
-  <button (click)="onUpdateSubmission()" class="submit">UPDATE SUBMISSION</button>
+  <button
+    *ngIf="!builderMode && competency.status === 'draft'"
+    (click)="onUpdateSubmission()"
+    class="submit"
+  >EDIT DRAFT</button>
+  <button
+    *ngIf="!builderMode && isAdmin"
+    (click)="onUpdateSubmission()"
+    class="submit"
+  >EDIT SUBMISSION</button>
 </div>
-
+</div>
 <ng-template #noTasks>
   <p>No tasks specified.</p>
 </ng-template>
@@ -74,4 +118,37 @@
 
 <ng-template #noTech>
   <p>No technology specified.</p>
+</ng-template>
+
+<ng-template #adminHeader>
+  <div class="admin header" [ngClass]="competency.status.toString()">
+    <div class="left-corner">
+      <h2>{{ competency.behavior.work_role }} - {{ competency.behavior.tasks[0].split(":")[0] }}</h2>
+      <p><b>Task: </b>{{ competency.behavior.tasks[0] }}</p>
+    </div>
+    <div class="right-corner">
+      <div class="status">
+        <i [ngClass]="competencyStatusIcon()"></i>
+        <p><b>{{ competency.status | titlecase }}</b></p>
+      </div>
+      
+      <button (click)="close.emit()">
+        <i class="far fa-times fa-2x"></i>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #adminFooter>
+  <div class="footer">
+    <button 
+      *ngIf="competency.status.toString() === 'submitted'"
+      (click)="onReject()"
+      >REJECT</button>
+    <button 
+      *ngIf="competency.status.toString() === 'submitted' || competency.status.toString() === 'published'" 
+      (click)="onUpdateSubmission()"
+      >EDIT</button>
+    <button *ngIf="!(competency.status.toString() === 'rejected' || competency.status.toString() === 'deprecated')" (click)="onAdminButtonClicked()" class="submit">{{ adminButtonText() }}</button>
+  </div>
 </ng-template>

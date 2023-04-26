@@ -22,15 +22,26 @@
     </p>
   </div>
   <div class="competency-constructor_accordion">
-    <!--Actor Card Preview-->
-    <div class="competency_edit-actor-container">
-      <p class="competency_card-actor"><span>Actor</span>: {{ competency.actor.type }}</p>
-    </div>
-    <!--Behavior Card Preview-->
-    <div class="competency_edit-behavior-container">
-      <p class="competency_card-workrole"><span>Work Role</span>: {{ competency.behavior.work_role }}</p>
-      <p class="competency_card-task"><span>Task</span>: {{ competency.behavior.tasks }}</p>
-      <p class="competency_card-description"><span>Description</span>: {{ competency.behavior.details }}</p>
-    </div>
+    <ng-container *ngIf="!loading; then competencyAccordion else loadingTemplate"></ng-container>
   </div>
 </div>
+
+<ng-template #competencyAccordion>
+  <!--Actor Card Preview-->
+  <div class="competency_edit-actor-container">
+    <p class="competency_card-actor"><span>Actor</span>: {{ competency.actor.type }}</p>
+  </div>
+  <!--Behavior Card Preview-->
+  <div class="competency_edit-behavior-container">
+    <p class="competency_card-workrole"><span>Work Role</span>: {{ workrole }}</p>
+    <p class="competency_card-task"><span>Task</span>: {{ tasks }}</p>
+    <p class="competency_card-description"><span>Description</span>: {{ competency.behavior.details }}</p>
+  </div>
+</ng-template>
+
+<ng-template #loadingTemplate>
+  <div class="competency-loading">
+      <i class="far fa-spinner-third fa-spin"></i>
+      Loading...
+  </div>
+</ng-template>
