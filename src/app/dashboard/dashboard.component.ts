@@ -46,7 +46,8 @@ export class DashboardComponent implements OnInit {
   previewCompetency!: Competency;
   openBuilder = false;
   openPreview = false;
-
+  // Boolean to disable `NEW COMPETENCY` button
+  disabled = false;
   isAdmin!: boolean;
 
   constructor(
@@ -286,6 +287,8 @@ export class DashboardComponent implements OnInit {
    * @param existingCompetency - Opens the builder with a pre-selected competency
    */
   async openCompetencyBuilder(existingCompetency?: Competency) {
+    // Enforce button disabled state
+    this.disabled = true;
     // If !existingCompetency; we are creating a new competency object
     if(!existingCompetency) {
       // Create competency shell
@@ -336,6 +339,8 @@ export class DashboardComponent implements OnInit {
       // Update user dashboard with newly created competencies
       await this.initDashboard();
     }
+    // Release button disabled state
+    this.disabled = false;
   }
 
   /**

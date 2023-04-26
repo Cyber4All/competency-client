@@ -4,8 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { COPY } from './footer.copy';
 import { environment } from '../../../../environments/environment';
-//import { SubscriptionAgreementService } from '../../../core/subscription-agreement.service';
-//import { ToastrOvenService } from '../../../shared/modules/toaster/notification.service';
 
 @Component({
   selector: 'cc-footer',
@@ -20,8 +18,6 @@ export class FooterComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    // private subscriptionService: SubscriptionAgreementService,
-    // private toaster: ToastrOvenService
   ) { }
 
   ngOnInit() {
