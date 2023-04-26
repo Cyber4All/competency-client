@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WorkroleService } from '../../../core/workrole.service';
 import { DropdownType } from '../../../../entity/dropdown';
-import { Lifecycles } from '../../../../entity/lifecycles';
+import { Lifecycles } from '../../../../entity/Lifecycles';
 import { Workrole } from '../../../../entity/workrole';
 import { Elements } from '../../../../entity/elements';
 
