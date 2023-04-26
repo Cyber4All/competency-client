@@ -2,7 +2,7 @@
 <div class="competency_edit-degree-container">
   <ng-container *ngIf="currIndex === 5">
     <!--Time form filed-->
-    <label>Time</label>
+    <label>Time *</label>
     <div class="time_selector">
       <input [formControl]="time" class="time_input">
       <div class="dropdown">
@@ -23,11 +23,11 @@
     </div>
     <!--Completeness form field-->
     <div class="completely_correct">
-    <label class="completeness">Completeness</label>
+    <label class="completeness">Completeness *</label>
     <textarea placeholder="Enter your definition of the task being completed here." [formControl]="complete"></textarea>
     
     <!--Correctness form field-->
-    <label class="correctness">Correctness</label>
+    <label class="correctness">Correctness *</label>
     <textarea placeholder="Enter your definition of the task being correct here." [formControl]="correct"></textarea>
     </div>
   </ng-container>

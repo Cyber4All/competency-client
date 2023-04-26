@@ -1,7 +1,7 @@
 <!--Actor Builder-->
 <!--Actor type form field-->
 <div class="actor_input">
-  <label>Actor</label>
+  <label>Actor *</label>
   <div class="actor_box" (click)="displayActors()">
     {{ actorSelected ? actorSelected.value : 'Select an actor' }}
     <div [ngClass]="actorDisplay ? 'hidden': 'arrow_down'">
@@ -19,7 +19,7 @@
 </div>
 <!--Actor description form field-->
 <div class="description_input">
-  <label>Description</label>
+  <label>Description *</label>
   <textarea class="description_box" placeholder="Provide a description for your actor"
     [formControl]="details"></textarea>
 </div>
