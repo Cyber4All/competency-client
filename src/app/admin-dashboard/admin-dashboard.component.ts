@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/core/auth.service';
 import { CompetencyService, sleep } from 'app/core/competency.service';
 import { Competency } from 'entity/Competency';
@@ -26,7 +26,7 @@ export class AdminDashboardComponent implements OnInit {
   };
   currPage = 1;
 
-  unsubscribe: Subject<void> = new Subject();
+  unsubscribe: Subject<void> = new Subject(); // TODO: this needs to be used
 
   // Logic to display the competency preview
   previewCompetency: Competency;
@@ -35,13 +35,13 @@ export class AdminDashboardComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private competencyService: CompetencyService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
+  // Properties for the filters
   dropdownType = DropdownType;
-
-  // Selected Filters
-  selectedStatuses: string[] = [];
+  selectedStatuses: string[] = []; // Selected filters
   selectedWorkroles: string[] = [];
   selectedTasks: string[] = [];
   selectedAudiences: string[] = [];
@@ -59,7 +59,7 @@ export class AdminDashboardComponent implements OnInit {
    */
   async initDashboard() {
     this.loading = true;
-    await sleep(1000);
+    await sleep(1000); // TODO: Do we need this?
     await this.getCompetencies(this.search);
     await this.loadCompetencies();
     this.loading = false;
@@ -74,21 +74,21 @@ export class AdminDashboardComponent implements OnInit {
     // Explicitly clear competencies array
     this.search.competencies = [];
     // Check if user is logged in
-    if(this.authService.user?._id !== undefined) {
+    if(this.authService.user?._id !== undefined) { // TODO: No need to check if user logged in
       // Retrieve author competencies
       this.search = await this.competencyService
         .getAllCompetencies({
           limit: q ? q.limit : this.search.limit,
           page:  q ? q.page : this.search.page,
-          author: this.authService.user?._id,
-          status: [
+          author: this.authService.user?._id, // TODO: Display from any user
+          status: [ // TODO: Remove drafts, display deprecated
             `${Lifecycles.DRAFT}`,
             `${Lifecycles.REJECTED}`,
             `${Lifecycles.SUBMITTED}`,
             `${Lifecycles.PUBLISHED}`
           ]
         });
-    } else {
+    } else { // TODO: Remove this
       // User is not logged in, clear search object, display no results
       this.search = {
         competencies: [],
@@ -112,6 +112,23 @@ export class AdminDashboardComponent implements OnInit {
           });
       });
     }
+  }
+
+  /**
+   * Method to navigate to dashboard with query params
+   */
+  async navigateDashboard() {
+    const params = {
+      limit: this.search.limit,
+      page: this.currPage
+    };
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.navigate(['/admin/dashboard'], {
+      queryParams: params
+    });
+    window.scrollTo(0, 0);
+    await sleep(1000);
+    this.currPage = params.page;
   }
 
   /**
@@ -143,32 +160,86 @@ export class AdminDashboardComponent implements OnInit {
       //   task: this.selectedTasks,
       //   audience: this.selectedAudiences
       // });
-    }
+  }
 
-    // Functions to set the selected filters upon change
-    statuses(statuses: string[]) {
-      this.selectedStatuses = statuses;
-      this.filter();
+  // Functions to set the selected filters upon change
+  statuses(statuses: string[]) {
+    this.selectedStatuses = statuses;
+    this.filter();
+  }
+  workroles(workroles: string[]) {
+    this.selectedWorkroles = workroles;
+    this.filter();
+  }
+  tasks(tasks: string[]) {
+    this.selectedTasks = tasks;
+    this.filter();
+  }
+  audiences(audiences: string[]) {
+    this.selectedAudiences = audiences;
+    this.filter();
+  }
+  /**
+   * Logic to trigger the Competency Preview component to open
+   *
+   * @param competency The competency to preview
+   */
+  async openCompetencyPreview(competency: Competency) {
+    this.previewCompetency = competency;
+    this.openPreview = true;
+  }
+
+  /**
+   * Navigate to previous page
+   */
+  prevPage() {
+    const page = +this.currPage - 1;
+    if (page > 0) {
+      this.currPage = page;
+      this.navigateDashboard();
     }
-    workroles(workroles: string[]) {
-      this.selectedWorkroles = workroles;
-      this.filter();
+  }
+
+  /**
+   * Navigate to next page
+   */
+  nextPage() {
+    const page = +this.currPage + 1;
+    if (page <= this.search.page) {
+      this.currPage = page;
+      this.navigateDashboard();
     }
-    tasks(tasks: string[]) {
-      this.selectedTasks = tasks;
-      this.filter();
+  }
+  /**
+   * Navigate to a numbered page
+   *
+   * @param page target page
+   */
+  goToPage(page: number) {
+    if (page > 0 && page <= this.search.page) {
+      this.currPage = page;
+      this.navigateDashboard();
     }
-    audiences(audiences: string[]) {
-      this.selectedAudiences = audiences;
-      this.filter();
+  }
+
+  get pages(): number[] {
+    const totalPages = this.search.total / this.search.limit;
+    const pageCount = this.search.page;
+    let count = 1;
+    let upCount = 1;
+    let downCount = 1;
+    const arr = [this.currPage];
+
+    while (count < totalPages) {
+      if (this.currPage + upCount <= pageCount) {
+        arr.push(this.currPage + upCount++);
+        count++;
+      }
+      if (this.currPage - downCount > 0) {
+        arr.unshift(this.currPage - downCount++);
+        count++;
+      }
     }
-    /**
-     * Logic to trigger the Competency Preview component to open
-     *
-     * @param competency The competency to preview
-     */
-    async openCompetencyPreview(competency: Competency) {
-      this.previewCompetency = competency;
-      this.openPreview = true;
-    }
+    return arr;
+  }
 }
