@@ -38,6 +38,7 @@ export class DashboardComponent implements OnInit {
     work_role: [],
     task: []
   };
+  searchText = '';
   // Boolean toggle for 'clear filters' button
   filterApplied = false;
   unsubscribe: Subject<void> = new Subject();
@@ -104,6 +105,7 @@ export class DashboardComponent implements OnInit {
       // Retrieve author competencies
       this.search = await this.competencyService
         .getAllCompetencies({
+          text: this.searchText,
           limit: q ? q.limit : this.search.limit,
           page:  q ? q.page : this.search.page,
           author: this.authService.user?._id,
@@ -229,8 +231,10 @@ export class DashboardComponent implements OnInit {
   }
 
   performSearch(searchText: any) {
-    //TODO Actually perform the search
-    console.log(searchText);
+    if (searchText.target?.value!) {
+      this.searchText = searchText.target.value;
+      this.initDashboard();
+    }
   }
 
   /**
