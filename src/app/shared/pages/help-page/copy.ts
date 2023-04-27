@@ -112,7 +112,7 @@ export const sections = {
                 questions: [
                     {
                         question: `What is the competency lifecycle?`,
-                        answer: `<p>In order to facilitate the curation of competencies for the CAE Community and beyond every competency`+
+                        answer: `<p>In order to facilitate the curation of competencies for the CAE Community and beyond, every competency`+
                             ` submitted will be subjected to review by the Competency Constructor Team. The Competency Constructor ` +
                             `allows you to build a competency within your own dashboard where you are the only one with the ability to ` +
                             `review and edit that competency. If you would like to submit it for review so that it can be made publicly ` +
