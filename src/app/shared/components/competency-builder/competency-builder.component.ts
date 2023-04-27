@@ -139,7 +139,6 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
           }
           break;
         case 'degree':
-          console.log(event.value);
           this.competency = this.competency.setDegree(event.value as Degree);
           const degreeValid: BuilderValidation[] = this.competency.validateDegree();
           if (degreeValid.length === 1 && degreeValid[0].isValid) {

@@ -29,7 +29,6 @@ export class DegreeBuilderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('NgOnInit DegreeBuilderComponent, degree: ', this.degree);
     // Subscribe to degree errors
     this.builderService.degreeErrors.subscribe((errors: BuilderValidation[]) => {
       errors.map((error: BuilderValidation) => {
