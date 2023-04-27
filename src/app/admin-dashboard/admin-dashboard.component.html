@@ -22,7 +22,7 @@
 </ng-template>
 
 <ng-template #competencyTemplate>
-  <!-- <div class="competency-card">
+  <div class="competency-card">
       <div class="competency-card-wrapper">
           <div *ngFor="let competency of loadedCompetencies" class="competency-card_container">
               <cc-competency-card
@@ -33,7 +33,7 @@
           </div>
       </div>
   </div>
-  <div class="paginationCtrl">
+  <!-- <div class="paginationCtrl">
       <ul>
           <li (click)="prevPage()" [ngClass]="{'gone': currPage <= 1}"><i class="fas fa-chevron-left" aria-label="Previous page of results" tabindex="0"></i> Back </li>
           <li *ngFor="let p of pages" [ngClass]="{'active': currPage === p}" (click)="goToPage(p)"  attr.aria-label="Page {{ p }} of results" tabindex="0">{{ p }}</li>

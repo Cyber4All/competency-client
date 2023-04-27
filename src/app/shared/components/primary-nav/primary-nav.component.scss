@@ -1,6 +1,10 @@
 .navbar{
     display: flex;
     justify-content: center;
+
+    &.admin {
+        background-color: #EFEFEF;
+    }
 }
 .wrapper {
     width: 100%;
@@ -28,9 +32,7 @@
         margin: 30px;
     }
 
-    &.admin {
-        background-color: #EFEFEF;
-    }
+    
 }
 
 
