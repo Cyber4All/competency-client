@@ -37,7 +37,7 @@ export const sections = {
                             `</p><img 
                                 src="../../../assets/actorbuilder.png"
                                 style="width: 100%; max-width: 500px;"
-                            ></img><p>` +
+                            ></img><br><p>` +
                             `Select an <b>Actor</b> from the provided list that best fits the individual that would be attempting ` +
                             `to achieve this competency. The <b>Description</b> field allows you to enter additional information that ` +
                             `may be pertinent to defining your actor (i.e. pre-requisite classes, competition details, etc...).</p>` +
@@ -54,6 +54,10 @@ export const sections = {
                                     <li><b>Task Description</b>: details about what exactly the actor should/will be doing</li>
                                 </ul>
                             ` +
+                            `</p><img 
+                                src="../../../assets/behaviorbuilder.png"
+                                style="width: 100%; max-width: 500px;"
+                            ></img><br><p>` +
                             `Search and select a <b>Workrole</b> from the NICE Framework* for your competency. Search and select ` +
                             `<b>Task</b>'s from the NICE Framework* for your competency. Multiple tasks can be selected. ` +
                             `<b>Task Description</b> is the unique task(s) an actor will be attempting to earn this competency ` +
@@ -78,7 +82,11 @@ export const sections = {
                                     `to while attempting to earn this competency.</li>
                                 </ul>
                             ` +
-                            `` +
+                            `</p><img 
+                                src="../../../assets/conditionbuilderdescrip.png"
+                                style="width: 100%; max-width: 500px;"
+                            ></img><br><p>` +
+                            `<b>Scenario</b> provides the  <b>Limiations</b>` +
                             `</p>`
                     },
                     {
@@ -120,7 +128,7 @@ export const sections = {
                             ` submitted will be subjected to review by the Competency Constructor Team. The Competency Constructor ` +
                             `allows you to build a competency within your own dashboard where you are the only one with the ability to ` +
                             `review and edit that competency. If you would like to submit it for review so that it can be made publicly ` +
-                            `available you can do so through your dashboard {{ link to that part of the help docs }}. After it is ` +
+                            `available you can do so through the competency builder when you're finsihed with all edits. After it is ` +
                             `submitted it will be reviewed for applicability and our team might reach out for clarification or to ` +
                             `provide feedback on your submission. After review the decision will be made to either approve the ` +
                             `competency and publish it for public consumption or to reject the competency. If a competency is rejected ` +
