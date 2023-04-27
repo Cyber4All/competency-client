@@ -16,7 +16,7 @@
         </div>
         <div [ngClass]="timeDisplay ? 'time_dropdown': 'hidden'">
           <ul class="time_list" (mouseleave)="displayTime()">
-            <li *ngFor="let measure of timeList" (click)="this.timeSelected=measure; displayTime(); time.patchValue(time.value + ' - ' + measure.value)">{{ measure.value }}</li>
+            <li *ngFor="let measure of timeList" (click)="updateMeasure(measure)">{{ measure.value }}</li>
           </ul>
         </div>
       </div>
@@ -25,7 +25,7 @@
     <div class="completely_correct">
     <label class="completeness">Completeness *</label>
     <textarea placeholder="Enter your definition of the task being completed here." [formControl]="complete"></textarea>
-    
+
     <!--Correctness form field-->
     <label class="correctness">Correctness *</label>
     <textarea placeholder="Enter your definition of the task being correct here." [formControl]="correct"></textarea>
