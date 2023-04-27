@@ -247,7 +247,10 @@ export class AuthService {
    * Private method to enforce token removal when necessary
    */
   private deleteToken() {
+    // Explicitly clear any authenticated user vars
     this.user = undefined;
+    this._isAdmin.next(false);
+    this._isBetaUser.next(false);
     localStorage.removeItem('userId');
     /**
      * These parameters are now required by the library.

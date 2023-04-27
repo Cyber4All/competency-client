@@ -4,11 +4,13 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { DowntimeComponent } from './shared/components/downtime/downtime.component';
-import { BetaWelcomeComponent } from './shared/components/beta-welcome/beta-welcome.component';
+import { DowntimeComponent } from './shared/pages/downtime/downtime.component';
+import { BetaWelcomeComponent } from './shared/pages/beta-welcome/beta-welcome.component';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
 import { BetaGuard } from './shared/guards/beta.guard';
+import { TermsOfServiceComponent } from './shared/pages/terms-of-service/terms-of-service.component';
+import { HelpPageComponent } from './shared/pages/help-page/help-page.component';
 import { VerifyEmailGuard } from './shared/guards/verify-email.guard';
 
 const routes: Routes = [
@@ -40,12 +42,20 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'help',
+    component: HelpPageComponent
+  },
+  {
     path: 'downtime',
     component: DowntimeComponent
   },
   {
     path: 'welcome',
     component: BetaWelcomeComponent
+  },
+  {
+    path: 'system/termsofservice',
+    component: TermsOfServiceComponent
   },
   {
     path: '**',

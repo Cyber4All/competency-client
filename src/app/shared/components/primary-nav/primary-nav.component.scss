@@ -14,13 +14,16 @@
     .logo {
         padding: 30px;
 
-        h2 {
-            padding-top: 10px;
+        a {
+            img {
+                max-width: 225px;
+                height: auto;
+            } 
         }
     }
 
     .search {
-        max-width: 50%;
+        width: 50%;
         flex-grow: 1;
     }
 

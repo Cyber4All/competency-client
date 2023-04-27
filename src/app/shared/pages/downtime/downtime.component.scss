@@ -1,16 +1,22 @@
-.beta-welcome-wrapper {
+@import "vars";
+
+.downtime-wrapper {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
-	color: white;
+	color: color-gray(1);
 
-  .feedback {
-    color: white;
+  img {
+    margin-bottom: 50px;
+    width: 200px;
+    max-width: 100%;
+    height: auto;
   }
 
   h2 {
+    color: color-accent();
     margin-bottom: 20px;
     text-align: center;
   }

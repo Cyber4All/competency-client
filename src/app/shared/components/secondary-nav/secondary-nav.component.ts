@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { DropdownType } from '../../../../entity/dropdown';
 
 @Component({
@@ -7,7 +7,7 @@ import { DropdownType } from '../../../../entity/dropdown';
   styleUrls: ['./secondary-nav.component.scss']
 })
 export class SecondaryNavComponent implements OnInit {
-
+  @Input() disabled: boolean;
   @Output() newCompetency = new EventEmitter();
   @Output() getHelp = new EventEmitter();
   @Output() filterCompetencies = new EventEmitter<{ status: string[], workrole: string[], task: string[], audience: string[]}>();
