@@ -1,11 +1,12 @@
 <div class="wrapper">
     <!-- Dropdown button -->
-    <button class="button-wrapper" [matMenuTriggerFor]="dropdown">
+    <button class="button-wrapper" [matMenuTriggerFor]="dropdown" (menuClosed)="iconArrowDown = true" (menuOpened)="iconArrowDown = false">
         <div class="title">{{title}}</div>
-        <i class="fa fa-chevron-down"></i>
+        <ng-container *ngIf="iconArrowDown else iconUp" [ngTemplateOutlet]="iconDown"></ng-container>
     </button>
 
     <!-- Dropdown Menu triggered toggled by the dropdown button -->
+    <!-- TO DO: Remove Angular Material and then add hover state for list items (see builder dropdowns)-->
     <mat-menu #dropdown="matMenu" class="dropdown-wrapper">
             <!-- Searchbar used to filter the 'filter items' -->
             <div *ngIf="searchbar" class="searchbar" (click)="$event.stopPropagation()">
@@ -14,7 +15,23 @@
 
             <!-- Filter items -->
             <div mat-menu-item class="dropdown">
-                <div *ngFor="let item of items" class="item" [ngStyle]="calculateStyles(item)" (click)="toggleFilterItem(item)">{{item.name}}</div>
+                <div *ngFor="let item of items" class="item" [ngStyle]="calculateStyles(item)" (click)="toggleFilterItem(item)">
+                    <div class="item_text">
+                        {{item.name}}
+                    </div>
+                </div>
             </div>
     </mat-menu>
 </div>
+
+<ng-template #iconDown>
+    <div>
+        <i *ngIf="iconArrowDown" class="fa fa-chevron-down"></i>
+    </div>
+</ng-template>
+
+<ng-template #iconUp>
+    <div>
+        <i *ngIf="!iconArrowDown" class="fa fa-chevron-up"></i>
+    </div>
+</ng-template>

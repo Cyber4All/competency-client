@@ -1,0 +1,131 @@
+@import 'vars.scss';
+
+$inputPadding: 13px;
+
+:host {
+  display: inline-block;
+
+  &.text-field--block {
+    display: block;
+  }
+}
+
+.input {
+  position: relative;
+  font-size: 12pt;
+  border: 2px solid color-gray(6);
+  border-radius: 3px;
+  background: color-gray(13);
+  transition: all 0.2s ease;
+
+  input {
+    box-sizing: border-box;
+    padding: $inputPadding;
+    appearance: none;
+    border: 0;
+    font-size: inherit;
+    font-family: inherit;
+    @include text--default();
+    min-width: 250px;
+    outline: 0;
+    position: relative;
+    z-index: 1;
+    background: transparent;
+    width: 100%;
+  }
+
+  &.input--focused {
+    border-color: color-accent();
+
+    .label {
+      color: color-accent();
+    }
+  }
+
+  &.input--focused,
+  &.input--content {
+    .label {
+      transform: scale(0.85) translateY(-16px);
+      padding: 4px 8px;
+      background: color-gray(13);
+    }
+  }
+
+  &.input--error {
+    border-color: color-danger();
+
+    .label {
+      color: color-danger();
+    }
+  }
+
+  &.input--success {
+    border-color: color-success();
+
+    .label {
+      color: color-success();
+    }
+  }
+
+  &.input--disabled {
+    pointer-events: none;
+    background: color-gray(6);
+    border-color: color-gray(6);
+  }
+
+  .label {
+    padding: $inputPadding;
+    border-radius: 2px;
+    position: absolute;
+    font-size: inherit;
+    transition: inherit;
+    color: color-gray(5);
+    z-index: 0;
+  }
+}
+
+.input__badges {
+  z-index: 1;
+  position: absolute;
+  right: $inputPadding;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 12pt;
+
+  & > * {
+    padding: 5px;
+  }
+
+  .badge--show-password {
+    color: color-accent();
+  }
+
+  .badge--error {
+    color: color-danger();
+  }
+
+  .badge--success {
+    color: color-success();
+  }
+
+  .badge--loading {
+    color: color-accent();
+  }
+}
+
+.show-password-toggle {
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-decoration: underline;
+  @include text--light();
+  margin-top: 8px;
+}

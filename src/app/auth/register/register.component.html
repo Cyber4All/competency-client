@@ -1,46 +1,61 @@
 <cc-error-banner [message]="errMessage"></cc-error-banner>
 <div class="register-wrapper">
-    <h1>Competency Constructor ( )</h1>
-    <h5>A SecurEd Inc. Project</h5>
-    <form #f (ngSubmit)="register()" [formGroup]="regFormGroup">
-      <mat-form-field appearance="fill">
-        <mat-label>Username</mat-label>
-        <input 
-        [(ngModel)]="regInfo.username" 
-        matInput 
-        #username 
-        formControlName="username" 
-        required
-        >
-      <mat-error *ngIf="regFormGroup.get('username')?.invalid">{{authValidation.getInputErrorMessage(regFormGroup.get('username')!)}}</mat-error>
-
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Full Name</mat-label>
-        <input matInput formControlName="name"
-        [(ngModel)]="regInfo.name"
-        >
-      <mat-error *ngIf="regFormGroup.get('name')?.invalid">{{authValidation.getInputErrorMessage(regFormGroup.get('name')!)}}</mat-error>
-
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="email@example.com" formControlName="email"
-        [(ngModel)]="regInfo.email"
-        >
-      <mat-error *ngIf="regFormGroup.get('email')?.invalid">{{authValidation.getInputErrorMessage(regFormGroup.get('email')!)}}</mat-error>
-
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Organization</mat-label>
-        <input 
-        matInput 
-        formControlName="organization" 
-        (keyup)="keyup($event)">
-      <mat-error *ngIf="regFormGroup.get('organization')?.invalid">{{authValidation.getInputErrorMessage(regFormGroup.get('organization')!)}}</mat-error>
-
-      </mat-form-field>
-      <ul
+  <div class="logo">
+    <img src="../../../assets/CompetencyConstructor_Logo_Transparent.png" alt="Competency Constructor Logo">
+  </div>
+  <form>
+    <cc-text-field
+      animate
+      [autofocus]="true"
+      [value]="regFormGroup.get('username')!.value"
+      (valueChange)="regFormGroup.get('username')!.setValue($event)"
+      [required]="true"
+      [block]="true"
+      label="Username"
+      [isValid]="regFormGroup.get('username')!.valid"
+      [showValidity]="true"
+      [error]="authValidation.getInputErrorMessage(regFormGroup.get('username')!)!"
+      [autocomplete]="'new-password'"
+    ></cc-text-field>
+    <cc-text-field
+      animate
+      [value]="regFormGroup.get('name')!.value"
+      (valueChange)="regFormGroup.get('name')!.setValue($event)"
+      [required]="true"
+      [block]="true"
+      label="Full Name"
+      [isValid]="regFormGroup.get('name')!.valid"
+      [showValidity]="true"
+      [error]="authValidation.getInputErrorMessage(regFormGroup.get('name')!)!"
+      [autocomplete]="'new-password'"
+    ></cc-text-field>
+    <cc-text-field
+      animate
+      [value]="regFormGroup.get('email')!.value"
+      (valueChange)="regFormGroup.get('email')!.setValue($event)"
+      [required]="true"
+      [block]="true"
+      label="Email"
+      type="email"
+      [isValid]="regFormGroup.get('email')!.valid"
+      [showValidity]="true"
+      [error]="authValidation.getInputErrorMessage(regFormGroup.get('email')!)!"
+      [autocomplete]="'new-password'"
+    ></cc-text-field>
+    <cc-text-field
+      animate
+      [value]="regFormGroup.get('organization')!.value"
+      (valueChange)="regFormGroup.get('organization')!.setValue($event)"
+      [required]="true"
+      [block]="true"
+      label="Organization"
+      [isValid]="regFormGroup.get('organization')!.valid"
+      [showValidity]="true"
+      [error]="authValidation.getInputErrorMessage(regFormGroup.get('organization')!)!"
+      [autocomplete]="'new-password'"
+      (keyup)="keyup($event)"
+    ></cc-text-field>
+    <ul
       *ngIf="showDropdown"
       (onBlur)="closeDropdown()"
       class="org-dropdown_list"
@@ -49,68 +64,81 @@
       *ngTemplateOutlet="loading ? loadingTemplate : resultsTemplate"
       ></ng-container>
     </ul>
-    <mat-form-field appearance="fill">
-      <mat-label>Password</mat-label>
-      <input matInput type="password" formControlName="password"
-      [(ngModel)]="regInfo.password"
-      >
-      <mat-error *ngIf="regFormGroup.get('password')?.invalid">{{authValidation.getInputErrorMessage(regFormGroup.get('password')!)}}</mat-error>
-
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Confirm Password</mat-label>
-      <input matInput type="password" formControlName="confirmPassword"
-      [(ngModel)]="regInfo.confirmPassword"
-      >
-      <mat-error *ngIf="regFormGroup.get('confirmPassword')?.hasError">{{authValidation.getInputErrorMessage(regFormGroup.get('confirmPassword')!)}}</mat-error>
-
-
-    </mat-form-field>
-    <button mat-raised-button color="primary" tyep="submit">REGISTER</button>
-    <button mat-raised-button (click)="login()">CANCEL</button>
-  </form>
-  </div>
-  
-  <!-- organization dropdown template -->
-  <ng-template #resultsTemplate>
-    <ng-container
-      *ngIf="searchResults && searchResults.length; else noResultsTemplate"
-    >
-        <virtual-scroller
-        #scroll
-        [style.height]="scrollerHeight"
-        [bufferAmount]="5"
-        [enableUnequalChildrenSizes]="true"
-        [items]="searchResults"
-        >
-            <li
-                class="org-dropdown_list-item"
-                *ngFor="let org of scroll.viewPortItems"
-                (click)="selectOrg(org)"
-            >
-                {{ org.name }}
-            </li>
-            <div class="other-box" (click)="selectOrg()">
-                <li class="other-option">
-                Other
-                </li>
-            </div>
-        </virtual-scroller>
-    </ng-container>
-  </ng-template>
-
-  <ng-template #noResultsTemplate>
-    <div class="other-box">
-      <li class="other-option" (click)="selectOrg()">
-        Other
-      </li>
+    <cc-text-field
+      animate
+      [value]="regFormGroup.get('password')!.value"
+      (valueChange)="regFormGroup.get('password')!.setValue($event)"
+      [required]="true"
+      [block]="true"
+      label="Password"
+      type="password"
+      [isValid]="!regFormGroup.get('password')!.invalid"
+      [showValidity]="true"
+      [error]="authValidation.getInputErrorMessage(regFormGroup.get('password')!)!"
+      [autocomplete]="'new-password'"
+      [allowShowPasswordOption]="true"
+    ></cc-text-field>
+    <cc-text-field
+      animate
+      [value]="regFormGroup.get('confirmPassword')!.value"
+      (valueChange)="regFormGroup.get('confirmPassword')!.setValue($event)"
+      [required]="true"
+      [block]="true"
+      label="Verify Password"
+      type="password"
+      [isValid]="regFormGroup.get('confirmPassword')!.valid"
+      [showValidity]="true"
+      [error]="authValidation.getInputErrorMessage(regFormGroup.get('confirmPassword')!)!"
+      [autocomplete]="'new-password'"
+      [allowShowPasswordOption]="true"
+    ></cc-text-field>
+    <div class="form-button">
+      <button class="button-margin submit" (click)="register()">REGISTER</button>
+      <button class="button-margin cancel" (click)="login()">CANCEL</button>
     </div>
-  </ng-template>
+  </form>
+</div>
+  
+<!-- organization dropdown template -->
+<ng-template #resultsTemplate>
+  <ng-container
+    *ngIf="searchResults && searchResults.length; else noResultsTemplate"
+  >
+      <virtual-scroller
+      #scroll
+      [style.height]="scrollerHeight"
+      [bufferAmount]="5"
+      [enableUnequalChildrenSizes]="true"
+      [items]="searchResults"
+      >
+          <li
+              class="org-dropdown_list-item"
+              *ngFor="let org of scroll.viewPortItems"
+              (click)="selectOrg(org)"
+          >
+              {{ org.name }}
+          </li>
+          <div class="other-box" (click)="selectOrg()">
+              <li class="other-option">
+              Other
+              </li>
+          </div>
+      </virtual-scroller>
+  </ng-container>
+</ng-template>
 
-  <ng-template #loadingTemplate>
-    <span class="org-dropdown__message">
-      <i class="far fa-spinner-third fa-spin">
-        Loading
-      </i>
-    </span>
-  </ng-template>
+<ng-template #noResultsTemplate>
+  <div class="other-box">
+    <li class="other-option" (click)="selectOrg()">
+      Other
+    </li>
+  </div>
+</ng-template>
+
+<ng-template #loadingTemplate>
+  <span class="org-dropdown__message">
+    <i class="far fa-spinner-third fa-spin">
+      Loading
+    </i>
+  </span>
+</ng-template>

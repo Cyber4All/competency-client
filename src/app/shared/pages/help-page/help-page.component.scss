@@ -1,0 +1,61 @@
+@import 'vars';
+
+h1 {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 25px;
+    color: color-gray(3);
+    position: relative;
+    font-size: $largest;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+h3 {
+    padding-left: 25px;
+    padding-top: 25px;
+    color: color-accent();
+}
+
+div {
+    padding: 25px;
+}
+
+.accordion {
+    position: relative;
+    align-items: center;
+    background: transparent;
+    z-index: 2;
+    border: none;
+    padding: 25px 5px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.mat-expansion-panel {
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),0px 0px 0px 0px rgba(0, 0, 0, 0.14),0px 0px 3px 0px rgba(0, 0, 0, 0.12);
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.mat-expansion-panel-spacing {
+    margin: 0px;
+}
+
+.mat-elevation-z3 {
+    box-shadow: none;
+}
+
+.mat-tab-panel {
+    z-index: 3;
+}
+
+.content {
+    padding: 0px;
+    justify-content: center;
+}
+
+::ng-deep .mat-tab-label, .mat-tab-link {
+    font-size: $large;
+}

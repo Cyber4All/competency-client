@@ -244,14 +244,6 @@ export class CompetencyBuilder extends Competency {
                     message: 'At least one technology is required.'
                 });
             }
-            if (!this.condition.documentation) {
-                conditionErrors.push({
-                    type: 'condition',
-                    attribute: 'documentation',
-                    isValid: false,
-                    message: 'At least one documentation is required.'
-                });
-            }
         } else {
             conditionErrors.push({
                 type: 'condition',

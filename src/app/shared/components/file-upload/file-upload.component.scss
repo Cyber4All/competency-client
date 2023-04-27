@@ -1,10 +1,13 @@
+@import "vars";
+
 .drop-zone {
   position: relative;
   width: 550px;
   height: 150px;
   text-align: center;
-  border: 1px dashed #636772;
+  border: 1px dashed color-gray(3);
   border-radius: 6px;
+  transition: all .1s ease-in-out;
 
   input {
     opacity: 0;
@@ -16,15 +19,17 @@
     cursor: pointer;
   }
 
-  .upload_text {
+  .upload_text, .drop_file {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 150px;
 
+
+
     .fa-file-upload {
-      color: #376ed6;
+      color: color-accent();
       margin-bottom: 10px;
     }
 
@@ -38,8 +43,14 @@
   }
 
   &:hover {
-    background-color: rgba($color: #808080, $alpha: 0.1);
+    background-color: rgba($color: color-accent(), $alpha: 0.1);
+    transition: all .1s ease-in-out;
   }
+}
+
+.drop_file{
+  background-color: rgba($color: color-accent(), $alpha: 0.1);
+  transition: all .1s ease-in-out;
 }
 
 .file-list {
@@ -52,34 +63,53 @@
     width: 550px;
     padding: 25px 0;
     margin-top: 10px;
-    background: #FFFFFF;
-    border: 1px solid #C6CBD2;
+    background: white;
+    border: 1px solid color-gray(7);
     border-radius: 6px;
 
-    .file-left{
+    .file-left {
       display: flex;
       flex-direction: row;
+      align-items: center;
       padding-left: 25px;
 
-      .fa-file{
-        color: #376ED6;
+      .fa-file {
+        color: color-accent();
+      }
+
+      .file-name {
+        line-height: 0;
       }
     }
 
-    .file-right{
+    .file-right {
       padding-right: 25px;
-      &:hover{
-        cursor: pointer;
+      display: flex;
+      align-items: center;
+
+      .fa-trash-alt {
+        font-size: 18px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: color-danger($style: "default");
+
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
+
+    p {
+      margin-left: 45px;
+      margin-bottom: 0;
+    }
+
+
   }
 
-  p {
-    margin-left: 45px;
-    margin-bottom: 0;
+  .submit {
+    z-index: 2;
   }
-}
 
-.submit {
-  z-index: 2;
 }

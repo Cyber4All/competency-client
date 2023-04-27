@@ -1,3 +1,5 @@
+@import "vars";
+
 .competency_edit-employability-container{
     display: flex;
     flex-direction: column;
@@ -5,14 +7,14 @@
     label{
         font-size: 18px;
         font-weight: 400;
-        color: #1F2228;
+        color: color-gray(1);
     }
 
     textarea{
         width: 550px;
         height: 130px;
         border: 1px solid;
-        border-color: #C6CBD2;
+        border-color: color-gray(7);
         border-radius: 6px;
         margin-top: 10px;
         font-family: Arial;
