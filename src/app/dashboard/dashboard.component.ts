@@ -273,6 +273,10 @@ export class DashboardComponent implements OnInit {
     // Delete competency
     await this.competencyService.deleteCompetency(competencyId);
     await this.initDashboard();
+    // Release button disabled state (if it was disabled)
+    if (this.disabled) {
+      this.disabled = false;
+    }
   }
 
   openHelp() {

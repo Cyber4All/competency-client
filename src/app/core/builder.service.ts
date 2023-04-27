@@ -53,6 +53,10 @@ export class BuilderService {
     }
     // Updates current builder index
     public setBuilderIndex(value: number) {
+        // Disable Rubrics for degree
+        if (value === 6 ) {
+            value++;
+        }
         this._builderIndex.next(value);
     }
     // Updates current submenu index
