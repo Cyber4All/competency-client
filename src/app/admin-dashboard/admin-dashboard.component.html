@@ -41,3 +41,38 @@
       </ul>
   </div>
 </ng-template>
+
+<cc-competency-builder
+    ccPanel
+    *ngIf="openBuilder"
+    [competency]="builderCompetency"
+    [options]="{
+        showDeleteButton: true,
+        showExitButton: true,
+        title: 'Competency Builder',
+        padding: true,
+        exitButtonColor: 'black',
+        position: 'lower-right'
+    }"
+    (close)="closeBuilder()"
+    (delete)="deleteCompetency(builderCompetency._id)"
+></cc-competency-builder>
+
+<cc-preview-competency
+    ccPanel
+    *ngIf="openPreview"
+    [competency]="previewCompetency"
+    [options]="{ 
+        showDeleteButton: true,
+        showExitButton: true,
+        title: 'Competency Preview',
+        padding: false,
+        exitButtonColor: 'black',
+        position: 'center'
+    }"
+    [isAdmin]="true"
+    (updateSubmission)="openCompetencyBuilder(previewCompetency)"
+    (close)="closePreview()"
+    (delete)="deleteCompetency(previewCompetency._id)"
+    (statusUpdated)="handleStatusUpdated()"
+></cc-preview-competency>

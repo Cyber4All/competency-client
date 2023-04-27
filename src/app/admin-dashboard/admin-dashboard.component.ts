@@ -1,10 +1,14 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/core/auth.service';
+import { BuilderService } from 'app/core/builder.service';
 import { CompetencyService, sleep } from 'app/core/competency.service';
+import { SnackbarService } from 'app/core/snackbar.service';
+import { SNACKBAR_COLOR } from 'app/shared/components/snackbar/snackbar.component';
 import { Competency } from 'entity/Competency';
 import { Lifecycles } from 'entity/Lifecycles';
 import { Search } from 'entity/Search';
+import { CompetencyBuilder } from 'entity/builder.class';
 import { DropdownType } from 'entity/dropdown';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -28,15 +32,19 @@ export class AdminDashboardComponent implements OnInit {
 
   unsubscribe: Subject<void> = new Subject(); // TODO: this needs to be used
 
-  // Logic to display the competency preview
+  // Logic to display the competency preview and builder
+  builderCompetency!: CompetencyBuilder;
   previewCompetency: Competency;
+  openBuilder = false;
   openPreview = false;
 
   constructor(
     private authService: AuthService,
     private competencyService: CompetencyService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private builderService: BuilderService,
+    private snackbarService: SnackbarService
   ) { }
 
   // Properties for the filters
@@ -179,15 +187,6 @@ export class AdminDashboardComponent implements OnInit {
     this.selectedAudiences = audiences;
     this.filter();
   }
-  /**
-   * Logic to trigger the Competency Preview component to open
-   *
-   * @param competency The competency to preview
-   */
-  async openCompetencyPreview(competency: Competency) {
-    this.previewCompetency = competency;
-    this.openPreview = true;
-  }
 
   /**
    * Navigate to previous page
@@ -242,4 +241,109 @@ export class AdminDashboardComponent implements OnInit {
     }
     return arr;
   }
+
+  /**
+   * Method to delete an entire competency and reset loaded competncy arrays
+   *
+   * @param competencyId
+   */
+  async deleteCompetency(competencyId: string) {
+    // Enforce loading state
+    this.loading = true;
+    // If competency preview is open, close it
+    if(this.openPreview) {
+      this.openPreview = false;
+    }
+    // If competency builder is open, close it
+    if(this.openBuilder) {
+      this.openBuilder = false;
+    }
+    // Delete competency
+    await this.competencyService.deleteCompetency(competencyId);
+    await this.initDashboard();
+  }
+
+  /**
+   * Method to open the competency-card component and build a competency
+   *
+   * @param existingCompetency - Opens the builder with a pre-selected competency
+   */
+  async openCompetencyBuilder(existingCompetency?: Competency) {
+    // If !existingCompetency; we are creating a new competency object
+    if(!existingCompetency) {
+      // Create competency shell
+      const competencyShellId: any = await this.builderService.createCompetency();
+      // Retrieve full competency object
+      existingCompetency = await this.competencyService.getCompetencyById(competencyShellId.id);
+    }
+    // Create new instance of competency builder
+    this.builderCompetency = new CompetencyBuilder(
+      existingCompetency._id,
+      existingCompetency.status,
+      existingCompetency.authorId,
+      existingCompetency.version,
+      existingCompetency.actor,
+      existingCompetency.behavior,
+      existingCompetency.condition,
+      existingCompetency.degree,
+      existingCompetency.employability,
+      existingCompetency.notes
+    );
+    this.openBuilder = true;
+  }
+
+  async closeBuilder() {
+    // Enforce loading state
+    this.loading = true;
+    this.openBuilder = false;
+    if(
+      !this.builderCompetency.actor.type &&
+      !this.builderCompetency.behavior.work_role &&
+      this.builderCompetency.behavior.tasks.length === 0 &&
+      !this.builderCompetency.condition.scenario &&
+      !this.builderCompetency.condition.limitations &&
+      this.builderCompetency.condition.tech.length === 0 &&
+      !this.builderCompetency.degree.complete &&
+      !this.builderCompetency.degree.correct &&
+      !this.builderCompetency.degree.time &&
+      !this.builderCompetency.employability.details
+    ) {
+      // Competency is neither savable nor being saved as draft; delete shell
+      await this.deleteCompetency(this.builderCompetency._id);
+      this.snackbarService.notification$.next({
+        message: 'Competency was missing required fields to be saved as a draft.',
+        title: 'Draft Deleted',
+        color: SNACKBAR_COLOR.WARNING
+      });
+    } else {
+      // Update user dashboard with newly created competencies
+      await this.initDashboard();
+    }
+  }
+
+  /**
+   * Logic to trigger the Competency Preview component to open
+   *
+   * @param competency The competency to preview
+   */
+  async openCompetencyPreview(competency: Competency) {
+    this.previewCompetency = competency;
+    this.openPreview = true;
+  }
+
+  /**
+   * Closes the Competency Preview component
+   */
+  closePreview() {
+    this.openPreview = false;
+  }
+
+  /**
+   * When an admin updates the status of a competency in the preview, reset the dashboard
+   */
+    async handleStatusUpdated() {
+      this.search.competencies = [];
+      this.loadedCompetencies = [];
+      await this.initDashboard();
+    }
 }
