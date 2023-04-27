@@ -100,7 +100,8 @@ import { SecondaryNavComponent } from './secondary-nav/secondary-nav.component';
     SecondaryNavComponent,
     SearchBarComponent,
     UserMenuComponent,
-    PreviewCompetencyComponent
+    PreviewCompetencyComponent,
+    FilteringDropdownsComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

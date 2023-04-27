@@ -1,10 +1,10 @@
 <div class="navbar">
-    <div class="wrapper">
+    <div class="wrapper" [ngClass]="{ 'admin': isAdmin }">
     <div class="logo">
         <!-- TODO ADD LOGO HERE -->
         <h2>Competency Constructor ( ) {{ '{' }}  {{ '}' }}</h2>
     </div>
-    <div class="search">
+    <div *ngIf="!isAdmin" class="search">
         <div class="search-wrapper">
             <cc-search-bar (search)="sendSearch($event)"></cc-search-bar>
         </div>
