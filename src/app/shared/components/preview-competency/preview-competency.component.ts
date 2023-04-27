@@ -31,6 +31,7 @@ export class PreviewCompetencyComponent implements OnInit {
   actor!: string;
   workrole!: Workrole;
   tasks: Elements[] = [];
+  competencyAuthor!: any;
   constructor(
     private workRoleService: WorkroleService,
     private dropdownService: DropdownService,
@@ -42,6 +43,7 @@ export class PreviewCompetencyComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.loading = true;
     this.dropdownService.getDropdownItems('actor');
+    this.competencyAuthor = await this.authService.getUser(this.competency.authorId);
     // Check actor type; if id retreive dropdown value
     this.dropdownService.actorList.subscribe((actors: DropdownItem[]) => {
       actors.filter((actor) => {

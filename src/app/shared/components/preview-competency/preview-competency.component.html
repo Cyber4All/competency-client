@@ -8,12 +8,12 @@
 }">
 
   <!-- TODO: Implement once user routes and submission dates are implemented -->
-  <!-- <div *ngIf="isAdmin" class="details bottom-bordered content-section">
+  <div *ngIf="isAdmin" class="details bottom-bordered content-section">
     <h2>Details</h2>
-    <p><b>Date Submitted:</b> Decembruary 32, 1932</p>
-    <p><b>Author Name: </b> Mick E. Maus</p>
-    <p><b>Author Email: </b> mickemaus@aol.com</p>
-  </div> -->
+    <!-- <p><b>Date Submitted:</b> Decembruary 32, 1932</p> -->
+    <p *ngIf="competencyAuthor"><b>Author Name: </b> {{ competencyAuthor.name }}</p>
+    <p *ngIf="competencyAuthor"><b>Author Email: </b> {{ competencyAuthor.email }}</p>
+  </div>
   <div class="actor bottom-bordered content-section">
     <div class="content-header">
        <h2>Actor</h2>
