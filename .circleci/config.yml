@@ -13,7 +13,7 @@ workflows:
       equal: [ staging, << pipeline.git.branch >> ]
     jobs:
       - cyber4all/s3:
-          context: [AWS]
+          context: [AWS, Slack]
           name: deploy-staging
           bucket: "competency-client-staging"
           role-arn: S3_STAGING_OIDC_ROLE
@@ -27,7 +27,7 @@ workflows:
           tag: "$(jq -r '.version' package.json)"
         
       - cyber4all/s3:
-          context: [AWS]
+          context: [AWS, Slack]
           requires: [cyber4all/release]
           name: deploy-production
           bucket: "cyber-competencies"
