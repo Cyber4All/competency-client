@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AuthService } from '../../../core/auth.service';
 
 @Component({
   selector: 'cc-primary-nav',
