@@ -8,6 +8,8 @@ import { DropdownType } from 'entity/dropdown';
 })
 export class AdminDashboardComponent implements OnInit {
 
+  loading = true;
+
   constructor() { }
 
   dropdownType = DropdownType;
