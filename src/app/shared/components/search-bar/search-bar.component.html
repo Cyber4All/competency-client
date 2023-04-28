@@ -1,4 +1,4 @@
-<div class="cc-search">
+<div class="cc-search" *ngIf="loggedIn">
     <div class="search-options">
       <form (submit)="performSearch(searchInput)">
         <div class="input">
@@ -11,6 +11,7 @@
             (ngModelChange)="togglePlaceholder()"
             aria-label="Search"
             [(ngModel)]="searchValue"
+            autocomplete="off"
           />
           <button
             aria-label="Search"

@@ -4,10 +4,10 @@ import { AuthService } from './auth.service';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { Actor } from '../../entity/actor';
-import { Degree } from '../../entity/degree';
-import { Condition } from '../../entity/condition';
-import { Behavior } from '../../entity/behavior';
-import { Employability } from '../../entity/employability';
+import { Degree } from '../../entity/Degree';
+import { Condition } from '../../entity/Condition';
+import { Behavior } from '../../entity/Behavior';
+import { Employability } from '../../entity/Employability';
 import { Notes } from '../../entity/notes';
 import { BuilderError, BuilderValidation } from '../../entity/builder-validation';
 import { SnackbarService } from './snackbar.service';
@@ -53,6 +53,10 @@ export class BuilderService {
     }
     // Updates current builder index
     public setBuilderIndex(value: number) {
+        // Disable Rubrics for degree
+        if (value === 6) {
+            value++;
+        }
         this._builderIndex.next(value);
     }
     // Updates current submenu index
@@ -128,6 +132,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -148,6 +153,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -168,6 +174,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -188,6 +195,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -208,6 +216,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -228,24 +237,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
-        });
-    }
-
-    /**
-     * Method to submit a competency for review
-     *
-     * @param competencyId ID of the competency to be submitted
-     */
-    async submitCompetency(competencyId: string) {
-        this.auth.initHeaders();
-        return await lastValueFrom(this.http
-        .patch(
-            COMPETENCY_ROUTES.SUBMIT(competencyId),
-            {},
-            { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-        ))
-        .catch((e)=> {
-            this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 }

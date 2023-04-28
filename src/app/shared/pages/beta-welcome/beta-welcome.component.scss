@@ -1,16 +1,20 @@
-.downtime-wrapper {
+.beta-welcome-wrapper {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
-	color: white;
+	color: #000000;
 
   img {
     margin-bottom: 50px;
-    width: 200px;
+    width: 500px;
     max-width: 100%;
     height: auto;
+  }
+
+  .feedback {
+    color: white;
   }
 
   h2 {

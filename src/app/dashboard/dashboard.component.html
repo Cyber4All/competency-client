@@ -1,8 +1,11 @@
-<cc-primary-nav (search)="performSearch($event)"></cc-primary-nav>
-<cc-secondary-nav (filterCompetencies)="filter($event)" (newCompetency)="openCompetencyBuilder()" (getHelp)="openHelp()"></cc-secondary-nav>
-
-<div class="wrapper">
-    <ng-container *ngIf="!loading; then competencyTemplate; else loadingTemplate"></ng-container>
+<div class="dashboard-component">
+    <div class="nav-bar">
+        <cc-primary-nav (search)="performSearch($event)"></cc-primary-nav>
+        <cc-secondary-nav (filterCompetencies)="filter($event)" (newCompetency)="openCompetencyBuilder()" (getHelp)="openHelp()" [disabled]="disabled"></cc-secondary-nav>
+    </div>
+    <div class="wrapper">
+        <ng-container *ngIf="!loading; then competencyTemplate; else loadingTemplate"></ng-container>
+    </div>
 </div>
 
 <ng-template #loadingTemplate>
@@ -13,6 +16,10 @@
 </ng-template>
 
 <ng-template #competencyTemplate>
+    <ng-container *ngIf="loadedCompetencies && loadedCompetencies.length > 0; then resultsTemplate; else noCompetenciesTemplate"></ng-container>
+</ng-template>
+
+<ng-template #resultsTemplate>
     <div class="competency-card">
         <div class="competency-card-wrapper">
             <div *ngFor="let competency of loadedCompetencies" class="competency-card_container">
@@ -30,6 +37,20 @@
             <li *ngFor="let p of pages" [ngClass]="{'active': currPage === p}" (click)="goToPage(p)"  attr.aria-label="Page {{ p }} of results" tabindex="0">{{ p }}</li>
             <li (click)="nextPage()" [ngClass]="{'gone': currPage >= search.page}"> Next <i class="fas fa-chevron-right" aria-label="Next page of results" tabindex="0"></i></li>
         </ul>
+    </div>
+</ng-template>
+
+<ng-template #noCompetenciesTemplate>
+    <div class="competency-no-results">
+        <h2>You don't have any comeptencies yet!</h2>
+        <button class="btn btn-primary" (click)="openCompetencyBuilder(); disabled=true;" [disabled]="disabled">NEW COMPETENCY</button>
+    </div>
+</ng-template>
+
+<ng-template #noResultsTemplate>
+    <div class="competency-no-results">
+        <h2>No Results</h2>
+        <p>There are no competencies that match your search.</p>
     </div>
 </ng-template>
 
@@ -53,9 +74,17 @@
     ccPanel
     *ngIf="openPreview"
     [competency]="previewCompetency"
-    [options]="{ showDeleteButton: true, title: 'yeet', showExitButton: false, padding: false, exitButtonColor: 'black', position: 'center' }"
+    [options]="{ 
+        showDeleteButton: true,
+        showExitButton: true,
+        title: 'Competency Preview',
+        padding: false,
+        exitButtonColor: 'black',
+        position: 'center'
+    }"
     [isAdmin]="isAdmin"
     (updateSubmission)="openCompetencyBuilder(previewCompetency)"
     (close)="closePreview()"
+    (delete)="deleteCompetency(previewCompetency._id)"
     (statusUpdated)="handleStatusUpdated()"
 ></cc-preview-competency>

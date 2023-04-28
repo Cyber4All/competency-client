@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable} from 'rxjs';
 
+const EMAIL_REGEX =
+// eslint-disable-next-line max-len
+/(?:[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/g;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -71,7 +75,7 @@ export class AuthValidationService {
     } else if(control.hasError('mismatch')) {
       return !match ? 'Fields do not match' : `${match}s do not match`;
     }
-    return;
+    return 'This field is required.';
   }
 
   /**
@@ -137,5 +141,19 @@ export class AuthValidationService {
    */
   public getErrorState(): Observable<Boolean> {
     return this.isError;
+  }
+
+  /**
+   * Checks an email to ensure it is valid
+   *
+   * @param controlName The name of the form validation control to validate with
+   */
+  public isEmailRegexValid(controlName: string): ValidatorFn {
+    return (control: AbstractControl) => {
+      if(control.get(controlName)!.value.match(EMAIL_REGEX) === null) {
+        control.get(controlName)?.setErrors({invalidEmail: true});
+      }
+      return null;
+    };
   }
 }

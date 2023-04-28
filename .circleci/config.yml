@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  cyber4all: cyber4all/orb@2.0.11
+  cyber4all: cyber4all/orb@2.0.12
 
 workflows:
   ci:
@@ -15,7 +15,7 @@ workflows:
       - cyber4all/s3:
           context: [AWS]
           name: deploy-staging
-          bucket: competency-client-staging
+          bucket: "competency-client-staging"
           role-arn: S3_STAGING_OIDC_ROLE
 
   continuous-deployment:
@@ -30,4 +30,4 @@ workflows:
           context: [AWS]
           requires: [cyber4all/release]
           name: deploy-production
-          bucket: cyber-competencies
+          bucket: "cyber-competencies"

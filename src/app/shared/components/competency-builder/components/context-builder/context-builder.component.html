@@ -3,15 +3,15 @@
     <!--Description form field-->
     <ng-container *ngIf="currIndex === 2" class="condition_description-container">
         <!--Scenario form field-->
-        <label class="scenario">Scenario</label>
+        <label class="scenario">Scenario *</label>
         <textarea class="textarea" [formControl]="scenario"></textarea>
         <!--Limitations form field-->
-        <label class="limitations">Limitations</label>
+        <label class="limitations">Limitations *</label>
         <textarea class="textarea" [formControl]="limitations"></textarea>
     </ng-container>
     <!--Technology form field-->
     <ng-container *ngIf="currIndex === 3" class="condition_technology-container">
-        <label>Technology</label>
+        <label>Technology *</label>
         <div class="tech-list">
             <button *ngFor="let tech of technology"
                 (click)="removeTechnology(tech)"
@@ -28,6 +28,6 @@
     </ng-container>
     <!--Documenation form filed-->
     <ng-container *ngIf="currIndex === 4" class="condition_file-container">
-        <cc-file-upload></cc-file-upload>
+        <cc-file-upload [competencyId]="competencyId" [documentation]="documentation"></cc-file-upload>
     </ng-container>
 </div>

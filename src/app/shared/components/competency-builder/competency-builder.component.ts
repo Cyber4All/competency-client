@@ -1,12 +1,12 @@
 import { Component, Input, OnInit, OnDestroy, HostListener, EventEmitter, Output } from '@angular/core';
 import { Notes } from '../../../../entity/notes';
 import { Actor } from '../../../../entity/actor';
-import { Behavior } from '../../../../entity/behavior';
+import { Behavior } from '../../../../entity/Behavior';
 import { BuilderError, BuilderValidation } from '../../../../entity/builder-validation';
-import { Competency } from '../../../../entity/competency';
-import { Condition } from '../../../../entity/condition';
-import { Degree } from '../../../../entity/degree';
-import { Employability } from '../../../../entity/employability';
+import { Competency } from '../../../../entity/Competency';
+import { Condition } from '../../../../entity/Condition';
+import { Degree } from '../../../../entity/Degree';
+import { Employability } from '../../../../entity/Employability';
 import { BuilderService } from '../../../core/builder.service';
 import { CompetencyBuilder, IndexButton } from '../../../../entity/builder.class';
 import { SnackbarService } from '../../../core/snackbar.service';
@@ -14,6 +14,7 @@ import { SNACKBAR_COLOR } from '../snackbar/snackbar.component';
 import { DropdownService } from '../../../core/dropdown.service';
 import { DropdownType } from '../../../../entity/dropdown';
 import { sleep } from '../../../core/competency.service';
+import { LifecyclesService } from '../../../core/lifecycles.service';
 @Component({
   selector: 'cc-competency-builder',
   templateUrl: './competency-builder.component.html',
@@ -34,6 +35,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     public builderService: BuilderService,
     private snackBarService: SnackbarService,
     private dropdownService: DropdownService,
+    private lifecycleService: LifecyclesService,
     ) {}
 
   // Method to prevent user from leaving the page without saving competency data
@@ -82,7 +84,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
         this.templateText = IndexButton.DEGREE;
         break;
       case 5:
-        this.templateText = IndexButton.RUBRIC;
+        this.templateText = IndexButton.EMPLOYABILITY;
         break;
       case 6:
         this.templateText = IndexButton.EMPLOYABILITY;
@@ -193,14 +195,9 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     });
   }
 
-  async deleteCompetency(): Promise<void> {
-    // Close the dialog and send a success notification
+  deleteCompetency(): void {
+    // Close the dialog
     this.close.emit(false);
-    this.snackBarService.notification$.next({
-      message: 'Draft Deleted',
-      title: 'Success',
-      color: SNACKBAR_COLOR.SUCCESS
-    });
   }
 
   /**
@@ -218,12 +215,12 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
       await this.builderService.updateEmployability(competency._id, competency.employability);
       await this.builderService.updateNotes(competency._id, competency.notes);
       // Update the status of a competnecy
-      await this.builderService.submitCompetency(competency._id);
+      await this.lifecycleService.submitCompetency(competency._id);
       // Close the dialog and send a success notification
       this.close.emit(true);
       this.snackBarService.notification$.next({
-        message: 'Competency Saved',
-        title: 'Success',
+        message: 'The competence in me honors the competence in you.',
+        title: 'Namaste!',
         color: SNACKBAR_COLOR.SUCCESS
       });
     } catch (err: any) {

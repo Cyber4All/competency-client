@@ -7,22 +7,13 @@ import { Organization } from '../../../entity/organization';
 import { AuthValidationService } from '../../core/auth-validation.service';
 import { OrganizationService } from '../../core/organization.service';
 import { SnackbarService } from '../../core/snackbar.service';
-
+import { SNACKBAR_COLOR } from '../../shared/components/snackbar/snackbar.component';
 @Component({
   selector: 'cc-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-
-  regInfo = {
-    username: '',
-    name: '',
-    email: '',
-    organization: '',
-    password: '',
-    confirmPassword: '',
-  };
 
   regFormGroup: FormGroup = new FormGroup({
     username: this.authValidation.getInputFormControl('username'),
@@ -31,16 +22,19 @@ export class RegisterComponent implements OnInit {
     organization: this.authValidation.getInputFormControl('required'),
     password: this.authValidation.getInputFormControl('password'),
     confirmPassword: this.authValidation.getInputFormControl('required'),
-  }, this.authValidation.passwordMatchValidator('password', 'confirmPassword'));
+  }, [this.authValidation.isEmailRegexValid('email'), this.authValidation.passwordMatchValidator('password', 'confirmPassword')]);
 
   organizationInput$: Subject<string> = new Subject<string>();
   showDropdown = false;
   loading = false;
   closeDropdown = () => {
-this.showDropdown = false;
-};
+    this.showDropdown = false;
+  };
   searchResults: Array<Organization> = [];
+  // Organization name for dropdown
   selectedOrg = '';
+  // Organization ID for registration
+  selectedOrganization = '';
   scrollerHeight = '100px';
   registrationFailure: Boolean = true;
   errMessage = '';
@@ -72,11 +66,11 @@ this.showDropdown = false;
 
   register() {
     const reqBody = {
-      username: this.regInfo.username.trim(),
-      name: this.regInfo.name.trim(),
-      email: this.regInfo.email.trim(),
-      password: this.regInfo.password.trim(),
-      organization: this.regInfo.organization.trim()
+      username: this.regFormGroup.get('username')!.value.trim(),
+      name: this.regFormGroup.get('name')!.value.trim(),
+      email: this.regFormGroup.get('email')!.value.trim(),
+      password: this.regFormGroup.get('password')!.value.trim(),
+      organization: this.selectedOrganization.trim()
     };
     if(this.regFormGroup.valid){
       this.auth.register(reqBody)
@@ -89,6 +83,12 @@ this.showDropdown = false;
         this.snackBarService.sendNotificationByError(error);
         this.errMessage = error.message;
         this.authValidation.showError();
+      });
+    } else {
+      this.snackBarService.notification$.next({
+        title: 'Incomplete Form',
+        message: 'Please fill out all required fields',
+        color: SNACKBAR_COLOR.DANGER
       });
     }
   }
@@ -104,7 +104,7 @@ this.showDropdown = false;
 
   selectOrg(org?: Organization) {
     if(org) {
-      this.regInfo.organization = org._id;
+      this.selectedOrganization = org._id;
       this.regFormGroup.get('organization')!.setValue(org.name);
     } else {
       this.selectedOrg = '602ae2a038e2aaa1059f3c39';

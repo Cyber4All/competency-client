@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { User } from '../../entity/user';
+import { AuthUser, User, getUserGraphQuery } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
 import { basic_user_permissions, competencyAcl } from 'competency-acl';
 import { SnackbarService} from './snackbar.service';
+import { COMPETENCY_ROUTES } from '../../environments/routes';
+import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 
 const TOKEN_KEY = 'presence';
 
@@ -106,6 +108,32 @@ export class AuthService {
   logout() {
     this.deleteToken();
     this.clearAuthHeader();
+  }
+
+  /**
+   * Retrieves a user by id
+   *
+   * @param id The id of the user to retrieve
+   * @returns A user of type AuthUser
+   */
+  // TODO: Add the AuthUser return type
+  async getUser(id: string): Promise<any> {
+    const query = getUserGraphQuery(id);
+    return await lastValueFrom(this.http
+      .post(
+        COMPETENCY_ROUTES.GRAPH_QUERY(),
+        { query },
+        { headers: this.headers, withCredentials: true, responseType: 'json' }
+        ))
+      .then((res: any) => {
+        return res.data.user;
+      })
+      .catch((err) => {
+        err = GraphErrorHandler.handleError(err);
+        if (err) {
+          this.snackbarService.sendNotificationByError(err);
+        }
+      });
   }
 
   /**
@@ -219,7 +247,10 @@ export class AuthService {
    * Private method to enforce token removal when necessary
    */
   private deleteToken() {
+    // Explicitly clear any authenticated user vars
     this.user = undefined;
+    this._isAdmin.next(false);
+    this._isBetaUser.next(false);
     localStorage.removeItem('userId');
     /**
      * These parameters are now required by the library.

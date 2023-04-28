@@ -1,0 +1,85 @@
+<div
+  class="input"
+  [ngClass]="{
+    'input--focused': isFocused,
+    'input--content': hasContent,
+    'input--disabled': disabled,
+    'input--error': isTouched && showValidity && !validity,
+    'input--success': isTouched && showValidity && validity
+  }"
+>
+  <div class="label">
+    {{ label }}
+  </div>
+  <input
+    #inputElement
+    [autofocus]="autofocus"
+    [type]="type === 'password' && showPassword ? 'text' : type"
+    [value]="value"
+    [disabled]="disabled"
+    [required]="required"
+    [autocomplete]="autocomplete"
+    (input)="valueChange.emit(inputElement.value)"
+    (focus)="isFocused = true"
+    (blur)="
+      isFocused = false;
+      hasContent = inputElement.value ? true : false;
+      isTouched = true
+    "
+  />
+  <div class="input__badges">
+    <ng-container
+      *ngIf="isTouched && showValidity && !validity"
+      [ngTemplateOutlet]="badgeError"
+    ></ng-container>
+    <ng-container
+      *ngIf="isTouched && showValidity && validity"
+      [ngTemplateOutlet]="badgeValid"
+    ></ng-container>
+    <ng-container
+      *ngIf="isLoading"
+      [ngTemplateOutlet]="badgeLoading"
+    ></ng-container>
+  </div>
+</div>
+<ng-container
+  *ngIf="type === 'password' && allowShowPasswordOption"
+  [ngTemplateOutlet]="showPasswordLabel"
+></ng-container>
+
+<ng-template #showPasswordLabel>
+  <button
+    type="button"
+    class="show-password-toggle"
+    (click)="showPassword = !showPassword"
+  >
+    <span *ngIf="!showPassword">
+      Show password
+    </span>
+    <span *ngIf="showPassword">
+      Hide password
+    </span>
+  </button>
+</ng-template>
+
+<ng-template #badgeError>
+  <div
+    [tip]="required && !value?.length ? 'This field is required!' : error || ''"
+    [tipDisabled]="validity || ((!required || !!value) && !error)"
+    class="badge badge--error"
+  >
+    <!-- <cards-icon name="exclamation" weight="solid"></cards-icon> -->
+  </div>
+</ng-template>
+
+<ng-template #badgeValid>
+  <div class="badge badge--success">
+    <!-- <cards-icon name="check"></cards-icon> -->
+  </div>
+</ng-template>
+
+<ng-template #badgeLoading>
+  <div class="badge badge--loading">
+    <!-- <cards-icon name="spinner-third" [spin]="true"></cards-icon> -->
+  </div>
+</ng-template>

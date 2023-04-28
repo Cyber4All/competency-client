@@ -4,28 +4,29 @@
     display: flex;
     align-items: center;
     position: relative; // allows dropdown to be positioned relative to this element
+    margin: 15px 20px 15px 0;
 
     .button-wrapper {
         display: flex;
-        padding: 10px 15px;
+        padding: 15px 20px;
 
         .title {
             margin-right: 10px;
             font-weight: 600;
+            text-transform: uppercase;
         }
     }
 }
 
 // ng-deep is used to override the default styles of the dropdown component
 ::ng-deep .dropdown-wrapper {
-    min-width: 150px; // TODO: this may be able to be removed if the text is wide enough
-    max-width: 200px;
+    width: 275px;
 
     margin-top: 5px; // space between dropdown and parent element
 
     // styles the container of the dropdown
-    background: #FFFFFF;
-    border: 1px solid #DFDFDF;
+    background: white;
+    border: 1px solid color-gray(12);
     border-radius: 4px;
 
     .searchbar {
@@ -34,14 +35,24 @@
 
     .dropdown {
         min-height: 200px; // we should change this to be a calculated value based on the number of items
-        overflow: scroll;
+        overflow-y: scroll;
+        overflow-x: hidden;
 
         .item {    
-            border-top: 1px solid #DFDFDF;
-    
-            cursor: pointer;
-            &:hover {
-                color: #376ED6;
+            border-top: 1px solid color-gray(12);
+            text-transform: capitalize;
+            &:first-child{
+                border-top: none;
+            }
+            .item_text{
+                width: 235px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                padding: 0 4px;
+                &:hover{
+                    background-color: rgba($color: color-accent(), $alpha: 0.1);
+                    cursor: pointer;
+                }
             }
         }
     }

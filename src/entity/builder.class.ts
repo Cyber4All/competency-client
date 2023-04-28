@@ -1,11 +1,11 @@
 import { Actor } from './actor';
-import { Behavior } from './behavior';
-import { Competency } from './competency';
-import { Condition } from './condition';
-import { Degree } from './degree';
-import { Documentation } from './documentation';
-import { Employability } from './employability';
-import { Lifecycles } from './lifecycles';
+import { Behavior } from './Behavior';
+import { Competency } from './Competency';
+import { Condition } from './Condition';
+import { Degree } from './Degree';
+import { Documentation } from './Documentation';
+import { Employability } from './Employability';
+import { Lifecycles } from './Lifecycles';
 import { Notes } from './notes';
 import { BuilderError, BuilderValidation } from './builder-validation';
 
@@ -242,14 +242,6 @@ export class CompetencyBuilder extends Competency {
                     attribute: 'tech',
                     isValid: false,
                     message: 'At least one technology is required.'
-                });
-            }
-            if (!this.condition.documentation) {
-                conditionErrors.push({
-                    type: 'condition',
-                    attribute: 'documentation',
-                    isValid: false,
-                    message: 'At least one documentation is required.'
                 });
             }
         } else {

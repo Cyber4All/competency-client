@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
-import { Documentation } from '../../entity/documentation';
+import { lastValueFrom } from 'rxjs';
+import { Documentation } from '../../entity/Documentation';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
+import { SnackbarService } from './snackbar.service';
+import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
 
 // the typing of the Lambda response when uploading a file
 interface Lambda {
@@ -26,7 +28,8 @@ export class FileService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBarService: SnackbarService
   ) { }
 
   /**
@@ -36,7 +39,7 @@ export class FileService {
    * @param file the file to be uploaded
    * @param description the description to add to the documentation
    */
-  async uploadFile(competencyId: string, file: File, description: string) {
+  async uploadFile(competencyId: string, file: File, description: string): Promise<Documentation> {
     this.authService.initHeaders();
     const lambdaResponse: Lambda = await this.uploadLambdaService(competencyId, file);
 
@@ -49,13 +52,13 @@ export class FileService {
 
     // Adds the file to S3
     await lastValueFrom(this.http.post(lambdaResponse.url, formData)).catch(e => {
-      console.log(e); // TODO: Swap for toaster component
+      this.snackBarService.sendNotificationByError(e);
     });
 
     // formats the uri to be stored in mongo, will be used for file retrieval and deleting a file
     const fileURL = `https://cc-file-upload-bucket.s3.amazonaws.com/${this.authService.user?._id}/${competencyId}/${file.name}`;
 
-    await lastValueFrom(
+    return await lastValueFrom(
       this.http.post(
         COMPETENCY_ROUTES.CREATE_DOCUMENTATION(competencyId),
         {
@@ -65,10 +68,16 @@ export class FileService {
         },
         { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
       )
-    ).then(res => {
-      console.log('Documentation created!', res); // TODO: Swap for toaster component
+    ).then((res: Documentation) => {
+      this.snackBarService.notification$.next({
+        message: `${res.description} has been uploaded!`,
+        title: 'Success',
+        color: SNACKBAR_COLOR.SUCCESS
+      });
+      return res;
     }).catch(e => {
-      console.log(e); // TODO: Swap for toaster component
+      this.snackBarService.sendNotificationByError(e);
+      throw e;
     });
   }
 
@@ -86,10 +95,14 @@ export class FileService {
     await Promise.all(LambdaResponse.urls.map(url => {
       try {
         lastValueFrom(this.http.delete(url)).then(res => {
-          console.log(res); // TODO: Swap for toaster component, this is a success toaster
+          this.snackBarService.notification$.next({
+            message: `File has been flagged for deletion!`,
+            title: 'Processing Request',
+            color: SNACKBAR_COLOR.SUCCESS
+          });
         });
-      } catch (error) {
-        console.log(error); // TODO: Swap for toaster component
+      } catch (e) {
+        this.snackBarService.sendNotificationByError(e);
       }
     }));
     await lastValueFrom(
@@ -105,9 +118,13 @@ export class FileService {
         }
       )
     ).then(res => {
-      console.log('Documentation deleted!'); // TODO: Swap for toaster component
+      this.snackBarService.notification$.next({
+        message: `File has been deleted!`,
+        title: 'Success',
+        color: SNACKBAR_COLOR.SUCCESS
+      });
     }).catch(e => {
-      console.log(e); // TODO: Swap for toaster component
+      this.snackBarService.sendNotificationByError(e);
     });
   }
 
@@ -144,7 +161,7 @@ export class FileService {
       ).then((res) => {
         return res;
       }).catch(e => {
-        console.log(e); // Swap for toaster component
+        this.snackBarService.sendNotificationByError(e);
       });
   }
 
@@ -169,7 +186,7 @@ export class FileService {
     ).then((res) => {
       return res;
     }).catch(e => {
-      console.log(e); // Swap for toaster component
+      this.snackBarService.sendNotificationByError(e);
     });
   }
 }

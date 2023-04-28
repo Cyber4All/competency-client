@@ -39,7 +39,7 @@ export class SnackbarService  {
 
         switch (err.status){
             case 400:
-                title = 'Invalid Input';
+                title = 'Bad Request';
                 break;
             case 401:
                 title = 'Not Authorized';

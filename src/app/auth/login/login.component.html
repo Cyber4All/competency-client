@@ -1,36 +1,30 @@
 <cc-error-banner [message]="errMessage"></cc-error-banner>
 <div class="login-wrapper">
-    <h1>Competency Constructor ( )</h1>
-    <h5>A SecurEd Inc. Project</h5>
-    <form #f (ngSubmit)="login()" [formGroup]="loginFormGroup">
-        <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input 
-            matInput 
-            [(ngModel)]="loginInfo.email"
-            placeholder="email@example.com" 
-            formControlName="email"
-            required>
-            <mat-error 
-            *ngIf="loginFormGroup.get('email')?.invalid">
-            {{authValidation.getInputErrorMessage(loginFormGroup.get('email')!)}}
-            </mat-error>
-
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Password</mat-label>
-            <input 
-            matInput
-            [(ngModel)]="loginInfo.password"
-            type="password" 
-            formControlName="password">
-            <mat-error 
-            *ngIf="loginFormGroup.get('email')?.invalid">
-            {{authValidation.getInputErrorMessage(loginFormGroup.get('email')!)}}
-            </mat-error>
-
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">LOGIN</button>
-        <button mat-raised-button (click)="register()">REGISTER</button>
+    <div class="logo">
+        <img src="../../../assets/CompetencyConstructor_Logo_Transparent.png" alt="Competency Constructor Logo">
+    </div>
+    <form>
+        <cc-text-field
+            animate
+            [value]="loginFormGroup.get('email')?.value"
+            (valueChange)="loginFormGroup.get('email')?.setValue($event)"
+            [autofocus]="true"
+            [required]="true"
+            label="Email address"
+            type="email"
+            [block]="true"
+        ></cc-text-field>
+        <cc-text-field
+            animate
+            [value]="loginFormGroup.get('password')?.value"
+            (valueChange)="loginFormGroup.get('password')?.setValue($event)"
+            label="Password"
+            type="password"
+            [block]="true"
+        ></cc-text-field>
+        <div class="form-button">
+            <button class="button-margin submit" (click)="login()">LOGIN</button>
+            <button class="button-margin register" (click)="register()">REGISTER</button>
+        </div>
     </form>
 </div>
