@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthValidationService } from 'src/app/core/auth-validation.service';
-import { AuthService } from 'src/app/core/auth.service';
+import { AuthValidationService } from '../../core/auth-validation.service';
+import { AuthService } from '../../core/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
@@ -18,8 +18,11 @@ export class ResetPasswordComponent implements OnInit {
     'confirmPassword': this.authvalidationService.getInputFormControl('password')
   },{ validators: this.authvalidationService.passwordMatchValidator('password','confirmPassword')});
 
-  constructor(private authvalidationService: AuthValidationService, private authService: AuthService,
-    private activatedRoute: ActivatedRoute,  ) { }
+  constructor(
+    public authvalidationService: AuthValidationService,
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.authvalidationService.getErrorState().subscribe(err => this.showError = err);
