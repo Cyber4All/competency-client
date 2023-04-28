@@ -243,13 +243,11 @@ export class DashboardComponent implements OnInit {
    */
   async filter(filter: { status: string[], workrole: string[], task: string[], audience: string[]}) {
     this.loading = true;
-    
     // filter competencies by status
     this.search.statuses = filter.status;
     await this.getCompetencies(this.search);
     await this.loadCompetencies();
     this.filterApplied = true;
-
     this.loading = false;
   }
 
