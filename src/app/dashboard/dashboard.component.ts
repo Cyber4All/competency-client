@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
@@ -28,8 +28,10 @@ export class DashboardComponent implements OnInit {
     competencies: [],
     limit: 12,
     page: 1,
-    total: 0
+    total: 0,
+    statuses: []
   };
+  urlParams: Record<string, string> = {};
   // Pagination default val
   currPage = 1;
   // Applied filters
@@ -37,6 +39,7 @@ export class DashboardComponent implements OnInit {
     work_role: [],
     task: []
   };
+  searchText = '';
   // Boolean toggle for 'clear filters' button
   filterApplied = false;
   unsubscribe: Subject<void> = new Subject();
@@ -45,7 +48,8 @@ export class DashboardComponent implements OnInit {
   previewCompetency!: Competency;
   openBuilder = false;
   openPreview = false;
-
+  // Boolean to disable `NEW COMPETENCY` button
+  disabled = false;
   isAdmin!: boolean;
 
   constructor(
@@ -63,10 +67,10 @@ export class DashboardComponent implements OnInit {
       this.isAdmin = res;
     });
     this.route.queryParams.pipe(takeUntil(this.unsubscribe)).subscribe(async params => {
-      this.currPage = params.page ? +params.page : 1;
+      this.urlParams = params;
       this.makeQuery(params);
-      await this.initDashboard();
     });
+    await this.initDashboard();
   }
 
   /**
@@ -74,6 +78,16 @@ export class DashboardComponent implements OnInit {
    */
   async initDashboard() {
     this.loading = true;
+    this.search = {
+      competencies: [],
+      limit: 12,
+      page: 1,
+      total: 0,
+      statuses: []
+    };
+    if (this.urlParams) {
+      this.makeQuery(this.urlParams);
+    }
     await sleep(1000);
     await this.getCompetencies(this.search);
     await this.loadCompetencies();
@@ -93,10 +107,11 @@ export class DashboardComponent implements OnInit {
       // Retrieve author competencies
       this.search = await this.competencyService
         .getAllCompetencies({
+          text: this.searchText,
           limit: q ? q.limit : this.search.limit,
           page:  q ? q.page : this.search.page,
           author: this.authService.user?._id,
-          status: [
+          status: (q && q.statuses.length > 0) ? q.statuses : [
             `${Lifecycles.DRAFT}`,
             `${Lifecycles.REJECTED}`,
             `${Lifecycles.SUBMITTED}`,
@@ -109,7 +124,8 @@ export class DashboardComponent implements OnInit {
         competencies: [],
         limit: 12,
         page: 1,
-        total: 0
+        total: 0,
+        statuses: []
       };
     }
   }
@@ -145,9 +161,7 @@ export class DashboardComponent implements OnInit {
     } else {
       this.search.limit = 12;
     }
-    if (params.currPage) {
-      this.currPage = +params.currPage;
-    }
+    this.currPage = params.page ? +params.page : 1;
   }
 
   /**
@@ -220,8 +234,10 @@ export class DashboardComponent implements OnInit {
   }
 
   performSearch(searchText: any) {
-    //TODO Actually perform the search
-    console.log(searchText);
+    if (searchText.target?.value!) {
+      this.searchText = searchText.target.value;
+      this.initDashboard();
+    }
   }
 
   /**
@@ -230,7 +246,13 @@ export class DashboardComponent implements OnInit {
    * @param filter object containing arrays of selected filters
    */
   async filter(filter: { status: string[], workrole: string[], task: string[], audience: string[]}) {
-    console.log('FILTER BASED SEARCHING NOT IMPLEMENTED YET.', filter);
+    this.loading = true;
+    // filter competencies by status
+    this.search.statuses = filter.status;
+    await this.getCompetencies(this.search);
+    await this.loadCompetencies();
+    this.filterApplied = true;
+    this.loading = false;
   }
 
   /**
@@ -246,7 +268,7 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
-   * Method to delete an entire competency and reset loaded competncy arrays
+   * Method to delete a competency and reset the dashboard
    *
    * @param competencyId
    */
@@ -264,6 +286,10 @@ export class DashboardComponent implements OnInit {
     // Delete competency
     await this.competencyService.deleteCompetency(competencyId);
     await this.initDashboard();
+    // Release button disabled state (if it was disabled)
+    if (this.disabled) {
+      this.disabled = false;
+    }
   }
 
   openHelp() {
@@ -278,6 +304,8 @@ export class DashboardComponent implements OnInit {
    * @param existingCompetency - Opens the builder with a pre-selected competency
    */
   async openCompetencyBuilder(existingCompetency?: Competency) {
+    // Enforce button disabled state
+    this.disabled = true;
     // If !existingCompetency; we are creating a new competency object
     if(!existingCompetency) {
       // Create competency shell
@@ -320,7 +348,7 @@ export class DashboardComponent implements OnInit {
       // Competency is neither savable nor being saved as draft; delete shell
       await this.deleteCompetency(this.builderCompetency._id);
       this.snackbarService.notification$.next({
-        message: 'Competency was missing required fields to be saved as a draft.',
+        message: 'Competency was missing minimum fields to be saved as a draft.',
         title: 'Draft Deleted',
         color: SNACKBAR_COLOR.WARNING
       });
@@ -328,6 +356,8 @@ export class DashboardComponent implements OnInit {
       // Update user dashboard with newly created competencies
       await this.initDashboard();
     }
+    // Release button disabled state
+    this.disabled = false;
   }
 
   /**
