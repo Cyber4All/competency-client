@@ -15,7 +15,7 @@
           </div>
         </div>
         <div [ngClass]="timeDisplay ? 'time_dropdown': 'hidden'">
-          <ul class="time_list" (mouseleave)="displayTime()">
+          <ul class="time_list">
             <li *ngFor="let measure of timeList" (click)="this.timeSelected=measure; displayTime(); time.patchValue(time.value + ' - ' + measure.value)">{{ measure.value }}</li>
           </ul>
         </div>
