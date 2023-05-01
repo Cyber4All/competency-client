@@ -9,6 +9,9 @@
     .button-wrapper {
         display: flex;
         padding: 15px 20px;
+        border: 1px solid color-gray(7);
+        border-radius: 4px;
+        background: color-gray(13);
 
         .title {
             margin-right: 10px;
