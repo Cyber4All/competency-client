@@ -22,7 +22,7 @@ export const sections = {
                             `the builder based on which attribute of a competnecy you wish to enter data for.</p>` +
                             `<img 
                                 src="../../../assets/competency-builder.png"
-                                style="width: 100%; max-width: 500px;"
+                                style="width: 100%; max-width: 600px;"
                             ></img>`
                     },
                     {
@@ -36,7 +36,7 @@ export const sections = {
                             ` +
                             `</p><img 
                                 src="../../../assets/actorbuilder.png"
-                                style="width: 100%; max-width: 500px;"
+                                style="width: 100%; max-width: 600px;"
                             ></img><br><p>` +
                             `Select an <b>Actor</b> from the provided list that best fits the individual that would be attempting ` +
                             `to achieve this competency. The <b>Description</b> field allows you to enter additional information that ` +
@@ -56,7 +56,7 @@ export const sections = {
                             ` +
                             `</p><img 
                                 src="../../../assets/behaviorbuilder.png"
-                                style="width: 100%; max-width: 500px;"
+                                style="width: 100%; max-width: 600px;"
                             ></img><br><p>` +
                             `Search and select a <b>Workrole</b> from the NICE Framework* for your competency. Search and select ` +
                             `<b>Task</b>'s from the NICE Framework* for your competency. Multiple tasks can be selected. ` +
@@ -77,22 +77,41 @@ export const sections = {
                                     <li><b>Limitations</b>: any restrictions that are placed on the actor while attempting this `+
                                     `competency.</li>
                                     <li><b>Technology</b>: the technology an actor may use for this competency.</li>
-                                    <p>yeetus maximus</p>
-                                    <li><b>Documentation</b>: reference files, weblinks, and other resources that an actor has access ` +
+                                    <li><b>Documentation</b>: reference files and other resources that an actor has access ` +
                                     `to while attempting to earn this competency.</li>
                                 </ul>
                             ` +
                             `</p><img 
                                 src="../../../assets/conditionbuilderdescrip.png"
-                                style="width: 100%; max-width: 500px;"
+                                style="width: 100%; max-width: 600px;"
                             ></img><br><p>` +
-                            `<b>Scenario</b> provides the  <b>Limiations</b>` +
-                            `</p>`
+                            `<b>Scenario</b> provides the situational context for the competency being attemtped. <b>Limiations</b> ` +
+                            `are any restrictions/constraints that are placed on the competency (i.e. Actor cannot use the ` +
+                            `interenet, etc.).<br>` +
+                            `</p><img 
+                                src="../../../assets/conditionbuildertech.png"
+                                style="width: 100%; max-width: 600px;"
+                            ></img><br><p>` +
+                            `<b>Technology</b> is the technology an actor may use for this competency (i.e. Windows 10, Linux, etc.). ` +
+                            `To add technology to your competency, press either the <b>TAB</b> or <b>ENTER</b> key.<br>` +
+                            // `</p><img
+                            //     src="../../../assets/conditionbuildertech.png"
+                            //     style="width: 100%; max-width: 600px;"
+                            // ></img><br><p>` +
+                            `<b>Documentation</b> is file uploads for a competency. You can upload any relevant materials an actor ` +
+                            `may need to succesfully complete a competency.</p>`
                     },
                     {
                         question: 'Building Degree',
-                        answer: `<p>The competency builder Degree ` +
-                            `` +
+                        answer: '<p>The competency builder Condition form has entry fields for  <b>Time</b>, <b>Correct</b>, ' +
+                            `and <b>Complete</b>.<br>` +
+                            `
+                                <ul>
+                                    <li><b>Time</b>: the situation in which the actor is attempting to earn this competency.</li>
+                                    <li><b>Correct</b>: any restrictions that are placed on the actor while attempting this
+                                    <li><b>Complete</b>: the technology an actor may use for this competency.</li>
+                                </ul>
+                            ` +
                             `</p>`
                     },
                     {
