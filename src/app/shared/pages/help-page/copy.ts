@@ -94,10 +94,10 @@ export const sections = {
                             ></img><br><p>` +
                             `<b>Technology</b> is the technology an actor may use for this competency (i.e. Windows 10, Linux, etc.). ` +
                             `To add technology to your competency, press either the <b>TAB</b> or <b>ENTER</b> key.<br>` +
-                            // `</p><img
-                            //     src="../../../assets/conditionbuildertech.png"
-                            //     style="width: 100%; max-width: 600px;"
-                            // ></img><br><p>` +
+                            `</p><img
+                                src="../../../assets/conditiondocuments.png"
+                                style="width: 100%; max-width: 600px;"
+                            ></img><br><p>` +
                             `<b>Documentation</b> is file uploads for a competency. You can upload any relevant materials an actor ` +
                             `may need to succesfully complete a competency.</p>` +
                             `<p><b>Scenario, Limitations, and at least one Technology are required to submit a competency for ` +
