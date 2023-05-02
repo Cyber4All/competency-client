@@ -236,7 +236,7 @@ export class CompetencyBuilder extends Competency {
                     message: 'Limitations are required.'
                 });
             }
-            if (!this.condition.tech) {
+            if (this.condition.tech.length === 0) {
                 conditionErrors.push({
                     type: 'condition',
                     attribute: 'tech',
