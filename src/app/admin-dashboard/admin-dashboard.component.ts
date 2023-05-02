@@ -26,7 +26,8 @@ export class AdminDashboardComponent implements OnInit {
     competencies: [],
     limit: 12,
     page: 1,
-    total: 0
+    total: 0,
+    statuses: []
   };
   currPage = 1;
 
@@ -102,7 +103,8 @@ export class AdminDashboardComponent implements OnInit {
         competencies: [],
         limit: 12,
         page: 1,
-        total: 0
+        total: 0,
+        statuses: []
       };
     }
   }

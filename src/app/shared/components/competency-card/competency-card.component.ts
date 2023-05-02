@@ -21,6 +21,7 @@ export class CompetencyCardComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    console.log(this.competency);
     this.loading = true;
     // load workrole
     if (this.competency.behavior.work_role) {
