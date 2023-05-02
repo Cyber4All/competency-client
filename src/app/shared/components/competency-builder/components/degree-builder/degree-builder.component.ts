@@ -106,7 +106,7 @@ export class DegreeBuilderComponent implements OnInit {
             _id: this.degree._id,
             complete: this.degree.complete,
             correct: this.degree.correct,
-            time: timeChange
+            time: timeChange + ' - ' + this.timeSelected.value
           }
         });
       });
@@ -116,7 +116,10 @@ export class DegreeBuilderComponent implements OnInit {
     }
     // If value exists, set details form control
     if (this.degree.time) {
-      this.time.patchValue(this.degree.time);
+      this.timeSelected = this.timeList.find((time: DropdownItem) => {
+        return time.value === this.degree.time.split('-')[1].trim();
+      });
+      this.time.patchValue(this.degree.time.split('-')[0].trim());
     }
     // If value exists, set workrole form control
     if (this.degree.correct) {
@@ -148,5 +151,11 @@ export class DegreeBuilderComponent implements OnInit {
         this.time.setErrors({error: true});
       }
     });
+  }
+
+  updateMeasure(measure: DropdownItem) {
+    this.timeSelected = measure;
+    // Update time form control to reflect selected measure
+    this.time.patchValue(this.time.value);
   }
 }
