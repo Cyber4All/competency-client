@@ -139,7 +139,7 @@ export class AuthValidationService {
    *
    * @returns error state
    */
-  public getErrorState(): Observable<Boolean> {
+  public getErrorState(): Observable<boolean> {
     return this.isError;
   }
 

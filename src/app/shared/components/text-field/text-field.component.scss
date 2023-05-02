@@ -15,7 +15,7 @@ $inputPadding: 13px;
   font-size: 12pt;
   border: 2px solid color-gray(6);
   border-radius: 3px;
-  background: color-gray(13);
+  background: white;
   transition: all 0.2s ease;
 
   input {
@@ -47,7 +47,7 @@ $inputPadding: 13px;
     .label {
       transform: scale(0.85) translateY(-16px);
       padding: 4px 8px;
-      background: color-gray(13);
+      background: white;
     }
   }
 

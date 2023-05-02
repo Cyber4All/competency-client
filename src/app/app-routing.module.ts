@@ -12,6 +12,8 @@ import { BetaGuard } from './shared/guards/beta.guard';
 import { TermsOfServiceComponent } from './shared/pages/terms-of-service/terms-of-service.component';
 import { HelpPageComponent } from './shared/pages/help-page/help-page.component';
 import { VerifyEmailGuard } from './shared/guards/verify-email.guard';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {
@@ -35,6 +37,14 @@ const routes: Routes = [
   {
     path: 'verify-email',
     canActivate: [VerifyEmailGuard],
+  },
+  {
+    path: 'auth/reset/password',
+    component: ResetPasswordComponent
+  },
+  {
+    path: 'auth/forgot-password',
+    component: ForgotPasswordComponent
   },
   {
     path: '',

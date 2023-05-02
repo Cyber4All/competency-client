@@ -77,6 +77,7 @@
       [error]="authValidation.getInputErrorMessage(regFormGroup.get('password')!)!"
       [autocomplete]="'new-password'"
       [allowShowPasswordOption]="true"
+      [tip]="'Password must be at least 8 characters long and contain at least one number, one uppercase letter, and one special character.'"
     ></cc-text-field>
     <cc-text-field
       animate
@@ -91,6 +92,7 @@
       [error]="authValidation.getInputErrorMessage(regFormGroup.get('confirmPassword')!)!"
       [autocomplete]="'new-password'"
       [allowShowPasswordOption]="true"
+      [tip]="'Passwords must match'"
     ></cc-text-field>
     <div class="form-button">
       <button class="button-margin submit" (click)="register()">REGISTER</button>

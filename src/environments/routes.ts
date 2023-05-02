@@ -10,6 +10,12 @@ export const USER_ROUTES = {
     TOKEN() {
         return `${environment.apiURL}/auth/token`;
     },
+    RESET_PASSWORD(otaCode: string){
+        return `${environment.apiURL}/auth/reset/password?ota=${encodeURIComponent(otaCode)}`;
+    },
+    SEND_RESET_PASSWORD(){
+        return `${environment.apiURL}/auth/reset/password`;
+    },
     UPDATE_ACL_ACTIONS(userId: string) {
         return `${environment.apiURL}/users/${encodeURIComponent(userId)}/acl`;
     },
@@ -31,6 +37,9 @@ export const USER_ROUTES = {
     VALIDATE_ACTIONS() {
         return `${environment.apiURL}/auth/validate`;
     },
+    SEND_VERIFICATION_EMAIL() {
+        return `${environment.apiURL}/auth/user/verify`;
+    }
 };
 
 export const ORGANIZATION_ROUTES = {
