@@ -149,7 +149,7 @@ export const sections = {
         title: 'Competency Ecosystem',
         topics: [
             {
-                title: `A Competnency's Lifecycle`,
+                title: `A Competency's Lifecycle`,
                 questions: [
                     {
                         question: `What is the competency lifecycle?`,
