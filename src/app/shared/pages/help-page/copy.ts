@@ -109,12 +109,15 @@ export const sections = {
                             `and <b>Complete</b>.<br>` +
                             `
                                 <ul>
-                                    <li><b>Time</b>: </li>
-                                    <li><b>Correct</b>: any restrictions that are placed on the actor while attempting this
-                                    <li><b>Complete</b>: the technology an actor may use for this competency.</li>
+                                    <li><b>Time</b>: the duration of time the comptency should be completed in</li>
+                                    <li><b>Correct</b>: defines what is qualitatively acceptable for attempting a competnecy</li>
+                                    <li><b>Complete</b>: defines what is quantitatively acceptable for 'finishing' a task or tasks</li>
                                 </ul>
                             ` +
-                            `</p>` +
+                            `</p><img
+                                src="../../../assets/degree.png"
+                                style="width: 100%; max-width: 600px;"
+                            ></img><br></p>` +
                             `<p><b>Time, Correct, and Complete are required fields to submit a competency for ` +
                             `review!</b></p>`
                     },
@@ -137,9 +140,22 @@ export const sections = {
                     },
                     {
                         question: 'Submitting a Competency',
-                        answer: '<p>To submit a competency ' +
-                            `` +
-                            `</p>`
+                        answer: '<p>You can submit a competency to be reviewed in the <b>Review</b> tab of the competency builder. ' +
+                            `Please ensure your competency is free of grammer errors and is filled out with the required fields.` +
+                            `After reviewing your competency, click the ` +
+                            `<button
+                                style="
+                                    background-color: #386fd6;
+                                    color: white;border: 0;
+                                    box-shadow: 0px 6px 12px -6px #386fd6;
+                                    border: 1px solid #DFDFDF;
+                                    border-radius: 4px;
+                                "
+                            >SUBMIT COMPETENCY</button> to submit it for a curated review.</p><br>` +
+                            `<img
+                                src="../../../assets/review.png"
+                                style="width: 100%; max-width: 600px;"
+                            ></img>`
                     },
                 ]
             },
