@@ -23,6 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { ErrorBannerComponent } from './components/error-banner/error-banner.component';
+import { SharedModule } from '../shared/shared.module';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 
@@ -30,7 +32,8 @@ import { ErrorBannerComponent } from './components/error-banner/error-banner.com
   declarations: [
     LoginComponent,
     RegisterComponent,
-    ErrorBannerComponent
+    ErrorBannerComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -55,6 +58,7 @@ import { ErrorBannerComponent } from './components/error-banner/error-banner.com
     ReactiveFormsModule,
     MatTooltipModule,
     VirtualScrollerModule,
+    SharedModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

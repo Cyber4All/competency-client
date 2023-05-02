@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FileService } from '../../../core/file.service';
 import { MimeTypes } from '../../../../entity/mimeTypes';
+import { FormControl } from '@angular/forms';
+import { Documentation } from '../../../../entity/Documentation';
+import { SnackbarService } from '../../../core/snackbar.service';
+import { SNACKBAR_COLOR } from '../snackbar/snackbar.component';
 
 @Component({
   selector: 'cc-file-upload',
@@ -10,14 +14,32 @@ import { MimeTypes } from '../../../../entity/mimeTypes';
 export class FileUploadComponent implements OnInit {
 
   @Input() competencyId = '';
+  @Input() documentation!: FormControl;
   fileOver = false;
-  files: File[] = [];
+  files: { name: string, documentationId?: string }[] = [];
 
   constructor(
     private fileService: FileService,
+    private snackbarService: SnackbarService
   ) { }
 
   ngOnInit(): void {
+    // Check if any documentation exists on the competency form control
+    if (this.documentation.value) {
+      // For each documentation, add the file to the files array
+      this.documentation.value.forEach((doc: Documentation) => {
+        const file: { name: string, documentationId?: string } = {
+          name: doc.description,
+          documentationId: doc._id
+        };
+        // Ensure that the file is not already in the files array
+        if (this.files.findIndex((file: { name: string, documentationId?: string }) => {
+          return file.documentationId === doc._id;
+        }) === -1) {
+          this.files.push(file);
+        }
+      });
+    }
   }
 
   /**
@@ -39,12 +61,26 @@ export class FileUploadComponent implements OnInit {
    */
   handleFileDropped(event: FileList) {
     let extension: string;
-    Array.from(event).forEach(file => {
+    Array.from(event).forEach(async file => {
       extension = file.name.split('.')[1];
       if((Object.values(MimeTypes) as string[]).includes(extension)) {
-        this.files.push(file);
+        const updatedFile: { name: string, documentationId?: string } = {
+          name: file.name,
+          // Id is returned from service
+          documentationId: ''
+        };
+        const doc: Documentation = await this.fileService.uploadFile(this.competencyId, file, file.name);
+        // Update the builder form with the documentation
+        this.documentation.patchValue(doc);
+        updatedFile.documentationId = doc._id;
+
+        this.files.push(updatedFile);
       } else {
-        console.log(extension, 'does not work'); // TODO: Replace with toaster message
+        this.snackbarService.notification$.next({
+          title: 'Unsupported File Type',
+          message: 'You are not allowed to upload this file type.',
+          color: SNACKBAR_COLOR.DANGER
+        });
       }
     });
   }
@@ -60,6 +96,22 @@ export class FileUploadComponent implements OnInit {
   }
 
   /**
+   * Removes a file that was about to be submitted
+   *
+   * @param file The file to be removed
+   */
+  async removeFile(file: { name: string, documentationId?: string }) {
+    // Set the documentation to be removed
+    const doc = this.documentation.value.find((doc: Documentation) => {
+      return doc._id === file.documentationId;
+    });
+    this.documentation.patchValue({remove: true, id: file.documentationId});
+    const index = this.files.indexOf(file);
+    this.files.splice(index, 1);
+    await this.fileService.deleteFile(this.competencyId, doc);
+  }
+
+  /**
    * Begins the process of submitting a file to S3 and the API
    *
    * @param file The file to submit
@@ -67,16 +119,5 @@ export class FileUploadComponent implements OnInit {
    */
   async handleFileUpload(file: File, description: string) {
     await this.fileService.uploadFile(this.competencyId, file, description);
-  }
-
-  /**
-   * Removes a file that was about to be submitted
-   *
-   * @param file The file to be removed
-   */
-  removeFile(file: File) {
-    const index = this.files.indexOf(file);
-
-    this.files.splice(index, 1);
   }
 }

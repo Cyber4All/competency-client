@@ -28,6 +28,6 @@
     </ng-container>
     <!--Documenation form filed-->
     <ng-container *ngIf="currIndex === 4" class="condition_file-container">
-        <cc-file-upload></cc-file-upload>
+        <cc-file-upload [competencyId]="competencyId" [documentation]="documentation"></cc-file-upload>
     </ng-container>
 </div>

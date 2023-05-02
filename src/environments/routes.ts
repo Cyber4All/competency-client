@@ -1,5 +1,4 @@
 import { environment } from './environment';
-import * as querystring from 'query-string';
 
 export const USER_ROUTES = {
     LOGIN() {
@@ -10,6 +9,12 @@ export const USER_ROUTES = {
     },
     TOKEN() {
         return `${environment.apiURL}/auth/token`;
+    },
+    RESET_PASSWORD(otaCode: string){
+        return `${environment.apiURL}/auth/reset/password?ota=${encodeURIComponent(otaCode)}`;
+    },
+    SEND_RESET_PASSWORD(){
+        return `${environment.apiURL}/auth/reset/password`;
     },
     UPDATE_ACL_ACTIONS(userId: string) {
         return `${environment.apiURL}/users/${encodeURIComponent(userId)}/acl`;
@@ -82,9 +87,12 @@ export const COMPETENCY_ROUTES = {
         return `${environment.fileUploadURL}/files?competencyId=${encodeURIComponent(competencyId)}`;
     },
     DELETE_FILE_LAMBDA(competencyId: string, filenames: string) {
-        // eslint-disable-next-line max-len
-        return `${environment.fileUploadURL}/files?competencyId=${encodeURIComponent(competencyId)}&filename=${encodeURIComponent(filenames)}`;
-    }
+        return `${environment.fileUploadURL}/files?competencyId=${
+            encodeURIComponent(competencyId)
+        }&filename=${
+            encodeURIComponent(filenames)
+        }`;
+    },
 };
 
 export const LIFECYCLE_ROUTES = {

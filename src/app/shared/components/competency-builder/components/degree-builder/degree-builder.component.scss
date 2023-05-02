@@ -97,7 +97,7 @@
 
         &:hover {
             cursor: pointer;
-            background-color: color-gray(12);
+            background-color: color-accent("hover");
         }
     }
 }

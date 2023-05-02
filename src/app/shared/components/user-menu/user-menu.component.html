@@ -1,3 +1,13 @@
-<button (click)="logout()">
-    LOGOUT
-</button>
+<ng-container *ngIf="loggedIn; then logoutTemplate; else loginTemplate"></ng-container>
+
+<ng-template #loginTemplate>
+    <button [routerLink]="['/login']">
+        LOGIN
+    </button>
+</ng-template>
+
+<ng-template #logoutTemplate>
+    <button (click)="logout()">
+        LOGOUT
+    </button>
+</ng-template>

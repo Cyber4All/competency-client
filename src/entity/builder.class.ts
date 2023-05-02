@@ -244,14 +244,6 @@ export class CompetencyBuilder extends Competency {
                     message: 'At least one technology is required.'
                 });
             }
-            if (!this.condition.documentation) {
-                conditionErrors.push({
-                    type: 'condition',
-                    attribute: 'documentation',
-                    isValid: false,
-                    message: 'At least one documentation is required.'
-                });
-            }
         } else {
             conditionErrors.push({
                 type: 'condition',
@@ -275,6 +267,15 @@ export class CompetencyBuilder extends Competency {
                     attribute: 'time',
                     isValid: false,
                     message: 'Time is required.'
+                });
+            }
+            // Check that time is a number
+            if (this.degree.time.split(' - ') && isNaN(Number(this.degree.time.split(' - ')[0]))) {
+                degreeErrors.push({
+                    type: 'degree',
+                    attribute: 'time',
+                    isValid: false,
+                    message: 'Time must be a number.'
                 });
             }
             if (!this.degree.correct) {

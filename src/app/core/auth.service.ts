@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, lastValueFrom, Observable, retry } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthUser, User, getUserGraphQuery } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
@@ -218,6 +218,24 @@ export class AuthService {
     }
   }
 
+  public async resetPassword(payload: string, otaCode: string): Promise<void> {
+    this.initHeaders();
+    await lastValueFrom(this.http
+      .patch(USER_ROUTES.RESET_PASSWORD(otaCode), { payload }))
+      .then((res: any)=> {
+        this.snackbarService.sendNotificationByError(res);
+      });
+  }
+
+  public async sendResetPassword(email: string): Promise<void>{
+    this.initHeaders();
+    await lastValueFrom(this.http
+      .post(USER_ROUTES.SEND_RESET_PASSWORD(), { email }))
+      .then((res: any)=> {
+        this.snackbarService.sendNotificationByError(res);
+      });
+  }
+
   /**
    * Private method to retrieve the token value
    *
@@ -247,7 +265,10 @@ export class AuthService {
    * Private method to enforce token removal when necessary
    */
   private deleteToken() {
+    // Explicitly clear any authenticated user vars
     this.user = undefined;
+    this._isAdmin.next(false);
+    this._isBetaUser.next(false);
     localStorage.removeItem('userId');
     /**
      * These parameters are now required by the library.

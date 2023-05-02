@@ -9,10 +9,9 @@ export class PrimaryNavComponent implements OnInit {
 
   @Input() isAdmin = false;
   @Output() search = new EventEmitter<string>();
-  constructor() { }
+  constructor( ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   sendSearch(value: any) {
     this.search.emit(value);

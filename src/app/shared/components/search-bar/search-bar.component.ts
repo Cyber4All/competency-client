@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
+import { AuthService } from '../../../core/auth.service';
 
 @Component({
   selector: 'cc-search-bar',
@@ -13,16 +14,20 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   searchValue = '';
   textQuery!: boolean;
-
+  loggedIn = false;
   destroyed$: Subject<void> = new Subject();
 
   @Output() search = new EventEmitter<string>();
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService,
     ) { }
 
   ngOnInit() {
+    this.authService.isBetaUser.pipe(takeUntil(this.destroyed$)).subscribe((isBetaUser: boolean) => {
+      this.loggedIn = isBetaUser;
+    });
     // force search bar to reflect current search value
     const textValue = this.route.snapshot.queryParamMap.get('text');
     if(textValue) {

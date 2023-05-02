@@ -9,7 +9,6 @@
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
   padding: 10px 20px;
-
   position: sticky;
   top: 0;
 
@@ -117,6 +116,8 @@
     padding: 15px 20px;
     border: 1px solid color-gray(6);
     border-radius: 5px;
+    color: white;
+    box-shadow: 0px 6px 12px -6px color-accent();
     margin-right: 25px;
     background-color: color-gray(13);
 

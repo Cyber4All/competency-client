@@ -53,6 +53,10 @@ export class BuilderService {
     }
     // Updates current builder index
     public setBuilderIndex(value: number) {
+        // Disable Rubrics for degree
+        if (value === 6) {
+            value++;
+        }
         this._builderIndex.next(value);
     }
     // Updates current submenu index
@@ -128,6 +132,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -148,6 +153,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -168,6 +174,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -188,6 +195,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -208,6 +216,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 
@@ -228,24 +237,7 @@ export class BuilderService {
         ))
         .catch((e)=> {
             this.snackBarService.sendNotificationByError(e);
-        });
-    }
-
-    /**
-     * Method to submit a competency for review
-     *
-     * @param competencyId ID of the competency to be submitted
-     */
-    async submitCompetency(competencyId: string) {
-        this.auth.initHeaders();
-        return await lastValueFrom(this.http
-        .patch(
-            LIFECYCLE_ROUTES.SUBMIT_COMPETENCY(competencyId),
-            {},
-            { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-        ))
-        .catch((e)=> {
-            this.snackBarService.sendNotificationByError(e);
+            throw e;
         });
     }
 }
