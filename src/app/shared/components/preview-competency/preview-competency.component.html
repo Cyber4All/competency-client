@@ -1,5 +1,5 @@
 <div>
-  <div *ngIf="!isAdmin else adminHeader" class="content" [ngClass]="{'builder-content': builderMode === true}">
+  <div *ngIf="!isAdmin" class="content" [ngClass]="{'builder-content': builderMode === true}">
   </div>
   <div class="content">
     <div [ngClass]="{ 'builder_content': builderMode, 'preview_content': !builderMode }">
@@ -110,6 +110,7 @@
     >EDIT SUBMISSION</button>
   </div>
 </div>
+
 <ng-template #noTasks>
   <p>No tasks specified.</p>
 </ng-template>
@@ -120,25 +121,6 @@
 
 <ng-template #noTech>
   <p>No technology specified.</p>
-</ng-template>
-
-<ng-template #adminHeader>
-  <div class="admin header" [ngClass]="competency.status.toString()">
-    <div class="left-corner">
-      <h2>{{ competency.behavior.work_role }} - {{ competency.behavior.tasks[0].split(":")[0] }}</h2>
-      <p><b>Task: </b>{{ competency.behavior.tasks[0] }}</p>
-    </div>
-    <div class="right-corner">
-      <div class="status">
-        <i [ngClass]="competencyStatusIcon()"></i>
-        <p><b>{{ competency.status | titlecase }}</b></p>
-      </div>
-      
-      <button (click)="close.emit()">
-        <i class="far fa-times fa-2x"></i>
-      </button>
-    </div>
-  </div>
 </ng-template>
 
 <ng-template #adminFooter>

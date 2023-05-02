@@ -52,7 +52,9 @@
         title: 'Competency Builder',
         padding: true,
         exitButtonColor: 'black',
-        position: 'lower-right'
+        position: 'lower-right',
+        isAdmin: false,
+        competency: previewCompetency
     }"
     (close)="closeBuilder()"
     (delete)="deleteCompetency(builderCompetency._id)"
@@ -68,7 +70,9 @@
         title: 'Competency Preview',
         padding: false,
         exitButtonColor: 'black',
-        position: 'center'
+        position: 'center',
+        isAdmin: true,
+        competency: previewCompetency
     }"
     [isAdmin]="true"
     (updateSubmission)="openCompetencyBuilder(previewCompetency)"
