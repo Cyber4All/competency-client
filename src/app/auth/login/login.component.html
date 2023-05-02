@@ -26,5 +26,14 @@
             <button class="button-margin submit" (click)="login()">LOGIN</button>
             <button class="button-margin register" (click)="register()">REGISTER</button>
         </div>
+        <div class="reset-password">
+            <button
+                type="button"
+                class="reset-password-toggle"
+                [routerLink]="['/auth/forgot-password']"
+            >
+                Forgot password?
+            </button>
+        </div>
     </form>
 </div>

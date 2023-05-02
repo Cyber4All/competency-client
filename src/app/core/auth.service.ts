@@ -247,22 +247,27 @@ export class AuthService {
     }
   }
 
+  /**
+   * Method to update a users password
+   *
+   * @param payload users new password
+   * @param otaCode OTA code to reset password/user info
+   */
   public async resetPassword(payload: string, otaCode: string): Promise<void> {
     this.initHeaders();
     await lastValueFrom(this.http
-      .patch(USER_ROUTES.RESET_PASSWORD(otaCode), { payload }))
-      .then((res: any)=> {
-        this.snackbarService.sendNotificationByError(res);
-      });
+      .patch(USER_ROUTES.RESET_PASSWORD(otaCode), { payload }));
   }
 
+  /**
+   * Method to request a reset password email
+   *
+   * @param email email of user to send reset password email to
+   */
   public async sendResetPassword(email: string): Promise<void>{
     this.initHeaders();
     await lastValueFrom(this.http
-      .post(USER_ROUTES.SEND_RESET_PASSWORD(), { email }))
-      .then((res: any)=> {
-        this.snackbarService.sendNotificationByError(res);
-      });
+      .post(USER_ROUTES.SEND_RESET_PASSWORD(), { email }));
   }
 
   /**
