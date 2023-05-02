@@ -37,6 +37,9 @@ export const USER_ROUTES = {
     VALIDATE_ACTIONS() {
         return `${environment.apiURL}/auth/validate`;
     },
+    SEND_VERIFICATION_EMAIL() {
+        return `${environment.apiURL}/auth/user/verify`;
+    }
 };
 
 export const ORGANIZATION_ROUTES = {

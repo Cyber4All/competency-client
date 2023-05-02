@@ -1,0 +1,10 @@
+<div class="email-banner" *ngIf="!isEmailVerified">
+    It looks like you haven't verified your email yet.
+    <button [tip]="'send an email verification.'" class="button bad white" (click)="sendEmailVerification()">
+        VERIFY EMAIL 
+        <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
+    </button>
+    <button [tip]="'close'" class="button close-button" (click)="closeEmailBanner()">
+        <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+    </button>
+</div>

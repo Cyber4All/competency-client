@@ -25,6 +25,7 @@ import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { ErrorBannerComponent } from './components/error-banner/error-banner.component';
 import { SharedModule } from '../shared/shared.module';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 
@@ -34,6 +35,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     RegisterComponent,
     ErrorBannerComponent,
     ResetPasswordComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     CommonModule,

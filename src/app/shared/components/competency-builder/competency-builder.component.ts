@@ -121,6 +121,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
           this.competency = this.competency.setActor(event.value as Actor);
           const actorValid: BuilderValidation[] = this.competency.validateActor();
           if (actorValid.length === 1 && actorValid[0].isValid) {
+            this.builderService.clearActorErrors();
             await this.builderService.updateActor(this.competency._id, this.competency.actor);
           }
           break;
@@ -128,6 +129,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
           this.competency = this.competency.setBehavior(event.value as Behavior);
           const behaviorValid: BuilderValidation[] = this.competency.validateBehavior();
           if (behaviorValid.length === 1 && behaviorValid[0].isValid) {
+            this.builderService.clearBehaviorErrors();
             await this.builderService.updateBehavior(this.competency._id, this.competency.behavior);
           }
           break;
@@ -135,6 +137,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
           this.competency = this.competency.setCondition(event.value as Condition);
           const conditionValid: BuilderValidation[] = this.competency.validateCondition();
           if (conditionValid.length === 1 && conditionValid[0].isValid) {
+            this.builderService.clearConditionErrors();
             await this.builderService.updateCondition(this.competency._id, this.competency.condition);
           }
           break;
@@ -142,6 +145,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
           this.competency = this.competency.setDegree(event.value as Degree);
           const degreeValid: BuilderValidation[] = this.competency.validateDegree();
           if (degreeValid.length === 1 && degreeValid[0].isValid) {
+            this.builderService.clearDegreeErrors();
             await this.builderService.updateDegree(this.competency._id, this.competency.degree);
           }
           break;
@@ -149,6 +153,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
           this.competency = this.competency.setEmployability(event.value as Employability);
           const employabilityValid: BuilderValidation[] = this.competency.validateEmployability();
           if (employabilityValid.length === 1 && employabilityValid[0].isValid) {
+            this.builderService.clearEmployabilityErrors();
             await this.builderService.updateEmployability(this.competency._id, this.competency.employability);
           }
           break;

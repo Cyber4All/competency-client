@@ -24,6 +24,7 @@
             placeholder="Specify technology required to complete this competency..."
             (keydown)="addTechnology($event)"
             [(ngModel)]="techInput"
+            [tip]="'Press TAB or ENTER to add a technology'"
         >
     </ng-container>
     <!--Documenation form filed-->

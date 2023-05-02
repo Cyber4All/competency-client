@@ -12,13 +12,13 @@ cc-text-field:nth-of-type(1) {
   .logo {
     margin: 20px auto;
     position: relative;
-
+    
     img {
-      position: relative;
-      left: -25%;
-      margin: 0 auto;
-      max-width: 150%;
-      height: auto;
+        position: relative;
+        left: -25%;
+        margin: 0 auto;
+        max-width: 150%;
+        height: auto;
     }
   }
 
@@ -63,6 +63,21 @@ cc-text-field:nth-of-type(1) {
           transform: scale(1.025);
           transition: all .15s ease-out;
         }
+      }
+    }
+    .reset-password {
+      .reset-password-toggle {
+        padding: 0;
+        margin: 0;
+        color: inherit;
+        cursor: pointer;
+        appearance: none;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        text-decoration: underline;
+        @include text--light();
+        margin-top: 8px;
       }
     }
   }

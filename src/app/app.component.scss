@@ -1,5 +1,14 @@
 main {
-    min-height: 100%;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+    height: 100%;
+    width: 100%;
+    display: table;
+
+    router-outlet {
+        height: 100%;
+        width: 100%;
+    }
+    
+    cc-footer {
+        display: table-footer-group;
+    }
 }

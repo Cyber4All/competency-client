@@ -3,22 +3,32 @@
 .competency-builder_navbar-buttons {
 
     .primary_nav {
-        display: block;
+        display: grid;
         text-align: left;
+        justify-content: space-between;
         width: 115px;
         padding: 15px;
         border-radius: 6px;
         font-size: 18px;
         .subs{
+            display: inline;
             font-size: 14px;
+            height: 100%;
         }
-        font-weight: 400px;
         margin-left: 20px;
         margin-right: 10px;
         color: color-gray(3);
         transition: background-color 500ms, color 500ms;
         &:hover{
             cursor: pointer;
+        }
+
+        .error {
+            display: flex;
+            font-size: 15px;
+            position: absolute;
+            right: 15px;
+            color: color-danger("default");
         }
     }
     .choosen {

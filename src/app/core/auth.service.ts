@@ -137,6 +137,35 @@ export class AuthService {
   }
 
   /**
+   * Sends an email to a user to verify their email
+   *
+   * @param email The email of the user to send the email to
+   * @returns A promise that resolves when the email is sent
+   * @throws An error if the email is not sent
+   */
+  async sendVerificationEmail(email: string): Promise<void> {
+    try {
+      await lastValueFrom(this.http
+        .post(USER_ROUTES.SEND_VERIFICATION_EMAIL(), { email }))
+        .then((res: any) => {
+          return Promise.resolve();
+        });
+    } catch(e: any) {
+      this.snackbarService.sendNotificationByError(e);
+      throw this.formatError(e);
+    }
+  }
+
+  /**
+   * Checks if a user email is verified
+   *
+   * @returns true if the user email is verified, false otherwise
+   */
+  isUserVerified(): boolean {
+    return this.user?.emailVerified ?? false;
+  }
+
+  /**
    * Public method to initialize headers for any route
    */
   public initHeaders() {
@@ -218,22 +247,27 @@ export class AuthService {
     }
   }
 
+  /**
+   * Method to update a users password
+   *
+   * @param payload users new password
+   * @param otaCode OTA code to reset password/user info
+   */
   public async resetPassword(payload: string, otaCode: string): Promise<void> {
     this.initHeaders();
     await lastValueFrom(this.http
-      .patch(USER_ROUTES.RESET_PASSWORD(otaCode), { payload }))
-      .then((res: any)=> {
-        this.snackbarService.sendNotificationByError(res);
-      });
+      .patch(USER_ROUTES.RESET_PASSWORD(otaCode), { payload }));
   }
 
+  /**
+   * Method to request a reset password email
+   *
+   * @param email email of user to send reset password email to
+   */
   public async sendResetPassword(email: string): Promise<void>{
     this.initHeaders();
     await lastValueFrom(this.http
-      .post(USER_ROUTES.SEND_RESET_PASSWORD(), { email }))
-      .then((res: any)=> {
-        this.snackbarService.sendNotificationByError(res);
-      });
+      .post(USER_ROUTES.SEND_RESET_PASSWORD(), { email }));
   }
 
   /**

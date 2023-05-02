@@ -4,6 +4,7 @@ export interface User {
     email: string;
     password: string;
     competencies: string[];
+    emailVerified?: boolean;
 }
 
 export interface AuthUser {

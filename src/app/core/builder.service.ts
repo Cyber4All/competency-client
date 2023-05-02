@@ -90,6 +90,26 @@ export class BuilderService {
             }
         });
     }
+    // Method to clear actor errors
+    public clearActorErrors(): void {
+        this._actorErrors.next([]);
+    }
+    // Method to clear behavior errors
+    public clearBehaviorErrors(): void {
+        this._behaviorErrors.next([]);
+    }
+    // Method to clear condition errors
+    public clearConditionErrors(): void {
+        this._conditionErrors.next([]);
+    }
+    // Method to clear degree errors
+    public clearDegreeErrors(): void {
+        this._degreeErrors.next([]);
+    }
+    // Method to clear employability errors
+    public clearEmployabilityErrors(): void {
+        this._employabilityErrors.next([]);
+    }
 
     constructor(
         private http: HttpClient,
