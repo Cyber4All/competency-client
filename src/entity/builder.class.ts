@@ -236,7 +236,7 @@ export class CompetencyBuilder extends Competency {
                     message: 'Limitations are required.'
                 });
             }
-            if (!this.condition.tech) {
+            if (this.condition.tech.length === 0) {
                 conditionErrors.push({
                     type: 'condition',
                     attribute: 'tech',
@@ -267,6 +267,15 @@ export class CompetencyBuilder extends Competency {
                     attribute: 'time',
                     isValid: false,
                     message: 'Time is required.'
+                });
+            }
+            // Check that time is a number
+            if (this.degree.time.split(' - ') && isNaN(Number(this.degree.time.split(' - ')[0]))) {
+                degreeErrors.push({
+                    type: 'degree',
+                    attribute: 'time',
+                    isValid: false,
+                    message: 'Time must be a number.'
                 });
             }
             if (!this.degree.correct) {

@@ -22,7 +22,7 @@ export const sections = {
                             `the builder based on which attribute of a competnecy you wish to enter data for.</p>` +
                             `<img 
                                 src="../../../assets/competency-builder.png"
-                                style="width: 100%; max-width: 500px;"
+                                style="width: 100%; max-width: 600px;"
                             ></img>`
                     },
                     {
@@ -36,12 +36,12 @@ export const sections = {
                             ` +
                             `</p><img 
                                 src="../../../assets/actorbuilder.png"
-                                style="width: 100%; max-width: 500px;"
+                                style="width: 100%; max-width: 600px;"
                             ></img><br><p>` +
                             `Select an <b>Actor</b> from the provided list that best fits the individual that would be attempting ` +
                             `to achieve this competency. The <b>Description</b> field allows you to enter additional information that ` +
                             `may be pertinent to defining your actor (i.e. pre-requisite classes, competition details, etc...).</p>` +
-                            `<p><b>Both Actor and Description are required to submit a competency for review!</b></p>`
+                            `<p><b>Both Actor and Description are required fileds to submit a competency for review!</b></p>`
                     },
                     {
                         question: 'Building Behavior',
@@ -56,7 +56,7 @@ export const sections = {
                             ` +
                             `</p><img 
                                 src="../../../assets/behaviorbuilder.png"
-                                style="width: 100%; max-width: 500px;"
+                                style="width: 100%; max-width: 600px;"
                             ></img><br><p>` +
                             `Search and select a <b>Workrole</b> from the NICE Framework* for your competency. Search and select ` +
                             `<b>Task</b>'s from the NICE Framework* for your competency. Multiple tasks can be selected. ` +
@@ -77,40 +77,85 @@ export const sections = {
                                     <li><b>Limitations</b>: any restrictions that are placed on the actor while attempting this `+
                                     `competency.</li>
                                     <li><b>Technology</b>: the technology an actor may use for this competency.</li>
-                                    <p>yeetus maximus</p>
-                                    <li><b>Documentation</b>: reference files, weblinks, and other resources that an actor has access ` +
+                                    <li><b>Documentation</b>: reference files and other resources that an actor has access ` +
                                     `to while attempting to earn this competency.</li>
                                 </ul>
                             ` +
                             `</p><img 
                                 src="../../../assets/conditionbuilderdescrip.png"
-                                style="width: 100%; max-width: 500px;"
+                                style="width: 100%; max-width: 600px;"
                             ></img><br><p>` +
-                            `<b>Scenario</b> provides the  <b>Limiations</b>` +
-                            `</p>`
+                            `<b>Scenario</b> provides the situational context for the competency being attemtped. <b>Limiations</b> ` +
+                            `are any restrictions/constraints that are placed on the competency (i.e. Actor cannot use the ` +
+                            `interenet, etc.).<br>` +
+                            `</p><img 
+                                src="../../../assets/conditionbuildertech.png"
+                                style="width: 100%; max-width: 600px;"
+                            ></img><br><p>` +
+                            `<b>Technology</b> is the technology an actor may use for this competency (i.e. Windows 10, Linux, etc.). ` +
+                            `To add technology to your competency, press either the <b>TAB</b> or <b>ENTER</b> key.<br>` +
+                            `</p><img
+                                src="../../../assets/conditiondocuments.png"
+                                style="width: 100%; max-width: 600px;"
+                            ></img><br><p>` +
+                            `<b>Documentation</b> is file uploads for a competency. You can upload any relevant materials an actor ` +
+                            `may need to succesfully complete a competency.</p>` +
+                            `<p><b>Scenario, Limitations, and at least one Technology are required to submit a competency for ` +
+                            `review!</b></p>`
                     },
                     {
                         question: 'Building Degree',
-                        answer: `<p>The competency builder Degree ` +
-                            `` +
-                            `</p>`
+                        answer: '<p>The competency builder Condition form has entry fields for  <b>Time</b>, <b>Correct</b>, ' +
+                            `and <b>Complete</b>.<br>` +
+                            `
+                                <ul>
+                                    <li><b>Time</b>: the duration of time the comptency should be completed in</li>
+                                    <li><b>Correct</b>: defines what is qualitatively acceptable for attempting a competnecy</li>
+                                    <li><b>Complete</b>: defines what is quantitatively acceptable for 'finishing' a task or tasks</li>
+                                </ul>
+                            ` +
+                            `</p><img
+                                src="../../../assets/degree.png"
+                                style="width: 100%; max-width: 600px;"
+                            ></img><br></p>` +
+                            `<p><b>Time, Correct, and Complete are required fields to submit a competency for ` +
+                            `review!</b></p>`
                     },
                     {
                         question: 'Building Employability',
                         answer: `<p>Relates to the professional skills an individual must have in order to be successful in the ` +
                             `workplace. Examples include teamwork, communication, and problem-solving. For a full list of examples ` +
-                            `please visit {{ link to that doc from Montreat }}</p>`
+                            `please visit 
+                            <a href="https://norwich0-my.sharepoint.com/:w:/g/personal/zfowler_norwich_edu/ERZQnxZyzoZGt3QBNCmUrNIBoV`+
+                            `suGQZDuLh8--S4uNUP_Q?rtime=mgFvzWJK20g" target="_blank">Montreat 360 Competencies and Skills</a>.</p>` +
+                            `<p><b>Employability is required to submit a competency for review!</b></p>`
                     },
                     {
                         question: 'Building Notes',
-                        answer: '<p>The competency builder Notes form is a secondary field that allows the author to provide ' +
-                            `additional context for a competnecy that does not fit with another part of the ABCDE model.</p>`
+                        answer: '<p>The competency builder Notes form is an optional field that allows the author to provide ' +
+                            `additional context for a competnecy that does not fit with another part of the ABCDE model.</p>` +
+                            `<br><p>As competencies continue to evolve, the builder will also evolve to accomodate new ` +
+                            `features and functionality. If you have any questions or suggestions for the builder, please ` +
+                            `contact us at <a href="mailto:info@secured.team?subject=Builder%20Suggestions">info@secured.team</a></p>`
                     },
                     {
                         question: 'Submitting a Competency',
-                        answer: '<p>To submit a competency ' +
-                            `` +
-                            `</p>`
+                        answer: '<p>You can submit a competency to be reviewed in the <b>Review</b> tab of the competency builder. ' +
+                            `Please ensure your competency is free of grammer errors and is filled out with the required fields.` +
+                            `After reviewing your competency, click the ` +
+                            `<button
+                                style="
+                                    background-color: #386fd6;
+                                    color: white;border: 0;
+                                    box-shadow: 0px 6px 12px -6px #386fd6;
+                                    border: 1px solid #DFDFDF;
+                                    border-radius: 4px;
+                                "
+                            >SUBMIT COMPETENCY</button> to submit it for a curated review.</p><br>` +
+                            `<img
+                                src="../../../assets/review.png"
+                                style="width: 100%; max-width: 600px;"
+                            ></img>`
                     },
                 ]
             },
@@ -120,11 +165,16 @@ export const sections = {
         title: 'Competency Ecosystem',
         topics: [
             {
-                title: `A Competnency's Lifecycle`,
+                title: `A Competency's Lifecycle`,
                 questions: [
                     {
                         question: `What is the competency lifecycle?`,
-                        answer: `<p>In order to facilitate the curation of competencies for the CAE Community and beyond, every competency`+
+                        answer:
+                            `</p><img
+                                src="../../../assets/lifecycles.png"
+                                style="width: 100%; max-width: 600px;"
+                            ></img><br><p>` +
+                            `<p>In order to facilitate the curation of competencies for the CAE Community and beyond, every competency`+
                             ` submitted will be subjected to review by the Competency Constructor Team. The Competency Constructor ` +
                             `allows you to build a competency within your own dashboard where you are the only one with the ability to ` +
                             `review and edit that competency. If you would like to submit it for review so that it can be made publicly ` +

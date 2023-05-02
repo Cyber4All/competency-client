@@ -5,6 +5,7 @@ export interface Search {
   limit: number
   page: number
   total: number
+  statuses: string[]
 }
 
 export function CompetencyCardSearch(id: string) {
