@@ -44,6 +44,7 @@ import { FilteringDropdownsComponent } from './filtering-dropdowns/filtering-dro
 import { SecondaryNavComponent } from './secondary-nav/secondary-nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { TextFieldComponent } from './text-field/text-field.component';
+import { EmailBannerComponent } from './email-banner/email-banner.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -65,7 +66,8 @@ import { TextFieldComponent } from './text-field/text-field.component';
     FilteringDropdownsComponent,
     SecondaryNavComponent,
     FooterComponent,
-    TextFieldComponent
+    TextFieldComponent,
+    EmailBannerComponent
   ],
   imports: [
     CommonModule,
@@ -106,7 +108,8 @@ import { TextFieldComponent } from './text-field/text-field.component';
     UserMenuComponent,
     PreviewCompetencyComponent,
     FooterComponent,
-    TextFieldComponent
+    TextFieldComponent,
+    EmailBannerComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

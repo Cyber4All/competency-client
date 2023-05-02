@@ -137,6 +137,35 @@ export class AuthService {
   }
 
   /**
+   * Sends an email to a user to verify their email
+   *
+   * @param email The email of the user to send the email to
+   * @returns A promise that resolves when the email is sent
+   * @throws An error if the email is not sent
+   */
+  async sendVerificationEmail(email: string): Promise<void> {
+    try {
+      await lastValueFrom(this.http
+        .post(USER_ROUTES.SEND_VERIFICATION_EMAIL(), { email }))
+        .then((res: any) => {
+          return Promise.resolve();
+        });
+    } catch(e: any) {
+      this.snackbarService.sendNotificationByError(e);
+      throw this.formatError(e);
+    }
+  }
+
+  /**
+   * Checks if a user email is verified
+   *
+   * @returns true if the user email is verified, false otherwise
+   */
+  isUserVerified(): boolean {
+    return this.user?.emailVerified ?? false;
+  }
+
+  /**
    * Public method to initialize headers for any route
    */
   public initHeaders() {
