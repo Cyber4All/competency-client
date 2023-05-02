@@ -1,69 +1,73 @@
 @import "vars";
 
 cc-text-field:nth-of-type(1) {
-    @include input-with-margin();
+  @include input-with-margin();
 }
 
 .login-wrapper {
-    width: 350px;
-    text-align: center;
-    margin: 10% auto 10% auto;
+  width: 350px;
+  text-align: center;
+  margin: 10% auto 10% auto;
 
-    .logo {
-        margin: 20px auto;
-        position: relative;
-        
-        img {
-            position: relative;
-            left: -25%;
-            margin: 0 auto;
-            max-width: 150%;
-            height: auto;
+  .logo {
+    margin: 20px auto;
+    position: relative;
+
+    img {
+      position: relative;
+      left: -25%;
+      margin: 0 auto;
+      max-width: 150%;
+      height: auto;
+    }
+  }
+
+  form {
+    margin: 10px auto;
+
+    .form-button {
+      display: inline-flex;
+      justify-content: space-between;
+      margin: 10px auto;
+      background-color: white;
+      z-index: 3;
+
+      .button-margin {
+        margin: 10px 5px;
+      }
+
+      .register {
+        padding: 15px 20px;
+        color: #454545;
+        background-color: #f7f7f7;
+        border: 1px solid #DFDFDF;
+        border-radius: 4px;
+
+        &:hover {
+          cursor: pointer;
         }
-    }
+      }
 
-    form {
-        margin: 10px auto;
+      .submit {
+        padding: 15px 20px;
+        color: #f7f7f7;
+        background-color: color-accent();
+        box-shadow: 0px 6px 12px -6px color-accent();
+        border-radius: 4px;
+        border: none;
+        margin-left: 30px;
+        transition: all .15s ease-in-out;
 
-        .form-button {
-            display: inline-flex;
-            justify-content: space-between;
-            margin: 10px auto;
-            background-color: white;
-            z-index: 3;
-          
-            .button-margin {
-              margin: 10px 5px;
-            }
-          
-            .register {
-              padding: 10px 20px;
-              color: #454545;
-              background-color: #f7f7f7;
-              border: 1px solid #DFDFDF;
-              border-radius: 4px;
-              &:hover{
-                cursor: pointer;
-              }
-            }
-            
-            .submit {
-              padding: 10px 20px;
-              color: #f7f7f7;
-              background-color: color-accent();
-              box-shadow: 0px 6px 12px -6px color-accent();
-              border-radius: 4px;
-              border: none;
-              margin-left: 30px;
-          
-              &:hover {
-                cursor: pointer;
-              }
-            }
-          }
+        &:hover {
+          cursor: pointer;
+          transform: scale(1.025);
+          transition: all .15s ease-out;
+        }
+      }
     }
+  }
 
-    button {
-        margin: 15px 5px;
-    }
+  button {
+    margin: 15px 5px;
+  }
 }

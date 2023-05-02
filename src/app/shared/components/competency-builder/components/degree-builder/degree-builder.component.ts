@@ -157,5 +157,6 @@ export class DegreeBuilderComponent implements OnInit {
     this.timeSelected = measure;
     // Update time form control to reflect selected measure
     this.time.patchValue(this.time.value);
+    this.displayTime();
   }
 }

@@ -12,7 +12,7 @@
     </div>
   </div>
   <div [ngClass]="actorDisplay ? 'actor_dropdown': 'hidden'">
-    <ul class="actor_list" (mouseleave)="displayActors()">
+    <ul class="actor_list">
       <li *ngFor="let actor of actorList" (click)="this.actorSelected=actor; displayActors(); type.patchValue(true)">{{ actor.value }}</li>
     </ul>
   </div>
