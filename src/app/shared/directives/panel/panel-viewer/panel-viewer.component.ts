@@ -11,6 +11,9 @@ import { takeUntil } from 'rxjs/operators';
 import { PanelOptions } from '../panel.directive';
 import { fade } from '../panel.animations';
 import { Lifecycles } from 'entity/Lifecycles';
+import { WorkroleService } from 'app/core/workrole.service';
+import { Elements } from 'entity/elements';
+import { Workrole } from 'entity/workrole';
 @Component({
   selector: 'cc-panel-viewer',
   template: `
@@ -53,9 +56,9 @@ import { Lifecycles } from 'entity/Lifecycles';
 
     <ng-template #adminHeader>
       <div class="admin header" [ngClass]="options.competency.status.toString()">
-        <div class="left-corner">
-          <h2>{{ options.competency.behavior.work_role }} - {{ options.competency.behavior.tasks[0].split(":")[0] }}</h2>
-          <p><b>Task: </b>{{ options.competency.behavior.tasks[0] }}</p>
+        <div class="left-corner" *ngIf="tasks[0] && workrole">
+          <h2>{{ workrole }} - {{ tasks[0].element_id }} </h2>
+          <p><b>Task: </b> {{ tasks[0].element_id }} - {{ tasks[0].description }}</p>
         </div>
         <div class="right-corner">
           <div class="status">
@@ -91,7 +94,12 @@ export class PanelViewerComponent implements OnInit, OnDestroy {
   private defaultWidth = 350;
   private destroyed$: Subject<void> = new Subject();
 
-  constructor() {}
+  workrole!: Workrole;
+  tasks: Elements[] = [];
+
+  constructor(
+    private workRoleService: WorkroleService
+  ) {}
 
   /**
    * Calculate the speed necessary to open the side panel
@@ -126,7 +134,23 @@ export class PanelViewerComponent implements OnInit, OnDestroy {
     this.delete.emit();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    if (this.options.competency.behavior.work_role) {
+      this.workrole =
+        await this.workRoleService.getCompleteWorkrole(this.options.competency.behavior.work_role)
+      .then((workroleQuery: any) => {
+        return workroleQuery.data.workrole.work_role;
+      });
+    }
+    // load tasks
+    if (this.options.competency.behavior.tasks.length > 0) {
+      const tasks = this.options.competency.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
+      .then((taskQuery: any) => {
+        return taskQuery.data.task;
+      }));
+      this.tasks = await Promise.all(tasks);
+    }
+    console.log(this.options.competency);
     this.close.pipe(takeUntil(this.destroyed$)).subscribe(() => {
       this.isOpen = false;
     });

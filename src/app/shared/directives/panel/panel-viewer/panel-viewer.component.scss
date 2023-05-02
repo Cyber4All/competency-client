@@ -108,6 +108,84 @@
       }
     }
   }
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: color-gray(8);
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+  
+    h2 {
+      margin: 0;
+    }
+  
+    button {
+      background-color: inherit;
+      color: inherit;
+      border: 0px;
+      margin-right: 5px;
+      padding: 5px 10px;
+  
+      &:hover {
+        cursor: pointer;
+      }
+  
+      &:active {
+        opacity: 0.5;
+        border-radius: 1000px;
+      }
+    }
+  
+    &.admin {
+      color: white;
+  
+      p {
+        margin: 0
+      }
+  
+      .right-corner {
+        display: flex;
+  
+        .status {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-right: 50px;
+    
+          p {
+            font-size: font();
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+  
+    &.draft {
+      background-color: $draft-light;
+    }
+  
+    &.submitted {
+      background-color: $submitted-light;
+    }
+  
+    &.published {
+      background-color: $published-light;
+    }
+  
+    &.deprecated {
+      background-color: $deprecated-light;
+    }
+  
+    &.rejected {
+      background-color: $rejected-light;
+    }
+  }
 }
 
 
