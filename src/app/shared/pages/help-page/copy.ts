@@ -19,7 +19,7 @@ export const sections = {
                             >NEW COMPETENCY</button> ` +
                             `button in the top-right corner of your dashboard. This opens the Competency Builder. The builder has ` +
                             `unique data entry fields that conform to the ABCDE model outlined in the Competency eHandbook. You navigate `+
-                            `the builder based on which attribute of a competnecy you wish to enter data for.</p>` +
+                            `the builder based on which attribute of a competency you wish to enter data for.</p>` +
                             `<img 
                                 src="../../../assets/competency-builder.png"
                                 style="width: 100%; max-width: 600px;"
@@ -41,7 +41,7 @@ export const sections = {
                             `Select an <b>Actor</b> from the provided list that best fits the individual that would be attempting ` +
                             `to achieve this competency. The <b>Description</b> field allows you to enter additional information that ` +
                             `may be pertinent to defining your actor (i.e. pre-requisite classes, competition details, etc...).</p>` +
-                            `<p><b>Both Actor and Description are required fileds to submit a competency for review!</b></p>`
+                            `<p><b>Both Actor and Description are required fields to submit a competency for review!</b></p>`
                     },
                     {
                         question: 'Building Behavior',
@@ -64,13 +64,13 @@ export const sections = {
                             `(The specific task(s) relating to a classroom lesson, a competition, etc.).</p>` +
                             `<p>*The work roles and task lists will be expanded upon as more frameworks like ` +
                             `<a href="https://public.cyber.mil/wid/dcwf/" target="_blank">DCWF</a> are adopted for the builder.</p><br>` +
-                            `<p><b>A Workrole, at least one Task, and a Task Descripiton are required to submit a competency for ` +
+                            `<p><b>A Workrole, at least one Task, and a Task Description are required to submit a competency for ` +
                             `review!</b></p>`
                     },
                     {
                         question: 'Building Condition & Context',
                         answer: '<p>The competency builder Condition form has entry fields for  <b>Scenario</b>, <b>Limitations</b>, ' +
-                            `<b>Technology</b>, and <b>Documenation</b>.<br>` +
+                            `<b>Technology</b>, and <b>Documentation</b>.<br>` +
                             `
                                 <ul>
                                     <li><b>Scenario</b>: the situation in which the actor is attempting to earn this competency.</li>
@@ -85,9 +85,9 @@ export const sections = {
                                 src="../../../assets/conditionbuilderdescrip.png"
                                 style="width: 100%; max-width: 600px;"
                             ></img><br><p>` +
-                            `<b>Scenario</b> provides the situational context for the competency being attemtped. <b>Limiations</b> ` +
+                            `<b>Scenario</b> provides the situational context for the competency being attempted. <b>Limitations</b> ` +
                             `are any restrictions/constraints that are placed on the competency (i.e. Actor cannot use the ` +
-                            `interenet, etc.).<br>` +
+                            `internet, etc.).<br>` +
                             `</p><img 
                                 src="../../../assets/conditionbuildertech.png"
                                 style="width: 100%; max-width: 600px;"
@@ -98,19 +98,19 @@ export const sections = {
                                 src="../../../assets/conditiondocuments.png"
                                 style="width: 100%; max-width: 600px;"
                             ></img><br><p>` +
-                            `<b>Documentation</b> is file uploads for a competency. You can upload any relevant materials an actor ` +
-                            `may need to succesfully complete a competency.</p>` +
+                            `<b>Documentation</b> is any external resource that can be used to complete a competency. You can upload ` +
+                            `any relevant materials an actor may need to successfully complete a competency.</p>` +
                             `<p><b>Scenario, Limitations, and at least one Technology are required to submit a competency for ` +
                             `review!</b></p>`
                     },
                     {
                         question: 'Building Degree',
-                        answer: '<p>The competency builder Condition form has entry fields for  <b>Time</b>, <b>Correct</b>, ' +
+                        answer: '<p>The competency builder Degree form has entry fields for  <b>Time</b>, <b>Correct</b>, ' +
                             `and <b>Complete</b>.<br>` +
                             `
                                 <ul>
-                                    <li><b>Time</b>: the duration of time the comptency should be completed in</li>
-                                    <li><b>Correct</b>: defines what is qualitatively acceptable for attempting a competnecy</li>
+                                    <li><b>Time</b>: the duration of time the competency should be completed in</li>
+                                    <li><b>Correct</b>: defines what is qualitatively acceptable for attempting a competency</li>
                                     <li><b>Complete</b>: defines what is quantitatively acceptable for 'finishing' a task or tasks</li>
                                 </ul>
                             ` +
@@ -123,7 +123,7 @@ export const sections = {
                     },
                     {
                         question: 'Building Employability',
-                        answer: `<p>Relates to the professional skills an individual must have in order to be successful in the ` +
+                        answer: `<p>Relates to the professional competencies an individual must have in order to be successful in the ` +
                             `workplace. Examples include teamwork, communication, and problem-solving. For a full list of examples ` +
                             `please visit 
                             <a href="https://norwich0-my.sharepoint.com/:w:/g/personal/zfowler_norwich_edu/ERZQnxZyzoZGt3QBNCmUrNIBoV`+
@@ -133,15 +133,15 @@ export const sections = {
                     {
                         question: 'Building Notes',
                         answer: '<p>The competency builder Notes form is an optional field that allows the author to provide ' +
-                            `additional context for a competnecy that does not fit with another part of the ABCDE model.</p>` +
-                            `<br><p>As competencies continue to evolve, the builder will also evolve to accomodate new ` +
+                            `additional context for a competency that does not fit with another part of the ABCDE model.</p>` +
+                            `<br><p>As Competency Constructor continues to evolve, the builder will also evolve to accommodate new ` +
                             `features and functionality. If you have any questions or suggestions for the builder, please ` +
                             `contact us at <a href="mailto:info@secured.team?subject=Builder%20Suggestions">info@secured.team</a></p>`
                     },
                     {
                         question: 'Submitting a Competency',
                         answer: '<p>You can submit a competency to be reviewed in the <b>Review</b> tab of the competency builder. ' +
-                            `Please ensure your competency is free of grammer errors and is filled out with the required fields.` +
+                            `Please ensure your competency is free of grammar errors and is filled out with the required fields.` +
                             `After reviewing your competency, click the ` +
                             `<button
                                 style="
@@ -151,7 +151,7 @@ export const sections = {
                                     border: 1px solid #DFDFDF;
                                     border-radius: 4px;
                                 "
-                            >SUBMIT COMPETENCY</button> to submit it for a curated review.</p><br>` +
+                            >SUBMIT COMPETENCY</button> button to submit it for a curated review.</p><br>` +
                             `<img
                                 src="../../../assets/review.png"
                                 style="width: 100%; max-width: 600px;"
@@ -178,13 +178,13 @@ export const sections = {
                             ` submitted will be subjected to review by the Competency Constructor Team. The Competency Constructor ` +
                             `allows you to build a competency within your own dashboard where you are the only one with the ability to ` +
                             `review and edit that competency. If you would like to submit it for review so that it can be made publicly ` +
-                            `available you can do so through the competency builder when you're finsihed with all edits. After it is ` +
-                            `submitted it will be reviewed for applicability and our team might reach out for clarification or to ` +
+                            `available you can do so through the competency builder when you are finished with all edits. After it is ` +
+                            `submitted, it will be reviewed for applicability and our team might reach out for clarification or to ` +
                             `provide feedback on your submission. After review the decision will be made to either approve the ` +
                             `competency and publish it for public consumption or to reject the competency. If a competency is rejected ` +
                             `you will have the opportunity to make revisions to the competency and resubmit for review.</p><br>` +
                             `<p>After some time a competency might be deemed no longer relevant and be deprecated. The decision on when ` +
-                            `to deprecate is up to the Competency Constructor team. If this occurs, the competency will still be ` +
+                            `to deprecate is up to the Competency Constructor Team. If this occurs, the competency will still be ` +
                             `publicly available but will no longer be listed as published.</p>`
                     },
                 ]
@@ -200,7 +200,7 @@ export const sections = {
                     {
                         question: 'What is Competency Constructor?',
                         answer: `<p>Competency Constructor is a platform to create, publish, and maintain competencies. A competency is ` +
-                            `the ability for an actor to compelte a task, or set of tasks, in the context of a work role. Our platform ` +
+                            `the ability for an actor to complete a task, or set of tasks, in the context of a work role. Our platform ` +
                             `provides the model for educators to build competencies that every NCAE-C institution can use.`
                     },
                     {

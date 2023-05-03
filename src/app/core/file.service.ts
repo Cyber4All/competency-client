@@ -56,7 +56,7 @@ export class FileService {
     });
 
     // formats the uri to be stored in mongo, will be used for file retrieval and deleting a file
-    const fileURL = `https://cc-file-upload-bucket.s3.amazonaws.com/${this.authService.user?._id}/${competencyId}/${file.name}`;
+    const fileURL = `https://cc-file-upload-bucket-prod.s3.amazonaws.com/${this.authService.user?._id}/${competencyId}/${file.name}`;
 
     return await lastValueFrom(
       this.http.post(
