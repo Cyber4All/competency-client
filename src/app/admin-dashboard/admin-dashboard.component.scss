@@ -111,3 +111,28 @@
     }
   }
 }
+
+// media queries
+@media (max-width: 1375px) {
+  .wrapper .competency-card {
+    padding: 0px;
+  }
+}
+
+@media (max-width: 1335px) {
+  .wrapper .competency-card .competency-card-wrapper {
+    width: 930px;
+  }
+}
+
+@media (max-width: 1017px) {
+  .wrapper .competency-card .competency-card-wrapper {
+    width: 613px;
+  }
+}
+
+@media (max-width: 700px) {
+  .wrapper .competency-card .competency-card-wrapper {
+    width: 289px;
+  }
+}
