@@ -219,7 +219,7 @@ export class CompetencyBuilder extends Competency {
      */
     validateCondition(): BuilderValidation[] {
         const conditionErrors: BuilderValidation[] = [];
-        if (!this.condition.scenario || !this.condition.limitations || !this.condition.tech || !this.condition.documentation) {
+        if (!this.condition.scenario || !this.condition.limitations || this.condition.tech.length === 0 || !this.condition.documentation) {
             if (!this.condition.scenario) {
                 conditionErrors.push({
                     type: 'condition',
