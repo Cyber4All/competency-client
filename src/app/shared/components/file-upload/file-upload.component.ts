@@ -60,10 +60,8 @@ export class FileUploadComponent implements OnInit {
    * @param event A list of files received from the user
    */
   handleFileDropped(event: FileList) {
-    let extension: string;
     Array.from(event).forEach(async file => {
-      extension = file.name.split('.')[1];
-      if((Object.values(MimeTypes) as string[]).includes(extension)) {
+      try {
         const updatedFile: { name: string, documentationId?: string } = {
           name: file.name,
           // Id is returned from service
@@ -75,12 +73,8 @@ export class FileUploadComponent implements OnInit {
         updatedFile.documentationId = doc._id;
 
         this.files.push(updatedFile);
-      } else {
-        this.snackbarService.notification$.next({
-          title: 'Unsupported File Type',
-          message: 'You are not allowed to upload this file type.',
-          color: SNACKBAR_COLOR.DANGER
-        });
+      } catch (e) {
+        this.snackbarService.sendNotificationByError(e);
       }
     });
   }
