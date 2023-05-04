@@ -126,13 +126,13 @@
 <ng-template #adminFooter>
   <div class="footer">
     <button 
-      *ngIf="competency.status.toString() === 'submitted'"
+      *ngIf="!builderMode && (competency.status.toString() === 'submitted')"
       (click)="onReject()"
       >REJECT</button>
     <button 
-      *ngIf="competency.status.toString() === 'submitted' || competency.status.toString() === 'published'" 
+      *ngIf="!builderMode && (competency.status.toString() === 'submitted' || competency.status.toString() === 'published')" 
       (click)="onUpdateSubmission()"
       >EDIT</button>
-    <button *ngIf="!(competency.status.toString() === 'rejected' || competency.status.toString() === 'deprecated')" (click)="onAdminButtonClicked()" class="submit">{{ adminButtonText() }}</button>
+    <button *ngIf="!builderMode && (!(competency.status.toString() === 'rejected' || competency.status.toString() === 'deprecated'))" (click)="onAdminButtonClicked()" class="submit">{{ adminButtonText() }}</button>
   </div>
 </ng-template>
