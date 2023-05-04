@@ -31,7 +31,7 @@ export class AdminDashboardComponent implements OnInit {
   };
   currPage = 1;
 
-  unsubscribe: Subject<void> = new Subject(); // TODO: this needs to be used
+  unsubscribe: Subject<void> = new Subject();
 
   // Logic to display the competency preview and builder
   builderCompetency!: CompetencyBuilder;
@@ -82,31 +82,18 @@ export class AdminDashboardComponent implements OnInit {
   async getCompetencies(q?: Search) {
     // Explicitly clear competencies array
     this.search.competencies = [];
-    // Check if user is logged in
-    if(this.authService.user?._id !== undefined) { // TODO: No need to check if user logged in
-      // Retrieve author competencies
-      this.search = await this.competencyService
-        .getAllCompetencies({
-          limit: q ? q.limit : this.search.limit,
-          page:  q ? q.page : this.search.page,
-          author: this.authService.user?._id, // TODO: Display from any user
-          status: [ // TODO: Remove drafts, display deprecated
-            `${Lifecycles.DRAFT}`,
-            `${Lifecycles.REJECTED}`,
-            `${Lifecycles.SUBMITTED}`,
-            `${Lifecycles.PUBLISHED}`
-          ]
-        });
-    } else { // TODO: Remove this
-      // User is not logged in, clear search object, display no results
-      this.search = {
-        competencies: [],
-        limit: 12,
-        page: 1,
-        total: 0,
-        statuses: []
-      };
-    }
+    // Retrieve author competencies
+    this.search = await this.competencyService
+      .getAllCompetencies({
+        limit: q ? q.limit : this.search.limit,
+        page:  q ? q.page : this.search.page,
+        // author: this.authService.user?._id, // TODO: Display from any user
+        status: [ // TODO: Remove drafts, display deprecated
+          `${Lifecycles.SUBMITTED}`,
+          `${Lifecycles.PUBLISHED}`,
+          `${Lifecycles.DEPRECATED}`
+        ]
+      });
   }
 
   /**

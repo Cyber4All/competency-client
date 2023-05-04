@@ -150,7 +150,6 @@ export class PanelViewerComponent implements OnInit, OnDestroy {
       }));
       this.tasks = await Promise.all(tasks);
     }
-    console.log(this.options.competency);
     this.close.pipe(takeUntil(this.destroyed$)).subscribe(() => {
       this.isOpen = false;
     });

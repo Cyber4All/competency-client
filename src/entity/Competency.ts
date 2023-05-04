@@ -148,8 +148,7 @@ export function CompetencySearch(
       search(
         text:"${query?.text ?? ''}",
         page:${query?.page ?? 0},
-        limit:${query?.limit ?? 0}, 
-        author:"${query?.author ?? ''}",
+        limit:${query?.limit ?? 0}, ${query?.author ? `\nauthor: "${query?.author}",` : ''}
         status:[${query?.status ?? 'DRAFT'}],
         version:${query?.version ?? 0}
       ) {
