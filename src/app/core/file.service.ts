@@ -105,7 +105,7 @@ export class FileService {
         this.snackBarService.sendNotificationByError(e);
       }
     }));
-    await lastValueFrom(
+    return await lastValueFrom(
       this.http.delete(
         COMPETENCY_ROUTES.DELETE_DOCUMENTATION(competencyId),
         {
