@@ -306,15 +306,20 @@ export class BehaviorBuilderComponent implements OnInit {
   }
 
   /**
-   * Closes either dropdown menu
+   * Closes either dropdown menu and conditionally clears the search value
    */
-  closeDropdown() {
+  closeDropdown(clearSearch?: boolean) {
     if (this.showWorkrolesDropdown) {
       this.showWorkrolesDropdown = false;
+      if(clearSearch) {
+        this.taskDropdownPlaceholder = ' ';
+      }
     }
     if (this.showTasksDropdown) {
       this.showTasksDropdown = false;
-      this.taskDropdownPlaceholder = '';
+      if(clearSearch) {
+        this.taskDropdownPlaceholder = ' ';
+      }
     }
   }
 
