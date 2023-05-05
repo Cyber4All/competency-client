@@ -111,4 +111,7 @@ export const LIFECYCLE_ROUTES = {
     SUBMIT_COMPETENCY(competencyId: string) {
         return `${environment.apiURL}/lifecycle/${encodeURIComponent(competencyId)}/submit`;
     },
+    UNSUBMIT_COMPETENCY(competencyId: string) {
+        return `${environment.apiURL}/lifecycle/${encodeURIComponent(competencyId)}/unsubmit`;
+    }
 };

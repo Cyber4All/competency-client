@@ -99,4 +99,20 @@ export class LifecyclesService {
         return false;
       });
   }
+
+  async unsubmitCompetency(competencyId: string): Promise<boolean> {
+    this.auth.initHeaders();
+    return await lastValueFrom(this.http
+       .patch(
+          LIFECYCLE_ROUTES.UNSUBMIT_COMPETENCY(competencyId),
+          { userId: this.auth.user?._id },
+          { headers: this.auth.headers, withCredentials: true }
+       )).then(() => {
+        return true;
+       })
+        .catch((err) => {
+          this.snackbar.sendNotificationByError(err);
+          return false;
+        });
+  }
 }
