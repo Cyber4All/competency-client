@@ -125,6 +125,11 @@
     (click)="onUpdateSubmission()"
     class="submit"
   >EDIT SUBMISSION</button>
+  <button
+    *ngIf="!builderMode && competency.status === 'submitted'"
+    (click)="unsubmitCompetency()"
+    class="submit"
+  >UNSUBMIT</button>
 </div>
 </div>
 <ng-template #noTasks>
