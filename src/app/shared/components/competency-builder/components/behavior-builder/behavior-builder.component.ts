@@ -314,7 +314,6 @@ export class BehaviorBuilderComponent implements OnInit {
     }
     if (this.showTasksDropdown) {
       this.showTasksDropdown = false;
-      this.taskDropdownPlaceholder = '';
     }
   }
 
