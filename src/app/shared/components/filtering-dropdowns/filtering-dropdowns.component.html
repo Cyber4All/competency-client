@@ -10,7 +10,7 @@
     <mat-menu #dropdown="matMenu" class="dropdown-wrapper">
             <!-- Searchbar used to filter the 'filter items' -->
             <div *ngIf="searchbar" class="searchbar" (click)="$event.stopPropagation()">
-                <cc-search-bar></cc-search-bar>
+                <cc-search-bar (search)="filterSearch($event)"></cc-search-bar>
             </div>
 
             <!-- Filter items -->

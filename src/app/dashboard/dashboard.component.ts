@@ -173,7 +173,14 @@ export class DashboardComponent implements OnInit {
       this.search.competencies.map(async (comp: Competency) => {
         await this.competencyService.getCompetencyById(comp._id)
           .then(async (comp: Competency) => {
-            this.loadedCompetencies.push(comp);
+            // apply work role filter if selected else load all
+            if (this.selected.work_role.length > 0) {
+              if (this.selected.work_role.includes(comp.behavior.work_role)) {
+                this.loadedCompetencies.push(comp);
+              }
+            } else {
+              this.loadedCompetencies.push(comp);
+            }
           });
       });
     }
@@ -258,6 +265,8 @@ export class DashboardComponent implements OnInit {
     // filter competencies by status
     this.search.statuses = filter.status;
     await this.getCompetencies(this.search);
+    // filter competencies by work role
+    this.selected.work_role = filter.workrole;
     await this.loadCompetencies();
     this.filterApplied = true;
     this.loading = false;
