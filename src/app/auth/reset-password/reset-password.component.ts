@@ -44,8 +44,8 @@ export class ResetPasswordComponent implements OnInit {
           message: 'Check your email for a link to reset your password.',
           color: SNACKBAR_COLOR.SUCCESS
         });
-        this.router.navigate(['/login']);
-      }, error => {
+      })
+      .catch((error) => {
         this.snackbarService.sendNotificationByError(error);
       });
     }
