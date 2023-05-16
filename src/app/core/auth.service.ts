@@ -258,14 +258,7 @@ export class AuthService {
     this.initHeaders();
     await lastValueFrom(this.http
       .patch(USER_ROUTES.RESET_PASSWORD(otaCode), { payload }))
-      .then(() => {
-          this.snackbarService.notification$.next({
-            title: 'Success!',
-            message: 'Your password has been updated',
-            color: SNACKBAR_COLOR.SUCCESS
-          });
-        }
-      ).catch((err) => {
+      .catch((err) => {
           this.snackbarService.sendNotificationByError(err);
       });
   }
