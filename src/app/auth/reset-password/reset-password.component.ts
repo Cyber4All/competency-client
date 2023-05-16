@@ -38,15 +38,13 @@ export class ResetPasswordComponent implements OnInit {
       await this.authService.resetPassword(
         this.passwords.get('password')?.value, this.otaCode
       )
-      .then(() => {
+      .then( async () => {
         this.snackbarService.notification$.next({
-          title: 'Email Sent!',
-          message: 'Check your email for a link to reset your password.',
+          title: 'Success!',
+          message: 'Your password has been updated.',
           color: SNACKBAR_COLOR.SUCCESS
         });
-        this.router.navigate(['/login']);
-      }, error => {
-        this.snackbarService.sendNotificationByError(error);
+        await this.router.navigate(['/']);
       });
     }
   }
