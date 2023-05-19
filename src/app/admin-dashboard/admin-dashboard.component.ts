@@ -1,8 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/core/auth.service';
 import { BuilderService } from 'app/core/builder.service';
-import { CompetencyService, sleep } from 'app/core/competency.service';
+import { CompetencyService } from 'app/core/competency.service';
 import { SnackbarService } from 'app/core/snackbar.service';
 import { SNACKBAR_COLOR } from 'app/shared/components/snackbar/snackbar.component';
 import { Competency } from 'entity/Competency';
@@ -68,7 +68,6 @@ export class AdminDashboardComponent implements OnInit {
    */
   async initDashboard() {
     this.loading = true;
-    await sleep(1000); // TODO: Do we need this?
     await this.getCompetencies(this.search);
     await this.loadCompetencies();
     this.loading = false;
@@ -87,8 +86,7 @@ export class AdminDashboardComponent implements OnInit {
       .getAllCompetencies({
         limit: q ? q.limit : this.search.limit,
         page:  q ? q.page : this.search.page,
-        // author: this.authService.user?._id, // TODO: Display from any user
-        status: [ // TODO: Remove drafts, display deprecated
+        status: [
           `${Lifecycles.SUBMITTED}`,
           `${Lifecycles.PUBLISHED}`,
           `${Lifecycles.DEPRECATED}`
@@ -124,7 +122,6 @@ export class AdminDashboardComponent implements OnInit {
       queryParams: params
     });
     window.scrollTo(0, 0);
-    await sleep(1000);
     this.currPage = params.page;
   }
 
