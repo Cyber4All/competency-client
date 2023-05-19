@@ -38,6 +38,7 @@ export class AdminDashboardComponent implements OnInit {
   previewCompetency: Competency;
   openBuilder = false;
   openPreview = false;
+  filterApplied = false;
 
   constructor(
     private authService: AuthService,
@@ -144,16 +145,20 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-
-  filter() {
-    // TODO: Implement filtering
+  /**
+   * Perform a search based on the filters selected from the secondary navbar component
+   *
+   * @param filter object containing arrays of selected filters
+   */
+  async filter() {
     // Emit the selected filters
-    // this.filterCompetencies.emit({
-      //   status: this.selectedStatuses,
-      //   workrole: this.selectedWorkroles,
-      //   task: this.selectedTasks,
-      //   audience: this.selectedAudiences
-      // });
+    this.loading = true;
+    // filter competencies by status
+    this.search.statuses = this.selectedStatuses;
+    await this.getCompetencies(this.search);
+    await this.loadCompetencies();
+    this.filterApplied = true;
+    this.loading = false;
   }
 
   // Functions to set the selected filters upon change
@@ -161,18 +166,19 @@ export class AdminDashboardComponent implements OnInit {
     this.selectedStatuses = statuses;
     this.filter();
   }
-  workroles(workroles: string[]) {
-    this.selectedWorkroles = workroles;
-    this.filter();
-  }
-  tasks(tasks: string[]) {
-    this.selectedTasks = tasks;
-    this.filter();
-  }
-  audiences(audiences: string[]) {
-    this.selectedAudiences = audiences;
-    this.filter();
-  }
+  // Disabled for Beta
+  // workroles(workroles: string[]) {
+  //   this.selectedWorkroles = workroles;
+  //   this.filter();
+  // }
+  // tasks(tasks: string[]) {
+  //   this.selectedTasks = tasks;
+  //   this.filter();
+  // }
+  // audiences(audiences: string[]) {
+  //   this.selectedAudiences = audiences;
+  //   this.filter();
+  // }
 
   /**
    * Navigate to previous page

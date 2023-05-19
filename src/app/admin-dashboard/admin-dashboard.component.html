@@ -3,10 +3,11 @@
   <h2>Admin Dashboard</h2>
   <cc-search-bar></cc-search-bar>
   <div class="filter">
-    <cc-filtering-dropdowns [title]="dropdownType.STATUS"></cc-filtering-dropdowns>
-    <cc-filtering-dropdowns [title]="dropdownType.WORKROLE"></cc-filtering-dropdowns>
+    <!-- The following is disabled for beta -->
+    <cc-filtering-dropdowns [title]="dropdownType.STATUS" (selectedEmitter)="statuses($event)"></cc-filtering-dropdowns>
+    <!-- <cc-filtering-dropdowns [title]="dropdownType.WORKROLE"></cc-filtering-dropdowns>
     <cc-filtering-dropdowns [title]="dropdownType.TASK"></cc-filtering-dropdowns>
-    <cc-filtering-dropdowns [title]="dropdownType.ACTOR"></cc-filtering-dropdowns>
+    <cc-filtering-dropdowns [title]="dropdownType.ACTOR"></cc-filtering-dropdowns> -->
   </div>
 
   <div class="competency-wrapper">
