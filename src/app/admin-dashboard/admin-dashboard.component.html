@@ -47,7 +47,7 @@
     *ngIf="openBuilder"
     [competency]="builderCompetency"
     [options]="{
-        showDeleteButton: true,
+        showDeleteButton: false,
         showExitButton: true,
         title: 'Competency Builder',
         padding: true,
@@ -57,7 +57,7 @@
         competency: previewCompetency
     }"
     (close)="closeBuilder()"
-    (delete)="deleteCompetency(builderCompetency._id)"
+    (delete)="deleteCompetencyError()"
 ></cc-competency-builder>
 
 <cc-preview-competency
@@ -65,7 +65,7 @@
     *ngIf="openPreview"
     [competency]="previewCompetency"
     [options]="{ 
-        showDeleteButton: true,
+        showDeleteButton: false,
         showExitButton: true,
         title: 'Competency Preview',
         padding: false,
@@ -77,6 +77,6 @@
     [isAdmin]="true"
     (updateSubmission)="openCompetencyBuilder(previewCompetency)"
     (close)="closePreview()"
-    (delete)="deleteCompetency(previewCompetency._id)"
+    (delete)="deleteCompetencyError()"
     (statusUpdated)="handleStatusUpdated()"
 ></cc-preview-competency>

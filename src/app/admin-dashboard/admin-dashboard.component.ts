@@ -229,24 +229,17 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   /**
-   * Method to delete an entire competency and reset loaded competncy arrays
+   * In case a Delete Competency event occurs, it will throw an error to the user
+   * informing them that admins are not allowed to delete any competencies.
    *
    * @param competencyId
    */
-  async deleteCompetency(competencyId: string) {
-    // Enforce loading state
-    this.loading = true;
-    // If competency preview is open, close it
-    if(this.openPreview) {
-      this.openPreview = false;
-    }
-    // If competency builder is open, close it
-    if(this.openBuilder) {
-      this.openBuilder = false;
-    }
-    // Delete competency
-    await this.competencyService.deleteCompetency(competencyId);
-    await this.initDashboard();
+  async deleteCompetencyError() {
+    this.snackbarService.notification$.next({
+      title: 'Error',
+      message: 'You cannot delete this competency!',
+      color: SNACKBAR_COLOR.WARNING,
+    });
   }
 
   /**
@@ -282,29 +275,7 @@ export class AdminDashboardComponent implements OnInit {
     // Enforce loading state
     this.loading = true;
     this.openBuilder = false;
-    if(
-      !this.builderCompetency.actor.type &&
-      !this.builderCompetency.behavior.work_role &&
-      this.builderCompetency.behavior.tasks.length === 0 &&
-      !this.builderCompetency.condition.scenario &&
-      !this.builderCompetency.condition.limitations &&
-      this.builderCompetency.condition.tech.length === 0 &&
-      !this.builderCompetency.degree.complete &&
-      !this.builderCompetency.degree.correct &&
-      !this.builderCompetency.degree.time &&
-      !this.builderCompetency.employability.details
-    ) {
-      // Competency is neither savable nor being saved as draft; delete shell
-      await this.deleteCompetency(this.builderCompetency._id);
-      this.snackbarService.notification$.next({
-        message: 'Competency was missing required fields to be saved as a draft.',
-        title: 'Draft Deleted',
-        color: SNACKBAR_COLOR.WARNING
-      });
-    } else {
-      // Update user dashboard with newly created competencies
-      await this.initDashboard();
-    }
+    await this.initDashboard();
   }
 
   /**
