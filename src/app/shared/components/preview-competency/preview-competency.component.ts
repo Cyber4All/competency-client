@@ -179,4 +179,12 @@ export class PreviewCompetencyComponent implements OnInit {
       this.statusUpdated.emit();
     }
   }
+
+  async unsubmitCompetency(): Promise<void> {
+    const unsubmitSuccess = await this.lifecycles.unsubmitCompetency(this.competency._id);
+    if (unsubmitSuccess) {
+      this.close.emit();
+      this.statusUpdated.emit();
+    }
+  }
 }

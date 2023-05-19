@@ -50,7 +50,7 @@
             selectedWorkrole = role;
             workroles = [role];
             tasks = role.tasks;
-            closeDropdown();
+            closeDropdown(true);
             workrole.patchValue(true);
           ">
         {{ role.work_role }}
@@ -67,7 +67,7 @@
       <li class="org-dropdown_list-item" *ngFor="let niceTask of scroll.viewPortItems" (click)="
             selectedTask.push(niceTask);
             workroles = niceTask.work_roles;
-            closeDropdown();
+            closeDropdown(true);
             task.patchValue(true);
           ">
         {{ niceTask.element_id | titlecase }} - {{ niceTask.description }}
