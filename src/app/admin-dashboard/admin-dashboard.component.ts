@@ -250,7 +250,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   /**
-   * Method to open the competency-card component and build a competency
+   * Method to open the preview-competency component and edit a submitted competency
    *
    * @param existingCompetency - Opens the builder with a pre-selected competency
    */

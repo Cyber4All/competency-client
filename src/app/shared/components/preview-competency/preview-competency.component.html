@@ -130,7 +130,7 @@
       (click)="onReject()"
       >REJECT</button>
     <button 
-      *ngIf="!builderMode && (competency.status.toString() === 'submitted' || competency.status.toString() === 'published')" 
+      *ngIf="!builderMode && (competency.status.toString() === 'submitted')" 
       (click)="onUpdateSubmission()"
       >EDIT</button>
     <button *ngIf="!builderMode && (!(competency.status.toString() === 'rejected' || competency.status.toString() === 'deprecated'))" (click)="onAdminButtonClicked()" class="submit">{{ adminButtonText() }}</button>
