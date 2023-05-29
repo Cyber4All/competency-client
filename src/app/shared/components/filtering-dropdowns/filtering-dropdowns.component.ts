@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { WorkroleService } from '../../../core/workrole.service';
 import { DropdownType } from '../../../../entity/dropdown';
 import { Lifecycles } from '../../../../entity/Lifecycles';
@@ -10,11 +10,11 @@ import { Elements } from '../../../../entity/elements';
   templateUrl: './filtering-dropdowns.component.html',
   styleUrls: ['./filtering-dropdowns.component.scss']
 })
-export class FilteringDropdownsComponent implements OnInit {
+export class FilteringDropdownsComponent implements OnInit, OnChanges {
 
   @Input() title = '';
   @Output() selectedEmitter = new EventEmitter<string[]>();
-
+  @Input() clearFilters = true;
   // All items to be displayed in the dropdown
   items: {
     id: string,  // Either the id of the workrole or task, or the value of the Lifecycles enum
@@ -79,6 +79,17 @@ export class FilteringDropdownsComponent implements OnInit {
   }
 
   /**
+   * Updates the selectedItems array when the clearFilters input changes to true
+   *
+   * @param changes the changes to the component
+   */
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.clearFilters.currentValue) {
+      this.selectedItems = [];
+    }
+  }
+
+  /**
    * Adds/Removes an item from the selectedItems array
    *
    * @param item a single item from the items array
@@ -96,7 +107,7 @@ export class FilteringDropdownsComponent implements OnInit {
   }
 
   calculateStyles(item: any) {
-    return this.selectedItems.includes(item) ? { 'color': '#376ED6' } : { 'color': '#454545' };
+    return this.selectedItems.includes(item.id) ? { 'color': '#376ED6' } : { 'color': '#454545' };
   }
 
 }
