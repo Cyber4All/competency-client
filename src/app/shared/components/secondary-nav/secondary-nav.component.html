@@ -7,7 +7,7 @@
             <!-- <cc-filtering-dropdowns [title]="dropdownType.WORKROLE" (selectedEmitter)="workroles($event)" [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns> -->
             <!-- <cc-filtering-dropdowns [title]="dropdownType.TASK" (selectedEmitter)="tasks($event)" [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns> -->
             <!-- <cc-filtering-dropdowns [title]="dropdownType.ACTOR" (selectedEmitter)="audiences($event)" [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns> -->
-            <div class="clear" (click)="clearFilters()">Clear all filters</div>
+            <div *ngIf="!areFiltersCleared" class="clear" (click)="clearFilters()">Clear all filters</div>
         </div>
     
         <!-- Buttons -->

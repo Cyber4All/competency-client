@@ -60,6 +60,12 @@
                     cursor: pointer;
                 }
             }
+            .blue {
+                color: color-accent();
+            }
+            .black {
+                color: color-gray(1);
+            }
         }
     }
 }

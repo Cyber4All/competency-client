@@ -107,7 +107,7 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
   }
 
   calculateStyles(item: any) {
-    return this.selectedItems.includes(item.id) ? { 'color': '#376ED6' } : { 'color': '#454545' };
+    return this.selectedItems.includes(item.id) ? { 'color': 'blue' } : { 'color': 'black' };
   }
 
 }
