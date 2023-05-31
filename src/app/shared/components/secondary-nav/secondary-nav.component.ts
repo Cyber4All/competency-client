@@ -13,6 +13,7 @@ export class SecondaryNavComponent implements OnInit {
   @Output() filterCompetencies = new EventEmitter<{ status: string[], workrole: string[], task: string[], audience: string[]}>();
 
   dropdownType = DropdownType;
+  areFiltersCleared = true;
 
   // Selected Filters
   selectedStatuses: string[] = [];
@@ -36,19 +37,38 @@ export class SecondaryNavComponent implements OnInit {
 
   // Functions to set the selected filters upon change
   statuses(statuses: string[]) {
+    this.areFiltersCleared = statuses.length === 0;
     this.selectedStatuses = statuses;
     this.filter();
   }
   workroles(workroles: string[]) {
+    this.areFiltersCleared = workroles.length === 0;
     this.selectedWorkroles = workroles;
     this.filter();
   }
   tasks(tasks: string[]) {
+    this.areFiltersCleared = tasks.length === 0;
     this.selectedTasks = tasks;
     this.filter();
   }
   audiences(audiences: string[]) {
+    this.areFiltersCleared = audiences.length === 0;
     this.selectedAudiences = audiences;
+    this.filter();
+  }
+  clearFilters() {
+    // If all filters are already cleared, do nothing
+    if (this.selectedStatuses.length === 0 &&
+      this.selectedWorkroles.length === 0 &&
+      this.selectedTasks.length === 0 &&
+      this.selectedAudiences.length === 0) {
+      return;
+    }
+    this.selectedStatuses = [];
+    this.selectedWorkroles = [];
+    this.selectedTasks = [];
+    this.selectedAudiences = [];
+    this.areFiltersCleared = true;
     this.filter();
   }
 }
