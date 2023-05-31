@@ -107,6 +107,7 @@ import { EmailBannerComponent } from './email-banner/email-banner.component';
     SearchBarComponent,
     UserMenuComponent,
     PreviewCompetencyComponent,
+    FilteringDropdownsComponent,
     FooterComponent,
     TextFieldComponent,
     EmailBannerComponent

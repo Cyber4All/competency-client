@@ -21,6 +21,7 @@ import {
 } from '@angular/animations';
 import { fadeIn, fadeOut, slideIn, slideOut } from './panel.animations';
 import { Subject } from 'rxjs';
+import { Competency } from 'entity/Competency';
 export interface PanelOptions {
   padding: boolean;
   showExitButton: boolean;
@@ -28,6 +29,8 @@ export interface PanelOptions {
   title: string;
   exitButtonColor: 'white' | 'black';
   position: 'lower-right' | 'center';
+  isAdmin: boolean;
+  competency: Competency;
 }
 @Directive({
   selector: '[ccPanel]'
