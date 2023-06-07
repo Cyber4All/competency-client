@@ -64,7 +64,9 @@
         title: 'Competency Builder',
         padding: true,
         exitButtonColor: 'black',
-        position: 'lower-right'
+        position: 'lower-right',
+        isAdmin: false,
+        competency: builderCompetency
     }"
     (close)="closeBuilder()"
     (delete)="deleteCompetency(builderCompetency._id)"
@@ -80,12 +82,12 @@
         title: 'Competency Preview',
         padding: false,
         exitButtonColor: 'black',
-        position: 'center'
+        position: 'center',
+        isAdmin: false,
+        competency: previewCompetency
     }"
-    [isAdmin]="isAdmin"
     (updateSubmission)="openCompetencyBuilder(previewCompetency)"
     (close)="closePreview()"
     (delete)="deleteCompetency(previewCompetency._id)"
-    (statusUpdated)="handleStatusUpdated()"
 ></cc-preview-competency>
 <cc-email-banner></cc-email-banner>

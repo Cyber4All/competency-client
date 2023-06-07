@@ -10,6 +10,7 @@ import { basic_user_permissions, competencyAcl } from 'competency-acl';
 import { SnackbarService} from './snackbar.service';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
+import { SNACKBAR_COLOR } from 'app/shared/components/snackbar/snackbar.component';
 
 const TOKEN_KEY = 'presence';
 
@@ -256,7 +257,10 @@ export class AuthService {
   public async resetPassword(payload: string, otaCode: string): Promise<void> {
     this.initHeaders();
     await lastValueFrom(this.http
-      .patch(USER_ROUTES.RESET_PASSWORD(otaCode), { payload }));
+      .patch(USER_ROUTES.RESET_PASSWORD(otaCode), { payload }))
+      .catch((err) => {
+          this.snackbarService.sendNotificationByError(err);
+      });
   }
 
   /**

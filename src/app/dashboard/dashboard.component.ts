@@ -50,7 +50,6 @@ export class DashboardComponent implements OnInit {
   openPreview = false;
   // Boolean to disable `NEW COMPETENCY` button
   disabled = false;
-  isAdmin!: boolean;
 
   constructor(
     private competencyService: CompetencyService,
@@ -62,10 +61,6 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    await this.authService.validateAdminAccess();
-    this.authService.isAdmin.subscribe((res) => {
-      this.isAdmin = res;
-    });
     this.route.queryParams.pipe(takeUntil(this.unsubscribe)).subscribe(async params => {
       this.urlParams = params;
       this.makeQuery(params);
@@ -388,15 +383,6 @@ export class DashboardComponent implements OnInit {
    */
   closePreview() {
     this.openPreview = false;
-  }
-
-  /**
-   * When an admin updates the status of a competency in the preview, reset the dashboard
-   */
-  async handleStatusUpdated() {
-    this.search.competencies = [];
-    this.loadedCompetencies = [];
-    await this.initDashboard();
   }
 
   /**
