@@ -116,7 +116,9 @@ export class DashboardComponent implements OnInit {
             `${Lifecycles.REJECTED}`,
             `${Lifecycles.SUBMITTED}`,
             `${Lifecycles.PUBLISHED}`
-          ]
+          ],
+          workrole: this.selected.work_role,
+          task: this.selected.task
         });
     } else {
       // User is not logged in, clear search object, display no results
@@ -173,14 +175,7 @@ export class DashboardComponent implements OnInit {
       this.search.competencies.map(async (comp: Competency) => {
         await this.competencyService.getCompetencyById(comp._id)
           .then(async (comp: Competency) => {
-            // apply work role filter if selected else load all
-            if (this.selected.work_role.length > 0) {
-              if (this.selected.work_role.includes(comp.behavior.work_role)) {
-                this.loadedCompetencies.push(comp);
-              }
-            } else {
-              this.loadedCompetencies.push(comp);
-            }
+            this.loadedCompetencies.push(comp);
           });
       });
     }
@@ -262,12 +257,13 @@ export class DashboardComponent implements OnInit {
       total: 0,
       statuses: []
     };
-    // filter competencies by status
+    // apply filters
     this.search.statuses = filter.status;
-    await this.getCompetencies(this.search);
-    // filter competencies by work role
     this.selected.work_role = filter.workrole;
+
+    await this.getCompetencies(this.search);
     await this.loadCompetencies();
+
     this.filterApplied = true;
     this.loading = false;
   }
