@@ -21,6 +21,12 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
     name: string // Either the name of the workrole or task, or the value of the Lifecycles enum
   }[] = [];
 
+  // filtered workroles items
+  filteredItems: {
+    id: string,  // Either the id of the workrole or task, or the value of the Lifecycles enum
+    name: string // Either the name of the workrole or task, or the value of the Lifecycles enum
+  }[] = [];
+
   // Active items selected in the dropdown
   // This is an array of ids (either the id of the workrole or task, or the value of the Lifecycles enum)
   selectedItems: string[] = [];
@@ -57,8 +63,9 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
         // Subscribe to the workroles observables
         this.workroleService.workroles.subscribe((workroles: Workrole[]) => {
           workroles.forEach((workrole: Workrole) => {
-            this.items.push({ id: workrole._id, name: workrole.work_role });
+            this.filteredItems.push({ id: workrole._id, name: workrole.work_role });
           });
+          this.items = this.filteredItems;
         });
         break;
       case DropdownType.TASK:
@@ -108,6 +115,17 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
 
   calculateStyles(item: any) {
     return this.selectedItems.includes(item.id) ? { 'color': 'blue' } : { 'color': 'black' };
+  }
+
+  /**
+   * Filters the dropdown items based on the value of the input field
+   *
+   * @param value the value of the input field
+   */
+  filterSearch(value: any) {
+    this.items = this.filteredItems.filter((item: any) => {
+      return item.name.toLowerCase().includes(value.toLowerCase());
+    });
   }
 
 }

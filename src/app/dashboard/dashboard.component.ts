@@ -111,7 +111,9 @@ export class DashboardComponent implements OnInit {
             `${Lifecycles.REJECTED}`,
             `${Lifecycles.SUBMITTED}`,
             `${Lifecycles.PUBLISHED}`
-          ]
+          ],
+          workrole: this.selected.work_role,
+          task: this.selected.task
         });
     } else {
       // User is not logged in, clear search object, display no results
@@ -250,10 +252,13 @@ export class DashboardComponent implements OnInit {
       total: 0,
       statuses: []
     };
-    // filter competencies by status
+    // apply filters
     this.search.statuses = filter.status;
+    this.selected.work_role = filter.workrole;
+
     await this.getCompetencies(this.search);
     await this.loadCompetencies();
+
     this.filterApplied = true;
     this.loading = false;
   }
