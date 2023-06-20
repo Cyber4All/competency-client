@@ -41,6 +41,8 @@ export class CompetencyService {
         limit?: number,
         author?: string,
         status?: string[],
+        workrole?: string[],
+        task?: string[],
         version?: number
       }
     ): Promise<Search> {

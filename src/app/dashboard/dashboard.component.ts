@@ -50,7 +50,6 @@ export class DashboardComponent implements OnInit {
   openPreview = false;
   // Boolean to disable `NEW COMPETENCY` button
   disabled = false;
-  isAdmin!: boolean;
 
   constructor(
     private competencyService: CompetencyService,
@@ -62,10 +61,6 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    await this.authService.validateAdminAccess();
-    this.authService.isAdmin.subscribe((res) => {
-      this.isAdmin = res;
-    });
     this.route.queryParams.pipe(takeUntil(this.unsubscribe)).subscribe(async params => {
       this.urlParams = params;
       this.makeQuery(params);
@@ -116,7 +111,9 @@ export class DashboardComponent implements OnInit {
             `${Lifecycles.REJECTED}`,
             `${Lifecycles.SUBMITTED}`,
             `${Lifecycles.PUBLISHED}`
-          ]
+          ],
+          workrole: this.selected.work_role,
+          task: this.selected.task
         });
     } else {
       // User is not logged in, clear search object, display no results
@@ -255,10 +252,13 @@ export class DashboardComponent implements OnInit {
       total: 0,
       statuses: []
     };
-    // filter competencies by status
+    // apply filters
     this.search.statuses = filter.status;
+    this.selected.work_role = filter.workrole;
+
     await this.getCompetencies(this.search);
     await this.loadCompetencies();
+
     this.filterApplied = true;
     this.loading = false;
   }
@@ -383,15 +383,6 @@ export class DashboardComponent implements OnInit {
    */
   closePreview() {
     this.openPreview = false;
-  }
-
-  /**
-   * When an admin updates the status of a competency in the preview, reset the dashboard
-   */
-  async handleStatusUpdated() {
-    this.search.competencies = [];
-    this.loadedCompetencies = [];
-    await this.initDashboard();
   }
 
   /**

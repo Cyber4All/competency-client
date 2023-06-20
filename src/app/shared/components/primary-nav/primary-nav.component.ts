@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'cc-primary-nav',
@@ -7,6 +7,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class PrimaryNavComponent implements OnInit {
 
+  @Input() isAdmin = false;
   @Output() search = new EventEmitter<string>();
   constructor( ) { }
 

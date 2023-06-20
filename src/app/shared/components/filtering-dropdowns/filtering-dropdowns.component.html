@@ -10,13 +10,13 @@
     <mat-menu #dropdown="matMenu" class="dropdown-wrapper">
             <!-- Searchbar used to filter the 'filter items' -->
             <div *ngIf="searchbar" class="searchbar" (click)="$event.stopPropagation()">
-                <cc-search-bar></cc-search-bar>
+                <cc-search-bar (search)="filterSearch($event)"></cc-search-bar>
             </div>
 
             <!-- Filter items -->
             <div mat-menu-item class="dropdown">
-                <div *ngFor="let item of items" class="item" [ngStyle]="calculateStyles(item)" (click)="toggleFilterItem(item)">
-                    <div class="item_text">
+                <div *ngFor="let item of items" class="item" (click)="toggleFilterItem(item)">
+                    <div class="item_text" [ngClass]="{'blue': calculateStyles(item).color === 'blue', 'black': calculateStyles(item).color === 'black'}">
                         {{item.name}}
                     </div>
                 </div>

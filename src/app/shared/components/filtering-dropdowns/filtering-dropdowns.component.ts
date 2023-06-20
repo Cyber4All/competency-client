@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { WorkroleService } from '../../../core/workrole.service';
 import { DropdownType } from '../../../../entity/dropdown';
 import { Lifecycles } from '../../../../entity/Lifecycles';
@@ -10,13 +10,19 @@ import { Elements } from '../../../../entity/elements';
   templateUrl: './filtering-dropdowns.component.html',
   styleUrls: ['./filtering-dropdowns.component.scss']
 })
-export class FilteringDropdownsComponent implements OnInit {
+export class FilteringDropdownsComponent implements OnInit, OnChanges {
 
   @Input() title = '';
   @Output() selectedEmitter = new EventEmitter<string[]>();
-
+  @Input() clearFilters = true;
   // All items to be displayed in the dropdown
   items: {
+    id: string,  // Either the id of the workrole or task, or the value of the Lifecycles enum
+    name: string // Either the name of the workrole or task, or the value of the Lifecycles enum
+  }[] = [];
+
+  // filtered workroles items
+  filteredItems: {
     id: string,  // Either the id of the workrole or task, or the value of the Lifecycles enum
     name: string // Either the name of the workrole or task, or the value of the Lifecycles enum
   }[] = [];
@@ -57,8 +63,9 @@ export class FilteringDropdownsComponent implements OnInit {
         // Subscribe to the workroles observables
         this.workroleService.workroles.subscribe((workroles: Workrole[]) => {
           workroles.forEach((workrole: Workrole) => {
-            this.items.push({ id: workrole._id, name: workrole.work_role });
+            this.filteredItems.push({ id: workrole._id, name: workrole.work_role });
           });
+          this.items = this.filteredItems;
         });
         break;
       case DropdownType.TASK:
@@ -75,6 +82,17 @@ export class FilteringDropdownsComponent implements OnInit {
         // Set items to a list of audiences
         this.items = [];
         break;
+    }
+  }
+
+  /**
+   * Updates the selectedItems array when the clearFilters input changes to true
+   *
+   * @param changes the changes to the component
+   */
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.clearFilters.currentValue) {
+      this.selectedItems = [];
     }
   }
 
@@ -96,7 +114,18 @@ export class FilteringDropdownsComponent implements OnInit {
   }
 
   calculateStyles(item: any) {
-    return this.selectedItems.includes(item) ? { 'color': '#376ED6' } : { 'color': '#454545' };
+    return this.selectedItems.includes(item.id) ? { 'color': 'blue' } : { 'color': 'black' };
+  }
+
+  /**
+   * Filters the dropdown items based on the value of the input field
+   *
+   * @param value the value of the input field
+   */
+  filterSearch(value: any) {
+    this.items = this.filteredItems.filter((item: any) => {
+      return item.name.toLowerCase().includes(value.toLowerCase());
+    });
   }
 
 }
