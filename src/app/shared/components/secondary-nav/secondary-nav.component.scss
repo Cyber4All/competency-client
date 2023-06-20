@@ -37,6 +37,19 @@ button {
             align-items: center;
         }
 
+        .clear {
+            margin: 0;
+            margin-right: 20px;
+            color: color-accent();
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
         .buttons {
             display: flex;
             align-items: center;

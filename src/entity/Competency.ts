@@ -140,6 +140,8 @@ export function CompetencySearch(
     limit?: number,
     author?: string,
     status?: string[],
+    workrole?: string[],
+    task?: string[],
     version?: number
   }
 ) {
@@ -148,9 +150,10 @@ export function CompetencySearch(
       search(
         text:"${query?.text ?? ''}",
         page:${query?.page ?? 0},
-        limit:${query?.limit ?? 0}, 
-        author:"${query?.author ?? ''}",
+        limit:${query?.limit ?? 0}, ${query?.author ? `\nauthor: "${query?.author}",` : ''}
         status:[${query?.status ?? 'DRAFT'}],
+        ${query?.workrole && query.workrole.length > 0 ? `workrole:["${query.workrole.join('","')+'"'}],`: ''}
+        ${query?.task && query.task.length > 0 ? `task:["${query.task.join('","')+'"'}],`: ''}
         version:${query?.version ?? 0}
       ) {
         competencies {
