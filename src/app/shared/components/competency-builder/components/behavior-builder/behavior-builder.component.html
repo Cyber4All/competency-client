@@ -1,4 +1,21 @@
 <!--Behavior Builder-->
+<div class="actor_input">
+  <label>Workforce Framework *</label>
+  <div class="actor_box" (click)="displayFrameworks()">
+    {{ workforceSelected ? (workforceSelected | uppercase) : 'Select a Workforce Framework' }}
+    <div [ngClass]="frameworkDisplay ? 'hidden': 'arrow_down'">
+      <i class="fas fa-angle-down fa-lg"></i>
+    </div>
+    <div [ngClass]="frameworkDisplay ? 'arrow_up': 'hidden'">
+      <i class="fas fa-angle-up fa-lg"></i>
+    </div>
+  </div>
+  <div [ngClass]="frameworkDisplay ? 'actor_dropdown': 'hidden'">
+    <ul class="actor_list">
+      <li *ngFor="let framework of workforceFrameworks" (click)="this.workforceSelected = framework; displayFrameworks(); source.patchValue(true)">{{ framework | uppercase }}</li>
+    </ul>
+  </div>
+</div>
 <div class="competency_edit-behavior-container">
   <!--Behavior workrole selection field-->
   <ng-container>

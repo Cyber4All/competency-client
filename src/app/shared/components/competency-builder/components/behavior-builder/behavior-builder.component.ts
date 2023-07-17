@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, Observable, Subject } from 'rxjs';
 import { WorkroleService } from '../../../../../core/workrole.service';
-import { Behavior } from '../../../../../../entity/Behavior';
+import { Behavior, Source } from '../../../../../../entity/behavior';
 import { Workrole } from '../../../../../../entity/workrole';
 import { Elements } from '../../../../../../entity/elements';
 import { BuilderService } from '../../../../../core/builder.service';
@@ -27,12 +27,17 @@ export class BehaviorBuilderComponent implements OnInit {
   task = new FormControl('');
   workrole = new FormControl('');
   details = new FormControl('');
+  source = new FormControl('');
   // Search input for workrole and task
   workroleInput$: Subject<string> = new Subject<string>();
   taskInput$: Subject<string> = new Subject<string>();
   // Workrole and task arrays
   workroles: Workrole[] = [];
   tasks: Elements[] = [];
+  // Workforce Framework Objects
+  workforceFrameworks = Object.values(Source);
+  workforceSelected: Source;
+  frameworkDisplay = false;
   // Selected workrole and task from virtual scroller
   selectedWorkrole!: Workrole;
   selectedTask: Elements[] = [];
@@ -110,7 +115,8 @@ export class BehaviorBuilderComponent implements OnInit {
             _id: this.behavior._id,
             tasks: this.behavior.tasks,
             details: this.behavior.details,
-            work_role: this.selectedWorkrole._id!
+            work_role: this.selectedWorkrole._id!,
+            source: this.behavior.source
           }
         });
       });
@@ -135,6 +141,7 @@ export class BehaviorBuilderComponent implements OnInit {
             tasks: taskIds,
             details: this.behavior.details,
             work_role: this.behavior.work_role,
+            source: this.behavior.source
           }
         });
       });
@@ -155,10 +162,34 @@ export class BehaviorBuilderComponent implements OnInit {
             tasks: this.behavior.tasks,
             details: detailsUpdate,
             work_role: this.behavior.work_role,
+            source: this.behavior.source
           }
         });
       });
-
+    this.source.valueChanges
+      .pipe(debounceTime(650))
+      .subscribe( () => {
+        // Remove source error from behaviorErrors array
+        this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
+          return error.attribute !== 'source';
+        });
+        this.source.setErrors({error: false});
+        console.log(this.workforceSelected);
+        // Emit behavior source change to parent builder component
+        /** Source has changed; workroles and tasks must be cleared **/
+        this.selectedTask = [];
+        this.selectedWorkrole = {} as Workrole;
+        this.behaviorChange.emit({
+          update: 'behavior',
+          value: {
+            _id: this.behavior._id,
+            tasks: [],
+            details: this.behavior.details,
+            work_role: '',
+            source: this.workforceSelected
+          }
+        });
+      });
     /**
      * 5. Set form values if they exist
      */
@@ -334,6 +365,17 @@ export class BehaviorBuilderComponent implements OnInit {
     }
   }
 
+  /**
+   * Toggles the dropdown menu Workforce Frameworks
+   */
+  displayFrameworks() {
+    if (this.frameworkDisplay === true) {
+      this.frameworkDisplay = false;
+    } else {
+      this.frameworkDisplay = true;
+    }
+  }
+
   displayErrors(): void {
     // Iterate through behavior errors
     this.behaviorErrors.map((error: BuilderValidation) => {
@@ -348,6 +390,10 @@ export class BehaviorBuilderComponent implements OnInit {
       // If error is for tasks, set tasks form control error
       if (error.attribute === 'tasks') {
         this.task.setErrors({ error: true });
+      }
+      // If error is for source, set source form control error
+      if (error.attribute === 'source') {
+        this.source.setErrors({ error: true });
       }
     });
   }

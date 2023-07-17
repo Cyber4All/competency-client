@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
@@ -39,7 +37,7 @@ export class WorkroleService {
   ) {}
 
   /**
-   * Method to retreive all workroles
+   * Method to retrieve all workroles
    *
    * @returns array of workrole ids from NICE DB
    */
@@ -64,7 +62,7 @@ export class WorkroleService {
   }
 
   /**
-   * Method to retrive all task ids from NICE DB
+   * Method to retrieve all task ids from NICE DB
    *
    * @returns array of task ids
    */
@@ -112,7 +110,7 @@ export class WorkroleService {
   }
 
   /**
-   * Method to retreive a full element object
+   * Method to retrieve a full element object
    *
    * @param taskId element object id
    * @returns complete element object
@@ -203,7 +201,7 @@ export class WorkroleService {
   }
 
   /**
-   * Method to retreive a list of NICE knowledge statements and NICE skills
+   * Method to retrieve a list of NICE knowledge statements and NICE skills
    *
    * @returns list of NICE knowledge and skills
    */

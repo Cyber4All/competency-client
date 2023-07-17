@@ -1,4 +1,4 @@
-import { Competency } from './Competency';
+import { Competency } from './competency';
 
 export interface Search {
   competencies: Competency[]
@@ -21,6 +21,7 @@ export function CompetencyCardSearch(id: string) {
           tasks
           details
           work_role
+          source
         }
       }
     }

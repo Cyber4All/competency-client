@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { lastValueFrom } from 'rxjs';
-import { Competency, CompetencyGraph, CompetencySearch } from '../../entity/Competency';
-import { CompetencyCardSearch, Search } from '../../entity/Search';
+import { Competency, CompetencyGraph, CompetencySearch } from '../../entity/competency';
+import { CompetencyCardSearch, Search } from '../../entity/search';
 import { SnackbarService } from './snackbar.service';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 

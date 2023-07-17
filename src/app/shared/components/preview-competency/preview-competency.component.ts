@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Competency } from '../../../../entity/Competency';
+import { Competency } from '../../../../entity/competency';
 import { DropdownItem } from '../../../../entity/dropdown';
 import { Workrole } from '../../../../entity/workrole';
 import { DropdownService } from '../../../core/dropdown.service';

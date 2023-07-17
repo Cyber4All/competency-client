@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, catchError, lastValueFrom, Observable, retry } from 'rxjs';
+import { BehaviorSubject,lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { AuthUser, User, getUserGraphQuery } from '../../entity/user';
+import { User, getUserGraphQuery } from '../../entity/user';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
@@ -10,7 +10,6 @@ import { basic_user_permissions, competencyAcl } from 'competency-acl';
 import { SnackbarService} from './snackbar.service';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
-import { SNACKBAR_COLOR } from 'app/shared/components/snackbar/snackbar.component';
 
 const TOKEN_KEY = 'presence';
 
@@ -20,7 +19,7 @@ type Optional<T> = T | undefined;
   providedIn: 'root'
 })
 export class AuthService {
-  private _user?: User; // Do not explicityly set a user, use the setter method
+  private _user?: User; // Do not explicitly set a user, use the setter method
   private _isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private _isBetaUser: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public headers = new HttpHeaders();
@@ -93,7 +92,7 @@ export class AuthService {
       await lastValueFrom(this.http
         .post<{bearer: string, user: User}>(USER_ROUTES.LOGIN(), encrypted))
         .then((res: any) => {
-          //delete auth header when there is a successul login
+          //delete auth header when there is a successful login
           this.headers = new HttpHeaders().delete('Authorization');
           this.user = res!.user;
           this.storeToken(res.bearer as any);
@@ -284,9 +283,9 @@ export class AuthService {
   }
 
   /**
-   * Pirvate method to store a token in cookies
+   * Private method to store a token in cookies
    *
-   * @param token bearer token returned from service after succesful login
+   * @param token bearer token returned from service after successful login
    */
   private storeToken(token: string) {
     if (token) {
