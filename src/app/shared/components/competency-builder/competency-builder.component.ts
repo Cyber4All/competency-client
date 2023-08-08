@@ -103,9 +103,9 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
 
   /**
    * Parent method to update attributes of a competency using the competency builder class
-   * Each attribute of a competency is updated in the database to perserve draft competencies
+   * Each attribute of a competency is updated in the database to preserve draft competencies
    *
-   * @param event is an event from the child componenet updating part of the competency
+   * @param event is an event from the child component updating part of the competency
    * @update <string> is the competency attribute being updated
    * @value <Object> is the attribute type with updated fields
    */
@@ -130,6 +130,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
           const behaviorValid: BuilderValidation[] = this.competency.validateBehavior();
           if (behaviorValid.length === 1 && behaviorValid[0].isValid) {
             this.builderService.clearBehaviorErrors();
+            console.log(this.competency.behavior);
             await this.builderService.updateBehavior(this.competency._id, this.competency.behavior);
           }
           break;

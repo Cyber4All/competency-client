@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
-import { WorkroleService } from '../../../core/workrole.service';
+import { NiceWorkroleService } from '../../../core/nice.workrole.service';
 import { DropdownType } from '../../../../entity/dropdown';
-import { Lifecycles } from '../../../../entity/Lifecycles';
-import { Workrole } from '../../../../entity/workrole';
-import { Elements } from '../../../../entity/elements';
+import { Lifecycles } from '../../../../entity/lifecycles';
+import { Workrole } from '../../../../entity/nice.workrole';
+import { Elements } from '../../../../entity/nice.elements';
 
 @Component({
   selector: 'cc-filtering-dropdowns',
@@ -42,7 +42,7 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
    */
 
   constructor(
-    private workroleService: WorkroleService
+    private workroleService: NiceWorkroleService
   ) { }
 
   async ngOnInit(): Promise<void> {

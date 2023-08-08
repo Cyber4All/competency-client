@@ -6,7 +6,7 @@ import { CompetencyService } from 'app/core/competency.service';
 import { SnackbarService } from 'app/core/snackbar.service';
 import { SNACKBAR_COLOR } from 'app/shared/components/snackbar/snackbar.component';
 import { Competency } from 'entity/competency';
-import { Lifecycles } from 'entity/Lifecycles';
+import { Lifecycles } from 'entity/lifecycles';
 import { Search } from 'entity/search';
 import { CompetencyBuilder } from 'entity/builder.class';
 import { DropdownType } from 'entity/dropdown';

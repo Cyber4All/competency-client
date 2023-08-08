@@ -10,10 +10,10 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PanelOptions } from '../panel.directive';
 import { fade } from '../panel.animations';
-import { Lifecycles } from 'entity/Lifecycles';
-import { WorkroleService } from 'app/core/workrole.service';
-import { Elements } from 'entity/elements';
-import { Workrole } from 'entity/workrole';
+import { Lifecycles } from 'entity/lifecycles';
+import { NiceWorkroleService } from 'app/core/nice.workrole.service';
+import { Elements } from 'entity/nice.elements';
+import { Workrole } from 'entity/nice.workrole';
 @Component({
   selector: 'cc-panel-viewer',
   template: `
@@ -98,7 +98,7 @@ export class PanelViewerComponent implements OnInit, OnDestroy {
   tasks: Elements[] = [];
 
   constructor(
-    private workRoleService: WorkroleService
+    private workRoleService: NiceWorkroleService
   ) {}
 
   /**

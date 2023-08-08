@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
 import { Competency } from '../../entity/competency';
-import { Lifecycles } from '../../entity/Lifecycles';
+import { Lifecycles } from '../../entity/lifecycles';
 import { Search } from '../../entity/search';
 import { sleep } from '../shared/functions/loading';
 import { BuilderService } from '../core/builder.service';

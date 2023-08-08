@@ -178,7 +178,7 @@ export class CompetencyBuilder extends Competency {
      */
     validateBehavior(): BuilderValidation[] {
         const behaviorErrors: BuilderValidation[] = [];
-        if (!this.behavior.details || !this.behavior.work_role || !this.behavior.tasks) {
+        if (!this.behavior.details || !this.behavior.work_role || this.behavior.tasks.length === 0 || !this.behavior.source) {
             if (!this.behavior.details) {
                 behaviorErrors.push({
                     type: 'behavior',

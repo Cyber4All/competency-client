@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Competency } from '../../../../entity/competency';
-import { Lifecycles } from '../../../../entity/Lifecycles';
-import { Workrole } from '../../../../entity/workrole';
-import { WorkroleService } from '../../../core/workrole.service';
+import { Lifecycles } from '../../../../entity/lifecycles';
+import { Workrole } from '../../../../entity/nice.workrole';
+import { NiceWorkroleService } from '../../../core/nice.workrole.service';
 import { sleep } from '../../functions/loading';
 
 @Component({
@@ -17,7 +17,7 @@ export class CompetencyCardComponent implements OnInit {
   workrole!: Workrole;
   tasks: string[] = [];
   constructor(
-    private workRoleService: WorkroleService
+    private workRoleService: NiceWorkroleService
   ) {}
 
   async ngOnInit(): Promise<void> {

@@ -1,4 +1,4 @@
-import { Elements } from './elements';
+import { Elements } from './nice.elements';
 export interface Workrole {
   _id: string
   work_role: string

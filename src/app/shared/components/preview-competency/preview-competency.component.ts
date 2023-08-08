@@ -1,17 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Competency } from '../../../../entity/competency';
 import { DropdownItem } from '../../../../entity/dropdown';
-import { Workrole } from '../../../../entity/workrole';
+import { Workrole } from '../../../../entity/nice.workrole';
 import { DropdownService } from '../../../core/dropdown.service';
-import { WorkroleService } from '../../../core/workrole.service';
+import { NiceWorkroleService } from '../../../core/nice.workrole.service';
 import { sleep } from '../../functions/loading';
-import { Elements } from '../../../../entity/elements';
+import { Elements } from '../../../../entity/nice.elements';
 import { AuthService } from '../../../core/auth.service';
 import { BuilderService } from '../../../core/builder.service';
 import { LifecyclesService } from '../../../core/lifecycles.service';
-import { Lifecycles } from '../../../../entity/Lifecycles';
-import { User } from '../../../../entity/user';
-import { CompetencyBuilder } from '../../../../entity/builder.class';
+import { Lifecycles } from '../../../../entity/lifecycles';
 
 @Component({
   selector: 'cc-preview-competency',
@@ -33,7 +31,7 @@ export class PreviewCompetencyComponent implements OnInit {
   tasks: Elements[] = [];
   competencyAuthor!: any;
   constructor(
-    private workRoleService: WorkroleService,
+    private workRoleService: NiceWorkroleService,
     private dropdownService: DropdownService,
     private authService: AuthService,
     public builderService: BuilderService,

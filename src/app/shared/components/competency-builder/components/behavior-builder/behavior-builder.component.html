@@ -12,7 +12,10 @@
   </div>
   <div [ngClass]="frameworkDisplay ? 'actor_dropdown': 'hidden'">
     <ul class="actor_list">
-      <li *ngFor="let framework of workforceFrameworks" (click)="this.workforceSelected = framework; displayFrameworks(); source.patchValue(true)">{{ framework | uppercase }}</li>
+      <li *ngFor="let framework of workforceFrameworks" (click)="
+        setFramework(framework);
+        displayFrameworks();
+      ">{{ framework | uppercase }}</li>
     </ul>
   </div>
 </div>

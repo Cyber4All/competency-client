@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, Observable, Subject } from 'rxjs';
-import { WorkroleService } from '../../../../../core/workrole.service';
+import { NiceWorkroleService } from '../../../../../core/nice.workrole.service';
 import { Behavior, Source } from '../../../../../../entity/behavior';
-import { Workrole } from '../../../../../../entity/workrole';
-import { Elements } from '../../../../../../entity/elements';
+import { Workrole } from '../../../../../../entity/nice.workrole';
+import { Elements } from '../../../../../../entity/nice.elements';
 import { BuilderService } from '../../../../../core/builder.service';
 import { BuilderValidation } from '../../../../../../entity/builder-validation';
 @Component({
@@ -46,7 +46,7 @@ export class BehaviorBuilderComponent implements OnInit {
   filteredWorkroles: Observable<string[]> = new Observable();
   filteredTasks: Observable<string[]> = new Observable();
   constructor(
-    private workroleService: WorkroleService,
+    private workroleService: NiceWorkroleService,
     private builderService: BuilderService
   ) {}
 
@@ -99,6 +99,27 @@ export class BehaviorBuilderComponent implements OnInit {
     /**
      * 4. Subscribe to form controls
      */
+    // Subscribe to source form control
+    this.source.valueChanges
+      .pipe(debounceTime(650))
+      .subscribe(() => {
+        // Remove source error from behaviorErrors array
+        this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
+          return error.attribute !== 'source';
+        });
+        this.source.setErrors({error: false});
+        // Emit behavior source change to parent builder component
+        this.behaviorChange.emit({
+          update: 'behavior',
+          value: {
+            _id: this.behavior._id,
+            tasks: [],
+            details: this.behavior.details,
+            work_role: '',
+            source: this.workforceSelected
+          }
+        });
+      });
     // Subscribe to workrole form control
     this.workrole.valueChanges
       .pipe(debounceTime(650))
@@ -166,33 +187,14 @@ export class BehaviorBuilderComponent implements OnInit {
           }
         });
       });
-    this.source.valueChanges
-      .pipe(debounceTime(650))
-      .subscribe( () => {
-        // Remove source error from behaviorErrors array
-        this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
-          return error.attribute !== 'source';
-        });
-        this.source.setErrors({error: false});
-        console.log(this.workforceSelected);
-        // Emit behavior source change to parent builder component
-        /** Source has changed; workroles and tasks must be cleared **/
-        this.selectedTask = [];
-        this.selectedWorkrole = {} as Workrole;
-        this.behaviorChange.emit({
-          update: 'behavior',
-          value: {
-            _id: this.behavior._id,
-            tasks: [],
-            details: this.behavior.details,
-            work_role: '',
-            source: this.workforceSelected
-          }
-        });
-      });
     /**
      * 5. Set form values if they exist
      */
+    // If source exists, set source form value
+    if (this.behavior.source) {
+      this.workforceSelected = this.behavior.source;
+      this.source.patchValue(true);
+    }
     // If work_role or tasks exist, set workrole and task form value
     if (this.behavior.work_role || this.behavior.tasks.length > 0) {
       if (this.behavior.work_role) {
@@ -373,6 +375,19 @@ export class BehaviorBuilderComponent implements OnInit {
       this.frameworkDisplay = false;
     } else {
       this.frameworkDisplay = true;
+    }
+  }
+
+  setFramework(framework: Source) {
+    if (this.workforceSelected !== framework) {
+      this.workforceSelected = framework;
+      this.workroleService.getAllWorkroles();
+      this.workroleService.getAllTasks();
+      this.selectedWorkrole = {} as Workrole;
+      this.selectedTask = [];
+      this.source.patchValue(true);
+      this.workrole.patchValue(true);
+      this.task.patchValue(true);
     }
   }
 
