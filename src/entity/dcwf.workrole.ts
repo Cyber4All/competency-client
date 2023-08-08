@@ -20,8 +20,8 @@ export function getCompleteWorkRole(id: string) {
         tasks {
           _id
           type
-          details
-          dcwf_id
+          description
+          element_id
         }
       }
     }
@@ -40,8 +40,8 @@ export function getAllWorkRoles() {
         tasks {
           _id
           type
-          details
-          dcwf_id
+          description
+          element_id
         }
       }
     }
@@ -54,8 +54,8 @@ export function getAllTasks() {
       dcwf_tasks {
         _id
         type
-        details
-        dcwf_id
+        description
+        element_id
         work_roles {
           _id
           work_role,
@@ -74,8 +74,8 @@ export function getCompleteTask(id: string) {
       dcwf_task(taskId: "${id}") {
         _id
         type
-        details
-        dcwf_id
+        description
+        element_id
       }
     }
   `;
@@ -93,8 +93,8 @@ export function queryWorkroles(search: string) {
         tasks {
           _id
           type
-          details
-          dcwf_id
+          description
+          element_id
         }
       }
     }
@@ -107,8 +107,8 @@ export function queryTasks(search: string) {
       dcwf_searchTasks(query: "${search}") {
         _id
         type
-        details
-        dcwf_id
+        description
+        element_id
         work_roles {
           _id
           work_role,

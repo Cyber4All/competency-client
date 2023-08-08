@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Competency } from '../../../../entity/competency';
 import { Lifecycles } from '../../../../entity/lifecycles';
 import { Workrole } from '../../../../entity/nice.workrole';
-import { NiceWorkroleService } from '../../../core/nice.workrole.service';
 import { sleep } from '../../functions/loading';
+import { FrameworkService } from '../../../core/framework.service';
 
 @Component({
   selector: 'cc-competency-card',
@@ -17,21 +17,25 @@ export class CompetencyCardComponent implements OnInit {
   workrole!: Workrole;
   tasks: string[] = [];
   constructor(
-    private workRoleService: NiceWorkroleService
+    private frameworkService: FrameworkService
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.loading = true;
+    // Set frameworkService source
+    if (this.competency.behavior.source) {
+      this.frameworkService.currentFramework = this.competency.behavior.source;
+    }
     // load workrole
     if (this.competency.behavior.work_role) {
-      this.workrole = await this.workRoleService.getCompleteWorkrole(this.competency.behavior.work_role)
+      this.workrole = await this.frameworkService.getCompleteWorkrole(this.competency.behavior.work_role)
       .then((workroleQuery: any) => {
         return workroleQuery.data.workrole.work_role;
       });
     }
     // load tasks
     if (this.competency.behavior.tasks.length > 0) {
-      const tasks = this.competency.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
+      const tasks = this.competency.behavior.tasks.map(async (task) => await this.frameworkService.getCompleteTask(task)
       .then((taskQuery: any) => {
         return taskQuery.data.task.description;
       }));

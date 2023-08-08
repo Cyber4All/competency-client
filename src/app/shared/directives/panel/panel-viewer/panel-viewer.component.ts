@@ -11,9 +11,9 @@ import { takeUntil } from 'rxjs/operators';
 import { PanelOptions } from '../panel.directive';
 import { fade } from '../panel.animations';
 import { Lifecycles } from 'entity/lifecycles';
-import { NiceWorkroleService } from 'app/core/nice.workrole.service';
 import { Elements } from 'entity/nice.elements';
 import { Workrole } from 'entity/nice.workrole';
+import { FrameworkService } from '../../../../core/framework.service';
 @Component({
   selector: 'cc-panel-viewer',
   template: `
@@ -98,7 +98,7 @@ export class PanelViewerComponent implements OnInit, OnDestroy {
   tasks: Elements[] = [];
 
   constructor(
-    private workRoleService: NiceWorkroleService
+    private frameworkService: FrameworkService,
   ) {}
 
   /**
@@ -135,16 +135,19 @@ export class PanelViewerComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
+    if (this.options.competency.behavior.source) {
+      this.frameworkService.currentFramework = this.options.competency.behavior.source;
+    }
     if (this.options.competency.behavior.work_role) {
       this.workrole =
-        await this.workRoleService.getCompleteWorkrole(this.options.competency.behavior.work_role)
+        await this.frameworkService.getCompleteWorkrole(this.options.competency.behavior.work_role)
       .then((workroleQuery: any) => {
         return workroleQuery.data.workrole.work_role;
       });
     }
     // load tasks
     if (this.options.competency.behavior.tasks.length > 0) {
-      const tasks = this.options.competency.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
+      const tasks = this.options.competency.behavior.tasks.map(async (task) => await this.frameworkService.getCompleteTask(task)
       .then((taskQuery: any) => {
         return taskQuery.data.task;
       }));

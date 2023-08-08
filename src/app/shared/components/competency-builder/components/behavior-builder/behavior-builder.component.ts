@@ -1,12 +1,14 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, Observable, Subject } from 'rxjs';
-import { NiceWorkroleService } from '../../../../../core/nice.workrole.service';
 import { Behavior, Source } from '../../../../../../entity/behavior';
 import { Workrole } from '../../../../../../entity/nice.workrole';
 import { Elements } from '../../../../../../entity/nice.elements';
 import { BuilderService } from '../../../../../core/builder.service';
 import { BuilderValidation } from '../../../../../../entity/builder-validation';
+import { FrameworkService } from '../../../../../core/framework.service';
+import { DCWF_Workrole } from '../../../../../../entity/dcwf.workrole';
+import { DCWF_Element } from '../../../../../../entity/dcwf.elements';
 @Component({
   selector: 'cc-behavior-builder',
   templateUrl: './behavior-builder.component.html',
@@ -32,8 +34,8 @@ export class BehaviorBuilderComponent implements OnInit {
   workroleInput$: Subject<string> = new Subject<string>();
   taskInput$: Subject<string> = new Subject<string>();
   // Workrole and task arrays
-  workroles: Workrole[] = [];
-  tasks: Elements[] = [];
+  workroles: (Workrole | DCWF_Workrole)[] = [];
+  tasks: (Elements | DCWF_Element)[] = [];
   // Workforce Framework Objects
   workforceFrameworks = Object.values(Source);
   workforceSelected: Source;
@@ -46,19 +48,23 @@ export class BehaviorBuilderComponent implements OnInit {
   filteredWorkroles: Observable<string[]> = new Observable();
   filteredTasks: Observable<string[]> = new Observable();
   constructor(
-    private workroleService: NiceWorkroleService,
-    private builderService: BuilderService
+    private builderService: BuilderService,
+    private frameworkService: FrameworkService
   ) {}
 
   async ngOnInit(): Promise<void> {
+
     /**
-     * 1. Get all workroles and tasks from service if they are not set in behavior
+     * 1. Get all workroles and tasks from service if source exists and they are not set in behavior
      */
-    if (!this.behavior.work_role) {
-      await this.workroleService.getAllWorkroles();
-    }
-    if (this.behavior.tasks.length === 0) {
-      await this.workroleService.getAllTasks();
+    if (this.behavior.source) {
+      this.frameworkService.currentFramework = this.behavior.source;
+      if (!this.behavior.work_role) {
+        await this.frameworkService.getAllWorkroles();
+      }
+      if (this.behavior.tasks.length === 0) {
+        await this.frameworkService.getAllTasks();
+      }
     }
 
     /**
@@ -82,16 +88,16 @@ export class BehaviorBuilderComponent implements OnInit {
      * 3. Subscribe to workroles and tasks as they are updated in the builder-service
      */
     // Subscribe to workroles as they are updated in the service
-    this.workroleService.workroles.subscribe((workroles: Workrole[]) => {
+    this.frameworkService.workroles.subscribe((workroles: (Workrole | DCWF_Workrole)[]) => {
       this.workroles = [];
-      workroles.map((workrole: Workrole) => {
+      workroles.map((workrole: (Workrole | DCWF_Workrole)) => {
         this.workroles.push(workrole);
       });
     });
     // Subscribe to tasks as they are updated in the service
-    this.workroleService.tasks.subscribe((tasks: Elements[]) => {
+    this.frameworkService.tasks.subscribe((tasks: Elements[] | DCWF_Element[]) => {
       this.tasks = [];
-      tasks.map((task: Elements) => {
+      tasks.map((task: Elements | DCWF_Element) => {
         this.tasks.push(task);
       });
     });
@@ -101,7 +107,6 @@ export class BehaviorBuilderComponent implements OnInit {
      */
     // Subscribe to source form control
     this.source.valueChanges
-      .pipe(debounceTime(650))
       .subscribe(() => {
         // Remove source error from behaviorErrors array
         this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
@@ -250,7 +255,7 @@ export class BehaviorBuilderComponent implements OnInit {
     this.workroleInput$.pipe(debounceTime(650))
       .subscribe( async (value: string) => {
         if (value && value !== '') {
-          await this.workroleService.searchWorkroles(value.trim());
+          await this.frameworkService.searchWorkroles(value.trim());
         } else {
           this.selectedWorkrole = {} as Workrole;
           // Text input is empty; check if a selected task(s) exist
@@ -270,8 +275,8 @@ export class BehaviorBuilderComponent implements OnInit {
             });
           } else {
             // No selected tasks; reset workroles and tasks arrays
-            await this.workroleService.getAllWorkroles();
-            await this.workroleService.getAllTasks();
+            await this.frameworkService.getAllWorkroles();
+            await this.frameworkService.getAllTasks();
           }
         }
         this.loading = false;
@@ -280,7 +285,7 @@ export class BehaviorBuilderComponent implements OnInit {
     this.taskInput$.pipe(debounceTime(650))
       .subscribe( async (value: string) => {
         if (value && value !== '') {
-          await this.workroleService.searchTasks(value.trim());
+          await this.frameworkService.searchTasks(value.trim());
         } else {
           // Text input is empty; check if a selected workrole exists
           if (this.selectedWorkrole._id) {
@@ -296,8 +301,8 @@ export class BehaviorBuilderComponent implements OnInit {
             });
           } else {
             // No selected workrole; reset tasks and workroles arrays
-            await this.workroleService.getAllTasks();
-            await this.workroleService.getAllWorkroles();
+            await this.frameworkService.getAllTasks();
+            await this.frameworkService.getAllWorkroles();
           }
         }
         this.loading = false;
@@ -360,9 +365,9 @@ export class BehaviorBuilderComponent implements OnInit {
     this.selectedTask.splice(this.selectedTask.indexOf(task), 1);
     this.task.patchValue(true);
     if (this.selectedTask.length === 0) {
-      await this.workroleService.getAllTasks();
+      await this.frameworkService.getAllTasks();
       if (!this.selectedWorkrole._id) {
-        await this.workroleService.getAllWorkroles();
+        await this.frameworkService.getAllWorkroles();
       }
     }
   }
@@ -380,9 +385,10 @@ export class BehaviorBuilderComponent implements OnInit {
 
   setFramework(framework: Source) {
     if (this.workforceSelected !== framework) {
+      this.frameworkService.currentFramework = framework;
       this.workforceSelected = framework;
-      this.workroleService.getAllWorkroles();
-      this.workroleService.getAllTasks();
+      this.frameworkService.getAllWorkroles();
+      this.frameworkService.getAllTasks();
       this.selectedWorkrole = {} as Workrole;
       this.selectedTask = [];
       this.source.patchValue(true);

@@ -38,10 +38,10 @@
   <div class="task">
     <label>Task *</label>
     <div class="task-list">
-      <button *ngFor="let niceTask of selectedTask" (click)="removeSelectedTask(niceTask)" class="chip"
-        attr.aria-label="Remove {{ niceTask.element_id | titlecase }} as an affiliated task"
-        [tip]="niceTask.description">
-        {{ niceTask.element_id | titlecase }} 
+      <button *ngFor="let frameworkTask of selectedTask" (click)="removeSelectedTask(frameworkTask)" class="chip"
+        attr.aria-label="Remove {{ frameworkTask.element_id | titlecase }} as an affiliated task"
+        [tip]="frameworkTask.description">
+        {{ frameworkTask.element_id | uppercase }} 
         <i class="far fa-times"></i>
       </button>
     </div>
@@ -84,13 +84,13 @@
   <ng-container *ngIf="tasks && tasks.length; else noResultsTemplate">
     <virtual-scroller #scroll [style.height]="scrollerHeight" [bufferAmount]="7" [enableUnequalChildrenSizes]="true"
       [items]="tasks" (mouseleave)="closeDropdown()">
-      <li class="org-dropdown_list-item" *ngFor="let niceTask of scroll.viewPortItems" (click)="
-            selectedTask.push(niceTask);
-            workroles = niceTask.work_roles;
+      <li class="org-dropdown_list-item" *ngFor="let frameworkTask of scroll.viewPortItems" (click)="
+            selectedTask.push(frameworkTask);
+            workroles = frameworkTask.work_roles;
             closeDropdown(true);
             task.patchValue(true);
           ">
-        {{ niceTask.element_id | titlecase }} - {{ niceTask.description }}
+        {{ frameworkTask.element_id | uppercase }} - {{ frameworkTask.description }}
       </li>
     </virtual-scroller>
   </ng-container>

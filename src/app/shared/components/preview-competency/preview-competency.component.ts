@@ -3,13 +3,13 @@ import { Competency } from '../../../../entity/competency';
 import { DropdownItem } from '../../../../entity/dropdown';
 import { Workrole } from '../../../../entity/nice.workrole';
 import { DropdownService } from '../../../core/dropdown.service';
-import { NiceWorkroleService } from '../../../core/nice.workrole.service';
 import { sleep } from '../../functions/loading';
 import { Elements } from '../../../../entity/nice.elements';
 import { AuthService } from '../../../core/auth.service';
 import { BuilderService } from '../../../core/builder.service';
 import { LifecyclesService } from '../../../core/lifecycles.service';
 import { Lifecycles } from '../../../../entity/lifecycles';
+import { FrameworkService } from '../../../core/framework.service';
 
 @Component({
   selector: 'cc-preview-competency',
@@ -31,7 +31,7 @@ export class PreviewCompetencyComponent implements OnInit {
   tasks: Elements[] = [];
   competencyAuthor!: any;
   constructor(
-    private workRoleService: NiceWorkroleService,
+    private frameworkService: FrameworkService,
     private dropdownService: DropdownService,
     private authService: AuthService,
     public builderService: BuilderService,
@@ -53,16 +53,20 @@ export class PreviewCompetencyComponent implements OnInit {
         this.actor = this.competency.actor.type;
       }
     });
+    // Set frameworkService source
+    if (this.competency.behavior.source) {
+      this.frameworkService.currentFramework = this.competency.behavior.source;
+    }
     // load workrole
     if (this.competency.behavior.work_role) {
-      this.workrole = await this.workRoleService.getCompleteWorkrole(this.competency.behavior.work_role)
+      this.workrole = await this.frameworkService.getCompleteWorkrole(this.competency.behavior.work_role)
       .then((workroleQuery: any) => {
         return workroleQuery.data.workrole.work_role;
       });
     }
     // load tasks
     if (this.competency.behavior.tasks.length > 0) {
-      const tasks = this.competency.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
+      const tasks = this.competency.behavior.tasks.map(async (task) => await this.frameworkService.getCompleteTask(task)
       .then((taskQuery: any) => {
         return taskQuery.data.task;
       }));

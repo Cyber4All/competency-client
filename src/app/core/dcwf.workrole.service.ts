@@ -50,7 +50,7 @@ export class DcwfWorkroleService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .then((workrolesQuery: any) => {
-        this._workroles.next(workrolesQuery.data.workroles);
+        this._workroles.next(workrolesQuery.data.dcwf_workroles);
       })
       .catch((err) => {
         err = GraphErrorHandler.handleError(err);
@@ -75,7 +75,7 @@ export class DcwfWorkroleService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .then((tasksQuery: any) => {
-        this._tasks.next(tasksQuery.data.tasks);
+        this._tasks.next(tasksQuery.data.dcwf_tasks);
       })
       .catch((err) => {
         err = GraphErrorHandler.handleError(err);
@@ -146,8 +146,8 @@ export class DcwfWorkroleService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .then((workrolesQuery: any) => {
-        if (workrolesQuery.data.searchWorkroles && workrolesQuery.data.searchWorkroles.length > 0) {
-          this._workroles.next(workrolesQuery.data.searchWorkroles);
+        if (workrolesQuery.data.dcwf_searchWorkroles && workrolesQuery.data.dcwf_searchWorkroles.length > 0) {
+          this._workroles.next(workrolesQuery.data.dcwf_searchWorkroles);
         } else {
           this._workroles.next([]);
           this.snackBarService.notification$.next({
@@ -180,8 +180,8 @@ export class DcwfWorkroleService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .then((tasksQuery: any) => {
-        if (tasksQuery.data.searchTasks && tasksQuery.data.searchTasks.length > 0) {
-          this._tasks.next(tasksQuery.data.searchTasks);
+        if (tasksQuery.data.dcwf_searchTasks && tasksQuery.data.dcwf_searchTasks.length > 0) {
+          this._tasks.next(tasksQuery.data.dcwf_searchTasks);
         } else {
           this._tasks.next([]);
           this.snackBarService.notification$.next({

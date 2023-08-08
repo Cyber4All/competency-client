@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
-import { NiceWorkroleService } from '../../../core/nice.workrole.service';
 import { DropdownType } from '../../../../entity/dropdown';
 import { Lifecycles } from '../../../../entity/lifecycles';
 import { Workrole } from '../../../../entity/nice.workrole';
 import { Elements } from '../../../../entity/nice.elements';
+import { FrameworkService } from '../../../core/framework.service';
 
 @Component({
   selector: 'cc-filtering-dropdowns',
@@ -42,7 +42,7 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
    */
 
   constructor(
-    private workroleService: NiceWorkroleService
+    private frameworkService: FrameworkService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -59,9 +59,9 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
         break;
       case DropdownType.WORKROLE:
         // Set items to the workroles returned from the API
-        await this.workroleService.getAllWorkroles();
+        await this.frameworkService.getAllWorkroles();
         // Subscribe to the workroles observables
-        this.workroleService.workroles.subscribe((workroles: Workrole[]) => {
+        this.frameworkService.workroles.subscribe((workroles: Workrole[]) => {
           workroles.forEach((workrole: Workrole) => {
             this.filteredItems.push({ id: workrole._id, name: workrole.work_role });
           });
@@ -70,9 +70,9 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
         break;
       case DropdownType.TASK:
         // Set items to the tasks returned from the API
-        await this.workroleService.getAllTasks();
+        await this.frameworkService.getAllTasks();
         // Subscribe to task observable
-        this.workroleService.tasks.subscribe((tasks: Elements[]) => {
+        this.frameworkService.tasks.subscribe((tasks: Elements[]) => {
           tasks.forEach((task: Elements) => {
             this.items.push({ id: task._id, name: `${task.element_id} - ${task.description}` });
           });
