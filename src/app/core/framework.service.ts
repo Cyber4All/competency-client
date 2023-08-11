@@ -18,12 +18,12 @@ export class FrameworkService {
 
   workroles: BehaviorSubject<(Workrole | DCWF_Workrole)[]> = new BehaviorSubject<(Workrole | DCWF_Workrole)[]>([]);
   tasks: BehaviorSubject<(Elements | DCWF_Element)[]> = new BehaviorSubject<(Elements | DCWF_Element)[]>([]);
-  private _currentFrameork: Source;
+  private _currentFramework: Source;
   get currentFramework(): Source {
-    return this._currentFrameork;
+    return this._currentFramework;
   }
   set currentFramework(source: Source) {
-    this._currentFrameork = source;
+    this._currentFramework = source;
   }
   constructor(
     private niceService: NiceWorkroleService,
@@ -32,7 +32,6 @@ export class FrameworkService {
   ) {}
 
   async getCompleteTask(task: string) {
-    console.log('getCompleteTask hit!');
     switch(this.currentFramework) {
       case Source.NICE:
         return await this.niceService.getCompleteTask(task);
@@ -43,7 +42,6 @@ export class FrameworkService {
     }
   }
   async getCompleteWorkrole(work_role: string) {
-    console.log('getCompleteWorkrole hit!');
     switch(this.currentFramework) {
       case Source.NICE:
         return await this.niceService.getCompleteWorkrole(work_role);
@@ -54,7 +52,6 @@ export class FrameworkService {
     }
   }
   async getAllTasks() {
-    console.log('getAllTasks hit!');
     switch(this.currentFramework) {
       case Source.NICE:
         await this.niceService.getAllTasks();
@@ -73,7 +70,6 @@ export class FrameworkService {
     }
   }
   async getAllWorkroles() {
-    console.log('getAllWorkroles hit!');
     switch(this.currentFramework) {
       case Source.NICE:
         await this.niceService.getAllWorkroles();
@@ -92,7 +88,6 @@ export class FrameworkService {
     }
   }
   async searchTasks(query: string) {
-    console.log('searchTasks hit!');
     switch(this.currentFramework) {
       case Source.NICE:
         return await this.niceService.searchTasks(query);
@@ -104,7 +99,6 @@ export class FrameworkService {
   }
 
   async searchWorkroles(query: string) {
-    console.log('searchWorkroles hit!');
     switch(this.currentFramework) {
       case Source.NICE:
         return await this.niceService.searchWorkroles(query);

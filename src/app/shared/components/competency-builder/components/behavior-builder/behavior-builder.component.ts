@@ -41,8 +41,8 @@ export class BehaviorBuilderComponent implements OnInit {
   workforceSelected: Source;
   frameworkDisplay = false;
   // Selected workrole and task from virtual scroller
-  selectedWorkrole!: Workrole;
-  selectedTask: Elements[] = [];
+  selectedWorkrole: Workrole | DCWF_Workrole = {} as Workrole | DCWF_Workrole;
+  selectedTask: (Elements | DCWF_Element) [] = [];
   taskDropdownPlaceholder = '';
   // Filtered workroles and tasks
   filteredWorkroles: Observable<string[]> = new Observable();
@@ -151,7 +151,7 @@ export class BehaviorBuilderComponent implements OnInit {
       .pipe(debounceTime(650))
       .subscribe(() => {
         // Get task ids from Elements array
-        const taskIds: string[] = this.selectedTask.map((task: Elements) => {
+        const taskIds: string[] = this.selectedTask.map((task: Elements | DCWF_Element) => {
           return task._id!;
         });
         // Remove task error from behaviorErrors array
@@ -198,13 +198,12 @@ export class BehaviorBuilderComponent implements OnInit {
     // If source exists, set source form value
     if (this.behavior.source) {
       this.workforceSelected = this.behavior.source;
-      this.source.patchValue(true);
     }
     // If work_role or tasks exist, set workrole and task form value
     if (this.behavior.work_role || this.behavior.tasks.length > 0) {
       if (this.behavior.work_role) {
         // Check if workrole is ObjectId or workrole name
-        this.workroles.filter((workrole: Workrole) => {
+        this.workroles.filter((workrole: Workrole | DCWF_Workrole) => {
           if (this.behavior.work_role === workrole.work_role) {
             // Workrole name is stored on a competency; retrieve workrole ObjectId
             this.workroles = [workrole];
@@ -222,7 +221,7 @@ export class BehaviorBuilderComponent implements OnInit {
       if(this.behavior.tasks.length > 0) {
         // Check if task is ObjectId or task name
         this.behavior.tasks.map((task: string) => {
-          this.tasks.filter((taskElement: Elements) => {
+          this.tasks.filter((taskElement: Elements | DCWF_Element) => {
             if (task === taskElement.description) {
               // Task name is stored on a competency; retrieve task ObjectId
               this.tasks.push(taskElement);
@@ -235,7 +234,7 @@ export class BehaviorBuilderComponent implements OnInit {
           });
         });
         if (this.selectedTask.length > 0) {
-          this.behavior.tasks = this.selectedTask.map((task: Elements) => {
+          this.behavior.tasks = this.selectedTask.map((task: Elements | DCWF_Element) => {
             return task._id!;
           });
         }
@@ -257,18 +256,18 @@ export class BehaviorBuilderComponent implements OnInit {
         if (value && value !== '') {
           await this.frameworkService.searchWorkroles(value.trim());
         } else {
-          this.selectedWorkrole = {} as Workrole;
+          this.selectedWorkrole = {} as Workrole | DCWF_Workrole;
           // Text input is empty; check if a selected task(s) exist
           if (this.selectedTask.length > 0) {
             // Selected task(s) exist; set workroles that contain selected task(s)
             // Clear workroles array
             this.workroles = [];
             // Check each selected task
-            this.selectedTask.map((task: Elements) => {
+            this.selectedTask.map((task: Elements | DCWF_Element) => {
               // Check workrole array on task
-              task.work_roles?.map((workrole: Workrole) => {
+              task.work_roles?.map((workrole: Workrole | DCWF_Workrole) => {
                 // If the workrole does not already exist in this.workroles then add it
-                if (this.workroles.findIndex(( w: Workrole) => w._id === workrole._id) === -1) {
+                if (this.workroles.findIndex(( w: Workrole | DCWF_Workrole) => w._id === workrole._id) === -1) {
                   this.workroles.push(workrole);
                 }
               });
@@ -293,9 +292,9 @@ export class BehaviorBuilderComponent implements OnInit {
             // Clear tasks array
             this.tasks = [];
             // Check each selected task
-            this.selectedWorkrole.tasks?.map((task: Elements) => {
+            this.selectedWorkrole.tasks?.map((task: Elements | DCWF_Element) => {
               // If the task does not already exist in this.tasks then add it
-              if (this.tasks.findIndex(( t: Elements) => t._id === task._id) === -1) {
+              if (this.tasks.findIndex(( t: Elements | DCWF_Element) => t._id === task._id) === -1) {
                 this.tasks.push(task);
               }
             });
@@ -361,7 +360,7 @@ export class BehaviorBuilderComponent implements OnInit {
     }
   }
 
-  async removeSelectedTask(task: Elements) {
+  async removeSelectedTask(task: Elements | DCWF_Element) {
     this.selectedTask.splice(this.selectedTask.indexOf(task), 1);
     this.task.patchValue(true);
     if (this.selectedTask.length === 0) {

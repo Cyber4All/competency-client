@@ -101,6 +101,9 @@ export class NiceWorkroleService {
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
+      .then((workroleQuery: any) => {
+        return workroleQuery.data.workrole;
+      })
       .catch((err) => {
         err = GraphErrorHandler.handleError(err);
         if (err) {
@@ -124,6 +127,9 @@ export class NiceWorkroleService {
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
+      .then((taskQuery: any) => {
+        return taskQuery.data.task;
+      })
       .catch((err) => {
         err = GraphErrorHandler.handleError(err);
         if (err) {

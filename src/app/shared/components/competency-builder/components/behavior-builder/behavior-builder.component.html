@@ -39,7 +39,7 @@
     <label>Task *</label>
     <div class="task-list">
       <button *ngFor="let frameworkTask of selectedTask" (click)="removeSelectedTask(frameworkTask)" class="chip"
-        attr.aria-label="Remove {{ frameworkTask.element_id | titlecase }} as an affiliated task"
+        attr.aria-label="Remove {{ frameworkTask.element_id | uppercase }} as an affiliated task"
         [tip]="frameworkTask.description">
         {{ frameworkTask.element_id | uppercase }} 
         <i class="far fa-times"></i>
