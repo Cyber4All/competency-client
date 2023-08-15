@@ -10,6 +10,8 @@ import { BuilderService } from '../../../core/builder.service';
 import { LifecyclesService } from '../../../core/lifecycles.service';
 import { Lifecycles } from '../../../../entity/lifecycles';
 import { FrameworkService } from '../../../core/framework.service';
+import { DCWF_Element } from '../../../../entity/dcwf.elements';
+import { DCWF_Workrole } from '../../../../entity/dcwf.workrole';
 
 @Component({
   selector: 'cc-preview-competency',
@@ -27,8 +29,8 @@ export class PreviewCompetencyComponent implements OnInit {
   @Output() close = new EventEmitter();
   loading = false;
   actor!: string;
-  workrole!: Workrole;
-  tasks: Elements[] = [];
+  workrole: Workrole | DCWF_Workrole = {} as Workrole | DCWF_Workrole;
+  tasks: (Elements | DCWF_Element)[] = [];
   competencyAuthor!: any;
   constructor(
     private frameworkService: FrameworkService,
@@ -42,7 +44,7 @@ export class PreviewCompetencyComponent implements OnInit {
     this.loading = true;
     this.dropdownService.getDropdownItems('actor');
     this.competencyAuthor = await this.authService.getUser(this.competency.authorId);
-    // Check actor type; if id retreive dropdown value
+    // Check actor type; if id retrieve dropdown value
     this.dropdownService.actorList.subscribe((actors: DropdownItem[]) => {
       actors.filter((actor) => {
         if (actor._id === this.competency.actor.type) {
@@ -59,18 +61,15 @@ export class PreviewCompetencyComponent implements OnInit {
     }
     // load workrole
     if (this.competency.behavior.work_role) {
-      this.workrole = await this.frameworkService.getCompleteWorkrole(this.competency.behavior.work_role)
-      .then((workroleQuery: any) => {
-        return workroleQuery.data.workrole.work_role;
-      });
+      this.workrole = await this.frameworkService.getCompleteWorkrole(this.competency.behavior.work_role);
     }
     // load tasks
     if (this.competency.behavior.tasks.length > 0) {
-      const tasks = this.competency.behavior.tasks.map(async (task) => await this.frameworkService.getCompleteTask(task)
-      .then((taskQuery: any) => {
-        return taskQuery.data.task;
-      }));
-      this.tasks = await Promise.all(tasks);
+      const tasks = this.competency.behavior.tasks.map(async (task) => await this.frameworkService.getCompleteTask(task));
+      await Promise.all(tasks)
+        .then((tasks: (Elements | DCWF_Element)[]) => {
+          this.tasks = tasks;
+        });
     }
     await sleep(1000);
     this.authService.isAdmin.subscribe((isAdmin: boolean) => {

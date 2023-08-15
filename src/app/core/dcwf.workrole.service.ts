@@ -100,6 +100,9 @@ export class DcwfWorkroleService {
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
+      .then((workroleQuery: any) => {
+        return workroleQuery.data.dcwf_workrole;
+      })
       .catch((err) => {
         err = GraphErrorHandler.handleError(err);
         if (err) {
@@ -123,6 +126,9 @@ export class DcwfWorkroleService {
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
+      .then((taskQuery: any) => {
+        return taskQuery.data.dcwf_task;
+      })
       .catch((err) => {
         err = GraphErrorHandler.handleError(err);
         if (err) {

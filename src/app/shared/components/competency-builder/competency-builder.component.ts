@@ -130,7 +130,6 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
           const behaviorValid: BuilderValidation[] = this.competency.validateBehavior();
           if (behaviorValid.length === 1 && behaviorValid[0].isValid) {
             this.builderService.clearBehaviorErrors();
-            console.log(this.competency.behavior);
             await this.builderService.updateBehavior(this.competency._id, this.competency.behavior);
           }
           break;

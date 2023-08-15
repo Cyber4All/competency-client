@@ -29,13 +29,13 @@
 <ng-template #competencyAccordion>
   <!--Actor Card Preview-->
   <div class="competency_edit-actor-container">
-    <p class="competency_card-actor"><span>Actor</span>: {{ competency.actor.type }}</p>
+    <p class="competency_card-actor"><span>Actor</span>: {{ competency.actor.type ? competency.actor.type : "No Actor Selected" }}</p>
   </div>
   <!--Behavior Card Preview-->
   <div class="competency_edit-behavior-container">
-    <p class="competency_card-workrole"><span>Work Role</span>: {{ workrole }}</p>
-    <p class="competency_card-task"><span>Task</span>: {{ tasks }}</p>
-    <p class="competency_card-description"><span>Description</span>: {{ competency.behavior.details }}</p>
+    <p class="competency_card-workrole"><span>Work Role</span>: {{ workrole.work_role ? workrole.work_role : "No Workrole Selected" }}</p>
+    <p class="competency_card-task"><span>Task</span>: {{ tasks[0] ? tasks[0] : "No Task Selected" }}</p>
+    <p class="competency_card-description"><span>Description</span>: {{ competency.behavior.details ? competency.behavior.details : "No Details Specified"}}</p>
   </div>
 </ng-template>
 

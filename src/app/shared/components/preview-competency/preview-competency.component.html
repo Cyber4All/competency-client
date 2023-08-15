@@ -28,11 +28,11 @@
             <i class="fas fa-edit fa-lg" [ngClass]="{'hidden': builderMode===false}" ></i>
           </div>
         </div>
-        <p><b>Workrole:</b> {{ workrole ? workrole : "No workrole specified."}}</p>
+        <p><b>Workrole:</b> {{ workrole.work_role ? workrole.work_role : "No workrole specified."}}</p>
         <div>
           <p><b>Tasks:</b></p>
           <ul>
-            <li *ngFor="let task of tasks">{{task.element_id | titlecase}} - {{ task.description }}</li>
+            <li *ngFor="let task of tasks">{{task.element_id | uppercase}} - {{ task.description }}</li>
             <ng-container *ngIf="!tasks.length" [ngTemplateOutlet]="noTasks"></ng-container>
           </ul>
         </div>
