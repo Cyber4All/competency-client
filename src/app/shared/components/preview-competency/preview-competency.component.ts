@@ -12,6 +12,7 @@ import { Lifecycles } from '../../../../entity/lifecycles';
 import { FrameworkService } from '../../../core/framework.service';
 import { DCWF_Element } from '../../../../entity/dcwf.elements';
 import { DCWF_Workrole } from '../../../../entity/dcwf.workrole';
+import { Source } from '../../../../entity/behavior';
 
 @Component({
   selector: 'cc-preview-competency',
@@ -27,6 +28,7 @@ export class PreviewCompetencyComponent implements OnInit {
   @Input() builderMode = false;
   // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() close = new EventEmitter();
+  source!: Source;
   loading = false;
   actor!: string;
   workrole: Workrole | DCWF_Workrole = {} as Workrole | DCWF_Workrole;
@@ -58,6 +60,7 @@ export class PreviewCompetencyComponent implements OnInit {
     // Set frameworkService source
     if (this.competency.behavior.source) {
       this.frameworkService.currentFramework = this.competency.behavior.source;
+      this.source = this.competency.behavior.source;
     }
     // load workrole
     if (this.competency.behavior.work_role) {

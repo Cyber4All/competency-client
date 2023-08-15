@@ -28,6 +28,7 @@
             <i class="fas fa-edit fa-lg" [ngClass]="{'hidden': builderMode===false}" ></i>
           </div>
         </div>
+        <p><b>Workforce Framework:</b> {{ source ? (source | uppercase) : "No framework selected."}}</p>
         <p><b>Workrole:</b> {{ workrole.work_role ? workrole.work_role : "No workrole specified."}}</p>
         <div>
           <p><b>Tasks:</b></p>
