@@ -4,6 +4,7 @@ import { Lifecycles } from '../../../../entity/lifecycles';
 import { Workrole } from '../../../../entity/nice.workrole';
 import { Elements } from '../../../../entity/nice.elements';
 import { FrameworkService } from '../../../core/framework.service';
+import { Source } from '../../../../entity/behavior';
 
 @Component({
   selector: 'cc-filtering-dropdowns',
@@ -48,12 +49,17 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
   async ngOnInit(): Promise<void> {
     // if title is Workrole or Task, then shared search bar should be used
     this.searchbar = this.title === DropdownType.WORKROLE || this.title === DropdownType.TASK;
-
     // Set items based on the type of the dropdown
     switch(this.title) {
       case DropdownType.STATUS:
         // Set items to the value of the Lifecycles enum
         Object.values(Lifecycles).forEach((value: string) => {
+          this.items.push({ id: value, name: value });
+        });
+        break;
+      case DropdownType.SOURCE:
+        // Set items to the value of the framework enum
+        Object.values(Source).forEach((value: string) => {
           this.items.push({ id: value, name: value });
         });
         break;
@@ -103,6 +109,10 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
    */
   toggleFilterItem(item: {id: string, name: string}) {
     if (!this.selectedItems.includes(item.id)) {
+      // If the dropdown is the source dropdown, clear the selectedItems array; only one source can be selected at a time
+      if (this.title === DropdownType.SOURCE) {
+        this.selectedItems = [];
+      }
       // Add item to selectedItems array if it is not already in the array
       this.selectedItems.push(item.id);
     } else {

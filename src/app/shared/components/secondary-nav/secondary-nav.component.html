@@ -3,7 +3,8 @@
         <!-- Dropdown Filters -->
         <div class="dropdowns">
             <cc-filtering-dropdowns [title]="dropdownType.STATUS" (selectedEmitter)="statuses($event)" [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns>
-            <cc-filtering-dropdowns [title]="dropdownType.WORKROLE" (selectedEmitter)="workroles($event)" [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns>
+            <cc-filtering-dropdowns [title]="dropdownType.SOURCE" (selectedEmitter)="source($event)" [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns>
+            <!-- <cc-filtering-dropdowns [title]="dropdownType.WORKROLE" (selectedEmitter)="workroles($event)" [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns> -->
             <!--DISABLED FOR BETA-->
             <!-- <cc-filtering-dropdowns [title]="dropdownType.TASK" (selectedEmitter)="tasks($event)"></cc-filtering-dropdowns> -->
             <!-- <cc-filtering-dropdowns [title]="dropdownType.ACTOR" (selectedEmitter)="audiences($event)"></cc-filtering-dropdowns> -->

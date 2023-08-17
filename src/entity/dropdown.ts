@@ -1,5 +1,6 @@
 export enum DropdownType {
     STATUS = 'status',
+    SOURCE = 'framework',
     WORKROLE = 'workrole',
     TASK = 'task',
     ACTOR = 'actor',

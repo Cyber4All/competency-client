@@ -17,7 +17,7 @@
             <div mat-menu-item class="dropdown">
                 <div *ngFor="let item of items" class="item" (click)="toggleFilterItem(item)">
                     <div class="item_text" [ngClass]="{'blue': calculateStyles(item).color === 'blue', 'black': calculateStyles(item).color === 'black'}">
-                        {{item.name}}
+                        {{item.name | uppercase}}
                     </div>
                 </div>
             </div>

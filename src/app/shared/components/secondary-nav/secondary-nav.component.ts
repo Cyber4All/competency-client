@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { DropdownType } from '../../../../entity/dropdown';
+import { Source } from '../../../../entity/behavior';
 
 @Component({
   selector: 'cc-secondary-nav',
@@ -10,7 +11,13 @@ export class SecondaryNavComponent implements OnInit {
   @Input() disabled: boolean;
   @Output() newCompetency = new EventEmitter();
   @Output() getHelp = new EventEmitter();
-  @Output() filterCompetencies = new EventEmitter<{ status: string[], workrole: string[], task: string[], audience: string[]}>();
+  @Output() filterCompetencies = new EventEmitter<{
+    status: string[],
+    source: string[],
+    workrole: string[],
+    task: string[],
+    audience: string[]
+  }>();
 
   dropdownType = DropdownType;
   areFiltersCleared = true;
@@ -18,6 +25,7 @@ export class SecondaryNavComponent implements OnInit {
   // Selected Filters
   selectedStatuses: string[] = [];
   selectedWorkroles: string[] = [];
+  selectedSource: string[] = [];
   selectedTasks: string[] = [];
   selectedAudiences: string[] = [];
 
@@ -29,6 +37,7 @@ export class SecondaryNavComponent implements OnInit {
     // Emit the selected filters
     this.filterCompetencies.emit({
       status: this.selectedStatuses,
+      source: this.selectedSource,
       workrole: this.selectedWorkroles,
       task: this.selectedTasks,
       audience: this.selectedAudiences
@@ -39,6 +48,11 @@ export class SecondaryNavComponent implements OnInit {
   statuses(statuses: string[]) {
     this.areFiltersCleared = statuses.length === 0;
     this.selectedStatuses = statuses;
+    this.filter();
+  }
+  source(source: string[]) {
+    this.areFiltersCleared = source.length === 0;
+    this.selectedSource = source;
     this.filter();
   }
   workroles(workroles: string[]) {
@@ -59,12 +73,14 @@ export class SecondaryNavComponent implements OnInit {
   clearFilters() {
     // If all filters are already cleared, do nothing
     if (this.selectedStatuses.length === 0 &&
+      this.selectedSource.length === 0 &&
       this.selectedWorkroles.length === 0 &&
       this.selectedTasks.length === 0 &&
       this.selectedAudiences.length === 0) {
       return;
     }
     this.selectedStatuses = [];
+    this.selectedSource = [];
     this.selectedWorkroles = [];
     this.selectedTasks = [];
     this.selectedAudiences = [];
