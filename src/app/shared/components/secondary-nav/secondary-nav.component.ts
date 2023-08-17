@@ -21,7 +21,7 @@ export class SecondaryNavComponent implements OnInit {
 
   dropdownType = DropdownType;
   areFiltersCleared = true;
-
+  frameworkSource = undefined as Source | undefined;
   // Selected Filters
   selectedStatuses: string[] = [];
   selectedWorkroles: string[] = [];
@@ -53,6 +53,7 @@ export class SecondaryNavComponent implements OnInit {
   source(source: string[]) {
     this.areFiltersCleared = source.length === 0;
     this.selectedSource = source;
+    this.frameworkSource = source[0] as Source;
     this.filter();
   }
   workroles(workroles: string[]) {
@@ -73,7 +74,7 @@ export class SecondaryNavComponent implements OnInit {
   clearFilters() {
     // If all filters are already cleared, do nothing
     if (this.selectedStatuses.length === 0 &&
-      this.selectedSource.length === 0 &&
+      (this.selectedSource.length === 0) &&
       this.selectedWorkroles.length === 0 &&
       this.selectedTasks.length === 0 &&
       this.selectedAudiences.length === 0) {
@@ -81,6 +82,7 @@ export class SecondaryNavComponent implements OnInit {
     }
     this.selectedStatuses = [];
     this.selectedSource = [];
+    this.frameworkSource = undefined;
     this.selectedWorkroles = [];
     this.selectedTasks = [];
     this.selectedAudiences = [];

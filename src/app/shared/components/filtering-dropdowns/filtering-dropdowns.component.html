@@ -1,7 +1,12 @@
 <div class="wrapper">
     <!-- Dropdown button -->
-    <button class="button-wrapper" [matMenuTriggerFor]="dropdown" (menuClosed)="iconArrowDown = true" (menuOpened)="iconArrowDown = false">
-        <div class="title">{{title}}</div>
+    <button class="button-wrapper"
+        [matMenuTriggerFor]="dropdown"
+        (menuClosed)="iconArrowDown = true"
+        (menuOpened)="iconArrowDown = false"
+        [disabled]="disabled"
+    >
+        <div class="title" [tipDisabled]="!disabled" [tip]="disabled ? 'Please select a Workforce Framework' : title + ' Filter'">{{title}}</div>
         <ng-container *ngIf="iconArrowDown else iconUp" [ngTemplateOutlet]="iconDown"></ng-container>
     </button>
 

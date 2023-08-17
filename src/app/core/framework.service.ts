@@ -52,6 +52,7 @@ export class FrameworkService {
     }
   }
   async getAllTasks() {
+    this.tasks.next([]);
     switch(this.currentFramework) {
       case Source.NICE:
         await this.niceService.getAllTasks();
@@ -70,6 +71,7 @@ export class FrameworkService {
     }
   }
   async getAllWorkroles() {
+    this.workroles.next([]);
     switch(this.currentFramework) {
       case Source.NICE:
         await this.niceService.getAllWorkroles();
