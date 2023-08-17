@@ -8,7 +8,6 @@ import { NiceWorkroleService } from '../../../core/nice.workrole.service';
 import { DcwfWorkroleService } from '../../../core/dcwf.workrole.service';
 import { SnackbarService } from '../../../core/snackbar.service';
 import { DCWF_Workrole } from '../../../../entity/dcwf.workrole';
-
 @Component({
   selector: 'cc-competency-card',
   templateUrl: './competency-card.component.html',

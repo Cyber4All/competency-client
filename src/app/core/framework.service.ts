@@ -41,7 +41,7 @@ export class FrameworkService {
         this.throwFrameworkError();
     }
   }
-  async getCompleteWorkrole(work_role: string | undefined) {
+  async getCompleteWorkrole(work_role: string) {
     switch(this.currentFramework) {
       case Source.NICE:
         return await this.niceService.getCompleteWorkrole(work_role);
