@@ -13,7 +13,7 @@ import { SnackbarService } from '../../../core/snackbar.service';
 import { SNACKBAR_COLOR } from '../snackbar/snackbar.component';
 import { DropdownService } from '../../../core/dropdown.service';
 import { DropdownType } from '../../../../entity/dropdown';
-import { sleep } from '../../../core/competency.service';
+import { sleep } from '../../functions/loading';
 import { LifecyclesService } from '../../../core/lifecycles.service';
 @Component({
   selector: 'cc-competency-builder',

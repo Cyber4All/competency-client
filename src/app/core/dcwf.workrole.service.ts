@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
-import {
-  DCWF_Workrole,
-  getAllWorkRoles,
-  getCompleteWorkRole,
-  getCompleteTask,
-  getAllTasks,
-  queryWorkroles,
-  queryTasks,
-} from '../../entity/dcwf.workrole';
+import { DCWF_Workrole } from '../../entity/dcwf.workrole';
+import { GraphQueries } from '../shared/functions/graph-queries';
 import { DCWF_Element } from '../../entity/dcwf.elements';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
@@ -16,11 +9,13 @@ import { SnackbarService } from './snackbar.service';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
+import { Source } from '../../entity/behavior';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DcwfWorkroleService {
+  private source: Source = Source.DCWF;
   private _workroles: BehaviorSubject<DCWF_Workrole[]> = new BehaviorSubject<DCWF_Workrole[]>([]);
   private _tasks: BehaviorSubject<DCWF_Element[]> = new BehaviorSubject<DCWF_Element[]>([]);
   get workroles(): Observable<DCWF_Workrole[]> {
@@ -42,7 +37,7 @@ export class DcwfWorkroleService {
    */
   async getAllWorkroles(): Promise<void> {
     this.auth.initHeaders();
-    const query = getAllWorkRoles();
+    const query = GraphQueries.getAllWorkRoles(this.source);
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -67,7 +62,7 @@ export class DcwfWorkroleService {
    */
   async getAllTasks(): Promise<void> {
     this.auth.initHeaders();
-    const query = getAllTasks();
+    const query = GraphQueries.getAllTasks(this.source);
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -93,7 +88,7 @@ export class DcwfWorkroleService {
    */
   async getCompleteWorkrole(workroleId: string) {
     this.auth.initHeaders();
-    const query = getCompleteWorkRole(workroleId);
+    const query = GraphQueries.getCompleteWorkRole(workroleId, this.source);
     return await lastValueFrom(this.http
       .post<DCWF_Workrole>(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -119,7 +114,7 @@ export class DcwfWorkroleService {
    */
   async getCompleteTask(taskId: string) {
     this.auth.initHeaders();
-    const query = getCompleteTask(taskId);
+    const query = GraphQueries.getCompleteTask(taskId, this.source);
     return await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -144,7 +139,7 @@ export class DcwfWorkroleService {
    */
   async searchWorkroles(search: string): Promise<void> {
     this.auth.initHeaders();
-    const query = queryWorkroles(search);
+    const query = GraphQueries.queryWorkroles(search, this.source);
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -178,7 +173,7 @@ export class DcwfWorkroleService {
    */
   async searchTasks(search: string): Promise<void> {
     this.auth.initHeaders();
-    const query = queryTasks(search);
+    const query = GraphQueries.queryTasks(search, this.source);
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),

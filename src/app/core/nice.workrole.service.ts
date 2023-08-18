@@ -3,25 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
-import {
-  getCompleteWorkRole,
-  Workrole,
-  getAllWorkRoles,
-  getAllTasks,
-  getCompleteTask,
-  queryWorkroles,
-  queryTasks
-} from '../../entity/nice.workrole';
+import { GraphQueries } from '../shared/functions/graph-queries';
+import { Workrole } from '../../entity/nice.workrole';
 import { getPreReqs } from '../../entity/actor';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 import { SnackbarService } from './snackbar.service';
 import { Elements } from '../../entity/nice.elements';
 import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
+import { Source } from '../../entity/behavior';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NiceWorkroleService {
+  private source: Source = Source.NICE;
   private _workroles: BehaviorSubject<Workrole[]> = new BehaviorSubject<Workrole[]>([]);
   private _tasks: BehaviorSubject<Elements[]> = new BehaviorSubject<Elements[]>([]);
   get workroles(): Observable<Workrole[]> {
@@ -43,7 +38,7 @@ export class NiceWorkroleService {
    */
   async getAllWorkroles(): Promise<void> {
     this.auth.initHeaders();
-    const query = getAllWorkRoles();
+    const query = GraphQueries.getAllWorkRoles(this.source);
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -68,7 +63,7 @@ export class NiceWorkroleService {
    */
   async getAllTasks(): Promise<void> {
     this.auth.initHeaders();
-    const query = getAllTasks();
+    const query = GraphQueries.getAllTasks(this.source);
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -94,7 +89,7 @@ export class NiceWorkroleService {
    */
   async getCompleteWorkrole(workroleId: string) {
     this.auth.initHeaders();
-    const query = getCompleteWorkRole(workroleId);
+    const query = GraphQueries.getCompleteWorkRole(workroleId, this.source);
     return await lastValueFrom(this.http
       .post<Workrole>(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -120,7 +115,7 @@ export class NiceWorkroleService {
    */
   async getCompleteTask(taskId: string) {
     this.auth.initHeaders();
-    const query = getCompleteTask(taskId);
+    const query = GraphQueries.getCompleteTask(taskId, this.source);
     return await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -145,7 +140,7 @@ export class NiceWorkroleService {
    */
   async searchWorkroles(search: string): Promise<void> {
     this.auth.initHeaders();
-    const query = queryWorkroles(search);
+    const query = GraphQueries.queryWorkroles(search, this.source);
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -179,7 +174,7 @@ export class NiceWorkroleService {
    */
   async searchTasks(search: string): Promise<void> {
     this.auth.initHeaders();
-    const query = queryTasks(search);
+    const query = GraphQueries.queryTasks(search, this.source);
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),

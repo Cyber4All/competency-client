@@ -12,15 +12,3 @@ export interface DropdownItem {
     type: DropdownType;
     value: string;
 }
-
-export function DropdownObjects(type: string) {
-    return `
-        {
-            dropdownItems(type: ${type}) {
-                _id
-                type
-                value
-            }
-        }
-    `;
-}

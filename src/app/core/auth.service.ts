@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject,lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { User, getUserGraphQuery } from '../../entity/user';
+import { User } from '../../entity/user';
+import { GraphQueries } from '../shared/functions/graph-queries';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
@@ -118,7 +119,7 @@ export class AuthService {
    */
   // TODO: Add the AuthUser return type
   async getUser(id: string): Promise<any> {
-    const query = getUserGraphQuery(id);
+    const query = GraphQueries.getUserGraphQuery(id);
     return await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),

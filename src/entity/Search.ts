@@ -7,23 +7,3 @@ export interface Search {
   total: number
   statuses: string[]
 }
-
-export function CompetencyCardSearch(id: string) {
-  return `
-    {
-      competency(competencyId:"${id}") {
-        
-        status
-        actor {
-          type
-        }
-        behavior {
-          tasks
-          details
-          work_role
-          source
-        }
-      }
-    }
-  `;
-}
