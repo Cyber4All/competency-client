@@ -1,9 +1,9 @@
 import { Actor } from './actor';
-import { Behavior } from './Behavior';
-import { Condition } from './Condition';
-import { Degree } from './Degree';
-import { Employability } from './Employability';
-import { Lifecycles } from './Lifecycles';
+import { Behavior } from './behavior';
+import { Condition } from './condition';
+import { Degree } from './degree';
+import { Employability } from './employability';
+import { Lifecycles } from './lifecycles';
 import { Notes } from './notes';
 
 export class Competency {
@@ -81,88 +81,4 @@ export class Competency {
   get notes$() {
       return this.notes;
   }
-}
-
-export function CompetencyGraph(id: string) {
-  return `
-    {
-      competency(competencyId:"${id}") {
-        _id
-        status
-        authorId
-        version
-        actor {
-          _id
-          type
-          details
-        }
-        behavior {
-          _id
-          tasks
-          details
-          work_role
-        }
-        condition {
-          _id
-          scenario
-          tech
-          limitations
-          documentation {
-              _id
-              conditionId
-              description
-              uri
-          }
-        }
-        degree {
-          _id
-          complete
-          correct
-          time
-        }
-        employability {
-          _id
-          details
-        },
-        notes {
-          _id
-          details
-        }
-      }
-    }
-  `;
-}
-
-export function CompetencySearch(
-  query?: {
-    text?: string,
-    page?: number,
-    limit?: number,
-    author?: string,
-    status?: string[],
-    workrole?: string[],
-    task?: string[],
-    version?: number
-  }
-) {
-  return `
-    {
-      search(
-        text:"${query?.text ?? ''}",
-        page:${query?.page ?? 0},
-        limit:${query?.limit ?? 0}, ${query?.author ? `\nauthor: "${query?.author}",` : ''}
-        status:[${query?.status ?? 'DRAFT'}],
-        ${query?.workrole && query.workrole.length > 0 ? `workrole:["${query.workrole.join('","')+'"'}],`: ''}
-        ${query?.task && query.task.length > 0 ? `task:["${query.task.join('","')+'"'}],`: ''}
-        version:${query?.version ?? 0}
-      ) {
-        competencies {
-          _id
-        }
-        total
-        page
-        limit
-      }
-    }
-  `;
 }

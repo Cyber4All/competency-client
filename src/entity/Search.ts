@@ -1,4 +1,4 @@
-import { Competency } from './Competency';
+import { Competency } from './competency';
 
 export interface Search {
   competencies: Competency[]
@@ -6,23 +6,4 @@ export interface Search {
   page: number
   total: number
   statuses: string[]
-}
-
-export function CompetencyCardSearch(id: string) {
-  return `
-    {
-      competency(competencyId:"${id}") {
-        
-        status
-        actor {
-          type
-        }
-        behavior {
-          tasks
-          details
-          work_role
-        }
-      }
-    }
-  `;
 }

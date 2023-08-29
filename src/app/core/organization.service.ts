@@ -15,6 +15,7 @@ export class OrganizationService {
     private auth: AuthService
   ) {}
 
+  // TODO: Remove deprecated toPromise() method and replace with lastValueFrom() method
   async searchOrgs(query: string): Promise<Array<Organization>> {
     return new Promise((resolve, reject) => {
       this.auth.initHeaders();

@@ -3,20 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { lastValueFrom } from 'rxjs';
-import { Competency, CompetencyGraph, CompetencySearch } from '../../entity/Competency';
-import { CompetencyCardSearch, Search } from '../../entity/Search';
+import { Competency } from '../../entity/competency';
+import { Search } from '../../entity/search';
+import { GraphQueries } from '../shared/functions/graph-queries';
 import { SnackbarService } from './snackbar.service';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
-
-/**
- * Function to toggle loading state display
- *
- * @param ms - time to toggle loading state
- * @returns resolves promise within specified time
- */
-export function sleep(ms: number): Promise<any> {
-  return new Promise((res) => setTimeout(res, ms));
-}
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +42,7 @@ export class CompetencyService {
     if (q && q.status) {
       q.status = q.status.map((val) => val.toUpperCase());
     }
-    const query = CompetencySearch(q);
+    const query = GraphQueries.competencySearch(q);
     return lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -77,7 +68,7 @@ export class CompetencyService {
    */
   async getCompetencyById(competencyId: string): Promise<Competency> {
     this.auth.initHeaders();
-    const query = CompetencyGraph(competencyId);
+    const query = GraphQueries.competencyGraph(competencyId);
     return await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -121,7 +112,7 @@ export class CompetencyService {
    */
   async getCompetencyCard(competencyId: string): Promise<Competency> {
     this.auth.initHeaders();
-    const query = CompetencyCardSearch(competencyId);
+    const query = GraphQueries.competencyCardSearch(competencyId);
     return await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),

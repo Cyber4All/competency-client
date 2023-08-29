@@ -10,10 +10,12 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PanelOptions } from '../panel.directive';
 import { fade } from '../panel.animations';
-import { Lifecycles } from 'entity/Lifecycles';
-import { WorkroleService } from 'app/core/workrole.service';
-import { Elements } from 'entity/elements';
-import { Workrole } from 'entity/workrole';
+import { Lifecycles } from 'entity/lifecycles';
+import { Elements } from 'entity/nice.elements';
+import { Workrole } from 'entity/nice.workrole';
+import { FrameworkService } from '../../../../core/framework.service';
+import { DCWF_Element } from '../../../../../entity/dcwf.elements';
+import { DCWF_Workrole } from '../../../../../entity/dcwf.workrole';
 @Component({
   selector: 'cc-panel-viewer',
   template: `
@@ -94,11 +96,11 @@ export class PanelViewerComponent implements OnInit, OnDestroy {
   private defaultWidth = 350;
   private destroyed$: Subject<void> = new Subject();
 
-  workrole!: Workrole;
-  tasks: Elements[] = [];
+  workrole!: Workrole | DCWF_Workrole;
+  tasks: (Elements | DCWF_Element)[] = [];
 
   constructor(
-    private workRoleService: WorkroleService
+    private frameworkService: FrameworkService,
   ) {}
 
   /**
@@ -135,20 +137,19 @@ export class PanelViewerComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
+    if (this.options.competency.behavior.source) {
+      this.frameworkService.currentFramework = this.options.competency.behavior.source;
+    }
     if (this.options.competency.behavior.work_role) {
-      this.workrole =
-        await this.workRoleService.getCompleteWorkrole(this.options.competency.behavior.work_role)
-      .then((workroleQuery: any) => {
-        return workroleQuery.data.workrole.work_role;
-      });
+      this.workrole = await this.frameworkService.getCompleteWorkrole(this.options.competency.behavior.work_role);
     }
     // load tasks
     if (this.options.competency.behavior.tasks.length > 0) {
-      const tasks = this.options.competency.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
-      .then((taskQuery: any) => {
-        return taskQuery.data.task;
-      }));
-      this.tasks = await Promise.all(tasks);
+      const tasks = this.options.competency.behavior.tasks.map(async (task) => await this.frameworkService.getCompleteTask(task));
+      await Promise.all(tasks)
+        .then((tasks: (Elements | DCWF_Element)[]) => {
+          this.tasks = tasks;
+        });
     }
     this.close.pipe(takeUntil(this.destroyed$)).subscribe(() => {
       this.isOpen = false;

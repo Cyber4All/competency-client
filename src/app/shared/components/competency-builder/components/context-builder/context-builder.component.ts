@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Condition } from '../../../../../../entity/Condition';
+import { Condition } from '../../../../../../entity/condition';
 import { debounceTime } from 'rxjs';
 import { Documentation } from '../../../../../../entity/Documentation';
 import { BuilderService } from '../../../../../core/builder.service';
