@@ -21,7 +21,7 @@ import {
 } from '@angular/animations';
 import { fadeIn, fadeOut, slideIn, slideOut } from './panel.animations';
 import { Subject } from 'rxjs';
-import { Competency } from 'entity/competency';
+import { Competency } from '../../../../entity/competency';
 export interface PanelOptions {
   padding: boolean;
   showExitButton: boolean;
