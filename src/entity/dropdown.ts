@@ -1,5 +1,6 @@
 export enum DropdownType {
     STATUS = 'status',
+    SOURCE = 'framework',
     WORKROLE = 'workrole',
     TASK = 'task',
     ACTOR = 'actor',
@@ -10,16 +11,4 @@ export interface DropdownItem {
     _id: string;
     type: DropdownType;
     value: string;
-}
-
-export function DropdownObjects(type: string) {
-    return `
-        {
-            dropdownItems(type: ${type}) {
-                _id
-                type
-                value
-            }
-        }
-    `;
 }
