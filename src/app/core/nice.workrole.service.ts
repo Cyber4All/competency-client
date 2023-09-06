@@ -4,13 +4,13 @@ import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { GraphQueries } from '../shared/functions/graph-queries';
-import { Workrole } from '../../entity/nice.workrole';
-import { getPreReqs } from '../../entity/actor';
+import { Workrole } from '../shared/entity/nice.workrole';
+import { getPreReqs } from '../shared/entity/actor';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 import { SnackbarService } from './snackbar.service';
-import { Elements } from '../../entity/nice.elements';
+import { Elements } from '../shared/entity/nice.elements';
 import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
-import { Source } from '../../entity/behavior';
+import { Source } from '../shared/entity/behavior';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,7 @@ export class NiceWorkroleService {
     private http: HttpClient,
     private auth: AuthService,
     private snackBarService: SnackbarService,
-  ) {}
+  ) { }
 
   /**
    * Method to retrieve all NICE workroles
@@ -42,7 +42,7 @@ export class NiceWorkroleService {
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
-        {query},
+        { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .then((workrolesQuery: any) => {
@@ -212,7 +212,7 @@ export class NiceWorkroleService {
     return await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
-        {query},
+        { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .catch((err) => {

@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FileService } from '../../../core/file.service';
-import { MimeTypes } from '../../../../entity/mimeTypes';
 import { FormControl } from '@angular/forms';
-import { Documentation } from '../../../../entity/Documentation';
+import { Documentation } from '../../entity/documentation';
 import { SnackbarService } from '../../../core/snackbar.service';
-import { SNACKBAR_COLOR } from '../snackbar/snackbar.component';
 
 @Component({
   selector: 'cc-file-upload',
@@ -99,7 +97,7 @@ export class FileUploadComponent implements OnInit {
     const doc = this.documentation.value.find((doc: Documentation) => {
       return doc._id === file.documentationId;
     });
-    this.documentation.patchValue({remove: true, id: file.documentationId});
+    this.documentation.patchValue({ remove: true, id: file.documentationId });
     const index = this.files.indexOf(file);
     this.files.splice(index, 1);
     await this.fileService.deleteFile(this.competencyId, doc);

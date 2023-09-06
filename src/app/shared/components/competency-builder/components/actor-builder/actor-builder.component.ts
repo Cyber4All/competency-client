@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
-import { Actor } from '../../../../../../entity/actor';
-import { BuilderValidation } from '../../../../../../entity/builder-validation';
-import { DropdownItem, DropdownType } from '../../../../../../entity/dropdown';
+import { Actor } from '../../../../entity/actor';
+import { BuilderValidation } from '../../../../entity/builder-validation';
+import { DropdownItem, DropdownType } from '../../../../entity/dropdown';
 import { BuilderService } from '../../../../../core/builder.service';
 import { DropdownService } from '../../../../../core/dropdown.service';
 
@@ -15,7 +15,7 @@ import { DropdownService } from '../../../../../core/dropdown.service';
 export class ActorBuilderComponent implements OnInit {
 
   @Input() actor!: Actor;
-  @Output() actorChange = new EventEmitter<{update: string, value: Actor}>();
+  @Output() actorChange = new EventEmitter<{ update: string, value: Actor }>();
   actorErrors: BuilderValidation[] = [];
   type = new FormControl('');
   details = new FormControl('');
@@ -26,7 +26,7 @@ export class ActorBuilderComponent implements OnInit {
   constructor(
     private builderService: BuilderService,
     private dropdownService: DropdownService
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
     // Subscribe to actor errors
@@ -55,7 +55,7 @@ export class ActorBuilderComponent implements OnInit {
         this.actorErrors = this.actorErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'type';
         });
-        this.type.setErrors({error: false});
+        this.type.setErrors({ error: false });
         // Emit actor type change to parent builder component
         this.actorChange.emit({
           update: 'actor',
@@ -74,7 +74,7 @@ export class ActorBuilderComponent implements OnInit {
         this.actorErrors = this.actorErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'details';
         });
-        this.details.setErrors({error: false});
+        this.details.setErrors({ error: false });
         // Emit actor details change to parent builder component
         this.actorChange.emit({
           update: 'actor',
@@ -86,7 +86,7 @@ export class ActorBuilderComponent implements OnInit {
         });
       });
     // If value passed, set type form control
-    if(this.actor.type) {
+    if (this.actor.type) {
       // Filter actor list to find selected actor
       this.actorSelected = this.actorList.filter((actor: DropdownItem) => {
         if (actor._id === this.actor.type) {
@@ -100,15 +100,15 @@ export class ActorBuilderComponent implements OnInit {
       this.type.patchValue(true);
     }
     // If value passed, set details form control
-    if(this.actor.details) {
+    if (this.actor.details) {
       this.details.patchValue(this.actor.details);
     }
   }
 
-  displayActors(){
-    if (this.actorDisplay === true){
+  displayActors() {
+    if (this.actorDisplay === true) {
       this.actorDisplay = false;
-    } else{
+    } else {
       this.actorDisplay = true;
     }
   }
@@ -118,11 +118,11 @@ export class ActorBuilderComponent implements OnInit {
     this.actorErrors.map((error: BuilderValidation) => {
       // If error is type, set type form control error
       if (error.attribute === 'type') {
-        this.type.setErrors({error: true});
+        this.type.setErrors({ error: true });
       }
       // If error is details, set details form control error
       if (error.attribute === 'details') {
-        this.details.setErrors({error: true});
+        this.details.setErrors({ error: true });
       }
     });
   }

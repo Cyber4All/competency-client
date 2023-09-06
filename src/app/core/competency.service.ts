@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { lastValueFrom } from 'rxjs';
-import { Competency } from '../../entity/competency';
-import { Search } from '../../entity/search';
+import { Competency } from '../shared/entity/competency';
+import { Search } from '../shared/entity/search';
 import { GraphQueries } from '../shared/functions/graph-queries';
 import { SnackbarService } from './snackbar.service';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
@@ -17,7 +17,7 @@ export class CompetencyService {
     private http: HttpClient,
     private auth: AuthService,
     private snackBarService: SnackbarService
-  ) {}
+  ) { }
 
   /**
    * Method to retrieve all competencies based on query params
@@ -26,17 +26,17 @@ export class CompetencyService {
    * @returns Promise with list of competencies
    */
   getAllCompetencies(
-      q?: {
-        text?: string,
-        page?: number,
-        limit?: number,
-        author?: string,
-        status?: string[],
-        workrole?: string[],
-        task?: string[],
-        version?: number
-      }
-    ): Promise<Search> {
+    q?: {
+      text?: string,
+      page?: number,
+      limit?: number,
+      author?: string,
+      status?: string[],
+      workrole?: string[],
+      task?: string[],
+      version?: number
+    }
+  ): Promise<Search> {
     this.auth.initHeaders();
     // Format to uppercase for GraphQL
     if (q && q.status) {
@@ -78,7 +78,7 @@ export class CompetencyService {
       .then((res: any) => {
         return res.data.competency;
       })
-      .catch((err)=> {
+      .catch((err) => {
         err = GraphErrorHandler.handleError(err);
         if (err) {
           this.snackBarService.sendNotificationByError(err);
@@ -99,7 +99,7 @@ export class CompetencyService {
         COMPETENCY_ROUTES.DELETE_COMPETENCY(competencyId),
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
-      .catch((e)=> {
+      .catch((e) => {
         this.snackBarService.sendNotificationByError(e);
       });
   }
@@ -122,11 +122,11 @@ export class CompetencyService {
       .then((res: any) => {
         return res.data.competency;
       })
-      .catch((err)=> {
+      .catch((err) => {
         err = GraphErrorHandler.handleError(err);
         if (err) {
           this.snackBarService.sendNotificationByError(err);
         }
       });
-    }
+  }
 }
