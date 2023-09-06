@@ -1,18 +1,18 @@
 import { Component, Input, OnInit, OnDestroy, HostListener, EventEmitter, Output } from '@angular/core';
-import { Notes } from '../../../../entity/notes';
-import { Actor } from '../../../../entity/actor';
-import { Behavior } from '../../../../entity/behavior';
-import { BuilderError, BuilderValidation } from '../../../../entity/builder-validation';
-import { Competency } from '../../../../entity/competency';
-import { Condition } from '../../../../entity/condition';
-import { Degree } from '../../../../entity/degree';
-import { Employability } from '../../../../entity/employability';
+import { Notes } from '../../../shared/entity/notes';
+import { Actor } from '../../../shared/entity/actor';
+import { Behavior } from '../../../shared/entity/behavior';
+import { BuilderError, BuilderValidation } from '../../../shared/entity/builder-validation';
+import { Competency } from '../../../shared/entity/competency';
+import { Condition } from '../../../shared/entity/condition';
+import { Degree } from '../../../shared/entity/degree';
+import { Employability } from '../../../shared/entity/employability';
 import { BuilderService } from '../../../core/builder.service';
-import { CompetencyBuilder, IndexButton } from '../../../../entity/builder.class';
+import { CompetencyBuilder, IndexButton } from '../../../shared/entity/builder.class';
 import { SnackbarService } from '../../../core/snackbar.service';
 import { SNACKBAR_COLOR } from '../snackbar/snackbar.component';
 import { DropdownService } from '../../../core/dropdown.service';
-import { DropdownType } from '../../../../entity/dropdown';
+import { DropdownType } from '../../../shared/entity/dropdown';
 import { sleep } from '../../functions/loading';
 import { LifecyclesService } from '../../../core/lifecycles.service';
 @Component({
@@ -36,7 +36,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     private snackBarService: SnackbarService,
     private dropdownService: DropdownService,
     private lifecycleService: LifecyclesService,
-    ) {}
+  ) { }
 
   // Method to prevent user from leaving the page without saving competency data
   @HostListener('window:beforeunload', ['$event']) public OnBeforeUnload(event: any) {
@@ -67,7 +67,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
    * Method to toggle text of the template button
    */
   setTemplateButton() {
-    switch(this.currIndex) {
+    switch (this.currIndex) {
       case 0:
         this.templateText = IndexButton.BEHAVIOR;
         break;
@@ -116,7 +116,7 @@ export class CompetencyBuilderComponent implements OnInit, OnDestroy {
     }
   ): Promise<void> {
     try {
-      switch(event.update) {
+      switch (event.update) {
         case 'actor':
           this.competency = this.competency.setActor(event.value as Actor);
           const actorValid: BuilderValidation[] = this.competency.validateActor();

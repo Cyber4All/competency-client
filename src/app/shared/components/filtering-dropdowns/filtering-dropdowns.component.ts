@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
-import { DropdownType } from '../../../../entity/dropdown';
-import { Lifecycles } from '../../../../entity/lifecycles';
-import { Workrole } from '../../../../entity/nice.workrole';
-import { Elements } from '../../../../entity/nice.elements';
+import { DropdownType } from '../../entity/dropdown';
+import { Lifecycles } from '../../entity/lifecycles';
+import { Workrole } from '../../entity/nice.workrole';
+import { Elements } from '../../entity/nice.elements';
 import { FrameworkService } from '../../../core/framework.service';
-import { Source } from '../../../../entity/behavior';
-import { DCWF_Element } from '../../../../entity/dcwf.elements';
-import { DCWF_Workrole } from '../../../../entity/dcwf.workrole';
+import { Source } from '../../entity/behavior';
+import { DCWF_Element } from '../../entity/dcwf.elements';
+import { DCWF_Workrole } from '../../entity/dcwf.workrole';
 
 @Component({
   selector: 'cc-filtering-dropdowns',
@@ -54,7 +54,7 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
     // if title is Workrole or Task, then shared search bar should be used
     this.searchbar = this.title === DropdownType.WORKROLE || this.title === DropdownType.TASK;
     // Set items based on the type of the dropdown
-    switch(this.title) {
+    switch (this.title) {
       case DropdownType.STATUS:
         // Set items to the value of the Lifecycles enum
         Object.values(Lifecycles).forEach((value: string) => {
@@ -115,7 +115,7 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
    *
    * @param item a single item from the items array
    */
-  toggleFilterItem(item: {id: string, name: string}) {
+  toggleFilterItem(item: { id: string, name: string }) {
     if (!this.selectedItems.includes(item.id)) {
       // If the dropdown is the source dropdown, clear the selectedItems array; only one source can be selected at a time
       if (this.title === DropdownType.SOURCE) {

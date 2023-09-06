@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
-import { DCWF_Workrole } from '../../entity/dcwf.workrole';
+import { DCWF_Workrole } from '../shared/entity/dcwf.workrole';
 import { GraphQueries } from '../shared/functions/graph-queries';
-import { DCWF_Element } from '../../entity/dcwf.elements';
+import { DCWF_Element } from '../shared/entity/dcwf.elements';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { SnackbarService } from './snackbar.service';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
-import { Source } from '../../entity/behavior';
+import { Source } from '../shared/entity/behavior';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class DcwfWorkroleService {
     private http: HttpClient,
     private auth: AuthService,
     private snackBarService: SnackbarService,
-  ) {}
+  ) { }
 
   /**
    * Method to retrieve all DCWF workroles
@@ -41,7 +41,7 @@ export class DcwfWorkroleService {
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
-        {query},
+        { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .then((workrolesQuery: any) => {

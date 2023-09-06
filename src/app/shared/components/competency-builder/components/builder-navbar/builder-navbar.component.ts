@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { BuilderService } from '../../../../../core/builder.service';
-import { BuilderValidation } from '../../../../../../entity/builder-validation';
+import { BuilderValidation } from '../../../../entity/builder-validation';
 
 @Component({
   selector: 'cc-builder-navbar',

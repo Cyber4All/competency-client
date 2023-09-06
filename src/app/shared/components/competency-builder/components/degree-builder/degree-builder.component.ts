@@ -1,9 +1,9 @@
-import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
-import { BuilderValidation } from '../../../../../../entity/builder-validation';
-import { Degree } from '../../../../../../entity/Degree';
-import { DropdownItem, DropdownType } from '../../../../../../entity/dropdown';
+import { BuilderValidation } from '../../../../entity/builder-validation';
+import { Degree } from '../../../../entity/degree';
+import { DropdownItem, DropdownType } from '../../../../entity/dropdown';
 import { BuilderService } from '../../../../../core/builder.service';
 import { DropdownService } from '../../../../../core/dropdown.service';
 @Component({
@@ -14,7 +14,7 @@ import { DropdownService } from '../../../../../core/dropdown.service';
 export class DegreeBuilderComponent implements OnInit {
 
   @Input() degree!: Degree;
-  @Output() degreeChange = new EventEmitter<{update: string, value: Degree}>();
+  @Output() degreeChange = new EventEmitter<{ update: string, value: Degree }>();
   degreeErrors: BuilderValidation[] = [];
   currIndex!: number;
   complete = new FormControl('');
@@ -26,7 +26,7 @@ export class DegreeBuilderComponent implements OnInit {
   constructor(
     public builderService: BuilderService,
     private dropdownService: DropdownService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Subscribe to degree errors
@@ -58,7 +58,7 @@ export class DegreeBuilderComponent implements OnInit {
         this.degreeErrors = this.degreeErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'complete';
         });
-        this.complete.setErrors({error: false});
+        this.complete.setErrors({ error: false });
         // Emit degree complete change to parent builder component
         this.degreeChange.emit({
           update: 'degree',
@@ -78,7 +78,7 @@ export class DegreeBuilderComponent implements OnInit {
         this.degreeErrors = this.degreeErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'correct';
         });
-        this.correct.setErrors({error: false});
+        this.correct.setErrors({ error: false });
         // Emit degree correct change to parent builder component
         this.degreeChange.emit({
           update: 'degree',
@@ -98,7 +98,7 @@ export class DegreeBuilderComponent implements OnInit {
         this.degreeErrors = this.degreeErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'time';
         });
-        this.time.setErrors({error: false});
+        this.time.setErrors({ error: false });
         // Emit degree time change to parent builder component
         this.degreeChange.emit({
           update: 'degree',
@@ -111,7 +111,7 @@ export class DegreeBuilderComponent implements OnInit {
         });
       });
     // If value exists, set type form control
-    if(this.degree.complete) {
+    if (this.degree.complete) {
       this.complete.patchValue(this.degree.complete);
     }
     // If value exists, set details form control
@@ -127,10 +127,10 @@ export class DegreeBuilderComponent implements OnInit {
     }
   }
 
-  displayTime(){
-    if (this.timeDisplay === true){
+  displayTime() {
+    if (this.timeDisplay === true) {
       this.timeDisplay = false;
-    } else{
+    } else {
       this.timeDisplay = true;
     }
   }
@@ -140,15 +140,15 @@ export class DegreeBuilderComponent implements OnInit {
     this.degreeErrors.map((error: BuilderValidation) => {
       // If error is for complete, set complete form control error
       if (error.attribute === 'complete') {
-        this.complete.setErrors({error: true});
+        this.complete.setErrors({ error: true });
       }
       // If error is for correct, set correct form control error
       if (error.attribute === 'correct') {
-        this.correct.setErrors({error: true});
+        this.correct.setErrors({ error: true });
       }
       // If error is for time, set time form control error
       if (error.attribute === 'time') {
-        this.time.setErrors({error: true});
+        this.time.setErrors({ error: true });
       }
     });
   }
