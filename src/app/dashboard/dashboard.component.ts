@@ -1,13 +1,13 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CompetencyService } from '../core/competency.service';
-import { Competency } from '../../entity/competency';
-import { Lifecycles } from '../../entity/lifecycles';
-import { Search } from '../../entity/search';
+import { Competency } from '../shared/entity/competency';
+import { Lifecycles } from '../shared/entity/lifecycles';
+import { Search } from '../shared/entity/search';
 import { sleep } from '../shared/functions/loading';
 import { BuilderService } from '../core/builder.service';
-import { CompetencyBuilder } from '../../entity/builder.class';
+import { CompetencyBuilder } from '../shared/entity/builder.class';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { SnackbarService } from '../core/snackbar.service';
@@ -98,13 +98,13 @@ export class DashboardComponent implements OnInit {
     // Explicitly clear competencies array
     this.search.competencies = [];
     // Check if user is logged in
-    if(this.authService.user?._id !== undefined) {
+    if (this.authService.user?._id !== undefined) {
       // Retrieve author competencies
       this.search = await this.competencyService
         .getAllCompetencies({
           text: this.searchText,
           limit: q ? q.limit : this.search.limit,
-          page:  q ? q.page : this.search.page,
+          page: q ? q.page : this.search.page,
           author: this.authService.user?._id,
           status: (q && q.statuses.length > 0) ? q.statuses : [
             `${Lifecycles.DRAFT}`,
@@ -166,7 +166,7 @@ export class DashboardComponent implements OnInit {
    */
   async loadCompetencies() {
     this.loadedCompetencies = [];
-    if(this.search.competencies.length > 0) {
+    if (this.search.competencies.length > 0) {
       this.search.competencies.map(async (comp: Competency) => {
         await this.competencyService.getCompetencyById(comp._id)
           .then(async (comp: Competency) => {
@@ -242,7 +242,7 @@ export class DashboardComponent implements OnInit {
    *
    * @param filter object containing arrays of selected filters
    */
-  async filter(filter: { status: string[], workrole: string[], task: string[], audience: string[]}) {
+  async filter(filter: { status: string[], workrole: string[], task: string[], audience: string[] }) {
     this.loading = true;
     // Explicitly clear search object
     this.search = {
@@ -284,11 +284,11 @@ export class DashboardComponent implements OnInit {
     // Enforce loading state
     this.loading = true;
     // If competency preview is open, close it
-    if(this.openPreview) {
+    if (this.openPreview) {
       this.openPreview = false;
     }
     // If competency builder is open, close it
-    if(this.openBuilder) {
+    if (this.openBuilder) {
       this.openBuilder = false;
     }
     // Delete competency
@@ -315,7 +315,7 @@ export class DashboardComponent implements OnInit {
     // Enforce button disabled state
     this.disabled = true;
     // If !existingCompetency; we are creating a new competency object
-    if(!existingCompetency) {
+    if (!existingCompetency) {
       // Create competency shell
       const competencyShellId: any = await this.builderService.createCompetency();
       // Retrieve full competency object
@@ -341,7 +341,7 @@ export class DashboardComponent implements OnInit {
     // Enforce loading state
     this.loading = true;
     this.openBuilder = false;
-    if(
+    if (
       !this.builderCompetency.actor.type &&
       !this.builderCompetency.behavior.work_role &&
       this.builderCompetency.behavior.tasks.length === 0 &&

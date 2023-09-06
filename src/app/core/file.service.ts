@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { Documentation } from '../../entity/documentation';
+import { Documentation } from '../shared/entity/documentation';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { SnackbarService } from './snackbar.service';
@@ -149,20 +149,20 @@ export class FileService {
    */
   private async uploadLambdaService(competencyId: string, file: File): Promise<any> {
     return await lastValueFrom(
-        this.http.post(
-          COMPETENCY_ROUTES.UPLOAD_FILE_LAMBDA(competencyId),
-          {
-            filename: file?.name,
-            filesize: file?.size,
-            extension: file?.name.split('.').pop()
-          },
-          { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
-        )
-      ).then((res) => {
-        return res;
-      }).catch(e => {
-        this.snackBarService.sendNotificationByError(e);
-      });
+      this.http.post(
+        COMPETENCY_ROUTES.UPLOAD_FILE_LAMBDA(competencyId),
+        {
+          filename: file?.name,
+          filesize: file?.size,
+          extension: file?.name.split('.').pop()
+        },
+        { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
+      )
+    ).then((res) => {
+      return res;
+    }).catch(e => {
+      this.snackBarService.sendNotificationByError(e);
+    });
   }
 
   /**

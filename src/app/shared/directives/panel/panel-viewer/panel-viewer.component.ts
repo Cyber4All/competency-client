@@ -10,12 +10,12 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PanelOptions } from '../panel.directive';
 import { fade } from '../panel.animations';
-import { Lifecycles } from 'entity/lifecycles';
-import { Elements } from 'entity/nice.elements';
-import { Workrole } from 'entity/nice.workrole';
+import { Lifecycles } from '../../../entity/lifecycles';
+import { Elements } from '../../../entity/nice.elements';
+import { Workrole } from '../../../entity/nice.workrole';
 import { FrameworkService } from '../../../../core/framework.service';
-import { DCWF_Element } from '../../../../../entity/dcwf.elements';
-import { DCWF_Workrole } from '../../../../../entity/dcwf.workrole';
+import { DCWF_Element } from '../../../entity/dcwf.elements';
+import { DCWF_Workrole } from '../../../entity/dcwf.workrole';
 @Component({
   selector: 'cc-panel-viewer',
   template: `
@@ -101,7 +101,7 @@ export class PanelViewerComponent implements OnInit, OnDestroy {
 
   constructor(
     private frameworkService: FrameworkService,
-  ) {}
+  ) { }
 
   /**
    * Calculate the speed necessary to open the side panel
@@ -168,7 +168,7 @@ export class PanelViewerComponent implements OnInit, OnDestroy {
    * @returns A FontAwesome icon
    */
   competencyStatusIcon(): string {
-    switch(this.options.competency.status) {
+    switch (this.options.competency.status) {
       case Lifecycles.DRAFT:
         return 'far fa-file-edit fa-2x';
       case Lifecycles.SUBMITTED:

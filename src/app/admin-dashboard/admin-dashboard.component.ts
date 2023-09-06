@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'app/core/auth.service';
-import { BuilderService } from 'app/core/builder.service';
-import { CompetencyService } from 'app/core/competency.service';
-import { SnackbarService } from 'app/core/snackbar.service';
-import { SNACKBAR_COLOR } from 'app/shared/components/snackbar/snackbar.component';
-import { Competency } from 'entity/competency';
-import { Lifecycles } from 'entity/lifecycles';
-import { Search } from 'entity/search';
-import { CompetencyBuilder } from 'entity/builder.class';
-import { DropdownType } from 'entity/dropdown';
+import { AuthService } from '../core/auth.service';
+import { BuilderService } from '../core/builder.service';
+import { CompetencyService } from '../core/competency.service';
+import { SnackbarService } from '../core/snackbar.service';
+import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
+import { Competency } from '../shared/entity/competency';
+import { Lifecycles } from '../shared/entity/lifecycles';
+import { Search } from '../shared/entity/search';
+import { CompetencyBuilder } from '../shared/entity/builder.class';
+import { DropdownType } from '../shared/entity/dropdown';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -86,7 +86,7 @@ export class AdminDashboardComponent implements OnInit {
     this.search = await this.competencyService
       .getAllCompetencies({
         limit: q ? q.limit : this.search.limit,
-        page:  q ? q.page : this.search.page,
+        page: q ? q.page : this.search.page,
         status: [
           `${Lifecycles.SUBMITTED}`,
           `${Lifecycles.PUBLISHED}`,
@@ -100,7 +100,7 @@ export class AdminDashboardComponent implements OnInit {
    */
   async loadCompetencies() {
     this.loadedCompetencies = [];
-    if(this.search.competencies.length > 0) {
+    if (this.search.competencies.length > 0) {
       this.search.competencies.map(async (comp: Competency) => {
         await this.competencyService.getCompetencyById(comp._id)
           .then(async (comp: Competency) => {
@@ -255,7 +255,7 @@ export class AdminDashboardComponent implements OnInit {
    */
   async openCompetencyBuilder(existingCompetency?: Competency) {
     // If !existingCompetency; we are creating a new competency object
-    if(!existingCompetency) {
+    if (!existingCompetency) {
       // Create competency shell
       const competencyShellId: any = await this.builderService.createCompetency();
       // Retrieve full competency object
@@ -304,9 +304,9 @@ export class AdminDashboardComponent implements OnInit {
   /**
    * When an admin updates the status of a competency in the preview, reset the dashboard
    */
-    async handleStatusUpdated() {
-      this.search.competencies = [];
-      this.loadedCompetencies = [];
-      await this.initDashboard();
-    }
+  async handleStatusUpdated() {
+    this.search.competencies = [];
+    this.loadedCompetencies = [];
+    await this.initDashboard();
+  }
 }

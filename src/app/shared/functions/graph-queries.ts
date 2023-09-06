@@ -1,7 +1,7 @@
-import { Source } from '../../../entity/behavior';
+import { Source } from '../entity/behavior';
 
 export class GraphQueries {
-    constructor() {}
+    constructor() { }
 
     /**
      * Query to get a user
@@ -105,8 +105,8 @@ export class GraphQueries {
                 page:${query?.page ?? 0},
                 limit:${query?.limit ?? 0}, ${query?.author ? `\nauthor: "${query?.author}",` : ''}
                 status:[${query?.status ?? 'DRAFT'}],
-                ${query?.workrole && query.workrole.length > 0 ? `workrole:["${query.workrole.join('","')+'"'}],`: ''}
-                ${query?.task && query.task.length > 0 ? `task:["${query.task.join('","')+'"'}],`: ''}
+                ${query?.workrole && query.workrole.length > 0 ? `workrole:["${query.workrole.join('","') + '"'}],` : ''}
+                ${query?.task && query.task.length > 0 ? `task:["${query.task.join('","') + '"'}],` : ''}
                 version:${query?.version ?? 0}
                 ) { 
                     competencies {
@@ -271,7 +271,7 @@ export class GraphQueries {
      * @returns Formatted string for GraphQL query to get a complete workrole from a framework
      */
     public static getCompleteWorkRole(id: string, source: Source) {
-        switch(source) {
+        switch (source) {
             case Source.NICE:
                 return `
                     query {
@@ -314,7 +314,7 @@ export class GraphQueries {
      * @returns Formatted string for GraphQL query to get a complete task from a framework
      */
     public static getCompleteTask(id: string, source: Source) {
-        switch(source) {
+        switch (source) {
             case Source.NICE:
                 return `
                     query {
@@ -348,7 +348,7 @@ export class GraphQueries {
      * @returns Formatted string for GraphQL query to search workroles from a framework
      */
     public static queryWorkroles(search: string, source: Source) {
-        switch(source) {
+        switch (source) {
             case Source.NICE:
                 return `
                     query {
@@ -397,7 +397,7 @@ export class GraphQueries {
      * @returns Formatted string for GraphQL query to search tasks from a framework
      */
     public static queryTasks(search: string, source: Source) {
-        switch(source) {
+        switch (source) {
             case Source.NICE:
                 return `
                     query {

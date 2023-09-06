@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
-import { DropdownType } from '../../../../entity/dropdown';
-import { Source } from '../../../../entity/behavior';
+import { DropdownType } from '../../entity/dropdown';
+import { Source } from '../../entity/behavior';
 
 @Component({
   selector: 'cc-secondary-nav',
@@ -31,7 +31,7 @@ export class SecondaryNavComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   filter() {
     // Emit the selected filters

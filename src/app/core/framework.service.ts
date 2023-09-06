@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Source } from '../../entity/behavior';
-import { Competency } from '../../entity/competency';
+import { Source } from '../shared/entity/behavior';
 import { NiceWorkroleService } from './nice.workrole.service';
 import { DcwfWorkroleService } from './dcwf.workrole.service';
 import { SnackbarService } from './snackbar.service';
 import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
-import { Workrole } from '../../entity/nice.workrole';
-import { DCWF_Workrole } from '../../entity/dcwf.workrole';
-import { Elements } from '../../entity/nice.elements';
-import { DCWF_Element } from '../../entity/dcwf.elements';
+import { Workrole } from '../shared/entity/nice.workrole';
+import { DCWF_Workrole } from '../shared/entity/dcwf.workrole';
+import { Elements } from '../shared/entity/nice.elements';
+import { DCWF_Element } from '../shared/entity/dcwf.elements';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -29,10 +28,10 @@ export class FrameworkService {
     private niceService: NiceWorkroleService,
     private dcwfService: DcwfWorkroleService,
     private snackbarService: SnackbarService
-  ) {}
+  ) { }
 
   async getCompleteTask(task: string) {
-    switch(this.currentFramework) {
+    switch (this.currentFramework) {
       case Source.NICE:
         return await this.niceService.getCompleteTask(task);
       case Source.DCWF:
@@ -42,7 +41,7 @@ export class FrameworkService {
     }
   }
   async getCompleteWorkrole(work_role: string) {
-    switch(this.currentFramework) {
+    switch (this.currentFramework) {
       case Source.NICE:
         return await this.niceService.getCompleteWorkrole(work_role);
       case Source.DCWF:
@@ -53,7 +52,7 @@ export class FrameworkService {
   }
   async getAllTasks() {
     this.tasks.next([]);
-    switch(this.currentFramework) {
+    switch (this.currentFramework) {
       case Source.NICE:
         await this.niceService.getAllTasks();
         this.niceService.tasks.subscribe((tasks: Elements[]) => {
@@ -72,7 +71,7 @@ export class FrameworkService {
   }
   async getAllWorkroles() {
     this.workroles.next([]);
-    switch(this.currentFramework) {
+    switch (this.currentFramework) {
       case Source.NICE:
         await this.niceService.getAllWorkroles();
         this.niceService.workroles.subscribe((workroles: Workrole[]) => {
@@ -90,7 +89,7 @@ export class FrameworkService {
     }
   }
   async searchTasks(query: string) {
-    switch(this.currentFramework) {
+    switch (this.currentFramework) {
       case Source.NICE:
         return await this.niceService.searchTasks(query);
       case Source.DCWF:
@@ -101,7 +100,7 @@ export class FrameworkService {
   }
 
   async searchWorkroles(query: string) {
-    switch(this.currentFramework) {
+    switch (this.currentFramework) {
       case Source.NICE:
         return await this.niceService.searchWorkroles(query);
       case Source.DCWF:

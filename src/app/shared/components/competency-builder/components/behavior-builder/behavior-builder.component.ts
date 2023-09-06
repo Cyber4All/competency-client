@@ -1,14 +1,14 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, Observable, Subject } from 'rxjs';
-import { Behavior, Source } from '../../../../../../entity/behavior';
-import { Workrole } from '../../../../../../entity/nice.workrole';
-import { Elements } from '../../../../../../entity/nice.elements';
+import { Behavior, Source } from '../../../../entity/behavior';
+import { Workrole } from '../../../../entity/nice.workrole';
+import { Elements } from '../../../../entity/nice.elements';
 import { BuilderService } from '../../../../../core/builder.service';
-import { BuilderValidation } from '../../../../../../entity/builder-validation';
+import { BuilderValidation } from '../../../../entity/builder-validation';
 import { FrameworkService } from '../../../../../core/framework.service';
-import { DCWF_Workrole } from '../../../../../../entity/dcwf.workrole';
-import { DCWF_Element } from '../../../../../../entity/dcwf.elements';
+import { DCWF_Workrole } from '../../../../entity/dcwf.workrole';
+import { DCWF_Element } from '../../../../entity/dcwf.elements';
 @Component({
   selector: 'cc-behavior-builder',
   templateUrl: './behavior-builder.component.html',
@@ -17,7 +17,7 @@ import { DCWF_Element } from '../../../../../../entity/dcwf.elements';
 export class BehaviorBuilderComponent implements OnInit {
 
   @Input() behavior!: Behavior;
-  @Output() behaviorChange = new EventEmitter<{update: string, value: Behavior}>();
+  @Output() behaviorChange = new EventEmitter<{ update: string, value: Behavior }>();
   // Builder - Behavior validation errors
   behaviorErrors: BuilderValidation[] = [];
   // Virtual Scroller and dropdowns
@@ -43,7 +43,7 @@ export class BehaviorBuilderComponent implements OnInit {
   frameworkDisplay = false;
   // Selected workrole and task from virtual scroller
   selectedWorkrole: Workrole | DCWF_Workrole = {} as Workrole | DCWF_Workrole;
-  selectedTask: (Elements | DCWF_Element) [] = [];
+  selectedTask: (Elements | DCWF_Element)[] = [];
   taskDropdownPlaceholder = '';
   // Filtered workroles and tasks
   filteredWorkroles: Observable<string[]> = new Observable();
@@ -51,7 +51,7 @@ export class BehaviorBuilderComponent implements OnInit {
   constructor(
     private builderService: BuilderService,
     private frameworkService: FrameworkService
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
 
@@ -110,7 +110,7 @@ export class BehaviorBuilderComponent implements OnInit {
         this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'source';
         });
-        this.source.setErrors({error: false});
+        this.source.setErrors({ error: false });
         // Emit behavior source change to parent builder component
         this.behaviorChange.emit({
           update: 'behavior',
@@ -131,7 +131,7 @@ export class BehaviorBuilderComponent implements OnInit {
         this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'work_role';
         });
-        this.workrole.setErrors({error: false});
+        this.workrole.setErrors({ error: false });
         // Emit behavior workrole change to parent builder component
         this.behaviorChange.emit({
           update: 'behavior',
@@ -156,7 +156,7 @@ export class BehaviorBuilderComponent implements OnInit {
         this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'tasks';
         });
-        this.task.setErrors({error: false});
+        this.task.setErrors({ error: false });
         // Emit behavior task change to parent builder component
         this.behaviorChange.emit({
           update: 'behavior',
@@ -177,7 +177,7 @@ export class BehaviorBuilderComponent implements OnInit {
         this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'details';
         });
-        this.details.setErrors({error: false});
+        this.details.setErrors({ error: false });
         // Emit behavior details change to parent builder component
         this.behaviorChange.emit({
           update: 'behavior',
@@ -206,7 +206,7 @@ export class BehaviorBuilderComponent implements OnInit {
             // Workrole name is stored on a competency; retrieve workrole ObjectId
             this.workroles = [workrole];
             this.selectedWorkrole = workrole;
-          } else if (this.behavior.work_role === workrole._id){
+          } else if (this.behavior.work_role === workrole._id) {
             // Workole ObjectId is stored on a competency; set workrole object
             this.workroles = [workrole];
             this.selectedWorkrole = workrole;
@@ -216,7 +216,7 @@ export class BehaviorBuilderComponent implements OnInit {
           this.behavior.work_role = this.selectedWorkrole._id!;
         }
       }
-      if(this.behavior.tasks.length > 0) {
+      if (this.behavior.tasks.length > 0) {
         // Check if task is ObjectId or task name
         this.behavior.tasks.map((task: string) => {
           this.tasks.filter((taskElement: Elements | DCWF_Element) => {
@@ -224,7 +224,7 @@ export class BehaviorBuilderComponent implements OnInit {
               // Task name is stored on a competency; retrieve task ObjectId
               this.tasks.push(taskElement);
               this.selectedTask.push(taskElement);
-            } else if (task === taskElement._id){
+            } else if (task === taskElement._id) {
               // Task ObjectId is stored on a competency; set task object
               this.tasks.push(taskElement);
               this.selectedTask.push(taskElement);
@@ -250,7 +250,7 @@ export class BehaviorBuilderComponent implements OnInit {
      */
     // Subscribe to workrole search input
     this.workroleInput$.pipe(debounceTime(650))
-      .subscribe( async (value: string) => {
+      .subscribe(async (value: string) => {
         if (value && value !== '') {
           await this.frameworkService.searchWorkroles(value.trim());
         } else {
@@ -265,7 +265,7 @@ export class BehaviorBuilderComponent implements OnInit {
               // Check workrole array on task
               task.work_roles?.map((workrole: Workrole | DCWF_Workrole) => {
                 // If the workrole does not already exist in this.workroles then add it
-                if (this.workroles.findIndex(( w: Workrole | DCWF_Workrole) => w._id === workrole._id) === -1) {
+                if (this.workroles.findIndex((w: Workrole | DCWF_Workrole) => w._id === workrole._id) === -1) {
                   this.workroles.push(workrole);
                 }
               });
@@ -280,7 +280,7 @@ export class BehaviorBuilderComponent implements OnInit {
       });
     // Subscribe to task search input
     this.taskInput$.pipe(debounceTime(650))
-      .subscribe( async (value: string) => {
+      .subscribe(async (value: string) => {
         if (value && value !== '') {
           await this.frameworkService.searchTasks(value.trim());
         } else {
@@ -292,7 +292,7 @@ export class BehaviorBuilderComponent implements OnInit {
             // Check each selected task
             this.selectedWorkrole.tasks?.map((task: Elements | DCWF_Element) => {
               // If the task does not already exist in this.tasks then add it
-              if (this.tasks.findIndex(( t: Elements | DCWF_Element) => t._id === task._id) === -1) {
+              if (this.tasks.findIndex((t: Elements | DCWF_Element) => t._id === task._id) === -1) {
                 this.tasks.push(task);
               }
             });
@@ -347,13 +347,13 @@ export class BehaviorBuilderComponent implements OnInit {
   closeDropdown(clearSearch?: boolean) {
     if (this.showWorkrolesDropdown) {
       this.showWorkrolesDropdown = false;
-      if(clearSearch) {
+      if (clearSearch) {
         this.taskDropdownPlaceholder = ' ';
       }
     }
     if (this.showTasksDropdown) {
       this.showTasksDropdown = false;
-      if(clearSearch) {
+      if (clearSearch) {
         this.taskDropdownPlaceholder = ' ';
       }
     }
