@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { debounceTime, Subject } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
-import { Organization } from '../../../entity/organization';
+import { Organization } from '../../shared/entity/organization';
 import { AuthValidationService } from '../../core/auth-validation.service';
 import { OrganizationService } from '../../core/organization.service';
 import { SnackbarService } from '../../core/snackbar.service';
@@ -49,10 +49,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.organizationInput$.pipe(debounceTime(650))
-    .subscribe( async (value: string) => {
-      this.searchResults = (await this.orgService.searchOrgs(value.trim()));
-      this.loading = false;
-    });
+      .subscribe(async (value: string) => {
+        this.searchResults = (await this.orgService.searchOrgs(value.trim()));
+        this.loading = false;
+      });
     this.organizationInput$
       .subscribe((value: string) => {
         if (value && value !== '') {
@@ -72,18 +72,18 @@ export class RegisterComponent implements OnInit {
       password: this.regFormGroup.get('password')!.value.trim(),
       organization: this.selectedOrganization.trim()
     };
-    if(this.regFormGroup.valid){
+    if (this.regFormGroup.valid) {
       this.auth.register(reqBody)
-      .then(() => {
-        if (this.auth.user) {
-          this.router.navigate(['/dashboard']);
-        }
-      })
-      .catch((error: any) => {
-        this.snackBarService.sendNotificationByError(error);
-        this.errMessage = error.message;
-        this.authValidation.showError();
-      });
+        .then(() => {
+          if (this.auth.user) {
+            this.router.navigate(['/dashboard']);
+          }
+        })
+        .catch((error: any) => {
+          this.snackBarService.sendNotificationByError(error);
+          this.errMessage = error.message;
+          this.authValidation.showError();
+        });
     } else {
       this.snackBarService.notification$.next({
         title: 'Incomplete Form',
@@ -103,7 +103,7 @@ export class RegisterComponent implements OnInit {
   }
 
   selectOrg(org?: Organization) {
-    if(org) {
+    if (org) {
       this.selectedOrganization = org._id;
       this.regFormGroup.get('organization')!.setValue(org.name);
     } else {

@@ -20,6 +20,9 @@ export const sections = {
                             `button in the top-right corner of your dashboard. This opens the Competency Builder. The builder has ` +
                             `unique data entry fields that conform to the ABCDE model outlined in the Competency eHandbook. You navigate `+
                             `the builder based on which attribute of a competency you wish to enter data for.</p>` +
+                            `<p>` +
+                            `<a href="https://competency-constructor.s3.amazonaws.com/CompetencyConstructorDataModelTemplate.pdf" ` +
+                            `target="_blank">Competency Template</a><p>` +
                             `<img 
                                 src="../../../assets/competency-builder.png"
                                 style="width: 100%; max-width: 600px;"
@@ -45,10 +48,11 @@ export const sections = {
                     },
                     {
                         question: 'Building Behavior',
-                        answer: `<p>The competency builder Behavior form has entry fields <b>Workrole</b>, <b>Task</b>, ` +
+                        answer: `<p>The competency builder Behavior form has entry fields <b>Source</b>, <b>Workrole</b>, <b>Task</b>, ` +
                             `and <b>Task Description</b>.<br>` +
                             `
                                 <ul>
+                                    <li><b>Source</b>: the cyber-workforce framework of the workrole and task</li>
                                     <li><b>Workrole</b>: a cyber-workforce industry position</li>
                                     <li><b>Task</b>: a cyber-workforce industry task</li>
                                     <li><b>Task Description</b>: details about what exactly the actor should/will be doing</li>
@@ -58,13 +62,12 @@ export const sections = {
                                 src="../../../assets/behaviorbuilder.png"
                                 style="width: 100%; max-width: 600px;"
                             ></img><br><p>` +
-                            `Search and select a <b>Workrole</b> from the NICE Framework* for your competency. Search and select ` +
-                            `<b>Task</b>'s from the NICE Framework* for your competency. Multiple tasks can be selected. ` +
+                            `First, select a workforce framework <b>Source</b> from the list provided. ` +
+                            `Search and select a <b>Workrole</b> for your competency. Search and select ` +
+                            `<b>Task</b>'s for your competency. Multiple tasks can be selected. ` +
                             `<b>Task Description</b> is the unique task(s) an actor will be attempting to earn this competency ` +
-                            `(The specific task(s) relating to a classroom lesson, a competition, etc.).</p>` +
-                            `<p>*The work roles and task lists will be expanded upon as more frameworks like ` +
-                            `<a href="https://public.cyber.mil/wid/dcwf/" target="_blank">DCWF</a> are adopted for the builder.</p><br>` +
-                            `<p><b>A Workrole, at least one Task, and a Task Description are required to submit a competency for ` +
+                            `(The specific task(s) relating to a classroom lesson, a competition, etc.).</p><br>` +
+                            `<p><b>Source, a Workrole, at least one Task, and a Task Description are required to submit a competency for ` +
                             `review!</b></p>`
                     },
                     {
@@ -126,8 +129,8 @@ export const sections = {
                         answer: `<p>Relates to the professional competencies an individual must have in order to be successful in the ` +
                             `workplace. Examples include teamwork, communication, and problem-solving. For a full list of examples ` +
                             `please visit 
-                            <a href="https://norwich0-my.sharepoint.com/:w:/g/personal/zfowler_norwich_edu/ERZQnxZyzoZGt3QBNCmUrNIBoV`+
-                            `suGQZDuLh8--S4uNUP_Q?rtime=mgFvzWJK20g" target="_blank">Montreat 360 Competencies and Skills</a>.</p>` +
+                            <a href="https://competency-constructor.s3.amazonaws.com/Defining+Montreat+360+Competencies+and+Skills.pdf" ` +
+                            `target="_blank">Montreat 360 Competencies and Skills</a>.</p>` +
                             `<p><b>Employability is required to submit a competency for review!</b></p>`
                     },
                     {

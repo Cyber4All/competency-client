@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { retry } from 'rxjs/operators';
 import { USER_ROUTES } from '../../environments/routes';
-import { AuthService } from './auth.service';
-
 @Injectable({
   providedIn: 'root',
 })

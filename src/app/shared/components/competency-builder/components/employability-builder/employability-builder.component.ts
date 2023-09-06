@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
-import { BuilderValidation } from '../../../../../../entity/builder-validation';
-import { Employability } from '../../../../../../entity/Employability';
+import { BuilderValidation } from '../../../../entity/builder-validation';
+import { Employability } from '../../../../entity/employability';
 import { BuilderService } from '../../../../../core/builder.service';
 @Component({
   selector: 'cc-employability-builder',
@@ -12,7 +12,7 @@ import { BuilderService } from '../../../../../core/builder.service';
 export class EmployabilityBuilderComponent implements OnInit {
 
   @Input() employability!: Employability;
-  @Output() employabilityChange = new EventEmitter<{update: string, value: Employability}>();
+  @Output() employabilityChange = new EventEmitter<{ update: string, value: Employability }>();
   employabilityErrors: BuilderValidation[] = [];
   details = new FormControl('');
 
@@ -43,7 +43,7 @@ export class EmployabilityBuilderComponent implements OnInit {
         this.employabilityErrors = this.employabilityErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'details';
         });
-        this.details.setErrors({error: false});
+        this.details.setErrors({ error: false });
         // Emit employability details change to parent builder component
         this.employabilityChange.emit({
           update: 'employability',
@@ -64,7 +64,7 @@ export class EmployabilityBuilderComponent implements OnInit {
     this.employabilityErrors.map((error: BuilderValidation) => {
       // If error is for details, set details form control error
       if (error.attribute === 'details') {
-        this.details.setErrors({error: true});
+        this.details.setErrors({ error: true });
       }
     });
   }

@@ -1,17 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Competency } from '../../../../entity/Competency';
-import { DropdownItem } from '../../../../entity/dropdown';
-import { Workrole } from '../../../../entity/workrole';
+import { Competency } from '../../entity/competency';
+import { DropdownItem } from '../../entity/dropdown';
+import { Workrole } from '../../entity/nice.workrole';
 import { DropdownService } from '../../../core/dropdown.service';
-import { WorkroleService } from '../../../core/workrole.service';
 import { sleep } from '../../functions/loading';
-import { Elements } from '../../../../entity/elements';
+import { Elements } from '../../entity/nice.elements';
 import { AuthService } from '../../../core/auth.service';
 import { BuilderService } from '../../../core/builder.service';
 import { LifecyclesService } from '../../../core/lifecycles.service';
-import { Lifecycles } from '../../../../entity/Lifecycles';
-import { User } from '../../../../entity/user';
-import { CompetencyBuilder } from '../../../../entity/builder.class';
+import { Lifecycles } from '../../entity/lifecycles';
+import { FrameworkService } from '../../../core/framework.service';
+import { DCWF_Element } from '../../entity/dcwf.elements';
+import { DCWF_Workrole } from '../../entity/dcwf.workrole';
+import { Source } from '../../entity/behavior';
 
 @Component({
   selector: 'cc-preview-competency',
@@ -27,13 +28,14 @@ export class PreviewCompetencyComponent implements OnInit {
   @Input() builderMode = false;
   // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() close = new EventEmitter();
+  source!: Source;
   loading = false;
   actor!: string;
-  workrole!: Workrole;
-  tasks: Elements[] = [];
+  workrole: Workrole | DCWF_Workrole = {} as Workrole | DCWF_Workrole;
+  tasks: (Elements | DCWF_Element)[] = [];
   competencyAuthor!: any;
   constructor(
-    private workRoleService: WorkroleService,
+    private frameworkService: FrameworkService,
     private dropdownService: DropdownService,
     private authService: AuthService,
     public builderService: BuilderService,
@@ -44,31 +46,33 @@ export class PreviewCompetencyComponent implements OnInit {
     this.loading = true;
     this.dropdownService.getDropdownItems('actor');
     this.competencyAuthor = await this.authService.getUser(this.competency.authorId);
-    // Check actor type; if id retreive dropdown value
+    // Check actor type; if id retrieve dropdown value
     this.dropdownService.actorList.subscribe((actors: DropdownItem[]) => {
       actors.filter((actor) => {
         if (actor._id === this.competency.actor.type) {
           this.actor = actor.value;
         }
       })[0].value;
-      if (!this.actor)  {
+      if (!this.actor) {
         this.actor = this.competency.actor.type;
       }
     });
+    // Set frameworkService source
+    if (this.competency.behavior.source) {
+      this.frameworkService.currentFramework = this.competency.behavior.source;
+      this.source = this.competency.behavior.source;
+    }
     // load workrole
     if (this.competency.behavior.work_role) {
-      this.workrole = await this.workRoleService.getCompleteWorkrole(this.competency.behavior.work_role)
-      .then((workroleQuery: any) => {
-        return workroleQuery.data.workrole.work_role;
-      });
+      this.workrole = await this.frameworkService.getCompleteWorkrole(this.competency.behavior.work_role);
     }
     // load tasks
     if (this.competency.behavior.tasks.length > 0) {
-      const tasks = this.competency.behavior.tasks.map(async (task) => await this.workRoleService.getCompleteTask(task)
-      .then((taskQuery: any) => {
-        return taskQuery.data.task;
-      }));
-      this.tasks = await Promise.all(tasks);
+      const tasks = this.competency.behavior.tasks.map(async (task) => await this.frameworkService.getCompleteTask(task));
+      await Promise.all(tasks)
+        .then((tasks: (Elements | DCWF_Element)[]) => {
+          this.tasks = tasks;
+        });
     }
     await sleep(1000);
     this.authService.isAdmin.subscribe((isAdmin: boolean) => {
@@ -84,7 +88,7 @@ export class PreviewCompetencyComponent implements OnInit {
    * @returns A FontAwesome icon
    */
   competencyStatusIcon(): string {
-    switch(this.competency.status) {
+    switch (this.competency.status) {
       case Lifecycles.DRAFT:
         return 'far fa-file-edit fa-2x';
       case Lifecycles.SUBMITTED:
@@ -163,7 +167,7 @@ export class PreviewCompetencyComponent implements OnInit {
    */
   async onDeprecate(): Promise<void> {
     const deprecateSuccess = await this.lifecycles.deprecateCompetency(this.competency._id);
-    if(deprecateSuccess) {
+    if (deprecateSuccess) {
       this.close.emit();
       this.statusUpdated.emit();
     }
