@@ -8,7 +8,7 @@ import { AuthValidationService } from '../../core/auth-validation.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent{
+export class LoginComponent {
 
   loginFormGroup: FormGroup = new FormGroup({
     email: this.authValidation.getInputFormControl('required'),
@@ -19,27 +19,31 @@ export class LoginComponent{
     private auth: AuthService,
     private router: Router,
     public authValidation: AuthValidationService
-  ) {}
+  ) { }
 
   errMessage = '';
   submissionError = false;
 
   login() {
     this.submissionError = false;
-    if(this.loginFormGroup.valid){
+    if (this.loginFormGroup.valid) {
       this.auth.login(
         this.loginFormGroup.get('email')?.value,
         this.loginFormGroup.get('password')?.value
       )
-      .then(() => {
-        if (this.auth.user) {
-          this.router.navigate(['/dashboard']);
-        }
-      }, error => {
-        this.errMessage = error.message;
-        this.submissionError = true;
-        this.authValidation.showError();
-      });
+        .then(() => {
+          if (this.auth.user) {
+            // If user is an admin, redirect to admin dashboard
+            if (this.auth.isAdmin) {
+              return this.router.navigate(['/admin/dashboard']);
+            }
+            return this.router.navigate(['/dashboard']);
+          }
+        }, error => {
+          this.errMessage = error.message;
+          this.submissionError = true;
+          this.authValidation.showError();
+        });
     }
   }
 
