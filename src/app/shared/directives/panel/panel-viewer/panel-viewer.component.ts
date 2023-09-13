@@ -59,7 +59,7 @@ import { DCWF_Workrole } from '../../../entity/dcwf.workrole';
     <ng-template #adminHeader>
       <div class="admin header" [ngClass]="options.competency.status.toString()">
         <div class="left-corner" *ngIf="tasks[0] && workrole">
-          <h2>{{ workrole }} - {{ tasks[0].element_id }} </h2>
+          <h2>{{ workrole.work_role }} - {{ tasks[0].element_id }} </h2>
           <p><b>Task: </b> {{ tasks[0].element_id }} - {{ tasks[0].description }}</p>
         </div>
         <div class="right-corner">
