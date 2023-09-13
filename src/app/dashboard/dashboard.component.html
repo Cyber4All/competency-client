@@ -1,7 +1,8 @@
 <div class="dashboard-component">
     <div class="nav-bar">
         <cc-primary-nav (search)="performSearch($event)"></cc-primary-nav>
-        <cc-secondary-nav (filterCompetencies)="filter($event)" (newCompetency)="openCompetencyBuilder()" (getHelp)="openHelp()" [disabled]="disabled"></cc-secondary-nav>
+        <cc-secondary-nav (filterCompetencies)="filter($event)" (newCompetency)="openCompetencyBuilder()"
+            (getHelp)="openHelp()" [disabled]="disabled"></cc-secondary-nav>
     </div>
     <div class="wrapper">
         <ng-container *ngIf="!loading; then competencyTemplate; else loadingTemplate"></ng-container>
@@ -16,26 +17,27 @@
 </ng-template>
 
 <ng-template #competencyTemplate>
-    <ng-container *ngIf="loadedCompetencies && loadedCompetencies.length > 0; then resultsTemplate; else noCompetenciesTemplate"></ng-container>
+    <ng-container
+        *ngIf="loadedCompetencies && loadedCompetencies.length > 0; then resultsTemplate; else noCompetenciesTemplate"></ng-container>
 </ng-template>
 
 <ng-template #resultsTemplate>
     <div class="competency-card">
         <div class="competency-card-wrapper">
             <div *ngFor="let competency of loadedCompetencies" class="competency-card_container">
-                <cc-competency-card
-                    tabindex="0"
-                    [competency]="competency"
-                    (click)="openCompetencyPreview(competency)"
-                ></cc-competency-card>
+                <cc-competency-card tabindex="0" [competency]="competency"
+                    (click)="openCompetencyPreview(competency)"></cc-competency-card>
             </div>
         </div>
     </div>
     <div class="paginationCtrl">
         <ul>
-            <li (click)="prevPage()" [ngClass]="{'gone': currPage <= 1}"><i class="fas fa-chevron-left" aria-label="Previous page of results" tabindex="0"></i> Back </li>
-            <li *ngFor="let p of pages" [ngClass]="{'active': currPage === p}" (click)="goToPage(p)"  attr.aria-label="Page {{ p }} of results" tabindex="0">{{ p }}</li>
-            <li (click)="nextPage()" [ngClass]="{'gone': currPage >= search.page}"> Next <i class="fas fa-chevron-right" aria-label="Next page of results" tabindex="0"></i></li>
+            <li (click)="prevPage()" [ngClass]="{'gone': currPage <= 1}"><i class="fas fa-chevron-left"
+                    aria-label="Previous page of results" tabindex="0"></i> Back </li>
+            <li *ngFor="let p of pages" [ngClass]="{'active': currPage === p}" (click)="goToPage(p)"
+                attr.aria-label="Page {{ p }} of results" tabindex="0">{{ p }}</li>
+            <li (click)="nextPage()" [ngClass]="{'gone': currPage >= search.page}"> Next <i class="fas fa-chevron-right"
+                    aria-label="Next page of results" tabindex="0"></i></li>
         </ul>
     </div>
 </ng-template>
@@ -43,7 +45,8 @@
 <ng-template #noCompetenciesTemplate>
     <div class="competency-no-results">
         <h2>You don't have any comeptencies yet!</h2>
-        <button class="btn btn-primary" (click)="openCompetencyBuilder(); disabled=true;" [disabled]="disabled">NEW COMPETENCY</button>
+        <button class="btn btn-primary" (click)="openCompetencyBuilder(); disabled=true;" [disabled]="disabled">NEW
+            COMPETENCY</button>
     </div>
 </ng-template>
 
@@ -54,11 +57,7 @@
     </div>
 </ng-template>
 
-<cc-competency-builder
-    ccPanel
-    *ngIf="openBuilder"
-    [competency]="builderCompetency"
-    [options]="{
+<cc-competency-builder ccPanel *ngIf="openBuilder" [competency]="builderCompetency" [options]="{
         showDeleteButton: true,
         showExitButton: true,
         title: 'Competency Builder',
@@ -67,16 +66,9 @@
         position: 'lower-right',
         isAdmin: false,
         competency: builderCompetency
-    }"
-    (close)="closeBuilder()"
-    (delete)="deleteCompetency(builderCompetency._id)"
-></cc-competency-builder>
+    }" (close)="closeBuilder()" (delete)="deleteCompetency(builderCompetency._id)"></cc-competency-builder>
 
-<cc-preview-competency
-    ccPanel
-    *ngIf="openPreview"
-    [competency]="previewCompetency"
-    [options]="{ 
+<cc-preview-competency ccPanel *ngIf="openPreview" [competency]="previewCompetency" [options]="{ 
         showDeleteButton: true,
         showExitButton: true,
         title: 'Competency Preview',
@@ -85,9 +77,6 @@
         position: 'center',
         isAdmin: false,
         competency: previewCompetency
-    }"
-    (updateSubmission)="openCompetencyBuilder(previewCompetency)"
-    (close)="closePreview()"
-    (delete)="deleteCompetency(previewCompetency._id)"
-></cc-preview-competency>
+    }" (updateSubmission)="openCompetencyBuilder(previewCompetency)" (close)="closePreview()"
+    (delete)="deleteCompetency(previewCompetency._id)"></cc-preview-competency>
 <cc-email-banner></cc-email-banner>
