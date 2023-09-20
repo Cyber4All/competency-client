@@ -1,31 +1,30 @@
 <!-- Toggle template for edit and viewing condition-->
 <div class="competency_edit-condition-container">
+    <label>Condition <a 
+        [tip]=" 'Click here to go to Condition description in e-handbook' "
+        href="https://caecommunity.org/sites/default/files/national_centers/CYBER_EDU_Competency_Handbook_2023.pdf#page=11"
+        target="_blank"
+        ><i class="fas fa-info-circle"></i></a></label>
+    <br>
     <!--Description form field-->
     <ng-container *ngIf="currIndex === 2" class="condition_description-container">
         <!--Scenario form field-->
-        <label class="scenario">Scenario *</label>
+        <label class="scenario">Scenario</label>
         <textarea class="textarea" [formControl]="scenario"></textarea>
         <!--Limitations form field-->
-        <label class="limitations">Limitations *</label>
+        <label class="limitations">Limitations</label>
         <textarea class="textarea" [formControl]="limitations"></textarea>
     </ng-container>
     <!--Technology form field-->
     <ng-container *ngIf="currIndex === 3" class="condition_technology-container">
-        <label>Technology *</label>
+        <label>Technology</label>
         <div class="tech-list">
-            <button *ngFor="let tech of technology"
-                (click)="removeTechnology(tech)"
-                class="chip"
-            >
+            <button *ngFor="let tech of technology" (click)="removeTechnology(tech)" class="chip">
                 {{ tech }} <i class="fas fa-times"></i>
             </button>
         </div>
-        <input
-            placeholder="Specify technology required to complete this competency..."
-            (keydown)="addTechnology($event)"
-            [(ngModel)]="techInput"
-            [tip]="'Press TAB or ENTER to add a technology'"
-        >
+        <input placeholder="Specify technology required to complete this competency..."
+            (keydown)="addTechnology($event)" [(ngModel)]="techInput" [tip]="'Press TAB or ENTER to add a technology'">
     </ng-container>
     <!--Documenation form filed-->
     <ng-container *ngIf="currIndex === 4" class="condition_file-container">
