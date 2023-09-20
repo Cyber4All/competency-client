@@ -13,13 +13,14 @@
   </div>
   <div [ngClass]="actorDisplay ? 'actor_dropdown': 'hidden'">
     <ul class="actor_list">
-      <li *ngFor="let actor of actorList" (click)="this.actorSelected=actor; displayActors(); type.patchValue(true)">{{ actor.value }}</li>
+      <li *ngFor="let actor of actorList" (click)="this.actorSelected=actor; displayActors(); type.patchValue(true)">{{
+        actor.value }}</li>
     </ul>
   </div>
 </div>
 <!--Actor description form field-->
 <div class="description_input">
-  <label>Description *</label>
+  <label>Description</label>
   <textarea class="description_box" placeholder="Provide a description for your actor"
     [formControl]="details"></textarea>
 </div>

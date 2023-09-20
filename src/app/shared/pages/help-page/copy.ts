@@ -18,7 +18,7 @@ export const sections = {
                                 "
                             >NEW COMPETENCY</button> ` +
                             `button in the top-right corner of your dashboard. This opens the Competency Builder. The builder has ` +
-                            `unique data entry fields that conform to the ABCDE model outlined in the Competency eHandbook. You navigate `+
+                            `unique data entry fields that conform to the ABCDE model outlined in the Competency eHandbook. You navigate ` +
                             `the builder based on which attribute of a competency you wish to enter data for.</p>` +
                             `<p>` +
                             `<a href="https://competency-constructor.s3.amazonaws.com/CompetencyConstructorDataModelTemplate.pdf" ` +
@@ -44,7 +44,7 @@ export const sections = {
                             `Select an <b>Actor</b> from the provided list that best fits the individual that would be attempting ` +
                             `to achieve this competency. The <b>Description</b> field allows you to enter additional information that ` +
                             `may be pertinent to defining your actor (i.e. pre-requisite classes, competition details, etc...).</p>` +
-                            `<p><b>Both Actor and Description are required fields to submit a competency for review!</b></p>`
+                            `<p><b>Actor is required to submit a competency for review!</b></p>`
                     },
                     {
                         question: 'Building Behavior',
@@ -78,10 +78,10 @@ export const sections = {
                                 <ul>
                                     <li><b>Scenario</b>: the situation in which the actor is attempting to earn this competency.</li>
                                     <li><b>Limitations</b>: any restrictions that are placed on the actor while attempting this `+
-                                    `competency.</li>
+                            `competency.</li>
                                     <li><b>Technology</b>: the technology an actor may use for this competency.</li>
                                     <li><b>Documentation</b>: reference files and other resources that an actor has access ` +
-                                    `to while attempting to earn this competency.</li>
+                            `to while attempting to earn this competency.</li>
                                 </ul>
                             ` +
                             `</p><img 
@@ -102,9 +102,9 @@ export const sections = {
                                 style="width: 100%; max-width: 600px;"
                             ></img><br><p>` +
                             `<b>Documentation</b> is any external resource that can be used to complete a competency. You can upload ` +
-                            `any relevant materials an actor may need to successfully complete a competency.</p>` +
-                            `<p><b>Scenario, Limitations, and at least one Technology are required to submit a competency for ` +
-                            `review!</b></p>`
+                            `any relevant materials an actor may need to successfully complete a competency.</p>`
+                        /*`<p><b>Scenario, Limitations, and at least one Technology are required to submit a competency for ` +
+                        `review!</b></p>`*/
                     },
                     {
                         question: 'Building Degree',
@@ -120,9 +120,9 @@ export const sections = {
                             `</p><img
                                 src="../../../assets/degree.png"
                                 style="width: 100%; max-width: 600px;"
-                            ></img><br></p>` +
-                            `<p><b>Time, Correct, and Complete are required fields to submit a competency for ` +
-                            `review!</b></p>`
+                            ></img><br></p>`
+                        /*`<p><b>Time, Correct, and Complete are required fields to submit a competency for ` +
+                        `review!</b></p>`*/
                     },
                     {
                         question: 'Building Employability',
@@ -130,8 +130,8 @@ export const sections = {
                             `workplace. Examples include teamwork, communication, and problem-solving. For a full list of examples ` +
                             `please visit 
                             <a href="https://competency-constructor.s3.amazonaws.com/Defining+Montreat+360+Competencies+and+Skills.pdf" ` +
-                            `target="_blank">Montreat 360 Competencies and Skills</a>.</p>` +
-                            `<p><b>Employability is required to submit a competency for review!</b></p>`
+                            `target="_blank">Montreat 360 Competencies and Skills</a>.</p>`
+                        //`<p><b>Employability is required to submit a competency for review!</b></p>`
                     },
                     {
                         question: 'Building Notes',
@@ -177,7 +177,7 @@ export const sections = {
                                 src="../../../assets/lifecycles.png"
                                 style="width: 100%; max-width: 600px;"
                             ></img><br><p>` +
-                            `<p>In order to facilitate the curation of competencies for the CAE Community and beyond, every competency`+
+                            `<p>In order to facilitate the curation of competencies for the CAE Community and beyond, every competency` +
                             ` submitted will be subjected to review by the Competency Constructor Team. The Competency Constructor ` +
                             `allows you to build a competency within your own dashboard where you are the only one with the ability to ` +
                             `review and edit that competency. If you would like to submit it for review so that it can be made publicly ` +
