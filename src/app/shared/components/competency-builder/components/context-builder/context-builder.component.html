@@ -1,5 +1,11 @@
 <!-- Toggle template for edit and viewing condition-->
 <div class="competency_edit-condition-container">
+    <label>Condition <a 
+        [tip]=" 'Click here to go to Condition description in e-handbook' "
+        href="https://caecommunity.org/sites/default/files/national_centers/CYBER_EDU_Competency_Handbook_2023.pdf#page=11"
+        target="_blank"
+        ><i class="fas fa-info-circle"></i></a></label>
+    <br>
     <!--Description form field-->
     <ng-container *ngIf="currIndex === 2" class="condition_description-container">
         <!--Scenario form field-->

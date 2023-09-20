@@ -3,6 +3,12 @@
 <ng-template #behaviorTemplate>
 <div class="competency_edit-behavior-container">
   <!--Workforce Framework Selection field-->
+  <label>Behavior <a 
+    [tip]=" 'Click here to go to Behavior description in e-handbook' "
+    href="https://caecommunity.org/sites/default/files/national_centers/CYBER_EDU_Competency_Handbook_2023.pdf#page=9"
+    target="_blank"
+    ><i class="fas fa-info-circle"></i></a></label>
+  <br>
   <div class="workforce_input">
     <label>Workforce Framework *</label>
     <div class="workforce_box" (click)="displayFrameworks()">
