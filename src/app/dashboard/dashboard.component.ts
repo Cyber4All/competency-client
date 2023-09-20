@@ -300,12 +300,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  openHelp() {
-    //TODO Open help dialog
-    // Oliver Twist reference
-    console.log('PLEASE SIR, MAY I HAVE SOME MORE SIR?');
-  }
-
   /**
    * Method to open the competency-card component and build a competency
    *

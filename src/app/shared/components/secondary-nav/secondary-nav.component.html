@@ -2,19 +2,27 @@
     <div class="content">
         <!-- Dropdown Filters -->
         <div class="dropdowns">
-            <cc-filtering-dropdowns [title]="dropdownType.STATUS" (selectedEmitter)="statuses($event)" [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns>
-            <cc-filtering-dropdowns [title]="dropdownType.SOURCE" (selectedEmitter)="source($event)" [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns>
-            <cc-filtering-dropdowns [title]="dropdownType.WORKROLE" (selectedEmitter)="workroles($event)" [clearFilters]="areFiltersCleared" [disabled]="!(selectedSource.length > 0)" [frameworkSource]="frameworkSource"></cc-filtering-dropdowns>
-            <cc-filtering-dropdowns [title]="dropdownType.TASK" (selectedEmitter)="tasks($event)" [clearFilters]="areFiltersCleared" [disabled]="!(selectedSource.length > 0)" [frameworkSource]="frameworkSource"></cc-filtering-dropdowns>
+            <cc-filtering-dropdowns [title]="dropdownType.STATUS" (selectedEmitter)="statuses($event)"
+                [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns>
+            <cc-filtering-dropdowns [title]="dropdownType.SOURCE" (selectedEmitter)="source($event)"
+                [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns>
+            <cc-filtering-dropdowns [title]="dropdownType.WORKROLE" (selectedEmitter)="workroles($event)"
+                [clearFilters]="areFiltersCleared" [disabled]="!(selectedSource.length > 0)"
+                [frameworkSource]="frameworkSource"></cc-filtering-dropdowns>
+            <cc-filtering-dropdowns [title]="dropdownType.TASK" (selectedEmitter)="tasks($event)"
+                [clearFilters]="areFiltersCleared" [disabled]="!(selectedSource.length > 0)"
+                [frameworkSource]="frameworkSource"></cc-filtering-dropdowns>
             <!--DISABLED FOR BETA-->
             <!-- <cc-filtering-dropdowns [title]="dropdownType.ACTOR" (selectedEmitter)="audiences($event)"></cc-filtering-dropdowns> -->
             <div *ngIf="!areFiltersCleared" class="clear" (click)="clearFilters()">Clear all filters</div>
         </div>
-    
+
         <!-- Buttons -->
         <div class="buttons">
             <button class="help" [routerLink]="['/help']">GET HELP</button>
-            <button class="builder" (click)="newCompetency.emit(); disabled=true;" [disabled]="disabled">NEW COMPETENCY</button>
-        </div>  
+            <button *ngIf="!isAdmin" class="builder" (click)="newCompetency.emit(); disabled=true;"
+                [disabled]="disabled">NEW
+                COMPETENCY</button>
+        </div>
     </div>
 </div>
