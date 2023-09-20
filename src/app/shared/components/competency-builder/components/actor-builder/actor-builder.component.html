@@ -1,7 +1,13 @@
 <!--Actor Builder-->
 <!--Actor type form field-->
 <div class="actor_input">
-  <label>Actor *</label>
+  <label>Actor <a 
+    [tip]=" 'Click here to go to Actor description in e-handbook' "
+    href="https://caecommunity.org/sites/default/files/national_centers/CYBER_EDU_Competency_Handbook_2023.pdf#page=8"
+    target="_blank"
+    ><i class="fas fa-info-circle"></i></a></label>
+  <br>
+  <label>Type *</label>
   <div class="actor_box" (click)="displayActors()">
     {{ actorSelected ? actorSelected.value : 'Select an actor' }}
     <div [ngClass]="actorDisplay ? 'hidden': 'arrow_down'">
