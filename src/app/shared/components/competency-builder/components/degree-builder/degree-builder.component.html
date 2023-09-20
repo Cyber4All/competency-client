@@ -1,12 +1,20 @@
 <!--Degree Builder-->
 <div class="competency_edit-degree-container">
+  <label>Degree <a 
+    [tip]=" 'Click here to go to Degree description in e-handbook' "
+    href="https://caecommunity.org/sites/default/files/national_centers/CYBER_EDU_Competency_Handbook_2023.pdf#page=13"
+    target="_blank"
+    ><i class="fas fa-info-circle"></i></a></label>
+  <br>
   <ng-container *ngIf="currIndex === 5">
     <!--Time form filed-->
-    <label>Time *</label>
+    <label>Time</label>
     <div class="time_selector">
       <input [formControl]="time" class="time_input">
       <div class="dropdown">
-        <div class="time_box" (click)="displayTime()">{{ timeSelected ? timeSelected.value : "Select a measure of time..." }}
+        <div class="time_box" (click)="displayTime()">{{
+          timeSelected ? timeSelected.value :"Select a measure of time.."
+          }}
           <div [ngClass]="timeDisplay ? 'hidden': 'arrow_down'">
             <i class="fas fa-angle-down fa-lg"></i>
           </div>
@@ -23,12 +31,13 @@
     </div>
     <!--Completeness form field-->
     <div class="completely_correct">
-    <label class="completeness">Completeness *</label>
-    <textarea placeholder="Enter your definition of the task being completed here." [formControl]="complete"></textarea>
+      <label class="completeness">Completeness</label>
+      <textarea placeholder="Enter your definition of the task being completed here."
+        [formControl]="complete"></textarea>
 
-    <!--Correctness form field-->
-    <label class="correctness">Correctness *</label>
-    <textarea placeholder="Enter your definition of the task being correct here." [formControl]="correct"></textarea>
+      <!--Correctness form field-->
+      <label class="correctness">Correctness</label>
+      <textarea placeholder="Enter your definition of the task being correct here." [formControl]="correct"></textarea>
     </div>
   </ng-container>
   <!-- *** KEEP HERE -- DISABLED FOR BETA *** -->

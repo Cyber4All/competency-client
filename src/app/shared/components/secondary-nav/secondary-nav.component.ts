@@ -9,6 +9,7 @@ import { Source } from '../../entity/behavior';
 })
 export class SecondaryNavComponent implements OnInit {
   @Input() disabled: boolean;
+  @Input() isAdmin = false;
   @Output() newCompetency = new EventEmitter();
   @Output() getHelp = new EventEmitter();
   @Output() filterCompetencies = new EventEmitter<{
