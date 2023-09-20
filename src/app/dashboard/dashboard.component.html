@@ -2,7 +2,7 @@
     <div class="nav-bar">
         <cc-primary-nav (search)="performSearch($event)"></cc-primary-nav>
         <cc-secondary-nav (filterCompetencies)="filter($event)" (newCompetency)="openCompetencyBuilder()"
-            (getHelp)="openHelp()" [disabled]="disabled"></cc-secondary-nav>
+            [disabled]="disabled"></cc-secondary-nav>
     </div>
     <div class="wrapper">
         <ng-container *ngIf="!loading; then competencyTemplate; else loadingTemplate"></ng-container>
@@ -44,7 +44,7 @@
 
 <ng-template #noCompetenciesTemplate>
     <div class="competency-no-results">
-        <h2>You don't have any comeptencies yet!</h2>
+        <h2>You don't have any competencies yet!</h2>
         <button class="btn btn-primary" (click)="openCompetencyBuilder(); disabled=true;" [disabled]="disabled">NEW
             COMPETENCY</button>
     </div>
