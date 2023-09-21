@@ -42,7 +42,8 @@ export class LoginComponent {
         }, error => {
           this.errMessage = error.message;
           this.submissionError = true;
-          this.authValidation.showError();
+          // This assures that 2 error messages don't appear
+          // this.authValidation.showError();
         });
     }
   }

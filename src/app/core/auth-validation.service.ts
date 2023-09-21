@@ -60,10 +60,11 @@ export class AuthValidationService {
    * @returns error message
    */
   public getInputErrorMessage(control: AbstractControl, match?: string): string | undefined{
+    console.log(control.hasError)
     if(control.hasError('required')) {//field not filled out
       return('This field is required');
     } else if (control.hasError('email')) {//email error
-      return('Invalid Email Address');
+      return('Invalid Email Address. Email address must be a .edu domain.');
     } else if (control.hasError('minlength')) {//minimum length error
       if(control.hasValidator(this.minLengthValidator)){
         return('Minimum Length 8 characters');//min length for password
