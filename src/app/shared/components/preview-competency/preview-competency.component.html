@@ -60,7 +60,7 @@
         <div>
           <p><b>Documentation:</b></p>
           <ul>
-            <li *ngFor="let doc of competency.condition.documentation">{{ doc.uri ? doc.uri : "No URI specified." }}
+            <li *ngFor="let doc of competency.condition.documentation"><a href="{{ doc.uri }}" target="_blank">{{ doc.uri ? doc.uri : "No URI specified." }}</a>
             </li>
             <ng-container *ngIf="!competency.condition.documentation.length" [ngTemplateOutlet]="noDocs"></ng-container>
           </ul>
