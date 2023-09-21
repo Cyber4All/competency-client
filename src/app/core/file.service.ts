@@ -55,8 +55,14 @@ export class FileService {
       this.snackBarService.sendNotificationByError(e);
     });
 
-    // formats the uri to be stored in mongo, will be used for file retrieval and deleting a file
-    const fileURL = `https://cc-file-upload-bucket-prod.s3.amazonaws.com/${this.authService.user?._id}/${competencyId}/${file.name}`;
+    /**
+     * Formats the uri returned from lambda to be stored in mongo, will be used for file retrieval and deleting a file
+     *
+     * The uri values come from lambda as is below:
+     * lambda.url = https://cc-file-upload-bucket-prod.s3.amazonaws.com
+     * lambda.fields.key = /userId/competencyId/formattedFileName
+     */
+    const fileURL = `${lambdaResponse.url}${lambdaResponse.fields.key}`;
 
     return await lastValueFrom(
       this.http.post(
