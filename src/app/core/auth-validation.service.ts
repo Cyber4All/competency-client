@@ -60,7 +60,6 @@ export class AuthValidationService {
    * @returns error message
    */
   public getInputErrorMessage(control: AbstractControl, match?: string): string | undefined{
-    console.log(control.hasError)
     if(control.hasError('required')) {//field not filled out
       return('This field is required');
     } else if (control.hasError('email')) {//email error
