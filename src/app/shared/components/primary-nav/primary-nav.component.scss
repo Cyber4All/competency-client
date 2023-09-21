@@ -1,3 +1,4 @@
+@import "vars";
 .navbar{
     display: flex;
     justify-content: center;
@@ -29,6 +30,12 @@
     .search {
         max-width: 800px;
         flex-grow: 1;
+        
+        .email {
+            color: color-accent();
+            text-decoration: underline;
+            cursor :pointer;
+        }
     }
 
     .profile {
