@@ -41,6 +41,7 @@
       [showValidity]="true"
       [error]="authValidation.getInputErrorMessage(regFormGroup.get('email')!)!"
       [autocomplete]="'new-password'"
+      [tip]="'Email must be from a .edu domain.'"
     ></cc-text-field>
     <cc-text-field
       animate

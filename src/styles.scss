@@ -61,6 +61,11 @@ $cc-theme: mat.define-light-theme((
     )
 ));
 
+// THIS IS TO REMOVE THE WEIRD DARK BORDER AROUND THE ERROR SNACKBAR POPUP
+.mat-snack-bar-container {
+  padding: 0px !important;
+}
+
 @include mat.all-component-themes($cc-theme);
 
 html, body { height: 100%; }

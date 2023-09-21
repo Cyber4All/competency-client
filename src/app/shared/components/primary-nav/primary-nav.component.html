@@ -8,6 +8,10 @@
         </div>
         <div *ngIf="!isAdmin" class="search">
             <div class="search-wrapper">
+                <p>
+                    We are currently in Beta and welcome your feedback! Send us an email at 
+                    <span class="email" id="email" [tip]="'Click to copy email address'" (click)="copyEmail()">info@secured.team</span>.
+                </p>
                 <!-- <cc-search-bar (search)="sendSearch($event)"></cc-search-bar> -->
             </div>
         </div>
