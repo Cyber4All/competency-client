@@ -2,7 +2,7 @@
     <div class="nav-bar">
         <cc-primary-nav (search)="performSearch($event)"></cc-primary-nav>
         <cc-secondary-nav (filterCompetencies)="filter($event)" (newCompetency)="openCompetencyBuilder()"
-            (getHelp)="openHelp()" [disabled]="disabled"></cc-secondary-nav>
+            [disabled]="disabled"></cc-secondary-nav>
     </div>
     <div class="wrapper">
         <ng-container *ngIf="!loading; then competencyTemplate; else loadingTemplate"></ng-container>

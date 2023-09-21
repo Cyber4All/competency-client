@@ -72,33 +72,33 @@ export class CompetencyBuilder extends Competency {
         this.notes = notes;
     }
 
-    setActor(update: {details: string, type: string}) {
+    setActor(update: { details: string, type: string }) {
         this.actor = update;
         return this;
     }
 
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    setBehavior(update: {tasks: string[], work_role: string, details: string, source: Source}) {
+    setBehavior(update: { tasks: string[], work_role: string, details: string, source: Source }) {
         this.behavior = update;
         return this;
     }
 
-    setCondition(update: {scenario: string, limitations: string, tech: string[], documentation: Documentation[]}) {
+    setCondition(update: { scenario: string, limitations: string, tech: string[], documentation: Documentation[] }) {
         this.condition = update;
         return this;
     }
 
-    setDegree(update: {time: string, correct: string, complete: string}) {
+    setDegree(update: { time: string, correct: string, complete: string }) {
         this.degree = update;
         return this;
     }
 
-    setEmployability(update: {details: string}) {
+    setEmployability(update: { details: string }) {
         this.employability = update;
         return this;
     }
 
-    setNotes(update: {details: string}) {
+    setNotes(update: { details: string }) {
         this.notes = update;
         return this;
     }
@@ -145,15 +145,16 @@ export class CompetencyBuilder extends Competency {
      */
     validateActor(): BuilderValidation[] {
         const actorErrors: BuilderValidation[] = [];
-        if (!this.actor.details || !this.actor.type) {
-            if (!this.actor.details) {
-                actorErrors.push({
-                    type: 'actor',
-                    attribute: 'details',
-                    isValid: false,
-                    message: 'Actor details are required.'
-                });
-            }
+        if (!this.actor.type) {
+            // Disabled !this.actor.details validation temporarily 9/15/23
+            // if (!this.actor.details) {
+            //     actorErrors.push({
+            //         type: 'actor',
+            //         attribute: 'details',
+            //         isValid: false,
+            //         message: 'Actor details are required.'
+            //     });
+            // }
             if (!this.actor.type) {
                 actorErrors.push({
                     type: 'actor',
@@ -178,15 +179,16 @@ export class CompetencyBuilder extends Competency {
      */
     validateBehavior(): BuilderValidation[] {
         const behaviorErrors: BuilderValidation[] = [];
-        if (!this.behavior.details || !this.behavior.work_role || this.behavior.tasks.length === 0 || !this.behavior.source) {
-            if (!this.behavior.details) {
-                behaviorErrors.push({
-                    type: 'behavior',
-                    attribute: 'details',
-                    isValid: false,
-                    message: 'Behavior details are required.'
-                });
-            }
+        if (!this.behavior.work_role || this.behavior.tasks.length === 0 || !this.behavior.source) {
+            // Disabled !this.behavior.details validation temporarily 9/15/23
+            // if (!this.behavior.details) {
+            //     behaviorErrors.push({
+            //         type: 'behavior',
+            //         attribute: 'details',
+            //         isValid: false,
+            //         message: 'Behavior details are required.'
+            //     });
+            // }
             if (!this.behavior.work_role) {
                 behaviorErrors.push({
                     type: 'behavior',
@@ -227,37 +229,43 @@ export class CompetencyBuilder extends Competency {
      */
     validateCondition(): BuilderValidation[] {
         const conditionErrors: BuilderValidation[] = [];
-        if (!this.condition.scenario || !this.condition.limitations || this.condition.tech.length === 0 || !this.condition.documentation) {
-            if (!this.condition.scenario) {
-                conditionErrors.push({
-                    type: 'condition',
-                    attribute: 'scenario',
-                    isValid: false,
-                    message: 'Scenario is required.'
-                });
-            }
-            if (!this.condition.limitations) {
-                conditionErrors.push({
-                    type: 'condition',
-                    attribute: 'limitations',
-                    isValid: false,
-                    message: 'Limitations are required.'
-                });
-            }
-            if (this.condition.tech.length === 0) {
-                conditionErrors.push({
-                    type: 'condition',
-                    attribute: 'tech',
-                    isValid: false,
-                    message: 'At least one technology is required.'
-                });
-            }
-        } else {
-            conditionErrors.push({
-                type: 'condition',
-                isValid: true
-            });
-        }
+        // Disabled !this.condition validation temporarily 9/15/23
+        // if (!this.condition.scenario || !this.condition.limitations ||
+        // this.condition.tech.length === 0 || !this.condition.documentation) {
+        //     if (!this.condition.scenario) {
+        //         conditionErrors.push({
+        //             type: 'condition',
+        //             attribute: 'scenario',
+        //             isValid: false,
+        //             message: 'Scenario is required.'
+        //         });
+        //     }
+        //     if (!this.condition.limitations) {
+        //         conditionErrors.push({
+        //             type: 'condition',
+        //             attribute: 'limitations',
+        //             isValid: false,
+        //             message: 'Limitations are required.'
+        //         });
+        //     }
+        //     if (this.condition.tech.length === 0) {
+        //         conditionErrors.push({
+        //             type: 'condition',
+        //             attribute: 'tech',
+        //             isValid: false,
+        //             message: 'At least one technology is required.'
+        //         });
+        //     }
+        // } else {
+        //     conditionErrors.push({
+        //         type: 'condition',
+        //         isValid: true
+        //     });
+        // }
+        conditionErrors.push({
+            type: 'condition',
+            isValid: true
+        });
         return conditionErrors;
     }
 
@@ -268,46 +276,51 @@ export class CompetencyBuilder extends Competency {
      */
     validateDegree(): BuilderValidation[] {
         const degreeErrors: BuilderValidation[] = [];
-        if (!this.degree.time || !this.degree.correct || !this.degree.complete) {
-            if (!this.degree.time) {
-                degreeErrors.push({
-                    type: 'degree',
-                    attribute: 'time',
-                    isValid: false,
-                    message: 'Time is required.'
-                });
-            }
-            // Check that time is a number
-            if (this.degree.time.split(' - ') && isNaN(Number(this.degree.time.split(' - ')[0]))) {
-                degreeErrors.push({
-                    type: 'degree',
-                    attribute: 'time',
-                    isValid: false,
-                    message: 'Time must be a number.'
-                });
-            }
-            if (!this.degree.correct) {
-                degreeErrors.push({
-                    type: 'degree',
-                    attribute: 'correct',
-                    isValid: false,
-                    message: 'Correctness is required.'
-                });
-            }
-            if (!this.degree.complete) {
-                degreeErrors.push({
-                    type: 'degree',
-                    attribute: 'complete',
-                    isValid: false,
-                    message: 'Completeness is required.'
-                });
-            }
-        } else {
-            degreeErrors.push({
-                type: 'degree',
-                isValid: true
-            });
-        }
+        // Disabled !this.degree validation temporarily 9/15/23
+        // if (!this.degree.time || !this.degree.correct || !this.degree.complete) {
+        //     if (!this.degree.time) {
+        //         degreeErrors.push({
+        //             type: 'degree',
+        //             attribute: 'time',
+        //             isValid: false,
+        //             message: 'Time is required.'
+        //         });
+        //     }
+        //     // Check that time is a number
+        //     if (this.degree.time.split(' - ') && isNaN(Number(this.degree.time.split(' - ')[0]))) {
+        //         degreeErrors.push({
+        //             type: 'degree',
+        //             attribute: 'time',
+        //             isValid: false,
+        //             message: 'Time must be a number.'
+        //         });
+        //     }
+        //     if (!this.degree.correct) {
+        //         degreeErrors.push({
+        //             type: 'degree',
+        //             attribute: 'correct',
+        //             isValid: false,
+        //             message: 'Correctness is required.'
+        //         });
+        //     }
+        //     if (!this.degree.complete) {
+        //         degreeErrors.push({
+        //             type: 'degree',
+        //             attribute: 'complete',
+        //             isValid: false,
+        //             message: 'Completeness is required.'
+        //         });
+        //     }
+        // } else {
+        //     degreeErrors.push({
+        //         type: 'degree',
+        //         isValid: true
+        //     });
+        // }
+        degreeErrors.push({
+            type: 'degree',
+            isValid: true
+        });
         return degreeErrors;
     }
 
@@ -318,19 +331,24 @@ export class CompetencyBuilder extends Competency {
      */
     validateEmployability(): BuilderValidation[] {
         const employabilityErrors: BuilderValidation[] = [];
-        if (!this.employability.details) {
-            employabilityErrors.push({
-                type: 'employability',
-                attribute: 'details',
-                isValid: false,
-                message: 'Employability is required'
-            });
-        } else {
-            employabilityErrors.push({
-                type: 'employability',
-                isValid: true
-            });
-        }
+        // Disabled !this.employability validation temporarily 9/15/23
+        // if (!this.employability.details) {
+        //     employabilityErrors.push({
+        //         type: 'employability',
+        //         attribute: 'details',
+        //         isValid: false,
+        //         message: 'Employability is required'
+        //     });
+        // } else {
+        //     employabilityErrors.push({
+        //         type: 'employability',
+        //         isValid: true
+        //     });
+        // }
+        employabilityErrors.push({
+            type: 'details',
+            isValid: true
+        });
         return employabilityErrors;
     }
 }
