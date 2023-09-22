@@ -48,8 +48,10 @@
         </div>
         <p><b>Scenario:</b> {{ competency.condition.scenario ? competency.condition.scenario : "No scenario specified"}}
         </p>
-        <p><b>Limitations:</b> {{ competency.condition.limitations ? competency.condition.limitations : "No limitations
-          specified."}}</p>
+        <p>
+          <b>Limitations:</b>
+          {{ competency.condition.limitations ? competency.condition.limitations : "No limitationsspecified."}}
+        </p>
         <div>
           <p><b>Technology:</b></p>
           <ul>
@@ -60,7 +62,8 @@
         <div>
           <p><b>Documentation:</b></p>
           <ul>
-            <li *ngFor="let doc of competency.condition.documentation"><a href="{{ doc.uri }}" target="_blank">{{ doc.uri ? doc.uri : "No URI specified." }}</a>
+            <li *ngFor="let doc of competency.condition.documentation"><a href="{{ doc.uri }}" target="_blank">{{
+                doc.uri ? doc.uri : "No URI specified." }}</a>
             </li>
             <ng-container *ngIf="!competency.condition.documentation.length" [ngTemplateOutlet]="noDocs"></ng-container>
           </ul>
@@ -74,8 +77,10 @@
           </div>
         </div>
         <p><b>Time:</b> {{ competency.degree.time ? competency.degree.time : "No time specified."}}</p>
-        <p><b>Completeness:</b> {{ competency.degree.complete ? competency.degree.complete : "No completeness
-          specified."}}</p>
+        <p>
+          <b>Completeness:</b>
+          {{ competency.degree.complete ? competency.degree.complete : "No completeness specified."}}
+        </p>
         <p><b>Correctness:</b> {{ competency.degree.correct ? competency.degree.correct : "No correctness specified." }}
         </p>
       </div>
@@ -106,6 +111,8 @@
     <!-- <p>Submitted December 32, 2133</p> -->
     <button *ngIf="!builderMode && competency.status === 'draft'" (click)="onUpdateSubmission()" class="submit">EDIT
       DRAFT</button>
+    <button *ngIf="!builderMode && competency.status === 'submitted' && !isAdmin" (click)="unsubmitCompetency()"
+      class="submit">UNSUBMIT</button>
     <button *ngIf="!builderMode && isAdmin" (click)="onUpdateSubmission()" class="submit">EDIT SUBMISSION</button>
   </div>
 </div>
@@ -115,11 +122,11 @@
 </ng-template>
 
 <ng-template #noDocs>
-  <p>No documentation specified.</p>
+  <p>No documentation provided.</p>
 </ng-template>
 
 <ng-template #noTech>
-  <p>No technology specified.</p>
+  <p>No technology provided.</p>
 </ng-template>
 
 <ng-template #adminFooter>

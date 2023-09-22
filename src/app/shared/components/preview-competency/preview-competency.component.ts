@@ -189,6 +189,8 @@ export class PreviewCompetencyComponent implements OnInit {
     if (unsubmitSuccess) {
       this.close.emit();
       this.statusUpdated.emit();
+    } else {
+      console.log('unsubmit failed');
     }
   }
 }

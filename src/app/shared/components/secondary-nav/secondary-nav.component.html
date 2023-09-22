@@ -2,8 +2,8 @@
     <div class="content">
         <!-- Dropdown Filters -->
         <div class="dropdowns">
-            <cc-filtering-dropdowns [title]="dropdownType.STATUS" (selectedEmitter)="statuses($event)"
-                [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns>
+            <cc-filtering-dropdowns [title]="dropdownType.STATUS" [isAdmin]="isAdmin"
+                (selectedEmitter)="statuses($event)" [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns>
             <cc-filtering-dropdowns [title]="dropdownType.SOURCE" (selectedEmitter)="source($event)"
                 [clearFilters]="areFiltersCleared"></cc-filtering-dropdowns>
             <cc-filtering-dropdowns [title]="dropdownType.WORKROLE" (selectedEmitter)="workroles($event)"
