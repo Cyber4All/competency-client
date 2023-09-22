@@ -78,5 +78,5 @@
         isAdmin: false,
         competency: previewCompetency
     }" (updateSubmission)="openCompetencyBuilder(previewCompetency)" (close)="closePreview()"
-    (delete)="deleteCompetency(previewCompetency._id)"></cc-preview-competency>
+    (delete)="deleteCompetency(previewCompetency._id)" (statusUpdated)="initDashboard()"></cc-preview-competency>
 <cc-email-banner></cc-email-banner>
