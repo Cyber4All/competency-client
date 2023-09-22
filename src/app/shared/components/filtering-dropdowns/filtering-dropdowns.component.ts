@@ -20,6 +20,7 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
   @Input() frameworkSource: Source | undefined;
   @Output() selectedEmitter = new EventEmitter<string[]>();
   @Input() clearFilters = true;
+  @Input() isAdmin = false;
   // All items to be displayed in the dropdown
   items: {
     id: string,  // Either the id of the workrole or task, or the value of the Lifecycles enum
@@ -57,9 +58,18 @@ export class FilteringDropdownsComponent implements OnInit, OnChanges {
     switch (this.title) {
       case DropdownType.STATUS:
         // Set items to the value of the Lifecycles enum
-        Object.values(Lifecycles).forEach((value: string) => {
-          this.items.push({ id: value, name: value });
-        });
+        if (!this.isAdmin) {
+          Object.values(Lifecycles).forEach((value: string) => {
+            this.items.push({ id: value, name: value });
+          });
+        } else {
+          // Remove DRAFT and REJECTED from the list of statuses
+          Object.values(Lifecycles).forEach((value: string) => {
+            if (value !== Lifecycles.DRAFT && value !== Lifecycles.REJECTED) {
+              this.items.push({ id: value, name: value });
+            }
+          });
+        }
         break;
       case DropdownType.SOURCE:
         // Set items to the value of the framework enum
