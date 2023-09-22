@@ -31,7 +31,11 @@ export class AdminDashboardComponent implements OnInit {
     statuses: []
   };
   currPage = 1;
-
+  // Applied filters
+  selected: { work_role: string[]; task: string[] } = {
+    work_role: [],
+    task: []
+  };
   unsubscribe: Subject<void> = new Subject();
 
   // Logic to display the competency preview and builder
@@ -40,6 +44,8 @@ export class AdminDashboardComponent implements OnInit {
   openBuilder = false;
   openPreview = false;
   filterApplied = false;
+  // Boolean to disable `NEW COMPETENCY` button
+  disabled = false;
 
   constructor(
     private authService: AuthService,
@@ -162,8 +168,7 @@ export class AdminDashboardComponent implements OnInit {
    *
    * @param filter object containing arrays of selected filters
    */
-  async filter() {
-    // Emit the selected filters
+  async filter(filter: { status: string[], workrole: string[], task: string[], audience: string[] }) {
     this.loading = true;
     // Explicitly clear search object
     this.search = {
@@ -174,9 +179,12 @@ export class AdminDashboardComponent implements OnInit {
       statuses: []
     };
     // apply filters
-    this.search.statuses = this.selectedStatuses;
+    this.search.statuses = filter.status;
+    this.selected.work_role = filter.workrole;
+
     await this.getCompetencies(this.search);
     await this.loadCompetencies();
+
     this.filterApplied = true;
     this.loading = false;
   }
@@ -185,36 +193,8 @@ export class AdminDashboardComponent implements OnInit {
   performSearch(query: any) {
     if (query.target?.value!) {
       this.query = query.target.value;
-      this.filter();
+      this.initDashboard();
     }
-  }
-
-  // Functions to set the selected filters upon change
-  statuses(statuses: string[]) {
-    this.areFiltersCleared = statuses.length === 0;
-    this.selectedStatuses = statuses;
-    this.filter();
-  }
-  source(source: string[]) {
-    this.areFiltersCleared = source.length === 0;
-    this.selectedSource = source;
-    this.frameworkSource = source[0] as Source;
-    this.filter();
-  }
-  workroles(workroles: string[]) {
-    this.areFiltersCleared = workroles.length === 0;
-    this.selectedWorkroles = workroles;
-    this.filter();
-  }
-  tasks(tasks: string[]) {
-    this.areFiltersCleared = tasks.length === 0;
-    this.selectedTasks = tasks;
-    this.filter();
-  }
-  actor(actor: string[]) {
-    this.areFiltersCleared = actor.length === 0;
-    this.selectedActor = actor;
-    this.filter();
   }
 
   /**
