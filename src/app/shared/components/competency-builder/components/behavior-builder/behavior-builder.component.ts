@@ -169,27 +169,30 @@ export class BehaviorBuilderComponent implements OnInit {
           }
         });
       });
+    /**
+     * Disabled for now 10/02/2023
+     */
     // Subscribe to details form control
-    this.details.valueChanges
-      .pipe(debounceTime(650))
-      .subscribe((detailsUpdate: string) => {
-        // Remove details error from behaviorErrors array
-        this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
-          return error.attribute !== 'details';
-        });
-        this.details.setErrors({ error: false });
-        // Emit behavior details change to parent builder component
-        this.behaviorChange.emit({
-          update: 'behavior',
-          value: {
-            _id: this.behavior._id,
-            tasks: this.behavior.tasks,
-            details: detailsUpdate,
-            work_role: this.behavior.work_role,
-            source: this.behavior.source
-          }
-        });
-      });
+    // this.details.valueChanges
+    //   .pipe(debounceTime(650))
+    //   .subscribe((detailsUpdate: string) => {
+    //     // Remove details error from behaviorErrors array
+    //     this.behaviorErrors = this.behaviorErrors.filter((error: BuilderValidation) => {
+    //       return error.attribute !== 'details';
+    //     });
+    //     this.details.setErrors({ error: false });
+    //     // Emit behavior details change to parent builder component
+    //     this.behaviorChange.emit({
+    //       update: 'behavior',
+    //       value: {
+    //         _id: this.behavior._id,
+    //         tasks: this.behavior.tasks,
+    //         details: detailsUpdate,
+    //         work_role: this.behavior.work_role,
+    //         source: this.behavior.source
+    //       }
+    //     });
+    //   });
     /**
      * 5. Set form values if they exist
      */
@@ -240,10 +243,13 @@ export class BehaviorBuilderComponent implements OnInit {
       this.workrole.patchValue(true);
       this.task.patchValue(true);
     }
+    /**
+     * Disabled for now 10/02/2023
+     */
     // If details exists, set details form value
-    if (this.behavior.details) {
-      this.details.patchValue(this.behavior.details);
-    }
+    // if (this.behavior.details) {
+    //   this.details.patchValue(this.behavior.details);
+    // }
 
     /**
      * 6. Subscribe to search inputs
@@ -398,10 +404,13 @@ export class BehaviorBuilderComponent implements OnInit {
   displayErrors(): void {
     // Iterate through behavior errors
     this.behaviorErrors.map((error: BuilderValidation) => {
+      /**
+       * Disabled for now 10/02/2023
+       */
       // If error is for details, set details form control error
-      if (error.attribute === 'details') {
-        this.details.setErrors({ error: true });
-      }
+      // if (error.attribute === 'details') {
+      //   this.details.setErrors({ error: true });
+      // }
       // If error is for workrole, set workrole form control error
       if (error.attribute === 'work_role') {
         this.workrole.setErrors({ error: true });
