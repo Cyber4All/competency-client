@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { AuthUser, User, getUserGraphQuery } from '../../entity/user';
+import { User } from '../shared/entity/user';
+import { GraphQueries } from '../shared/functions/graph-queries';
 import { EncryptionService } from './encryption.service';
 import { USER_ROUTES } from '../../environments/routes';
 import { CookieService } from 'ngx-cookie-service';
 import { basic_user_permissions, competencyAcl } from 'competency-acl';
-import { SnackbarService} from './snackbar.service';
+import { SnackbarService } from './snackbar.service';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 
@@ -19,7 +20,7 @@ type Optional<T> = T | undefined;
   providedIn: 'root'
 })
 export class AuthService {
-  private _user?: User; // Do not explicityly set a user, use the setter method
+  private _user?: User; // Do not explicitly set a user, use the setter method
   private _isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private _isBetaUser: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public headers = new HttpHeaders();
@@ -34,11 +35,11 @@ export class AuthService {
     this._user = value;
   }
 
-  get isAdmin(): Observable<boolean>{
+  get isAdmin(): Observable<boolean> {
     return this._isAdmin.asObservable();
   }
 
-  get isBetaUser(): Observable<boolean>{
+  get isBetaUser(): Observable<boolean> {
     return this._isBetaUser.asObservable();
   }
 
@@ -52,16 +53,16 @@ export class AuthService {
    * @param user - object of user email, name, pwd, org, and username
    */
   async register(user: {
-      email: string,
-      name: string,
-      password: string,
-      organization: string,
-      username: string
+    email: string,
+    name: string,
+    password: string,
+    organization: string,
+    username: string
   }): Promise<void> {
     try {
       const encrypted = await this.encryptionService.encryptRSA(user);
       await lastValueFrom(this.http
-        .post<{bearer: string, user: User}>(USER_ROUTES.REGISTER(), {
+        .post<{ bearer: string, user: User }>(USER_ROUTES.REGISTER(), {
           data: encrypted.data,
           publicKey: encrypted.publicKey
         }))
@@ -71,7 +72,7 @@ export class AuthService {
           this.initHeaders();
           return Promise.resolve();
         });
-    } catch(e: any) {
+    } catch (e: any) {
       this.snackbarService.sendNotificationByError(e);
       throw this.formatError(e);
     }
@@ -90,18 +91,18 @@ export class AuthService {
         password,
       });
       await lastValueFrom(this.http
-        .post<{bearer: string, user: User}>(USER_ROUTES.LOGIN(), encrypted))
+        .post<{ bearer: string, user: User }>(USER_ROUTES.LOGIN(), encrypted))
         .then((res: any) => {
-          //delete auth header when there is a successul login
+          //delete auth header when there is a successful login
           this.headers = new HttpHeaders().delete('Authorization');
           this.user = res!.user;
           this.storeToken(res.bearer as any);
           this.initHeaders();
           return Promise.resolve();
         });
-    } catch(e: any) {
-     this.snackbarService.sendNotificationByError(e);
-     throw this.formatError(e);
+    } catch (e: any) {
+      this.snackbarService.sendNotificationByError(e);
+      throw this.formatError(e);
     }
   }
 
@@ -118,13 +119,13 @@ export class AuthService {
    */
   // TODO: Add the AuthUser return type
   async getUser(id: string): Promise<any> {
-    const query = getUserGraphQuery(id);
+    const query = GraphQueries.getUserGraphQuery(id);
     return await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
         { query },
         { headers: this.headers, withCredentials: true, responseType: 'json' }
-        ))
+      ))
       .then((res: any) => {
         return res.data.user;
       })
@@ -134,6 +135,35 @@ export class AuthService {
           this.snackbarService.sendNotificationByError(err);
         }
       });
+  }
+
+  /**
+   * Sends an email to a user to verify their email
+   *
+   * @param email The email of the user to send the email to
+   * @returns A promise that resolves when the email is sent
+   * @throws An error if the email is not sent
+   */
+  async sendVerificationEmail(email: string): Promise<void> {
+    try {
+      await lastValueFrom(this.http
+        .post(USER_ROUTES.SEND_VERIFICATION_EMAIL(), { email }))
+        .then((res: any) => {
+          return Promise.resolve();
+        });
+    } catch (e: any) {
+      this.snackbarService.sendNotificationByError(e);
+      throw this.formatError(e);
+    }
+  }
+
+  /**
+   * Checks if a user email is verified
+   *
+   * @returns true if the user email is verified, false otherwise
+   */
+  isUserVerified(): boolean {
+    return this.user?.emailVerified ?? false;
   }
 
   /**
@@ -152,7 +182,7 @@ export class AuthService {
   /**
    * Method to validate if an admin user is logged in
    */
-  public async validateAdminAccess(): Promise <void> {
+  public async validateAdminAccess(): Promise<void> {
     const token = this.retrieveToken();
     const targetActions: string[] = [
       competencyAcl.competencies.reviewSubmitted,
@@ -162,7 +192,7 @@ export class AuthService {
     ];
 
     await lastValueFrom(this.http
-      .post(USER_ROUTES.VALIDATE_ACTIONS(), {token, targetActions}))
+      .post(USER_ROUTES.VALIDATE_ACTIONS(), { token, targetActions }))
       .then((res: any) => {
         this._isAdmin.next(res.isValid);
       });
@@ -171,12 +201,12 @@ export class AuthService {
   /**
    * Method to validate if a beta user is logged in
    */
-  public async validateBetaAccess(): Promise <void> {
+  public async validateBetaAccess(): Promise<void> {
     const token = this.retrieveToken();
     const targetActions: string[] = basic_user_permissions;
 
     await lastValueFrom(this.http
-      .post(USER_ROUTES.VALIDATE_ACTIONS(), {token, targetActions}))
+      .post(USER_ROUTES.VALIDATE_ACTIONS(), { token, targetActions }))
       .then((res: any) => {
         this._isBetaUser.next(res.isValid);
       });
@@ -189,7 +219,7 @@ export class AuthService {
    */
   public async checkStatus(): Promise<void> {
     const token = this.retrieveToken();
-    if(token) {
+    if (token) {
       // And we already have a user; resolve
       if (this.user) {
         return Promise.resolve();
@@ -197,7 +227,7 @@ export class AuthService {
       // No user; retrieve user
       this.initHeaders();
       await lastValueFrom(this.http
-        .get<{user: User}>(
+        .get<{ user: User }>(
           USER_ROUTES.TOKEN(),
           { headers: this.headers, withCredentials: true, responseType: 'json' }
         ))
@@ -219,6 +249,32 @@ export class AuthService {
   }
 
   /**
+   * Method to update a users password
+   *
+   * @param payload users new password
+   * @param otaCode OTA code to reset password/user info
+   */
+  public async resetPassword(payload: string, otaCode: string): Promise<void> {
+    this.initHeaders();
+    await lastValueFrom(this.http
+      .patch(USER_ROUTES.RESET_PASSWORD(otaCode), { payload }))
+      .catch((err) => {
+        this.snackbarService.sendNotificationByError(err);
+      });
+  }
+
+  /**
+   * Method to request a reset password email
+   *
+   * @param email email of user to send reset password email to
+   */
+  public async sendResetPassword(email: string): Promise<void> {
+    this.initHeaders();
+    await lastValueFrom(this.http
+      .post(USER_ROUTES.SEND_RESET_PASSWORD(), { email }));
+  }
+
+  /**
    * Private method to retrieve the token value
    *
    * @returns the bearer token from the user signed in
@@ -228,9 +284,9 @@ export class AuthService {
   }
 
   /**
-   * Pirvate method to store a token in cookies
+   * Private method to store a token in cookies
    *
-   * @param token bearer token returned from service after succesful login
+   * @param token bearer token returned from service after successful login
    */
   private storeToken(token: string) {
     if (token) {
@@ -270,13 +326,13 @@ export class AuthService {
    * @returns formatted error
    */
   private formatError(e: any): { code: number, message: string } {
-    if(e.error.message instanceof Array){
+    if (e.error.message instanceof Array) {
       return {
         code: 500,
         message: 'There was an error formatting your request.'
-              +  ' Sorry for the inconvenience.'
-              +  ' If the error persists, please email info@secured.team'
-            };
+          + ' Sorry for the inconvenience.'
+          + ' If the error persists, please email info@secured.team'
+      };
     } else {
       return e.error;
     }

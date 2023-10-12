@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
-import { Actor } from '../../entity/actor';
-import { Degree } from '../../entity/Degree';
-import { Condition } from '../../entity/Condition';
-import { Behavior } from '../../entity/Behavior';
-import { Employability } from '../../entity/Employability';
-import { Notes } from '../../entity/notes';
-import { BuilderError, BuilderValidation } from '../../entity/builder-validation';
+import { Actor } from '../shared/entity/actor';
+import { Degree } from '../shared/entity/degree';
+import { Condition } from '../shared/entity/condition';
+import { Behavior } from '../shared/entity/behavior';
+import { Employability } from '../shared/entity/employability';
+import { Notes } from '../shared/entity/notes';
+import { BuilderError, BuilderValidation } from '../shared/entity/builder-validation';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -71,7 +71,7 @@ export class BuilderService {
         this._degreeErrors.next([]);
         this._employabilityErrors.next([]);
         value.errors.map((error: BuilderValidation) => {
-            switch(error.type) {
+            switch (error.type) {
                 case 'actor':
                     this._actorErrors.next((this._actorErrors.value, [error]));
                     break;
@@ -90,12 +90,32 @@ export class BuilderService {
             }
         });
     }
+    // Method to clear actor errors
+    public clearActorErrors(): void {
+        this._actorErrors.next([]);
+    }
+    // Method to clear behavior errors
+    public clearBehaviorErrors(): void {
+        this._behaviorErrors.next([]);
+    }
+    // Method to clear condition errors
+    public clearConditionErrors(): void {
+        this._conditionErrors.next([]);
+    }
+    // Method to clear degree errors
+    public clearDegreeErrors(): void {
+        this._degreeErrors.next([]);
+    }
+    // Method to clear employability errors
+    public clearEmployabilityErrors(): void {
+        this._employabilityErrors.next([]);
+    }
 
     constructor(
         private http: HttpClient,
         private auth: AuthService,
         private snackBarService: SnackbarService
-    ) {}
+    ) { }
 
     /**
      * Method to create the shell of a competency
@@ -105,14 +125,14 @@ export class BuilderService {
     async createCompetency() {
         this.auth.initHeaders();
         return await lastValueFrom(this.http
-        .post(
-            COMPETENCY_ROUTES.CREATE_COMPETENCY(),
-            {},
-            { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-        ))
-        .catch((e)=> {
-            this.snackBarService.sendNotificationByError(e);
-        });
+            .post(
+                COMPETENCY_ROUTES.CREATE_COMPETENCY(),
+                {},
+                { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+            ))
+            .catch((e) => {
+                this.snackBarService.sendNotificationByError(e);
+            });
     }
 
     /**
@@ -125,15 +145,15 @@ export class BuilderService {
     async updateActor(competencyId: string, actorUpdate: Actor) {
         this.auth.initHeaders();
         return await lastValueFrom(this.http
-        .patch(
-            COMPETENCY_ROUTES.UPDATE_ACTOR(competencyId),
-            actorUpdate,
-            { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-        ))
-        .catch((e)=> {
-            this.snackBarService.sendNotificationByError(e);
-            throw e;
-        });
+            .patch(
+                COMPETENCY_ROUTES.UPDATE_ACTOR(competencyId),
+                actorUpdate,
+                { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+            ))
+            .catch((e) => {
+                this.snackBarService.sendNotificationByError(e);
+                throw e;
+            });
     }
 
     /**
@@ -146,15 +166,15 @@ export class BuilderService {
     async updateBehavior(competencyId: string, behaviorUpdate: Partial<Behavior>) {
         this.auth.initHeaders();
         return await lastValueFrom(this.http
-        .patch(
-            COMPETENCY_ROUTES.UPDATE_BEHAVIOR(competencyId),
-            behaviorUpdate,
-            { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-        ))
-        .catch((e)=> {
-            this.snackBarService.sendNotificationByError(e);
-            throw e;
-        });
+            .patch(
+                COMPETENCY_ROUTES.UPDATE_BEHAVIOR(competencyId),
+                behaviorUpdate,
+                { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+            ))
+            .catch((e) => {
+                this.snackBarService.sendNotificationByError(e);
+                throw e;
+            });
     }
 
     /**
@@ -167,15 +187,15 @@ export class BuilderService {
     async updateCondition(competencyId: string, conditionUpdate: Partial<Condition>) {
         this.auth.initHeaders();
         return await lastValueFrom(this.http
-        .patch(
-            COMPETENCY_ROUTES.UPDATE_CONDITION(competencyId),
-            conditionUpdate,
-            { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-        ))
-        .catch((e)=> {
-            this.snackBarService.sendNotificationByError(e);
-            throw e;
-        });
+            .patch(
+                COMPETENCY_ROUTES.UPDATE_CONDITION(competencyId),
+                conditionUpdate,
+                { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+            ))
+            .catch((e) => {
+                this.snackBarService.sendNotificationByError(e);
+                throw e;
+            });
     }
 
     /**
@@ -188,15 +208,15 @@ export class BuilderService {
     async updateDegree(competencyId: string, degreeUpdate: Partial<Degree>) {
         this.auth.initHeaders();
         return await lastValueFrom(this.http
-        .patch(
-            COMPETENCY_ROUTES.UPDATE_DEGREE(competencyId),
-            degreeUpdate,
-            { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-        ))
-        .catch((e)=> {
-            this.snackBarService.sendNotificationByError(e);
-            throw e;
-        });
+            .patch(
+                COMPETENCY_ROUTES.UPDATE_DEGREE(competencyId),
+                degreeUpdate,
+                { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+            ))
+            .catch((e) => {
+                this.snackBarService.sendNotificationByError(e);
+                throw e;
+            });
     }
 
     /**
@@ -209,15 +229,15 @@ export class BuilderService {
     async updateEmployability(competencyId: string, employabilityUpdate: Partial<Employability>) {
         this.auth.initHeaders();
         return await lastValueFrom(this.http
-        .patch(
-            COMPETENCY_ROUTES.UPDATE_EMPLOYABILITY(competencyId),
-            employabilityUpdate,
-            { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-        ))
-        .catch((e)=> {
-            this.snackBarService.sendNotificationByError(e);
-            throw e;
-        });
+            .patch(
+                COMPETENCY_ROUTES.UPDATE_EMPLOYABILITY(competencyId),
+                employabilityUpdate,
+                { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+            ))
+            .catch((e) => {
+                this.snackBarService.sendNotificationByError(e);
+                throw e;
+            });
     }
 
     /**
@@ -230,14 +250,14 @@ export class BuilderService {
     async updateNotes(competencyId: string, notesUpdate: Partial<Notes>) {
         this.auth.initHeaders();
         return await lastValueFrom(this.http
-        .patch(
-            COMPETENCY_ROUTES.UPDATE_NOTES(competencyId),
-            notesUpdate,
-            { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-        ))
-        .catch((e)=> {
-            this.snackBarService.sendNotificationByError(e);
-            throw e;
-        });
+            .patch(
+                COMPETENCY_ROUTES.UPDATE_NOTES(competencyId),
+                notesUpdate,
+                { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
+            ))
+            .catch((e) => {
+                this.snackBarService.sendNotificationByError(e);
+                throw e;
+            });
     }
 }

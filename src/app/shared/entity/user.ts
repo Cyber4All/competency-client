@@ -4,6 +4,7 @@ export interface User {
     email: string;
     password: string;
     competencies: string[];
+    emailVerified?: boolean;
 }
 
 export interface AuthUser {
@@ -12,18 +13,4 @@ export interface AuthUser {
   email: string;
   username: string;
   emailVerified: boolean;
-}
-
-export function getUserGraphQuery(id: string): string {
-  return `
-    {
-      user(userId: "${id}") {
-          _id
-          name
-          email
-          username
-          emailVerified
-      }
-    }
-  `;
 }

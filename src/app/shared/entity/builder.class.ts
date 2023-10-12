@@ -1,11 +1,11 @@
 import { Actor } from './actor';
-import { Behavior } from './Behavior';
-import { Competency } from './Competency';
-import { Condition } from './Condition';
-import { Degree } from './Degree';
-import { Documentation } from './Documentation';
-import { Employability } from './Employability';
-import { Lifecycles } from './Lifecycles';
+import { Behavior, Source } from './behavior';
+import { Competency } from './competency';
+import { Condition } from './condition';
+import { Degree } from './degree';
+import { Documentation } from './documentation';
+import { Employability } from './employability';
+import { Lifecycles } from './lifecycles';
 import { Notes } from './notes';
 import { BuilderError, BuilderValidation } from './builder-validation';
 
@@ -78,7 +78,7 @@ export class CompetencyBuilder extends Competency {
     }
 
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    setBehavior(update: {tasks: string[], work_role: string, details: string}) {
+    setBehavior(update: {tasks: string[], work_role: string, details: string, source: Source}) {
         this.behavior = update;
         return this;
     }
@@ -178,7 +178,7 @@ export class CompetencyBuilder extends Competency {
      */
     validateBehavior(): BuilderValidation[] {
         const behaviorErrors: BuilderValidation[] = [];
-        if (!this.behavior.details || !this.behavior.work_role || !this.behavior.tasks) {
+        if (!this.behavior.details || !this.behavior.work_role || this.behavior.tasks.length === 0 || !this.behavior.source) {
             if (!this.behavior.details) {
                 behaviorErrors.push({
                     type: 'behavior',
@@ -203,6 +203,14 @@ export class CompetencyBuilder extends Competency {
                     message: 'At least one task is required.'
                 });
             }
+            if (!this.behavior.source) {
+                behaviorErrors.push({
+                    type: 'behavior',
+                    attribute: 'source',
+                    isValid: false,
+                    message: 'A workrole/task framework source is required.'
+                });
+            }
         } else {
             behaviorErrors.push({
                 type: 'behavior',
@@ -219,7 +227,7 @@ export class CompetencyBuilder extends Competency {
      */
     validateCondition(): BuilderValidation[] {
         const conditionErrors: BuilderValidation[] = [];
-        if (!this.condition.scenario || !this.condition.limitations || !this.condition.tech || !this.condition.documentation) {
+        if (!this.condition.scenario || !this.condition.limitations || this.condition.tech.length === 0 || !this.condition.documentation) {
             if (!this.condition.scenario) {
                 conditionErrors.push({
                     type: 'condition',
@@ -236,7 +244,7 @@ export class CompetencyBuilder extends Competency {
                     message: 'Limitations are required.'
                 });
             }
-            if (!this.condition.tech) {
+            if (this.condition.tech.length === 0) {
                 conditionErrors.push({
                     type: 'condition',
                     attribute: 'tech',
@@ -267,6 +275,15 @@ export class CompetencyBuilder extends Competency {
                     attribute: 'time',
                     isValid: false,
                     message: 'Time is required.'
+                });
+            }
+            // Check that time is a number
+            if (this.degree.time.split(' - ') && isNaN(Number(this.degree.time.split(' - ')[0]))) {
+                degreeErrors.push({
+                    type: 'degree',
+                    attribute: 'time',
+                    isValid: false,
+                    message: 'Time must be a number.'
                 });
             }
             if (!this.degree.correct) {

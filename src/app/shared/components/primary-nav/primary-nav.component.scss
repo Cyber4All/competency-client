@@ -1,6 +1,10 @@
 .navbar{
     display: flex;
     justify-content: center;
+
+    &.admin {
+        background-color: #EFEFEF;
+    }
 }
 .wrapper {
     width: 100%;
@@ -23,6 +27,7 @@
     }
 
     .search {
+        max-width: 800px;
         flex-grow: 1;
         max-width: 800px;
     }
@@ -30,6 +35,8 @@
     .profile {
         margin: 30px;
     }
+
+    
 }
 
 

@@ -21,6 +21,7 @@ import {
 } from '@angular/animations';
 import { fadeIn, fadeOut, slideIn, slideOut } from './panel.animations';
 import { Subject } from 'rxjs';
+import { Competency } from '../../entity/competency';
 export interface PanelOptions {
   padding: boolean;
   showExitButton: boolean;
@@ -28,6 +29,8 @@ export interface PanelOptions {
   title: string;
   exitButtonColor: 'white' | 'black';
   position: 'lower-right' | 'center';
+  isAdmin: boolean;
+  competency: Competency;
 }
 @Directive({
   selector: '[ccPanel]'
@@ -55,7 +58,7 @@ export class PanelDirective implements OnInit, OnDestroy {
     private injector: Injector,
     private appRef: ApplicationRef,
     private builder: AnimationBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // remove the original element from the DOM so it doesn't duplicate
@@ -87,7 +90,7 @@ export class PanelDirective implements OnInit, OnDestroy {
         this.close.emit(e.detail);
         this.host.nativeElement.removeEventListener(
           'SidePanelCloseEvent',
-          (_: CustomEvent) => {}
+          (_: CustomEvent) => { }
         );
       }
     );

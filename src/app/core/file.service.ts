@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { Documentation } from '../../entity/Documentation';
+import { Documentation } from '../shared/entity/documentation';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { SnackbarService } from './snackbar.service';
@@ -56,7 +56,7 @@ export class FileService {
     });
 
     // formats the uri to be stored in mongo, will be used for file retrieval and deleting a file
-    const fileURL = `https://cc-file-upload-bucket.s3.amazonaws.com/${this.authService.user?._id}/${competencyId}/${file.name}`;
+    const fileURL = `https://cc-file-upload-bucket-prod.s3.amazonaws.com/${this.authService.user?._id}/${competencyId}/${file.name}`;
 
     return await lastValueFrom(
       this.http.post(
@@ -92,9 +92,9 @@ export class FileService {
     const docsToDelete = (documentation instanceof Array) ? documentation : [documentation];
     const fileNameQuery = docsToDelete.map(doc => this.parseFileName(doc.uri)).join(',');
     const LambdaResponse: { urls: string[] } = await this.deleteLambdaService(competencyId, fileNameQuery);
-    await Promise.all(LambdaResponse.urls.map(url => {
+    return await Promise.all(LambdaResponse.urls.map(async url => {
       try {
-        lastValueFrom(this.http.delete(url)).then(res => {
+        await lastValueFrom(this.http.delete(url)).then(res => {
           this.snackBarService.notification$.next({
             message: `File has been flagged for deletion!`,
             title: 'Processing Request',
@@ -102,30 +102,30 @@ export class FileService {
           });
         });
       } catch (e) {
-        this.snackBarService.sendNotificationByError(e);
+        return this.snackBarService.sendNotificationByError(e);
       }
-    }));
-    await lastValueFrom(
-      this.http.delete(
-        COMPETENCY_ROUTES.DELETE_DOCUMENTATION(competencyId),
-        {
-          params: {
-            ids: docsToDelete.map(doc => doc._id)
-          },
-          headers: this.authService.headers,
-          withCredentials: true,
-          responseType: 'json'
-        }
-      )
-    ).then(res => {
-      this.snackBarService.notification$.next({
-        message: `File has been deleted!`,
-        title: 'Success',
-        color: SNACKBAR_COLOR.SUCCESS
+      await lastValueFrom(
+        this.http.delete(
+          COMPETENCY_ROUTES.DELETE_DOCUMENTATION(competencyId),
+          {
+            params: {
+              ids: docsToDelete.map(doc => doc._id)
+            },
+            headers: this.authService.headers,
+            withCredentials: true,
+            responseType: 'json'
+          }
+        )
+      ).then(res => {
+        this.snackBarService.notification$.next({
+          message: `File has been deleted!`,
+          title: 'Success',
+          color: SNACKBAR_COLOR.SUCCESS
+        });
+      }).catch(e => {
+        return this.snackBarService.sendNotificationByError(e);
       });
-    }).catch(e => {
-      this.snackBarService.sendNotificationByError(e);
-    });
+    }));
   }
 
   /**
@@ -149,20 +149,20 @@ export class FileService {
    */
   private async uploadLambdaService(competencyId: string, file: File): Promise<any> {
     return await lastValueFrom(
-        this.http.post(
-          COMPETENCY_ROUTES.UPLOAD_FILE_LAMBDA(competencyId),
-          {
-            filename: file?.name,
-            filesize: file?.size,
-            extension: file?.name.split('.').pop()
-          },
-          { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
-        )
-      ).then((res) => {
-        return res;
-      }).catch(e => {
-        this.snackBarService.sendNotificationByError(e);
-      });
+      this.http.post(
+        COMPETENCY_ROUTES.UPLOAD_FILE_LAMBDA(competencyId),
+        {
+          filename: file?.name,
+          filesize: file?.size,
+          extension: file?.name.split('.').pop()
+        },
+        { headers: this.authService.headers, withCredentials: true, responseType: 'json' }
+      )
+    ).then((res) => {
+      return res;
+    }).catch(e => {
+      this.snackBarService.sendNotificationByError(e);
+    });
   }
 
   /**

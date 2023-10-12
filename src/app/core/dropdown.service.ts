@@ -4,7 +4,8 @@ import { SnackbarService } from './snackbar.service';
 import { COMPETENCY_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
-import { DropdownItem, DropdownObjects, DropdownType } from '../../entity/dropdown';
+import { DropdownItem, DropdownType } from '../shared/entity/dropdown';
+import { GraphQueries } from '../shared/functions/graph-queries';
 import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,7 @@ export class DropdownService {
   async getDropdownItems(type: string): Promise<void> {
     this.auth.initHeaders();
     const queryType = type.toUpperCase();  // Format to uppercase for GraphQL
-    const query = DropdownObjects(queryType);
+    const query = GraphQueries.dropdownObjects(queryType);
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -45,7 +46,7 @@ export class DropdownService {
           this._timeList.next(res.data.dropdownItems);
         }
       })
-      .catch((err)=> {
+      .catch((err) => {
         err = GraphErrorHandler.handleError(err);
         if (err) {
           this.snackBarService.sendNotificationByError(err);

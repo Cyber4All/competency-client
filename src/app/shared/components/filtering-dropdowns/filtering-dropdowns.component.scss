@@ -9,6 +9,9 @@
     .button-wrapper {
         display: flex;
         padding: 15px 20px;
+        border: 1px solid color-gray(7);
+        border-radius: 4px;
+        background: color-gray(13);
 
         .title {
             margin-right: 10px;
@@ -37,6 +40,9 @@
         min-height: 200px; // we should change this to be a calculated value based on the number of items
         overflow-y: scroll;
         overflow-x: hidden;
+        &:hover{
+            background-color: white;
+        }
 
         .item {    
             border-top: 1px solid color-gray(12);
@@ -53,6 +59,12 @@
                     background-color: rgba($color: color-accent(), $alpha: 0.1);
                     cursor: pointer;
                 }
+            }
+            .blue {
+                color: color-accent();
+            }
+            .black {
+                color: color-gray(1);
             }
         }
     }

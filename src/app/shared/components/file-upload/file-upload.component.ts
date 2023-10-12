@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FileService } from '../../../core/file.service';
-import { MimeTypes } from '../../../../entity/mimeTypes';
 import { FormControl } from '@angular/forms';
-import { Documentation } from '../../../../entity/Documentation';
+import { Documentation } from '../../entity/documentation';
 import { SnackbarService } from '../../../core/snackbar.service';
-import { SNACKBAR_COLOR } from '../snackbar/snackbar.component';
 
 @Component({
   selector: 'cc-file-upload',
@@ -60,10 +58,8 @@ export class FileUploadComponent implements OnInit {
    * @param event A list of files received from the user
    */
   handleFileDropped(event: FileList) {
-    let extension: string;
     Array.from(event).forEach(async file => {
-      extension = file.name.split('.')[1];
-      if((Object.values(MimeTypes) as string[]).includes(extension)) {
+      try {
         const updatedFile: { name: string, documentationId?: string } = {
           name: file.name,
           // Id is returned from service
@@ -75,12 +71,8 @@ export class FileUploadComponent implements OnInit {
         updatedFile.documentationId = doc._id;
 
         this.files.push(updatedFile);
-      } else {
-        this.snackbarService.notification$.next({
-          title: 'Unsupported File Type',
-          message: 'You are not allowed to upload this file type.',
-          color: SNACKBAR_COLOR.DANGER
-        });
+      } catch (e) {
+        this.snackbarService.sendNotificationByError(e);
       }
     });
   }
@@ -105,7 +97,7 @@ export class FileUploadComponent implements OnInit {
     const doc = this.documentation.value.find((doc: Documentation) => {
       return doc._id === file.documentationId;
     });
-    this.documentation.patchValue({remove: true, id: file.documentationId});
+    this.documentation.patchValue({ remove: true, id: file.documentationId });
     const index = this.files.indexOf(file);
     this.files.splice(index, 1);
     await this.fileService.deleteFile(this.competencyId, doc);

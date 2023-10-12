@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { LIFECYCLE_ROUTES } from '../../environments/routes';
 import { AuthService } from './auth.service';
 import { SnackbarService } from './snackbar.service';
@@ -98,5 +98,21 @@ export class LifecyclesService {
         this.snackbar.sendNotificationByError(err);
         return false;
       });
+  }
+
+  async unsubmitCompetency(competencyId: string): Promise<boolean> {
+    this.auth.initHeaders();
+    return await lastValueFrom(this.http
+       .patch(
+          LIFECYCLE_ROUTES.UNSUBMIT_COMPETENCY(competencyId),
+          { userId: this.auth.user?._id },
+          { headers: this.auth.headers, withCredentials: true }
+       )).then(() => {
+        return true;
+       })
+        .catch((err) => {
+          this.snackbar.sendNotificationByError(err);
+          return false;
+        });
   }
 }

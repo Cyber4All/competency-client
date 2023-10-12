@@ -1,7 +1,30 @@
-<!--Behavior Builder-->
+<ng-container *ngTemplateOutlet="mainLoading ? behaviorLoading : behaviorTemplate"></ng-container>
+
+<ng-template #behaviorTemplate>
 <div class="competency_edit-behavior-container">
+  <!--Workforce Framework Selection field-->
+  <div class="workforce_input">
+    <label>Workforce Framework *</label>
+    <div class="workforce_box" (click)="displayFrameworks()">
+      {{ workforceSelected ? (workforceSelected | uppercase) : 'Select a Workforce Framework' }}
+      <div [ngClass]="frameworkDisplay ? 'hidden': 'arrow_down'">
+        <i class="fas fa-angle-down fa-lg"></i>
+      </div>
+      <div [ngClass]="frameworkDisplay ? 'arrow_up': 'hidden'">
+        <i class="fas fa-angle-up fa-lg"></i>
+      </div>
+    </div>
+    <div [ngClass]="frameworkDisplay ? 'workforce_dropdown': 'hidden'">
+      <ul class="workforce_list">
+        <li *ngFor="let framework of workforceFrameworks" (click)="
+          setFramework(framework);
+          displayFrameworks();
+        ">{{ framework | uppercase }}</li>
+      </ul>
+    </div>
+  </div>
   <!--Behavior workrole selection field-->
-  <ng-container>
+  <div>
     <label>Work Role *</label>
     <div class="search_bar">
       <div class="search_icon">
@@ -13,15 +36,15 @@
     <ul *ngIf="showWorkrolesDropdown" (onBlur)="closeDropdown()" class="org-dropdown_list">
       <ng-container *ngTemplateOutlet="loading ? loadingTemplate : workroleResultsTemplate"></ng-container>
     </ul>
-  </ng-container>
+  </div>
   <!--Behavior task selection field-->
   <div class="task">
     <label>Task *</label>
     <div class="task-list">
-      <button *ngFor="let niceTask of selectedTask" (click)="removeSelectedTask(niceTask)" class="chip"
-        attr.aria-label="Remove {{ niceTask.element_id | titlecase }} as an affiliated task"
-        [tip]="niceTask.description">
-        {{ niceTask.element_id | titlecase }} 
+      <button *ngFor="let frameworkTask of selectedTask" (click)="removeSelectedTask(frameworkTask)" class="chip"
+        attr.aria-label="Remove {{ frameworkTask.element_id | uppercase }} as an affiliated task"
+        [tip]="frameworkTask.description">
+        {{ frameworkTask.element_id | uppercase }} 
         <i class="far fa-times"></i>
       </button>
     </div>
@@ -30,7 +53,7 @@
       <input placeholder="Search for tasks..." [(ngModel)]="taskDropdownPlaceholder" (keyup)="taskKeyup($event)"
         (click)="showTasksDropdown = !showTasksDropdown">
     </div>
-    <ul *ngIf="showTasksDropdown" (onBlur)="closeDropdown()" class="org-dropdown_list task_dropdown">
+    <ul *ngIf="showTasksDropdown" (onBlur)="closeDropdown()" class="org-dropdown_list">
       <ng-container *ngTemplateOutlet="loading ? loadingTemplate : taskResultsTemplate"></ng-container>
     </ul>
   </div>
@@ -40,6 +63,7 @@
     <textarea placeholder="Provide a description for your task" [formControl]="details"></textarea>
   </ng-container>
 </div>
+</ng-template>
 
 <!-- workrole dropdown template -->
 <ng-template #workroleResultsTemplate>
@@ -50,7 +74,7 @@
             selectedWorkrole = role;
             workroles = [role];
             tasks = role.tasks;
-            closeDropdown();
+            closeDropdown(true);
             workrole.patchValue(true);
           ">
         {{ role.work_role }}
@@ -64,13 +88,13 @@
   <ng-container *ngIf="tasks && tasks.length; else noResultsTemplate">
     <virtual-scroller #scroll [style.height]="scrollerHeight" [bufferAmount]="7" [enableUnequalChildrenSizes]="true"
       [items]="tasks" (mouseleave)="closeDropdown()">
-      <li class="org-dropdown_list-item" *ngFor="let niceTask of scroll.viewPortItems" (click)="
-            selectedTask.push(niceTask);
-            workroles = niceTask.work_roles;
-            closeDropdown();
+      <li class="org-dropdown_list-item" *ngFor="let frameworkTask of scroll.viewPortItems" (click)="
+            selectedTask.push(frameworkTask);
+            workroles = frameworkTask.work_roles;
+            closeDropdown(true);
             task.patchValue(true);
           ">
-        {{ niceTask.element_id | titlecase }} - {{ niceTask.description }}
+        {{ frameworkTask.element_id | uppercase }} - {{ frameworkTask.description }}
       </li>
     </virtual-scroller>
   </ng-container>
@@ -92,3 +116,9 @@
     </li>
   </div>
 </ng-template>
+
+<ng-template #behaviorLoading>
+  <div class="behavior-loading">
+    <i class="far fa-spinner-third fa-spin"></i>
+    Please wait...
+  </div>

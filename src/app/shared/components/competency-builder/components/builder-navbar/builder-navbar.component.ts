@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { trigger, transition, style, animate, state } from '@angular/animations';
-import { each } from 'jquery';
 import { BuilderService } from '../../../../../core/builder.service';
+import { BuilderValidation } from '../../../../entity/builder-validation';
 
 @Component({
   selector: 'cc-builder-navbar',
@@ -28,8 +28,11 @@ import { BuilderService } from '../../../../../core/builder.service';
 })
 export class BuilderNavbarComponent implements OnInit {
   currIndex!: number;
-  subSelection = 'Description';
-
+  actorErrors: BuilderValidation[] = [];
+  behaviorErrors: BuilderValidation[] = [];
+  conditionErrors: BuilderValidation[] = [];
+  degreeErrors: BuilderValidation[] = [];
+  employabilityErrors: BuilderValidation[] = [];
   constructor(
     public builderService: BuilderService,
   ) { }
@@ -38,11 +41,20 @@ export class BuilderNavbarComponent implements OnInit {
     this.builderService.builderIndex.subscribe((index: number) => {
       this.currIndex = index;
     });
-  }
-  isSubActive(selected: string): boolean{
-    return this.subSelection === selected;
-  }
-  subselect(selected: string){
-    this.subSelection=selected;
+    this.builderService.actorErrors.subscribe((errors: BuilderValidation[]) => {
+      this.actorErrors = errors;
+    });
+    this.builderService.behaviorErrors.subscribe((errors: BuilderValidation[]) => {
+      this.behaviorErrors = errors;
+    });
+    this.builderService.contextErrors.subscribe((errors: BuilderValidation[]) => {
+      this.conditionErrors = errors;
+    });
+    this.builderService.degreeErrors.subscribe((errors: BuilderValidation[]) => {
+      this.degreeErrors = errors;
+    });
+    this.builderService.employabilityErrors.subscribe((errors: BuilderValidation[]) => {
+      this.employabilityErrors = errors;
+    });
   }
 }

@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Condition } from '../../../../../../entity/Condition';
+import { Condition } from '../../../../entity/condition';
 import { debounceTime } from 'rxjs';
-import { Documentation } from '../../../../../../entity/Documentation';
+import { Documentation } from '../../../../entity/documentation';
 import { BuilderService } from '../../../../../core/builder.service';
-import { BuilderValidation } from '../../../../../../entity/builder-validation';
+import { BuilderValidation } from '../../../../entity/builder-validation';
 interface DeleteFile {
   remove: boolean;
   id: string;
@@ -18,7 +18,7 @@ export class ContextBuilderComponent implements OnInit {
 
   @Input() condition!: Condition;
   @Input() competencyId!: string;
-  @Output() conditionChange = new EventEmitter<{update: string, value: Condition}>();
+  @Output() conditionChange = new EventEmitter<{ update: string, value: Condition }>();
   // Builder - Behavior validation errors
   contextErrors: BuilderValidation[] = [];
   currIndex!: number;
@@ -62,7 +62,7 @@ export class ContextBuilderComponent implements OnInit {
         this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'scenario';
         });
-        this.scenario.setErrors({error: false});
+        this.scenario.setErrors({ error: false });
         // Emit context scenario change to parent builder component
         this.conditionChange.emit({
           update: 'condition',
@@ -83,7 +83,7 @@ export class ContextBuilderComponent implements OnInit {
         this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'tech';
         });
-        this.tech.setErrors({error: false});
+        this.tech.setErrors({ error: false });
         // Emit context tech change to parent builder component
         this.conditionChange.emit({
           update: 'condition',
@@ -104,7 +104,7 @@ export class ContextBuilderComponent implements OnInit {
         this.contextErrors = this.contextErrors.filter((error: BuilderValidation) => {
           return error.attribute !== 'limitations';
         });
-        this.limitations.setErrors({error: false});
+        this.limitations.setErrors({ error: false });
         // Emit context limitations change to parent builder component
         this.conditionChange.emit({
           update: 'condition',
@@ -175,7 +175,7 @@ export class ContextBuilderComponent implements OnInit {
       this.scenario.patchValue(this.condition.scenario);
     }
     // If value exists, set condition form control
-    if(this.condition.tech) {
+    if (this.condition.tech) {
       this.technology = this.condition.tech;
       this.tech.patchValue(this.condition.tech);
     }
@@ -220,7 +220,7 @@ export class ContextBuilderComponent implements OnInit {
   removeTechnology(tech: string) {
     // Find index of technology
     const index = this.technology.indexOf(tech);
-    if(index >= 0) {
+    if (index >= 0) {
       // Remove tech from technology array
       this.technology.splice(index, 1);
       // Update form control with new technology array
@@ -233,19 +233,19 @@ export class ContextBuilderComponent implements OnInit {
     this.contextErrors.map((contextError: BuilderValidation) => {
       // If error is for scenario, set scenario form control error
       if (contextError.attribute === 'scenario') {
-        this.scenario.setErrors({error: true});
+        this.scenario.setErrors({ error: true });
       }
       // If error is for tech, set tech form control error
       if (contextError.attribute === 'tech') {
-        this.tech.setErrors({error: true});
+        this.tech.setErrors({ error: true });
       }
       // If error is for limitations, set limitations form control error
       if (contextError.attribute === 'limitations') {
-        this.limitations.setErrors({error: true});
+        this.limitations.setErrors({ error: true });
       }
       // If error is for documentation, set documentation form control error
       if (contextError.attribute === 'documentation') {
-        this.documentation.setErrors({error: true});
+        this.documentation.setErrors({ error: true });
       }
     });
   }

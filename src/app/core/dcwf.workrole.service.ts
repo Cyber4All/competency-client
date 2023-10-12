@@ -1,59 +1,51 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-} from '@angular/common/http';
-import { COMPETENCY_ROUTES } from '../../environments/routes';
+import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
+import { DCWF_Workrole } from '../shared/entity/dcwf.workrole';
+import { GraphQueries } from '../shared/functions/graph-queries';
+import { DCWF_Element } from '../shared/entity/dcwf.elements';
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
-import {
-  getCompleteWorkRole,
-  Workrole,
-  getAllWorkRoles,
-  getAllTasks,
-  getCompleteTask,
-  queryWorkroles,
-  queryTasks
-} from '../../entity/workrole';
-import { getPreReqs } from '../../entity/actor';
-import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 import { SnackbarService } from './snackbar.service';
-import { Elements } from '../../entity/elements';
+import { COMPETENCY_ROUTES } from '../../environments/routes';
+import { GraphErrorHandler } from '../shared/functions/GraphErrorHandler';
 import { SNACKBAR_COLOR } from '../shared/components/snackbar/snackbar.component';
+import { Source } from '../shared/entity/behavior';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WorkroleService {
-  private _workroles: BehaviorSubject<Workrole[]> = new BehaviorSubject<Workrole[]>([]);
-  private _tasks: BehaviorSubject<Elements[]> = new BehaviorSubject<Elements[]>([]);
-  get workroles(): Observable<Workrole[]> {
+export class DcwfWorkroleService {
+  private source: Source = Source.DCWF;
+  private _workroles: BehaviorSubject<DCWF_Workrole[]> = new BehaviorSubject<DCWF_Workrole[]>([]);
+  private _tasks: BehaviorSubject<DCWF_Element[]> = new BehaviorSubject<DCWF_Element[]>([]);
+  get workroles(): Observable<DCWF_Workrole[]> {
     return this._workroles.asObservable();
   }
-  get tasks(): Observable<Elements[]> {
+  get tasks(): Observable<DCWF_Element[]> {
     return this._tasks.asObservable();
   }
   constructor(
     private http: HttpClient,
     private auth: AuthService,
     private snackBarService: SnackbarService,
-  ) {}
+  ) { }
 
   /**
-   * Method to retreive all workroles
+   * Method to retrieve all DCWF workroles
    *
-   * @returns array of workrole ids from NICE DB
+   * @returns array of workrole ids from DCWF DB
    */
   async getAllWorkroles(): Promise<void> {
     this.auth.initHeaders();
-    const query = getAllWorkRoles();
+    const query = GraphQueries.getAllWorkRoles(this.source);
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
-        {query},
+        { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .then((workrolesQuery: any) => {
-        this._workroles.next(workrolesQuery.data.workroles);
+        this._workroles.next(workrolesQuery.data.dcwf_workroles);
       })
       .catch((err) => {
         err = GraphErrorHandler.handleError(err);
@@ -64,13 +56,13 @@ export class WorkroleService {
   }
 
   /**
-   * Method to retrive all task ids from NICE DB
+   * Method to retrieve all task ids from DCWF DB
    *
    * @returns array of task ids
    */
   async getAllTasks(): Promise<void> {
     this.auth.initHeaders();
-    const query = getAllTasks();
+    const query = GraphQueries.getAllTasks(this.source);
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -78,7 +70,7 @@ export class WorkroleService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .then((tasksQuery: any) => {
-        this._tasks.next(tasksQuery.data.tasks);
+        this._tasks.next(tasksQuery.data.dcwf_tasks);
       })
       .catch((err) => {
         err = GraphErrorHandler.handleError(err);
@@ -89,20 +81,23 @@ export class WorkroleService {
   }
 
   /**
-   * Method to retrieving attributes of a partial workrole
+   * Method to retrieving attributes of a partial DCWF workrole
    *
    * @param workroleId workrole id
    * @returns complete workrole object
    */
   async getCompleteWorkrole(workroleId: string) {
     this.auth.initHeaders();
-    const query = getCompleteWorkRole(workroleId);
+    const query = GraphQueries.getCompleteWorkRole(workroleId, this.source);
     return await lastValueFrom(this.http
-      .post<Workrole>(
+      .post<DCWF_Workrole>(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
+      .then((workroleQuery: any) => {
+        return workroleQuery.data.dcwf_workrole;
+      })
       .catch((err) => {
         err = GraphErrorHandler.handleError(err);
         if (err) {
@@ -112,20 +107,23 @@ export class WorkroleService {
   }
 
   /**
-   * Method to retreive a full element object
+   * Method to retrieve a full DCWF element object
    *
    * @param taskId element object id
    * @returns complete element object
    */
   async getCompleteTask(taskId: string) {
     this.auth.initHeaders();
-    const query = getCompleteTask(taskId);
+    const query = GraphQueries.getCompleteTask(taskId, this.source);
     return await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
         { query },
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
+      .then((taskQuery: any) => {
+        return taskQuery.data.dcwf_task;
+      })
       .catch((err) => {
         err = GraphErrorHandler.handleError(err);
         if (err) {
@@ -135,13 +133,13 @@ export class WorkroleService {
   }
 
   /**
-   * Method to perform a text search on workroles
+   * Method to perform a text search on DCWF workroles
    *
    * @param search text query
    */
   async searchWorkroles(search: string): Promise<void> {
     this.auth.initHeaders();
-    const query = queryWorkroles(search);
+    const query = GraphQueries.queryWorkroles(search, this.source);
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -149,8 +147,8 @@ export class WorkroleService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .then((workrolesQuery: any) => {
-        if (workrolesQuery.data.searchWorkroles && workrolesQuery.data.searchWorkroles.length > 0) {
-          this._workroles.next(workrolesQuery.data.searchWorkroles);
+        if (workrolesQuery.data.dcwf_searchWorkroles && workrolesQuery.data.dcwf_searchWorkroles.length > 0) {
+          this._workroles.next(workrolesQuery.data.dcwf_searchWorkroles);
         } else {
           this._workroles.next([]);
           this.snackBarService.notification$.next({
@@ -169,13 +167,13 @@ export class WorkroleService {
   }
 
   /**
-   * Method to perform a text search on tasks
+   * Method to perform a text search on DCWF tasks
    *
    * @param search text query
    */
   async searchTasks(search: string): Promise<void> {
     this.auth.initHeaders();
-    const query = queryTasks(search);
+    const query = GraphQueries.queryTasks(search, this.source);
     await lastValueFrom(this.http
       .post(
         COMPETENCY_ROUTES.GRAPH_QUERY(),
@@ -183,8 +181,8 @@ export class WorkroleService {
         { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
       ))
       .then((tasksQuery: any) => {
-        if (tasksQuery.data.searchTasks && tasksQuery.data.searchTasks.length > 0) {
-          this._tasks.next(tasksQuery.data.searchTasks);
+        if (tasksQuery.data.dcwf_searchTasks && tasksQuery.data.dcwf_searchTasks.length > 0) {
+          this._tasks.next(tasksQuery.data.dcwf_searchTasks);
         } else {
           this._tasks.next([]);
           this.snackBarService.notification$.next({
@@ -194,28 +192,6 @@ export class WorkroleService {
           });
         }
       })
-      .catch((err) => {
-        err = GraphErrorHandler.handleError(err);
-        if (err) {
-          this.snackBarService.sendNotificationByError(err);
-        }
-      });
-  }
-
-  /**
-   * Method to retreive a list of NICE knowledge statements and NICE skills
-   *
-   * @returns list of NICE knowledge and skills
-   */
-  async getActorPrereqs() {
-    this.auth.initHeaders();
-    const query = getPreReqs();
-    return await lastValueFrom(this.http
-      .post(
-        COMPETENCY_ROUTES.GRAPH_QUERY(),
-        {query},
-        { headers: this.auth.headers, withCredentials: true, responseType: 'json' }
-      ))
       .catch((err) => {
         err = GraphErrorHandler.handleError(err);
         if (err) {

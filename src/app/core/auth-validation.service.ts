@@ -33,6 +33,7 @@ export class AuthValidationService {
         ]);
       case 'email':
         return new FormControl('', [
+          Validators.pattern(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.+-]+\.edu$`),
           Validators.required,
           Validators.email
         ]);
@@ -139,7 +140,7 @@ export class AuthValidationService {
    *
    * @returns error state
    */
-  public getErrorState(): Observable<Boolean> {
+  public getErrorState(): Observable<boolean> {
     return this.isError;
   }
 
