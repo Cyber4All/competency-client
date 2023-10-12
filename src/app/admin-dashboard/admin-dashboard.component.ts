@@ -11,6 +11,7 @@ import { Search } from '../shared/entity/search';
 import { CompetencyBuilder } from '../shared/entity/builder.class';
 import { DropdownType } from '../shared/entity/dropdown';
 import { Subject, takeUntil } from 'rxjs';
+import { Source } from '../shared/entity/behavior';
 
 @Component({
   selector: 'cc-admin-dashboard',
@@ -18,7 +19,7 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./admin-dashboard.component.scss']
 })
 export class AdminDashboardComponent implements OnInit {
-
+  isAdmin = false;
   // Logic to load and display competency cards
   loading = true;
   loadedCompetencies: Competency[] = [];
@@ -30,7 +31,11 @@ export class AdminDashboardComponent implements OnInit {
     statuses: []
   };
   currPage = 1;
-
+  // Applied filters
+  selected: { work_role: string[]; task: string[] } = {
+    work_role: [],
+    task: []
+  };
   unsubscribe: Subject<void> = new Subject();
 
   // Logic to display the competency preview and builder
@@ -39,6 +44,8 @@ export class AdminDashboardComponent implements OnInit {
   openBuilder = false;
   openPreview = false;
   filterApplied = false;
+  // Boolean to disable `NEW COMPETENCY` button
+  disabled = false;
 
   constructor(
     private authService: AuthService,
@@ -49,18 +56,26 @@ export class AdminDashboardComponent implements OnInit {
     private snackbarService: SnackbarService
   ) { }
 
-  // Properties for the filters
   dropdownType = DropdownType;
-  selectedStatuses: string[] = []; // Selected filters
+  areFiltersCleared = true;
+  frameworkSource = undefined as Source | undefined;
+  // Text Search
+  query = '';
+  // Selected Filters
+  selectedStatuses: string[] = [];
   selectedWorkroles: string[] = [];
+  selectedSource: string[] = [];
   selectedTasks: string[] = [];
-  selectedAudiences: string[] = [];
+  selectedActor: string[] = [];
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntil(this.unsubscribe)).subscribe(async params => {
       this.currPage = params.page ? +params.page : 1;
       this.makeQuery(params);
       await this.initDashboard();
+    });
+    this.authService.isAdmin.subscribe(isAdmin => {
+      this.isAdmin = isAdmin;
     });
   }
 
@@ -85,13 +100,16 @@ export class AdminDashboardComponent implements OnInit {
     // Retrieve author competencies
     this.search = await this.competencyService
       .getAllCompetencies({
+        text: this.query,
         limit: q ? q.limit : this.search.limit,
         page: q ? q.page : this.search.page,
-        status: [
+        status: (q && q.statuses.length > 0) ? q.statuses : [
           `${Lifecycles.SUBMITTED}`,
           `${Lifecycles.PUBLISHED}`,
           `${Lifecycles.DEPRECATED}`
-        ]
+        ],
+        workrole: this.selectedWorkroles,
+        task: this.selectedTasks,
       });
   }
 
@@ -150,35 +168,34 @@ export class AdminDashboardComponent implements OnInit {
    *
    * @param filter object containing arrays of selected filters
    */
-  async filter() {
-    // Emit the selected filters
+  async filter(filter: { status: string[], workrole: string[], task: string[], audience: string[] }) {
     this.loading = true;
-    // filter competencies by status
-    this.search.statuses = this.selectedStatuses;
+    // Explicitly clear search object
+    this.search = {
+      competencies: [],
+      limit: 12,
+      page: 1,
+      total: 0,
+      statuses: []
+    };
+    // apply filters
+    this.search.statuses = filter.status;
+    this.selected.work_role = filter.workrole;
+
     await this.getCompetencies(this.search);
     await this.loadCompetencies();
+
     this.filterApplied = true;
     this.loading = false;
   }
 
-  // Functions to set the selected filters upon change
-  statuses(statuses: string[]) {
-    this.selectedStatuses = statuses;
-    this.filter();
+  // Method to perform a text based search
+  performSearch(query: any) {
+    if (query.target?.value!) {
+      this.query = query.target.value;
+      this.initDashboard();
+    }
   }
-  // Disabled for Beta
-  // workroles(workroles: string[]) {
-  //   this.selectedWorkroles = workroles;
-  //   this.filter();
-  // }
-  // tasks(tasks: string[]) {
-  //   this.selectedTasks = tasks;
-  //   this.filter();
-  // }
-  // audiences(audiences: string[]) {
-  //   this.selectedAudiences = audiences;
-  //   this.filter();
-  // }
 
   /**
    * Navigate to previous page

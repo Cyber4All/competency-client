@@ -36,7 +36,6 @@ export class SnackbarComponent implements OnInit {
       this.callbacks = this.data.callbacks;
     }
 
-    //this.setButtonStyle();
   }
 
   ngOnInit(): void {

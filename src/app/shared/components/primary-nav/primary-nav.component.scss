@@ -1,4 +1,6 @@
-.navbar{
+@import "vars";
+
+.navbar {
     display: flex;
     justify-content: center;
 
@@ -6,6 +8,7 @@
         background-color: #EFEFEF;
     }
 }
+
 .wrapper {
     width: 100%;
     max-width: 1500px;
@@ -16,27 +19,30 @@
     align-items: center;
 
     .logo {
+        display: flex;
+        align-items: center;
         padding: 30px;
 
         a {
             img {
                 max-width: 225px;
                 height: auto;
-            } 
+            }
+        }
+
+        p {
+            font-size: $larger;
+            margin: 0 0 0 20px;
+            font: bold;
         }
     }
 
     .search {
         max-width: 800px;
         flex-grow: 1;
-        max-width: 800px;
     }
 
     .profile {
         margin: 30px;
     }
-
-    
 }
-
-

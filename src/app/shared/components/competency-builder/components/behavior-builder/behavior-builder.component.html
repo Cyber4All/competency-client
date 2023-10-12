@@ -1,68 +1,74 @@
 <ng-container *ngTemplateOutlet="mainLoading ? behaviorLoading : behaviorTemplate"></ng-container>
 
 <ng-template #behaviorTemplate>
-<div class="competency_edit-behavior-container">
-  <!--Workforce Framework Selection field-->
-  <div class="workforce_input">
-    <label>Workforce Framework *</label>
-    <div class="workforce_box" (click)="displayFrameworks()">
-      {{ workforceSelected ? (workforceSelected | uppercase) : 'Select a Workforce Framework' }}
-      <div [ngClass]="frameworkDisplay ? 'hidden': 'arrow_down'">
-        <i class="fas fa-angle-down fa-lg"></i>
+  <div class="competency_edit-behavior-container">
+    <label>Behavior <a [tip]=" 'Click here to go to Behavior description in e-handbook' "
+        href="https://caecommunity.org/sites/default/files/national_centers/CYBER_EDU_Competency_Handbook_2023.pdf#page=9"
+        target="_blank"><i class="fas fa-info-circle"></i></a></label>
+    <br>
+    <!--Workforce Framework Selection field-->
+    <div class="workforce_input">
+      <label>Workforce Framework *</label>
+      <div class="workforce_box" (click)="displayFrameworks()">
+        {{ workforceSelected ? (workforceSelected | uppercase) : 'Select a Workforce Framework' }}
+        <div [ngClass]="frameworkDisplay ? 'hidden': 'arrow_down'">
+          <i class="fas fa-angle-down fa-lg"></i>
+        </div>
+        <div [ngClass]="frameworkDisplay ? 'arrow_up': 'hidden'">
+          <i class="fas fa-angle-up fa-lg"></i>
+        </div>
       </div>
-      <div [ngClass]="frameworkDisplay ? 'arrow_up': 'hidden'">
-        <i class="fas fa-angle-up fa-lg"></i>
-      </div>
-    </div>
-    <div [ngClass]="frameworkDisplay ? 'workforce_dropdown': 'hidden'">
-      <ul class="workforce_list">
-        <li *ngFor="let framework of workforceFrameworks" (click)="
+      <div [ngClass]="frameworkDisplay ? 'workforce_dropdown': 'hidden'">
+        <ul class="workforce_list">
+          <li *ngFor="let framework of workforceFrameworks" (click)="
           setFramework(framework);
           displayFrameworks();
         ">{{ framework | uppercase }}</li>
+        </ul>
+      </div>
+    </div>
+    <!--Behavior workrole selection field-->
+    <div>
+      <label>Work Role *</label>
+      <div class="search_bar">
+        <div class="search_icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <input [ngModel]="selectedWorkrole ? selectedWorkrole.work_role : ''" (keyup)="workroleKeyup($event)"
+          placeholder="Search workroles..." (click)="showWorkrolesDropdown = !showWorkrolesDropdown" #workroleInput
+          [tip]="'Search using the Work Role name'">
+      </div>
+      <ul *ngIf="showWorkrolesDropdown" (onBlur)="closeDropdown()" class="org-dropdown_list">
+        <ng-container *ngTemplateOutlet="loading ? loadingTemplate : workroleResultsTemplate"></ng-container>
       </ul>
     </div>
-  </div>
-  <!--Behavior workrole selection field-->
-  <div>
-    <label>Work Role *</label>
-    <div class="search_bar">
-      <div class="search_icon">
-        <i class="fas fa-search"></i>
+    <!--Behavior task selection field-->
+    <div class="task">
+      <label>Task *</label>
+      <div class="search_bar">
+        <div class="search_icon"><i class="fas fa-search"></i></div>
+        <input placeholder="Search for tasks..." [(ngModel)]="taskDropdownPlaceholder" (keyup)="taskKeyup($event)"
+          (click)="showTasksDropdown = !showTasksDropdown" [tip]="'Search using the Task ID'">
       </div>
-      <input [ngModel]="selectedWorkrole ? selectedWorkrole.work_role : ''" (keyup)="workroleKeyup($event)"
-        placeholder="Search workroles..." (click)="showWorkrolesDropdown = !showWorkrolesDropdown" #workroleInput>
+      <ul *ngIf="showTasksDropdown" (onBlur)="closeDropdown()" class="org-dropdown_list-up">
+        <ng-container *ngTemplateOutlet="loading ? loadingTemplate : taskResultsTemplate"></ng-container>
+      </ul>
+      <div class="task-list">
+        <button *ngFor="let frameworkTask of selectedTask" (click)="removeSelectedTask(frameworkTask)" class="chip"
+          attr.aria-label="Remove {{ frameworkTask.element_id | uppercase }} as an affiliated task"
+          [tip]="frameworkTask.description">
+          {{ frameworkTask.element_id | uppercase }}
+          <i class="far fa-times"></i>
+        </button>
+      </div>
     </div>
-    <ul *ngIf="showWorkrolesDropdown" (onBlur)="closeDropdown()" class="org-dropdown_list">
-      <ng-container *ngTemplateOutlet="loading ? loadingTemplate : workroleResultsTemplate"></ng-container>
-    </ul>
+    <!--Disabled: 10/10/2023-->
+    <!--Behavior description form field-->
+    <!-- <ng-container>
+      <label class="task_description">Task Description *</label>
+      <textarea placeholder="Provide a description for your task" [formControl]="details"></textarea>
+    </ng-container> -->
   </div>
-  <!--Behavior task selection field-->
-  <div class="task">
-    <label>Task *</label>
-    <div class="task-list">
-      <button *ngFor="let frameworkTask of selectedTask" (click)="removeSelectedTask(frameworkTask)" class="chip"
-        attr.aria-label="Remove {{ frameworkTask.element_id | uppercase }} as an affiliated task"
-        [tip]="frameworkTask.description">
-        {{ frameworkTask.element_id | uppercase }} 
-        <i class="far fa-times"></i>
-      </button>
-    </div>
-    <div class="search_bar">
-      <div class="search_icon"><i class="fas fa-search"></i></div>
-      <input placeholder="Search for tasks..." [(ngModel)]="taskDropdownPlaceholder" (keyup)="taskKeyup($event)"
-        (click)="showTasksDropdown = !showTasksDropdown">
-    </div>
-    <ul *ngIf="showTasksDropdown" (onBlur)="closeDropdown()" class="org-dropdown_list">
-      <ng-container *ngTemplateOutlet="loading ? loadingTemplate : taskResultsTemplate"></ng-container>
-    </ul>
-  </div>
-  <!--Behavior description form field-->
-  <ng-container>
-    <label class="task_description">Task Description *</label>
-    <textarea placeholder="Provide a description for your task" [formControl]="details"></textarea>
-  </ng-container>
-</div>
 </ng-template>
 
 <!-- workrole dropdown template -->

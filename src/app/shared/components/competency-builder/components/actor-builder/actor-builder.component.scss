@@ -5,6 +5,9 @@ label {
     font-weight: 400;
     color: color-gray(1);
 
+    .fa-info-circle {
+        color: color-accent()
+    }
 }
 
 .actor_input {

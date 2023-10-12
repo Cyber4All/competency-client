@@ -1,17 +1,24 @@
 <div class="navbar" [ngClass]="{ 'admin': isAdmin }">
     <div class="wrapper">
-    <div class="logo">
-        <a [routerLink]="['/dashboard']" aria-label="Clickable Competency Constructor dashboard link">
-            <img src="../../../../assets/CompetencyConstructor_Logo_Transparent.png" alt="Competency Constructor Logo">
-        </a>
-    </div>
-    <div *ngIf="!isAdmin" class="search">
-        <div class="search-wrapper">
-            <!-- <cc-search-bar (search)="sendSearch($event)"></cc-search-bar> -->
+        <div class="logo">
+            <a [routerLink]="['/admin/dashboard']" aria-label="Clickable Competency Constructor dashboard link">
+                <img src="../../../../assets/CompetencyConstructor_Logo_Transparent.png"
+                    alt="Competency Constructor Logo">
+            </a>
+            <p *ngIf="isAdmin">ADMIN DASHBOARD</p>
+        </div>
+        <div *ngIf="!isAdmin" class="search">
+            <div class="search-wrapper">
+                <p>
+                    We are currently in Beta and welcome your feedback! Send us an email at
+                    <span class="email" id="email" [tip]="'Click to copy email address'"
+                        (click)="copyEmail()">info@secured.team</span>.
+                </p>
+                <!-- <cc-search-bar (search)="sendSearch($event)"></cc-search-bar> -->
+            </div>
+        </div>
+        <div class="profile">
+            <cc-user-menu></cc-user-menu>
         </div>
     </div>
-    <div class="profile">
-        <cc-user-menu></cc-user-menu>
-    </div>
-</div>
 </div>
