@@ -16,5 +16,6 @@ export const COPY = {
     ROADMAP: 'Roadmap',
     PRIVACY: 'Privacy Policy',
     BLOG: 'Blogs',
-    HANDBOOK: 'e-Handbook'
+    HANDBOOK: 'e-Handbook',
+    TASK_TOOL: 'Task Tool'
 };

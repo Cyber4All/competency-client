@@ -15,6 +15,7 @@ import { VerifyEmailGuard } from './shared/guards/verify-email.guard';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { PasswordResetGuard } from './shared/guards/password-reset.guard';
+import { TaskToolComponent } from './task-tool/task-tool/task-tool.component';
 
 const routes: Routes = [
   {
@@ -71,6 +72,10 @@ const routes: Routes = [
   {
     path: 'system/termsofservice',
     component: TermsOfServiceComponent
+  },
+  {
+    path: 'task-tool',
+    component: TaskToolComponent
   },
   {
     path: '**',
