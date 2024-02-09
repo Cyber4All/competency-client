@@ -81,16 +81,8 @@ label {
     display: flex;
     flex-direction: column;
     margin-top: 30px;
-
-    .description_box {
-        width: 550px;
-        height: 130px;
-        border: 1px solid;
-        border-color: color-gray(7);
-        border-radius: 6px;
-        margin-top: 10px;
-        font-family: Arial;
-        font-size: 14px;
-        padding: 15px;
+    
+    .description{
+        margin-bottom: 10px;
     }
 }

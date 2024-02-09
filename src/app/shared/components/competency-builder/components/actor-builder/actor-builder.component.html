@@ -26,7 +26,21 @@
 </div>
 <!--Actor description form field-->
 <div class="description_input">
-  <label>Description</label>
-  <textarea class="description_box" placeholder="Provide a description for your actor"
-    [formControl]="details"></textarea>
+  <label class="description">Description</label>
+  <!-- TinyMCE box-->
+    <editor
+    apiKey="3fkli5rzzx1lcmqsbo8n6kok6ym0yc67wdpek4h1j37jg47q"
+    [init]="{
+      icons: 'material',
+      skin: 'borderless',
+      plugins: 'wordcount, lists',
+      menubar: false,
+      toolbar: 'undo redo | styleselect | bold italic | numlist bullist',
+      placeholder: 'Provide a description for your actor.',
+      height: 250,
+      width: 580
+    }"
+    [formControl]="details"
+    [ngModelOptions]="{ standalone: true }"
+  ></editor>
 </div>

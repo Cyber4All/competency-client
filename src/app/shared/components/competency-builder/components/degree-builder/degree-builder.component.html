@@ -32,12 +32,34 @@
     <!--Completeness form field-->
     <div class="completely_correct">
       <label class="completeness">Completeness</label>
-      <textarea placeholder="Enter your definition of the task being completed here."
-        [formControl]="complete"></textarea>
+      <!-- <textarea placeholder="Enter your definition of the task being completed here." -->
+        <!-- [formControl]="complete"></textarea> -->
+          <!-- TinyMCE box-->
+        <editor apiKey="3fkli5rzzx1lcmqsbo8n6kok6ym0yc67wdpek4h1j37jg47q" [init]="{
+          icons: 'material',
+          skin: 'borderless',
+          plugins: 'wordcount, lists',
+          menubar: false,
+          toolbar: 'undo redo | styleselect | bold italic | numlist bullist',
+          placeholder: 'Enter your definition of the task being completed here.',
+          height: 250,
+          width:580
+      }" [formControl]="complete" [ngModelOptions]="{ standalone: true }"></editor>
 
       <!--Correctness form field-->
       <label class="correctness">Correctness</label>
-      <textarea placeholder="Enter your definition of the task being correct here." [formControl]="correct"></textarea>
+      <!-- <textarea placeholder="Enter your definition of the task being correct here." [formControl]="correct"></textarea> -->
+        <!-- TinyMCE box-->
+      <editor apiKey="3fkli5rzzx1lcmqsbo8n6kok6ym0yc67wdpek4h1j37jg47q" [init]="{
+        icons: 'material',
+        skin: 'borderless',
+        plugins: 'wordcount, lists',
+        menubar: false,
+        toolbar: 'undo redo | styleselect | bold italic | numlist bullist',
+        placeholder: 'Any additional notes needed for the competency should go here.',
+        height: 250,
+        width:580
+    }" [formControl]="correct" [ngModelOptions]="{ standalone: true }"></editor>
     </div>
   </ng-container>
   <!-- *** KEEP HERE -- DISABLED FOR BETA *** -->
