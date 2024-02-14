@@ -32,16 +32,10 @@
     <!--Completeness form field-->
     <div class="completely_correct">
       <label class="completeness">Completeness</label>
-        <editor  [init]="{
-          icons: 'material',
-          skin: 'borderless',
-          plugins: 'wordcount, lists',
-          menubar: false,
-          toolbar: 'undo redo | styleselect | bold italic | numlist bullist',
-          placeholder: 'Enter your definition of the task being completed here.',
-          height: 250,
-          width:580
-      }" [formControl]="complete" [ngModelOptions]="{ standalone: true }"></editor>
+      <cc-tiny-editor
+      [placeholder]="'Enter your definition of the task being completed here.'"
+      [data]="complete"
+    ></cc-tiny-editor>
 
       <!--Correctness form field-->
       <label class="correctness">Correctness</label>
