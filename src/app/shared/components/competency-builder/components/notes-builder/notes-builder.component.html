@@ -4,19 +4,8 @@
   <br>
   <!--Employability description-->
   <label >Description</label>
-  <!-- <textarea placeholder="Any additional notes needed for the competency should go here." [formControl]="details"></textarea> -->
-    <!-- TinyMCE box-->
-  <editor 
-    apiKey="3fkli5rzzx1lcmqsbo8n6kok6ym0yc67wdpek4h1j37jg47q" 
-    [init]="{
-      icons: 'material',
-      skin: 'borderless',
-      plugins: 'wordcount, lists',
-      menubar: false,
-      toolbar: 'undo redo | styleselect | bold italic | numlist bullist',
-      placeholder: 'Any additional notes needed for the competency should go here.',
-      height: 250,
-      width: 580}" 
-      [formControl]="details" 
-      [ngModelOptions]="{ standalone: true }"></editor>
+  <cc-tiny-editor
+    [placeholder]="'Any additional notes needed for the competency should go here.'"
+    [data]="details"
+  ></cc-tiny-editor>
 </div>

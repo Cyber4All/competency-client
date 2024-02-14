@@ -10,34 +10,16 @@
     <ng-container *ngIf="currIndex === 2" class="condition_description-container">
         <!--Scenario form field-->
         <label class="scenario">Scenario</label>
-        <!-- <textarea class="textarea" [formControl]="scenario"></textarea> -->
-          <!-- TinyMCE box-->
-        <editor apiKey="3fkli5rzzx1lcmqsbo8n6kok6ym0yc67wdpek4h1j37jg47q" [init]="{
-            icons: 'material',
-            skin: 'borderless',
-            plugins: 'wordcount, lists',
-            menubar: false,
-            toolbar: 'undo redo | styleselect | bold italic | numlist bullist', 
-            placeholder: 'Provide a scenario for context.',          
-            height: 250,
-            width: 580}" 
-            [formControl]="scenario" 
-            [ngModelOptions]="{ standalone: true }"></editor>
+        <cc-tiny-editor
+            [placeholder]="'Provide a scenario for context.'"
+            [data]="scenario"
+        ></cc-tiny-editor>
         <!--Limitations form field-->
         <label class="limitations">Limitations</label>
-        <!-- <textarea class="textarea" [formControl]="limitations"></textarea> -->
-         <!-- TinyMCE box-->
-        <editor apiKey="3fkli5rzzx1lcmqsbo8n6kok6ym0yc67wdpek4h1j37jg47q" [init]="{
-             icons: 'material',
-            skin: 'borderless',
-            plugins: 'wordcount, lists',
-            menubar: false,
-            toolbar: 'undo redo | styleselect | bold italic | numlist bullist',
-            placeholder: 'Provide the limitations for context.',            
-            height: 250,
-            width: 580}" 
-            [formControl]="limitations" 
-            [ngModelOptions]="{ standalone: true }"></editor>
+        <cc-tiny-editor
+            [placeholder]="'Provide the limitations for context.'"
+            [data]="limitations"
+        ></cc-tiny-editor>
     </ng-container>
     <!--Technology form field-->
     <ng-container *ngIf="currIndex === 3" class="condition_technology-container">

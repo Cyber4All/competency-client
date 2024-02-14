@@ -46,6 +46,7 @@ import { FooterComponent } from './footer/footer.component';
 import { TextFieldComponent } from './text-field/text-field.component';
 import { EmailBannerComponent } from './email-banner/email-banner.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { TinyEditorComponent } from './tiny-editor/tiny-editor.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -68,7 +69,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     SecondaryNavComponent,
     FooterComponent,
     TextFieldComponent,
-    EmailBannerComponent
+    EmailBannerComponent,
+    TinyEditorComponent
   ],
   imports: [
     CommonModule,
