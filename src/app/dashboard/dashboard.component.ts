@@ -321,6 +321,7 @@ export class DashboardComponent implements OnInit {
       existingCompetency.status,
       existingCompetency.authorId,
       existingCompetency.version,
+      existingCompetency.name,
       existingCompetency.actor,
       existingCompetency.behavior,
       existingCompetency.condition,

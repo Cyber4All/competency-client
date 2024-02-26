@@ -7,78 +7,85 @@ import { Lifecycles } from './lifecycles';
 import { Notes } from './notes';
 
 export class Competency {
-  _id!: string;
-  status!: Lifecycles;
-  authorId!: string;
-  version!: number;
-  actor!: Actor;
-  behavior!: Behavior;
-  condition!: Condition;
-  degree!: Degree;
-  employability!: Employability;
-  notes!: Notes;
+    _id!: string;
+    status!: Lifecycles;
+    authorId!: string;
+    version!: number;
+    name!: string;
+    actor!: Actor;
+    behavior!: Behavior;
+    condition!: Condition;
+    degree!: Degree;
+    employability!: Employability;
+    notes!: Notes;
 
-  constructor(
-      _id: string,
-      status: Lifecycles,
-      authorId: string,
-      version: number,
-      actor: Actor,
-      behavior: Behavior,
-      condition: Condition,
-      degree: Degree,
-      employability: Employability,
-      notes: Notes
-  ) {
-      this._id = _id;
-      this.status = status;
-      this.authorId = authorId;
-      this.version = version;
-      this.actor = actor;
-      this.behavior = behavior;
-      this.condition = condition;
-      this.degree = degree;
-      this.employability = employability;
-      this.notes = notes;
-  }
+    constructor(
+        _id: string,
+        status: Lifecycles,
+        authorId: string,
+        version: number,
+        name: string,
+        actor: Actor,
+        behavior: Behavior,
+        condition: Condition,
+        degree: Degree,
+        employability: Employability,
+        notes: Notes
+    ) {
+        this._id = _id;
+        this.status = status;
+        this.authorId = authorId;
+        this.version = version;
+        this.name = name;
+        this.actor = actor;
+        this.behavior = behavior;
+        this.condition = condition;
+        this.degree = degree;
+        this.employability = employability;
+        this.notes = notes;
+    }
 
-  get id() {
-      return this._id;
-  }
+    get id() {
+        return this._id;
+    }
 
-  get status$() {
-      return this.status;
-  }
+    get status$() {
+        return this.status;
+    }
 
-  get authorId$() {
-      return this.authorId;
-  }
+    get authorId$() {
+        return this.authorId;
+    }
 
-  get version$() {
-      return this.version;
-  }
+    get version$() {
+        return this.version;
+    }
 
-  get actor$() {
-      return this.actor;
-  }
+    get name$() {
+        return this.name;
+    }
 
-  get behavior$() {
-      return this.behavior;
-  }
+    get actor$() {
+        return this.actor;
+    }
 
-  get condition$() {
-      return this.condition;
-  }
+    get behavior$() {
+        return this.behavior;
+    }
 
-  get degree$() {
-      return this.degree;
-  }
+    get condition$() {
+        return this.condition;
+    }
 
-  get employability$() {
-      return this.employability;
-  }
+    get degree$() {
+        return this.degree;
+    }
 
-  get notes$() {
-      return this.notes;
-  }
+    get employability$() {
+        return this.employability;
+    }
+
+    get notes$() {
+        return this.notes;
+    }
 }

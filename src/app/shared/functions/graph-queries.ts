@@ -37,6 +37,7 @@ export class GraphQueries {
                 status
                 authorId
                 version
+                name
                 actor {
                     _id
                     type

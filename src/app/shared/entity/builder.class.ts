@@ -28,6 +28,7 @@ export class CompetencyBuilder extends Competency {
     status!: Lifecycles;
     authorId!: string;
     version!: number;
+    name!: string;
     actor!: Actor;
     behavior!: Behavior;
     condition!: Condition;
@@ -40,6 +41,7 @@ export class CompetencyBuilder extends Competency {
         status: Lifecycles,
         authorId: string,
         version: number,
+        name: string,
         actor: Actor,
         behavior: Behavior,
         condition: Condition,
@@ -52,6 +54,7 @@ export class CompetencyBuilder extends Competency {
             status,
             authorId,
             version,
+            name,
             actor,
             behavior,
             condition,
@@ -64,12 +67,18 @@ export class CompetencyBuilder extends Competency {
         this.status = status;
         this.authorId = authorId;
         this.version = version;
+        this.name = name;
         this.actor = actor;
         this.behavior = behavior;
         this.condition = condition;
         this.degree = degree;
         this.employability = employability;
         this.notes = notes;
+    }
+
+    setName(update: { name: string }) {
+        this.name = update.name;
+        return this;
     }
 
     setActor(update: { details: string, type: string }) {
@@ -129,6 +138,7 @@ export class CompetencyBuilder extends Competency {
             this.status,
             this.authorId,
             this.version,
+            this.name,
             this.actor,
             this.behavior,
             this.condition,
