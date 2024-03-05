@@ -3,6 +3,9 @@
   <label>Notes <i class="fas fa-info-circle"></i></label>
   <br>
   <!--Employability description-->
-  <label>Description</label>
-  <textarea placeholder="Any additional notes needed for the competency should go here." [formControl]="details"></textarea>
+  <label >Description</label>
+  <cc-tiny-editor
+    [placeholder]="'Any additional notes needed for the competency should go here.'"
+    [data]="details"
+  ></cc-tiny-editor>
 </div>

@@ -32,12 +32,17 @@
     <!--Completeness form field-->
     <div class="completely_correct">
       <label class="completeness">Completeness</label>
-      <textarea placeholder="Enter your definition of the task being completed here."
-        [formControl]="complete"></textarea>
+      <cc-tiny-editor
+      [placeholder]="'Enter your definition of the task being completed here.'"
+      [data]="complete"
+    ></cc-tiny-editor>
 
       <!--Correctness form field-->
       <label class="correctness">Correctness</label>
-      <textarea placeholder="Enter your definition of the task being correct here." [formControl]="correct"></textarea>
+      <cc-tiny-editor
+        [placeholder]="'Enter your definition of the task being correct here.'"
+        [data]="correct"
+      ></cc-tiny-editor>
     </div>
   </ng-container>
   <!-- *** KEEP HERE -- DISABLED FOR BETA *** -->

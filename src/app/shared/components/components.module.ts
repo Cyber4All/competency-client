@@ -45,6 +45,8 @@ import { SecondaryNavComponent } from './secondary-nav/secondary-nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { TextFieldComponent } from './text-field/text-field.component';
 import { EmailBannerComponent } from './email-banner/email-banner.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
+import { TinyEditorComponent } from './tiny-editor/tiny-editor.component';
 @NgModule({
   declarations: [
     CompetencyCardComponent,
@@ -67,7 +69,8 @@ import { EmailBannerComponent } from './email-banner/email-banner.component';
     SecondaryNavComponent,
     FooterComponent,
     TextFieldComponent,
-    EmailBannerComponent
+    EmailBannerComponent,
+    TinyEditorComponent
   ],
   imports: [
     CommonModule,
@@ -95,7 +98,8 @@ import { EmailBannerComponent } from './email-banner/email-banner.component';
     MatChipsModule,
     SharedDirectivesModule,
     VirtualScrollerModule,
-    RouterModule
+    RouterModule,
+    EditorModule
   ],
   exports: [
     CompetencyCardComponent,

@@ -10,8 +10,9 @@
       target="_blank">Montreat 360 Competencies and Skills</a> to define employability.
   </p>
   <!--Employability description-->
-  <label>Description</label>
-  <textarea
-    placeholder="Describe the professional skills and employment fit an individual must have in order to achieve this competency."
-    [formControl]="details"></textarea>
+  <label >Description</label>
+  <cc-tiny-editor
+    [placeholder]="'Describe the professional skills and employment fit an individual must have in order to achieve this competency.'"
+    [data]="details"
+  ></cc-tiny-editor>
 </div>

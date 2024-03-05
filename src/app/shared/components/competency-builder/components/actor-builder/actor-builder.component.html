@@ -24,9 +24,10 @@
     </ul>
   </div>
 </div>
-<!--Actor description form field-->
 <div class="description_input">
-  <label>Description</label>
-  <textarea class="description_box" placeholder="Provide a description for your actor"
-    [formControl]="details"></textarea>
+  <label class="description">Description</label>
+  <cc-tiny-editor 
+    [placeholder]="'Provide a description for your actor.'"
+    [data]="details"
+  ></cc-tiny-editor>
 </div>
